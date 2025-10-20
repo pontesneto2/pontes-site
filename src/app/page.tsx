@@ -17,6 +17,13 @@ export default function Page() {
 
   const featuredProjects = [
     {
+      title: "Silva e Duarte Advogados",
+      tags: ["WordPress", "Elementor", "Custom CSS", "SEO", "Responsivo", "UX/UI"],
+      link: "https://silvaeduarteadvogados.com/",
+      blurb: "Website institucional moderno para escritório de advocacia com foco em credibilidade, profissionalismo e experiência do usuário. Design clean, navegação intuitiva e otimização para conversão de clientes.",
+      category: "Website Institucional"
+    },
+    {
       title: "Aplicativo de Mídia OOH — Plataforma DOOH",
       tags: ["React Native", "Expo", "Node.js", "Express", "PostgreSQL", "Docker", "Grafana"],
       link: "#",
@@ -58,6 +65,7 @@ export default function Page() {
   ];
 
   const websites = [
+    { url: "https://silvaeduarteadvogados.com/", name: "Silva e Duarte Advogados" },
     { url: "https://movimentafilmes.com.br", name: "Movimenta Filmes" },
     { url: "https://anjosdigitais.org", name: "Anjos Digitais" },
     { url: "https://institutoagropolos.org.br", name: "Instituto Agropolos" },
