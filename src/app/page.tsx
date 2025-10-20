@@ -18,7 +18,7 @@ export default function Page() {
   const featuredProjects = [
     {
       title: "Silva e Duarte Advogados",
-      tags: ["WordPress", "Elementor", "Custom CSS", "SEO", "Responsivo", "UX/UI"],
+      tags: ["React", "Next.js", "Node.js", "UX/UI", "Responsivo"],
       link: "https://silvaeduarteadvogados.com/",
       blurb: "Website institucional moderno para escritório de advocacia com foco em credibilidade, profissionalismo e experiência do usuário. Design clean, navegação intuitiva e otimização para conversão de clientes.",
       category: "Website Institucional"
