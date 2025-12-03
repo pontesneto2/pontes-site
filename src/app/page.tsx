@@ -5,7 +5,8 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import {
   Rocket, MonitorSmartphone, Globe, Code,
-  Mail, Github, Linkedin, ExternalLink
+  Mail, Github, Linkedin, ExternalLink, Lock,
+  Layers, Server, Cloud, Palette
 } from 'lucide-react';
 
 const FloatingIcons3D = dynamic(() => import("@/components/FloatingIcons3D"), {
@@ -26,23 +27,23 @@ export default function Page() {
     {
       title: "Aplicativo de Mídia OOH — Plataforma DOOH",
       tags: ["React Native", "Expo", "Node.js", "Express", "PostgreSQL", "Docker", "Grafana"],
-      link: "#",
-      blurb: "Plataforma completa conectando painéis digitais, campanhas publicitárias e métricas em tempo real. Arquitetura escalável com atuação end-to-end em DevOps e UX-Ops.",
-      category: "Mobile & Backend"
+      link: "",
+      blurb: "Plataforma completa conectando painéis digitais, campanhas publicitárias e métricas em tempo real. Arquitetura escalável com atuação end-to-end em DevOps e UX-Ops. (Projeto privado em desenvolvimento)",
+      category: "Desenvolvimento Full JS"
     },
     {
       title: "Valor Certo Financeira",
       tags: ["WordPress", "Elementor", "Custom CSS", "SEO", "Analytics"],
-      link: "#",
+      link: "https://valorcertofinanceira.com.br/",
       blurb: "Website institucional de alta conversão com simuladores financeiros integrados. Foco em performance, SEO técnico e governança de conteúdo.",
       category: "Website & Conversão"
     },
     {
       title: "i3Brasil MIO — Experience Design",
       tags: ["UX/UI", "Design System", "Prototipação", "Figma", "High-Fidelity"],
-      link: "#",
-      blurb: "Jornada digital completa para plataforma de investimento imobiliário fracionado de alto padrão, com foco em confiança, exclusividade e usabilidade.",
-      category: "UX/UI Design"
+      link: "",
+      blurb: "Jornada digital completa para plataforma de investimento imobiliário fracionado de alto padrão, com foco em confiança, exclusividade e usabilidade. (Projeto privado entregue)",
+      category: "UX Ops"
     },
   ];
 
@@ -66,7 +67,7 @@ export default function Page() {
 
   const websites = [
     { url: "https://silvaeduarteadvogados.com/", name: "Silva e Duarte Advogados" },
-    { url: "https://movimentafilmes.com.br", name: "Movimenta Filmes" },
+    { url: "https://2.0.movimentafilmes.com/", name: "Movimenta Filmes" },
     { url: "https://anjosdigitais.org", name: "Anjos Digitais" },
     { url: "https://institutoagropolos.org.br", name: "Instituto Agropolos" },
     { url: "https://fastcall.com.br/2.0", name: "FastCall 2.0" },
@@ -78,12 +79,12 @@ export default function Page() {
   const experience = [
     {
       company: "Grupo Star Capital",
-      role: "Gerente de Projetos | DevOps",
+      role: "Engenheiro de Software Sênior | Gerente de Projetos",
       period: "2025"
     },
     {
       company: "Instituto Anjos Digitais",
-      role: "Gerente de Projetos Digitais e Letramento Digital",
+      role: "Desenvolvedor Sênior de Produtos Digitais | Gerente de Projetos",
       period: "2023–2025"
     },
     {
@@ -100,6 +101,11 @@ export default function Page() {
       company: "Com3 Brasil",
       role: "Desenvolvedor Fullstack | UX/UI Designer",
       period: "2020–2021"
+    },
+    {
+      company: "Grupo Laredo Atacado e Varejo",
+      role: "Gerente Operacional de Mercado",
+      period: "2018–2020"
     }
   ];
 
@@ -401,15 +407,15 @@ export default function Page() {
       </section>
 
       {/* PROJETOS EM DESTAQUE - REDESENHADO */}
-      <section id="projects" className="relative py-24 border-t border-white/5">
+      <section id="projects" className="relative py-24 border-t border-white/5 bg-zinc-900/80">
         <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold">
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-zinc-400">
+            <h2 className="text-3xl font-bold mb-3">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-violet-300">
                 Projetos em Destaque
               </span>
             </h2>
-            <p className="mt-3 text-zinc-400">Seleção de casos de sucesso e impacto real</p>
+            <p className="text-sm text-zinc-500">Seleção de entregas técnicas e resultados mensuráveis</p>
           </div>
 
           {/* Cards de projetos principais - Mais elegantes */}
@@ -449,13 +455,31 @@ export default function Page() {
                   ))}
                 </div>
 
-                <a
-                  href={project.link}
-                  className="inline-flex items-center gap-2 text-sm font-medium text-fuchsia-400 hover:text-fuchsia-300 transition-colors group-hover:gap-3"
-                >
-                  Ver projeto
-                  <ExternalLink className="h-4 w-4" />
-                </a>
+                {project.link ? (
+                  <a
+                    href={project.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-sm font-medium text-fuchsia-400 hover:text-fuchsia-300 transition-colors group-hover:gap-3"
+                  >
+                    Ver projeto
+                    <ExternalLink className="h-4 w-4" />
+                  </a>
+                ) : (
+                  <div className="flex flex-col gap-2 mt-2">
+                    <div className="inline-flex items-center gap-2 text-sm font-medium text-zinc-500">
+                      <Lock className="h-4 w-4" />
+                      Projeto Privado
+                    </div>
+                    <a
+                      href="mailto:pontesneto2@gmail.com?subject=Solicita%C3%A7%C3%A3o%20de%20acesso%20ao%20projeto"
+                      className="inline-flex items-center gap-2 text-xs font-medium text-violet-400 hover:text-violet-300 transition-colors"
+                    >
+                      <Mail className="h-3 w-3" />
+                      Solicite acesso via email
+                    </a>
+                  </div>
+                )}
               </motion.article>
             ))}
           </div>
@@ -470,14 +494,21 @@ export default function Page() {
               transition={{ duration: 0.6 }}
               className="relative rounded-2xl border border-white/10 bg-black/40 backdrop-blur-xl p-6"
             >
-              <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+              <h3 className="text-lg font-semibold mb-2 flex items-center gap-2">
                 <Code className="h-5 w-5 text-violet-400" />
                 Sistemas & Plataformas
               </h3>
+              <p className="text-xs text-zinc-500 mb-4 leading-relaxed">
+                <span className="text-violet-400 font-medium">Desenvolvo sistemas 100% personalizados</span> para a sua necessidade: gestão financeira, fluxo de caixa, diário de obra, controle de estoque, CRM, ERP e muito mais. Do zero ao deploy.
+              </p>
               <div className="space-y-3">
                 {additionalProjects.map(proj => (
-                  <div key={proj.name} className="group p-4 rounded-xl bg-zinc-900/50 border border-zinc-800 hover:border-violet-500/30 transition-all">
-                    <h4 className="font-medium text-sm mb-1 group-hover:text-violet-300 transition-colors">{proj.name}</h4>
+                  <div key={proj.name} className="group relative p-4 rounded-xl bg-zinc-900/50 border border-zinc-800 hover:border-violet-500/30 transition-all">
+                    {/* Badge de projeto privado - canto superior direito */}
+                    <div className="absolute top-3 right-3">
+                      <Lock className="h-3 w-3 text-zinc-600" />
+                    </div>
+                    <h4 className="font-medium text-sm mb-1 group-hover:text-violet-300 transition-colors pr-6">{proj.name}</h4>
                     <p className="text-xs text-zinc-500 mb-2">{proj.desc}</p>
                     <div className="flex flex-wrap gap-1.5">
                       {proj.tech.map(t => (
@@ -525,9 +556,13 @@ export default function Page() {
       </section>
 
       {/* TRAJETÓRIA PROFISSIONAL - Discreto e Elegante */}
-      <section className="relative py-20 border-t border-white/5">
+      <section className="relative py-24 border-t border-white/5">
         <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
-          <h3 className="text-xl font-semibold mb-8 text-center text-zinc-400">Trajetória Profissional</h3>
+          <h2 className="text-3xl font-bold mb-12 text-center">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-violet-300">
+              Trajetória Profissional
+            </span>
+          </h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
             {experience.map((exp, idx) => (
               <motion.div
@@ -551,68 +586,94 @@ export default function Page() {
         </div>
       </section>
 
-      {/* STACK - REDESENHADO COM ANIMAÇÕES */}
+      {/* STACK PREFERIDA - PREMIUM & MINIMALISTA */}
       <section id="stack" className="relative py-24 border-t border-white/5">
         <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
-          <h2 className="text-3xl font-bold mb-12 text-center">
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-violet-300">
-              Stack Preferida
-            </span>
-          </h2>
-          <div className="grid md:grid-cols-4 gap-6">
+          {/* Título */}
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-bold mb-3">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-violet-300">
+                Stack Preferida
+              </span>
+            </h2>
+            <p className="text-sm text-zinc-500">Ferramentas e práticas para entregar valor técnico com excelência</p>
+          </div>
+
+          {/* Grid de Stack */}
+          <div className="grid md:grid-cols-2 gap-8">
             {[
-              { 
-                title: "Front-end", 
-                items: ["HTML5 & CSS3", "JavaScript (ES6+)", "React/Typescript", "React Native", "Next.js", "Vue.js", "Tailwind CSS", "Framer Motion", "WordPress", "Shadcn/UI"],
-                color: "fuchsia"
+              {
+                title: "Front-end",
+                icon: Layers,
+                intro: "Construção de interfaces modernas, performáticas e orientadas à experiência do usuário.",
+                techs: ["React", "Next.js", "TypeScript", "React Native", "Tailwind CSS", "Framer Motion", "Vue.js", "WordPress"]
               },
-              { 
-                title: "Back-end", 
-                items: ["Node.js", "Express.js", "PHP", "PostgreSQL", "MongoDB", "MySQL", "Prisma ORM", "REST APIs", "GraphQL", "Firebase"],
-                color: "fuchsia"
+              {
+                title: "Back-end",
+                icon: Server,
+                intro: "Arquiteturas escaláveis e seguras, com foco em alta disponibilidade e integridade dos dados.",
+                techs: ["Node.js", "Express.js", "PHP", "PostgreSQL", "MySQL", "MongoDB", "REST APIs", "GraphQL", "Prisma ORM", "Firebase"]
               },
-              { 
-                title: "DevOps", 
-                items: ["Docker", "CI/CD", "GitHub Actions", "Prometheus", "Grafana", "Vercel", "AWS", "Azure", "Sentry", "Nginx"],
-                color: "fuchsia"
+              {
+                title: "DevOps & Infraestrutura",
+                icon: Cloud,
+                intro: "Cultura de automação, observabilidade e entrega contínua para garantir confiabilidade em escala.",
+                techs: ["Docker", "CI/CD", "GitHub Actions", "Prometheus", "Grafana", "AWS", "Azure", "Vercel", "Nginx", "Sentry"]
               },
-              { 
-                title: "UX/UI", 
-                items: ["Figma", "Design Systems", "Prototipação", "Wireframes", "User Research", "Testes de Usabilidade", "Acessibilidade", "Design Tokens"],
-                color: "fuchsia"
-              },
+              {
+                title: "UX/UI & Produto",
+                icon: Palette,
+                intro: "Design centrado no usuário aliado à estratégia de produto para criar experiências digitais consistentes.",
+                techs: ["Figma", "Design Systems", "Prototipação", "Wireframes", "User Research", "Testes de Usabilidade", "Acessibilidade", "Design Tokens"]
+              }
             ].map((stack, idx) => (
-              <motion.div
+              <motion.article
                 key={stack.title}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: idx * 0.1 }}
-                className="group relative rounded-2xl border border-white/10 p-6 bg-black/60 backdrop-blur-xl shadow-xl hover:border-violet-500/40 transition-all duration-500 h-full"
+                transition={{ delay: idx * 0.1, duration: 0.6 }}
+                className="group relative rounded-3xl border border-white/10 bg-gradient-to-br from-black/80 via-black/60 to-black/80 backdrop-blur-xl p-8 hover:border-violet-500/40 hover:shadow-[0_0_40px_rgba(168,85,247,0.15)] transition-all duration-500 shadow-xl"
               >
-                <div className="absolute inset-0 bg-gradient-to-b from-violet-500/5 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="relative z-10 h-full flex flex-col">
-                  <div className="flex items-center gap-2 mb-5">
-                    <div className={`h-2 w-2 rounded-full bg-${stack.color}-400 shadow-[0_0_10px_currentColor]`} />
-                    <h3 className="font-bold text-lg">{stack.title}</h3>
+                {/* Glow sutil no hover */}
+                <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-violet-500/0 via-violet-500/10 to-fuchsia-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                
+                {/* Orbe de fundo animado */}
+                <motion.div
+                  className="absolute -top-20 -right-20 w-40 h-40 bg-violet-500/20 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+                  animate={{ scale: [1, 1.2, 1] }}
+                  transition={{ duration: 4, repeat: Infinity }}
+                />
+                
+                <div className="relative z-10">
+                  {/* Cabeçalho */}
+                  <div className="flex items-start gap-4 mb-4">
+                    <div className="p-3 rounded-xl bg-violet-500/10 border border-violet-500/20 group-hover:bg-violet-500/20 group-hover:border-violet-500/40 group-hover:shadow-[0_0_20px_rgba(168,85,247,0.3)] transition-all duration-500">
+                      <stack.icon className="h-6 w-6 text-violet-400 group-hover:text-violet-300 group-hover:scale-110 transition-all duration-500" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-xl font-bold text-white mb-2 group-hover:text-violet-100 transition-colors duration-300">{stack.title}</h3>
+                      <p className="text-sm text-zinc-400 leading-relaxed group-hover:text-zinc-300 transition-colors duration-300">{stack.intro}</p>
+                    </div>
                   </div>
-                  <ul className="space-y-2.5 text-sm text-zinc-300 flex-1">
-                    {stack.items.map((item, i) => (
-                      <motion.li 
-                        key={item}
-                        initial={{ opacity: 0, x: -10 }}
-                        whileInView={{ opacity: 1, x: 0 }}
+
+                  {/* Tecnologias */}
+                  <div className="flex flex-wrap gap-2 mt-6">
+                    {stack.techs.map((tech, i) => (
+                      <motion.span
+                        key={tech}
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
                         viewport={{ once: true }}
-                        transition={{ delay: idx * 0.1 + i * 0.05 }}
-                        className="flex items-start gap-2 leading-relaxed group/item"
+                        transition={{ delay: idx * 0.1 + i * 0.03, duration: 0.3 }}
+                        className="inline-block px-3 py-1.5 rounded-lg bg-zinc-900/50 border border-zinc-800/50 text-xs text-zinc-300 hover:border-violet-500/40 hover:text-white hover:bg-zinc-800/70 hover:shadow-[0_0_15px_rgba(168,85,247,0.2)] transition-all duration-300"
                       >
-                        <span className="text-violet-400 mt-0.5 group-hover/item:scale-125 transition-transform">•</span>
-                        <span className="group-hover/item:text-white transition-colors">{item}</span>
-                      </motion.li>
+                        {tech}
+                      </motion.span>
                     ))}
-                  </ul>
+                  </div>
                 </div>
-              </motion.div>
+              </motion.article>
             ))}
           </div>
         </div>
