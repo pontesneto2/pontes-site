@@ -5,6 +5,15 @@ const nextConfig: NextConfig = {
     dirs: ["src"],
     ignoreDuringBuilds: true,
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "image.thum.io",
+        pathname: "/**",
+      },
+    ],
+  },
 };
 
 export default nextConfig;

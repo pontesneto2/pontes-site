@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import Image from "next/image";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -62,7 +63,7 @@ export default function Page() {
       link: "",
       blurb: "Aplicativo mobile em desenvolvimento com foco em jornada simples e rápida: catálogo, busca, captação de leads e fluxo de atendimento. Arquitetura preparada para escalar com métricas e evolução contínua.",
       category: "Aplicativo Mobile",
-      thumb: ""
+      thumb: "/img-card-meoocarro.png"
     },
   ];
 
@@ -396,7 +397,6 @@ export default function Page() {
           </motion.div>
 
         </div>
-                      href="https://www.linkedin.com/in/fcopts"
         {/* Scroll Indicator - CENTRALIZADO (relativo à seção inteira) */}
         <motion.a
           href="#services"
@@ -530,7 +530,7 @@ export default function Page() {
           </div>
 
           {/* Cards de projetos principais - Mais elegantes */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20 auto-rows-fr">
             {featuredProjects.map((project, idx) => (
               <motion.article
                 key={project.title}
@@ -538,7 +538,7 @@ export default function Page() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: idx * 0.15, duration: 0.6 }}
-                className="group relative rounded-3xl border border-white/10 bg-black/75 backdrop-blur-xl p-8 hover:bg-black/80 hover:border-violet-500/40 transition-all duration-500 shadow-xl"
+                className="group relative h-full flex flex-col rounded-3xl border border-white/10 bg-black/75 backdrop-blur-xl p-8 hover:bg-black/80 hover:border-violet-500/40 transition-all duration-500 shadow-xl"
               >
                 {/* Badge de categoria */}
                 <div className="mb-4">
@@ -548,13 +548,14 @@ export default function Page() {
                 </div>
 
                 {/* Miniatura do projeto */}
-                <div className="mb-5 overflow-hidden rounded-2xl border border-white/10 bg-zinc-900/40">
+                <div className="relative mb-5 h-36 w-full overflow-hidden rounded-2xl border border-white/10 bg-zinc-900/40">
                   {project.thumb ? (
-                    <img
+                    <Image
                       src={project.thumb}
                       alt={`Capa do projeto: ${project.title}`}
-                      loading="lazy"
-                      className="h-36 w-full object-cover object-top opacity-90 group-hover:opacity-100 transition-opacity"
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      className="object-cover object-top opacity-90 group-hover:opacity-100 transition-opacity"
                     />
                   ) : (
                     <div className="h-36 w-full bg-gradient-to-br from-violet-500/10 via-transparent to-fuchsia-500/10" />
@@ -564,12 +565,12 @@ export default function Page() {
                 <h3 className="text-xl font-semibold mb-3 group-hover:text-violet-300 transition-colors">
                   {project.title}
                 </h3>
-                <p className="text-sm text-zinc-400 leading-relaxed mb-6">
+                <p className="text-sm text-zinc-400 leading-relaxed mb-6 overflow-hidden [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:4]">
                   {project.blurb}
                 </p>
 
                 {/* Tags estilizadas */}
-                <div className="flex flex-wrap gap-2 mb-6">
+                <div className="flex flex-wrap gap-2 mb-6 max-h-16 overflow-hidden">
                   {project.tags.map(tag => (
                     <span
                       key={tag}
@@ -580,31 +581,33 @@ export default function Page() {
                   ))}
                 </div>
 
-                {project.link ? (
-                  <a
-                    href={project.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-sm font-medium text-fuchsia-400 hover:text-fuchsia-300 transition-colors group-hover:gap-3"
-                  >
-                    Ver projeto
-                    <ExternalLink className="h-4 w-4" />
-                  </a>
-                ) : (
-                  <div className="flex flex-col gap-2 mt-2">
-                    <div className="inline-flex items-center gap-2 text-sm font-medium text-zinc-500">
-                      <Lock className="h-4 w-4" />
-                      Projeto Privado
-                    </div>
+                <div className="mt-auto">
+                  {project.link ? (
                     <a
-                      href="mailto:pontesneto2@gmail.com?subject=Solicita%C3%A7%C3%A3o%20de%20acesso%20ao%20projeto"
-                      className="inline-flex items-center gap-2 text-xs font-medium text-violet-400 hover:text-violet-300 transition-colors"
+                      href={project.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 text-sm font-medium text-fuchsia-400 hover:text-fuchsia-300 transition-colors group-hover:gap-3"
                     >
-                      <Mail className="h-3 w-3" />
-                      Solicite acesso via email
+                      Ver projeto
+                      <ExternalLink className="h-4 w-4" />
                     </a>
-                  </div>
-                )}
+                  ) : (
+                    <div className="flex flex-col gap-2 mt-2">
+                      <div className="inline-flex items-center gap-2 text-sm font-medium text-zinc-500">
+                        <Lock className="h-4 w-4" />
+                        Projeto Privado
+                      </div>
+                      <a
+                        href="mailto:pontesneto2@gmail.com?subject=Solicita%C3%A7%C3%A3o%20de%20acesso%20ao%20projeto"
+                        className="inline-flex items-center gap-2 text-xs font-medium text-violet-400 hover:text-violet-300 transition-colors"
+                      >
+                        <Mail className="h-3 w-3" />
+                        Solicite acesso via email
+                      </a>
+                    </div>
+                  )}
+                </div>
               </motion.article>
             ))}
           </div>
@@ -821,7 +824,16 @@ export default function Page() {
               <div className="md:col-span-2 flex items-center">
                 <div className="relative w-full">
                   <div className="aspect-square rounded-2xl overflow-hidden border border-violet-500/30 shadow-[0_0_50px_rgba(168,85,247,0.2)]">
-                    <img src="/pontes.jpg" alt="Francisco Pontes" className="w-full h-full object-cover" />
+                    <div className="relative w-full h-full">
+                      <Image
+                        src="/pontes.jpg"
+                        alt="Francisco Pontes"
+                        fill
+                        sizes="(max-width: 768px) 100vw, 40vw"
+                        className="object-cover"
+                        priority
+                      />
+                    </div>
                   </div>
                   {/* Badge flutuante */}
                   <div className="absolute -bottom-4 -right-4 bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white px-6 py-3 rounded-2xl shadow-xl font-semibold text-sm">
