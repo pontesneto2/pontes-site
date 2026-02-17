@@ -16,64 +16,145 @@ const FloatingIcons3D = dynamic(() => import("@/components/FloatingIcons3D"), {
 export default function Page() {
   const [navOpen, setNavOpen] = useState(false);
 
+  const getProjectThumb = (link?: string) => {
+    if (!link) return "";
+    const safe = link.trim();
+    if (!safe) return "";
+    return `https://image.thum.io/get/width/1200/crop/900/${safe}`;
+  };
+
   const featuredProjects = [
     {
       title: "Silva e Duarte Advogados",
       tags: ["React", "Next.js", "Node.js", "UX/UI", "Responsivo"],
       link: "https://silvaeduarteadvogados.com/",
       blurb: "Website institucional moderno para escritório de advocacia com foco em credibilidade, profissionalismo e experiência do usuário. Design clean, navegação intuitiva e otimização para conversão de clientes.",
-      category: "Website Institucional"
+      category: "Website Institucional",
+      thumb: getProjectThumb("https://silvaeduarteadvogados.com/")
     },
     {
       title: "Aplicativo de Mídia OOH — Plataforma DOOH",
       tags: ["React Native", "Expo", "Node.js", "Express", "PostgreSQL", "Docker", "Grafana"],
       link: "",
       blurb: "Plataforma completa conectando painéis digitais, campanhas publicitárias e métricas em tempo real. Arquitetura escalável com atuação end-to-end em DevOps e UX-Ops. (Projeto privado em desenvolvimento)",
-      category: "Desenvolvimento Full JS"
+      category: "Desenvolvimento Full JS",
+      thumb: ""
     },
     {
       title: "Valor Certo Financeira",
       tags: ["WordPress", "Elementor", "Custom CSS", "SEO", "Analytics"],
       link: "https://valorcertofinanceira.com.br/",
       blurb: "Website institucional de alta conversão com simuladores financeiros integrados. Foco em performance, SEO técnico e governança de conteúdo.",
-      category: "Website & Conversão"
+      category: "Website & Conversão",
+      thumb: getProjectThumb("https://valorcertofinanceira.com.br/")
     },
     {
       title: "i3Brasil MIO — Experience Design",
       tags: ["UX/UI", "Design System", "Prototipação", "Figma", "High-Fidelity"],
       link: "",
       blurb: "Jornada digital completa para plataforma de investimento imobiliário fracionado de alto padrão, com foco em confiança, exclusividade e usabilidade. (Projeto privado entregue)",
-      category: "UX Ops"
+      category: "UX Ops",
+      thumb: ""
+    },
+    {
+      title: "Meoocarro — App (em desenvolvimento)",
+      tags: ["React Native", "Expo", "TypeScript", "Node.js", "PostgreSQL"],
+      link: "",
+      blurb: "Aplicativo mobile em desenvolvimento com foco em jornada simples e rápida: catálogo, busca, captação de leads e fluxo de atendimento. Arquitetura preparada para escalar com métricas e evolução contínua.",
+      category: "Aplicativo Mobile",
+      thumb: ""
     },
   ];
 
   const additionalProjects = [
-    { 
-      name: "Sistema Especial Fazenda Chapéu", 
-      tech: ["PHP", "JavaScript", "Scriptcase", "PostgreSQL", "Git", "Testes Automatizados"], 
-      desc: "Secretaria de Desenvolvimento Agrário do Ceará - Regularização fundiária" 
+    {
+      name: "Sistema Especial Fazenda Chapéu",
+      tech: ["PHP", "JavaScript", "Scriptcase", "PostgreSQL", "Git", "Testes Automatizados"],
+      desc: "Secretaria de Desenvolvimento Agrário do Ceará - Regularização fundiária"
     },
-    { 
-      name: "Sistema SIGMA", 
-      tech: ["Node.js", "React", "PostgreSQL", "Express"], 
-      desc: "Instituto Agropolos do Ceará - Sistema de Gestão" 
+    {
+      name: "Sistema Financeiro ERP Estrela",
+      tech: ["Node.js", "React", "PostgreSQL", "Docker", "APIs", "Observabilidade"],
+      desc: "ERP financeiro para rotinas de contas a pagar/receber, conciliação, relatórios e governança de dados. Foco em confiabilidade, performance e rastreabilidade."
     },
-    { 
-      name: "Sistema de Inscrições - Letramento Digital", 
-      tech: ["JavaScript", "WordPress", "PHP"], 
-      desc: "Inclusão digital pelo Brasil" 
+    {
+      name: "Sistema SIGMA",
+      tech: ["Node.js", "React", "PostgreSQL", "Express"],
+      desc: "Instituto Agropolos do Ceará - Sistema de Gestão"
+    },
+    {
+      name: "Sistema de Inscrições - Letramento Digital",
+      tech: ["JavaScript", "WordPress", "PHP"],
+      desc: "Inclusão digital pelo Brasil"
     },
   ];
 
   const websites = [
-    { url: "https://silvaeduarteadvogados.com/", name: "Silva e Duarte Advogados" },
-    { url: "https://2.0.movimentafilmes.com/", name: "Movimenta Filmes" },
-    { url: "https://anjosdigitais.org", name: "Anjos Digitais" },
-    { url: "https://institutoagropolos.org.br", name: "Instituto Agropolos" },
-    { url: "https://fastcall.com.br/2.0", name: "FastCall 2.0" },
-    { url: "https://com3brasil.com.br/wp", name: "COM3 Brasil" },
-    { url: "https://www.sda.ce.gov.br", name: "SDA Ceará" },
-    { url: "https://sistemas2.sda.ce.gov.br", name: "Sistemas SDA" },
+    {
+      url: "https://starcapital.stargrupo.com.br/",
+      name: "Star Capital",
+      desc: "Website institucional com foco em credibilidade, performance e clareza de proposta."
+    },
+    {
+      url: "https://www.stargrupo.com.br/",
+      name: "Star Grupo",
+      desc: "Presença digital corporativa com estrutura de navegação e conteúdo orientados a conversão."
+    },
+    {
+      url: "https://starpesquisas.stargrupo.com.br/",
+      name: "Star Pesquisas",
+      desc: "Landing institucional para serviços de pesquisa, com copy objetiva e escaneável."
+    },
+    {
+      url: "https://starreciclagem.stargrupo.com.br/",
+      name: "Star Reciclagem",
+      desc: "Website com posicionamento sustentável e foco em serviços e captação de contatos."
+    },
+    {
+      url: "https://silvaeduarteadvogados.com/",
+      name: "Silva e Duarte Advogados",
+      desc: "Institucional moderno com foco em credibilidade e geração de leads."
+    },
+    {
+      url: "https://2.0.movimentafilmes.com/",
+      name: "Movimenta Filmes",
+      desc: "Portfólio com destaque para identidade visual e experiência de navegação."
+    },
+    {
+      url: "https://anjosdigitais.org",
+      name: "Anjos Digitais",
+      desc: "Website de impacto social com estrutura clara de conteúdo e chamadas para ação."
+    },
+    {
+      url: "https://institutoagropolos.org.br",
+      name: "Instituto Agropolos",
+      desc: "Institucional com organização de conteúdo, performance e manutenção simplificada."
+    },
+    {
+      url: "https://fastcall.com.br/2.0",
+      name: "FastCall 2.0",
+      desc: "Site com foco em conversão e comunicação objetiva do serviço."
+    },
+    {
+      url: "https://com3brasil.com.br/wp",
+      name: "COM3 Brasil",
+      desc: "Website corporativo com gestão de conteúdo e melhorias contínuas de UX."
+    },
+    {
+      url: "https://www.sda.ce.gov.br",
+      name: "SDA Ceará",
+      desc: "Portal institucional com governança de conteúdo e acesso rápido a serviços."
+    },
+    {
+      url: "https://sistemas2.sda.ce.gov.br",
+      name: "Sistemas SDA",
+      desc: "Hub de sistemas com navegação padronizada e foco em usabilidade."
+    },
+    {
+      url: "https://www.clicksoftwarehouse.com/",
+      name: "Click Software House",
+      desc: "Website institucional com foco em posicionamento, clareza de serviços e conversão."
+    },
   ];
 
   const experience = [
@@ -110,8 +191,10 @@ export default function Page() {
   ];
 
   return (
-    <div className="min-h-screen font-sans">
+    <div className="min-h-screen font-sans relative isolate">
       <FloatingIcons3D />
+
+      <div className="relative z-10">
 
       {/* NAV */}
       <header className="sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-black/30 border-b border-white/5">
@@ -172,7 +255,7 @@ export default function Page() {
       <section className="relative h-[100vh] flex items-center justify-center overflow-hidden">
         {/* Gradiente de fundo animado */}
         <div className="absolute inset-0 bg-gradient-to-b from-violet-950/20 via-transparent to-black/50" />
-        
+
         {/* Orbs grandes de fundo */}
         <motion.div
           animate={{
@@ -245,6 +328,27 @@ export default function Page() {
             </span>
           </motion.p>
 
+          {/* Highlights rápidos */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.55 }}
+            className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-10"
+          >
+            {[
+              "Arquitetura & Produto",
+              "CI/CD & Observabilidade",
+              "Performance & UX",
+            ].map((item) => (
+              <span
+                key={item}
+                className="inline-flex items-center px-4 py-2 rounded-full text-xs sm:text-sm bg-white/5 border border-white/10 text-zinc-300 backdrop-blur-sm"
+              >
+                {item}
+              </span>
+            ))}
+          </motion.div>
+
           {/* CTAs */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -284,31 +388,38 @@ export default function Page() {
             </a>
             <a
               aria-label="LinkedIn"
-              href="https://www.linkedin.com/in/fcopontes"
+              href="https://www.linkedin.com/in/fcopts"
               className="p-3 rounded-xl border border-white/10 hover:bg-white/5 hover:border-fuchsia-500/50 hover:shadow-[0_0_20px_rgba(217,70,239,0.3)] transition-all duration-300"
             >
               <Linkedin className="h-6 w-6" />
             </a>
           </motion.div>
 
-          {/* Scroll Indicator - CENTRALIZADO */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1, y: [0, 10, 0] }}
-            transition={{ 
-              opacity: { delay: 1, duration: 0.8 },
-              y: { duration: 2, repeat: Infinity, ease: "easeInOut" }
-            }}
-            className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center"
-          >
-            <div className="flex flex-col items-center gap-2 text-zinc-500">
-              <span className="text-sm">Role para explorar</span>
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <path d="M12 5v14M19 12l-7 7-7-7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </div>
-          </motion.div>
         </div>
+                      href="https://www.linkedin.com/in/fcopts"
+        {/* Scroll Indicator - CENTRALIZADO (relativo à seção inteira) */}
+        <motion.a
+          href="#services"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1, y: [0, 10, 0] }}
+          transition={{
+            opacity: { delay: 1, duration: 0.8 },
+            y: { duration: 2, repeat: Infinity, ease: "easeInOut" },
+          }}
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-zinc-500 hover:text-zinc-300 transition-colors"
+          aria-label="Role para explorar"
+        >
+          <span className="text-sm">Role para explorar</span>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path
+              d="M12 5v14M19 12l-7 7-7-7"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </motion.a>
       </section>
 
       {/* CARD COMERCIAL - DESTAQUE MÁXIMO */}
@@ -324,12 +435,12 @@ export default function Page() {
           >
             {/* Glow effect externo */}
             <div className="absolute -inset-1 bg-gradient-to-r from-violet-600 via-fuchsia-600 to-violet-600 rounded-3xl blur-2xl opacity-20 animate-pulse" />
-            
+
             {/* Card principal */}
             <div className="relative rounded-3xl border-2 border-violet-500/50 p-8 md:p-12 bg-gradient-to-br from-black/90 via-violet-950/30 to-black/90 backdrop-blur-xl shadow-2xl">
               {/* Padrão de grid no fundo */}
               <div className="absolute inset-0 bg-[linear-gradient(rgba(168,85,247,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(168,85,247,0.03)_1px,transparent_1px)] bg-[size:32px_32px] rounded-3xl" />
-              
+
               {/* Badge de destaque */}
               <div className="relative z-10 mb-6">
                 <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-violet-600/20 to-fuchsia-600/20 border border-violet-500/30 text-violet-300 text-sm font-semibold backdrop-blur-sm">
@@ -349,7 +460,7 @@ export default function Page() {
                     — projetos 100% personalizados
                   </span>
                 </h2>
-                
+
                 {/* Descrição com destaque */}
                 <p className="mt-6 text-lg text-zinc-200 max-w-4xl leading-relaxed">
                   Do <span className="text-violet-300 font-semibold">discovery</span> ao <span className="text-fuchsia-300 font-semibold">deploy</span>: requisitos, protótipos, desenvolvimento, integrações, CI/CD e observabilidade.
@@ -407,7 +518,7 @@ export default function Page() {
       </section>
 
       {/* PROJETOS EM DESTAQUE - REDESENHADO */}
-      <section id="projects" className="relative py-24 border-t border-white/5 bg-zinc-900/80">
+      <section id="projects" className="relative py-24 border-t border-white/5 bg-zinc-900/40">
         <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-bold mb-3">
@@ -419,7 +530,7 @@ export default function Page() {
           </div>
 
           {/* Cards de projetos principais - Mais elegantes */}
-          <div className="grid md:grid-cols-3 gap-8 mb-20">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
             {featuredProjects.map((project, idx) => (
               <motion.article
                 key={project.title}
@@ -427,13 +538,27 @@ export default function Page() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: idx * 0.15, duration: 0.6 }}
-                className="group relative rounded-3xl border border-white/10 bg-black/60 backdrop-blur-xl p-8 hover:bg-black/70 hover:border-violet-500/40 transition-all duration-500 shadow-xl"
+                className="group relative rounded-3xl border border-white/10 bg-black/75 backdrop-blur-xl p-8 hover:bg-black/80 hover:border-violet-500/40 transition-all duration-500 shadow-xl"
               >
                 {/* Badge de categoria */}
                 <div className="mb-4">
                   <span className="inline-block px-3 py-1 rounded-full text-xs font-medium bg-violet-500/10 text-violet-300 border border-violet-500/20">
                     {project.category}
                   </span>
+                </div>
+
+                {/* Miniatura do projeto */}
+                <div className="mb-5 overflow-hidden rounded-2xl border border-white/10 bg-zinc-900/40">
+                  {project.thumb ? (
+                    <img
+                      src={project.thumb}
+                      alt={`Capa do projeto: ${project.title}`}
+                      loading="lazy"
+                      className="h-36 w-full object-cover object-top opacity-90 group-hover:opacity-100 transition-opacity"
+                    />
+                  ) : (
+                    <div className="h-36 w-full bg-gradient-to-br from-violet-500/10 via-transparent to-fuchsia-500/10" />
+                  )}
                 </div>
 
                 <h3 className="text-xl font-semibold mb-3 group-hover:text-violet-300 transition-colors">
@@ -492,7 +617,7 @@ export default function Page() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="relative rounded-2xl border border-white/10 bg-black/40 backdrop-blur-xl p-6"
+              className="relative rounded-2xl border border-white/10 bg-black/55 backdrop-blur-xl p-6"
             >
               <h3 className="text-lg font-semibold mb-2 flex items-center gap-2">
                 <Code className="h-5 w-5 text-violet-400" />
@@ -528,7 +653,7 @@ export default function Page() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="relative rounded-2xl border border-white/10 bg-black/40 backdrop-blur-xl p-6"
+              className="relative rounded-2xl border border-white/10 bg-black/55 backdrop-blur-xl p-6"
             >
               <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
                 <Globe className="h-5 w-5 text-fuchsia-400" />
@@ -543,9 +668,14 @@ export default function Page() {
                     rel="noopener noreferrer"
                     className="group flex items-center justify-between p-3 rounded-lg bg-zinc-900/50 border border-zinc-800 hover:border-fuchsia-500/30 hover:bg-zinc-900/70 transition-all"
                   >
-                    <span className="text-sm text-zinc-300 group-hover:text-fuchsia-300 transition-colors">
-                      {site.name}
-                    </span>
+                    <div className="min-w-0">
+                      <div className="text-sm text-zinc-300 group-hover:text-fuchsia-300 transition-colors truncate">
+                        {site.name}
+                      </div>
+                      <div className="text-[11px] text-zinc-500 leading-snug mt-0.5 line-clamp-2">
+                        {site.desc}
+                      </div>
+                    </div>
                     <ExternalLink className="h-4 w-4 text-zinc-600 group-hover:text-fuchsia-400 transition-colors" />
                   </a>
                 ))}
@@ -637,14 +767,14 @@ export default function Page() {
               >
                 {/* Glow sutil no hover */}
                 <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-violet-500/0 via-violet-500/10 to-fuchsia-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                
+
                 {/* Orbe de fundo animado */}
                 <motion.div
                   className="absolute -top-20 -right-20 w-40 h-40 bg-violet-500/20 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"
                   animate={{ scale: [1, 1.2, 1] }}
                   transition={{ duration: 4, repeat: Infinity }}
                 />
-                
+
                 <div className="relative z-10">
                   {/* Cabeçalho */}
                   <div className="flex items-start gap-4 mb-4">
@@ -682,10 +812,10 @@ export default function Page() {
       {/* SOBRE MIM - Card Unificado Criativo */}
       <section id="about" className="relative py-24 border-t border-white/5">
         <div className="mx-auto max-w-6xl px-6 sm:px-8 lg:px-12">
-          <div className="relative rounded-3xl border border-white/10 bg-black/60 backdrop-blur-xl shadow-2xl overflow-hidden">
+          <div className="relative rounded-3xl border border-white/10 bg-black/70 backdrop-blur-xl shadow-2xl overflow-hidden">
             {/* Gradiente de fundo */}
             <div className="absolute inset-0 bg-gradient-to-br from-violet-500/5 via-transparent to-fuchsia-500/5" />
-            
+
             <div className="relative z-10 grid md:grid-cols-5 gap-8 p-8 md:p-12">
               {/* Coluna da imagem - 2 colunas */}
               <div className="md:col-span-2 flex items-center">
@@ -710,12 +840,12 @@ export default function Page() {
 
                 <div className="space-y-4 text-zinc-300 leading-relaxed">
                   <p>
-                    <span className="text-white font-semibold">Sênior Software Engineer</span> com atuação em DevOps, Web/Mobile e UX/UI. 
-                    Há <span className="text-violet-300 font-semibold">5+ anos</span> entregando soluções que combinam tecnologia, performance e boas práticas de engenharia.
+                    <span className="text-white font-semibold">Senior Software Engineer</span> com atuação em <span className="text-violet-300 font-semibold">Web/Mobile</span>, <span className="text-fuchsia-300 font-semibold">DevOps</span> e <span className="text-white font-semibold">UX/UI</span>.
+                    Meu foco é transformar objetivos de negócio em produto funcionando: arquitetura bem definida, entrega previsível e experiência consistente.
                   </p>
                   <p>
-                    Trabalhei por anos no <span className="text-violet-300">setor público</span> com sistemas críticos e modernização focada em acessibilidade. 
-                    Hoje, no <span className="text-fuchsia-300">setor privado</span>, projeto soluções escaláveis, automatizo pipelines e garanto ambientes seguros para deploy contínuo.
+                    Experiência em <span className="text-violet-300">setor público</span> com sistemas críticos e modernização orientada à usabilidade.
+                    No <span className="text-fuchsia-300">setor privado</span>, desenho soluções escaláveis, automatizo CI/CD, fortaleço observabilidade e garanto ambientes confiáveis para evolução contínua.
                   </p>
                   <p className="text-sm text-zinc-400">
                     Formação em ADS, especializações em Full-Stack e UX/UI @EBAC. Cursando pós em Engenharia de Software + DevOps @UNIFOR e segunda graduação em Ciência da Computação.
@@ -757,7 +887,7 @@ export default function Page() {
               viewport={{ once: true }}
               className="relative group"
             >
-              <div className="relative bg-black/60 backdrop-blur-xl border border-white/10 group-hover:border-violet-500/30 rounded-2xl p-8 shadow-2xl group-hover:shadow-violet-500/20 transition-all duration-300">
+              <div className="relative bg-black/70 backdrop-blur-xl border border-white/10 group-hover:border-violet-500/30 rounded-2xl p-8 shadow-2xl group-hover:shadow-violet-500/20 transition-all duration-300">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-12 h-12 bg-gradient-to-br from-violet-500 to-fuchsia-500 rounded-lg flex items-center justify-center group-hover:shadow-lg group-hover:shadow-violet-500/50 transition-shadow duration-300">
                     <Mail className="w-6 h-6 text-white" />
@@ -772,8 +902,8 @@ export default function Page() {
 
                 <div className="space-y-4">
                   <p className="text-zinc-300">
-                    Se você tem um projeto em mente ou quer discutir oportunidades, 
-                    ficarei feliz em bater um papo! 🚀
+                    Se você tem um projeto em mente ou quer discutir oportunidades,
+                    ficarei feliz em bater um papo.
                   </p>
 
                   <motion.a
@@ -804,7 +934,7 @@ export default function Page() {
                     </motion.a>
 
                     <motion.a
-                      href="https://www.linkedin.com/in/fcopontes"
+                      href="https://www.linkedin.com/in/fcopts"
                       target="_blank"
                       rel="noopener noreferrer"
                       whileHover={{ scale: 1.1, rotate: -5 }}
@@ -817,7 +947,7 @@ export default function Page() {
                   </div>
 
                   <div className="pt-4 text-center">
-                    <a 
+                    <a
                       href="https://drive.google.com/file/d/1NGGBTy9kzAPm5Os6we_jaeevsU-_zavX/view?usp=sharing"
                       target="_blank"
                       rel="noopener noreferrer"
@@ -884,7 +1014,7 @@ export default function Page() {
 
                   {/* Cabeça */}
                   <rect x="70" y="50" width="60" height="50" rx="8" fill="url(#gradient2b)" stroke="white" strokeWidth="2" opacity="0.9"/>
-                  
+
                   {/* Olhos */}
                   <motion.circle
                     cx="85" cy="70" r="6"
@@ -912,7 +1042,7 @@ export default function Page() {
 
                   {/* Corpo */}
                   <rect x="60" y="105" width="80" height="70" rx="10" fill="url(#gradient3b)" stroke="white" strokeWidth="2" opacity="0.9"/>
-                  
+
                   {/* Detalhes do corpo */}
                   <motion.circle
                     cx="100" cy="130" r="8"
@@ -1006,9 +1136,10 @@ export default function Page() {
         </div>
       </section>
 
-      <footer className="py-10 border-t border-white/5 text-center text-sm text-zinc-400">
-        © {new Date().getFullYear()} Pontes. Feito com Next.js/React, Tailwind e amor por DX.
-      </footer>
+        <footer className="py-10 border-t border-white/5 text-center text-sm text-zinc-400">
+          © {new Date().getFullYear()} Francisco Pontes de Lima Neto. Todos os Direitos Reservados.
+        </footer>
+      </div>
     </div>
   );
 }

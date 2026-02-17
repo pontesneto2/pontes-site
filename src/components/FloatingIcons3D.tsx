@@ -5,7 +5,7 @@ import { Cpu, Cloud, Smartphone } from "lucide-react";
 
 export default function FloatingIcons3D() {
   return (
-    <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden opacity-40">
+    <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden opacity-25 sm:opacity-40">
       {/* CPU Icon - Top Left - MENOR */}
       <motion.div
         className="absolute left-[8%] top-[12%] w-[80px] h-[80px]"
@@ -84,7 +84,7 @@ export default function FloatingIcons3D() {
           ease: "easeInOut",
         }}
       />
-      
+
       <motion.div
         className="absolute left-[20%] top-[40%] w-40 h-40 rounded-full bg-gradient-to-br from-fuchsia-400/8 to-purple-400/8 blur-3xl"
         animate={{
