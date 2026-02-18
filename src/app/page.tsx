@@ -26,44 +26,60 @@ const FloatingIcons3D = dynamic(() => import("@/components/FloatingIcons3D"), {
 
 export default function Page() {
   const [navOpen, setNavOpen] = useState(false);
+  const [activePortfolioTab, setActivePortfolioTab] = useState<"sistemas" | "websites">("sistemas");
 
   const featuredProjects = [
     {
-      title: "Meoocarro — App (em desenvolvimento)",
-      tags: ["React Native", "Expo", "TypeScript", "Node.js", "PostgreSQL"],
+      title: "Meoocarro — App",
+      subtitle: "Em desenvolvimento",
+      tags: [
+        "React Native",
+        "TypeScript",
+        "Next.js",
+        "Node.js",
+        "Express.js",
+        "NestJS",
+        "PostgreSQL",
+        "Prisma",
+        "Docker",
+      ],
       link: "",
       blurb:
-        "Aplicativo para organizar a jornada de compra e atendimento, com experiência simples, rápida e pronta para evoluir conforme o negócio cresce.",
+        "Aplicativo para conectar motoristas e oficinas de maneira inteligente, simplificando agendamentos, orçamentos e o acompanhamento de serviços automotivos.",
       category: "Aplicativo Mobile + Painel Admin",
       thumb: "/img-card-meoocarro.png",
     },
     {
       title: "iMidooh — Gerenciamento de Mídia DOOH",
+      subtitle: "",
       tags: [
         "React Native",
-        "Expo",
+        "TypeScript",
+        "Next.js",
         "Node.js",
-        "Express",
+        "Express.js",
+        "NestJS",
         "PostgreSQL",
+        "Prisma",
         "Docker",
-        "Grafana",
       ],
       link: "",
       blurb:
-        "Plataforma para operar mídia digital OOH com campanhas, telas e resultados em um só lugar, priorizando controle, clareza e acompanhamento contínuo.",
+        "Plataforma mobile para operar mídia DOOH em painéis de LED dos mais diversos tipos, com gestão de campanhas, monitoramento em tempo real e relatórios de performance.",
       category: "Aplicativo Mobile + Painel Admin",
       thumb: "/logo-dooh.png",
     },
     {
       title: "Sistema Financeiro ERP Estrela",
+      subtitle: "",
       tags: [
+        "React Web",
+        "TypeScript",
         "Node.js",
-        "Express",
-        "Next.js",
-        "NestJS",
+        "Express.js",
+        "TailwindCSS",
         "PostgreSQL",
-        "n8n",
-        "Observabilidade",
+        "Docker",
       ],
       link: "",
       blurb:
@@ -651,10 +667,15 @@ export default function Page() {
                     )}
                   </div>
 
-                  <h3 className="text-xl font-semibold mb-3 group-hover:text-violet-300 transition-colors">
+                  <h3 className="text-xl font-semibold group-hover:text-violet-300 transition-colors">
                     {project.title}
                   </h3>
-                  <p className="text-sm text-zinc-400 leading-relaxed mb-6">
+                  {project.subtitle && (
+                    <span className="inline-block text-xs text-amber-400/80 font-medium mt-1 mb-2">
+                      {project.subtitle}
+                    </span>
+                  )}
+                  <p className="text-sm text-zinc-400 leading-relaxed mb-6 mt-2">
                     {project.blurb}
                   </p>
 
@@ -701,91 +722,131 @@ export default function Page() {
               ))}
             </div>
 
-            {/* Outros projetos e websites - Coluna única com scroll */}
-            <div className="grid grid-cols-1 gap-8">
-              {/* Sistemas desenvolvidos */}
-              <motion.div
-                initial={{ opacity: 0, x: -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-                className="relative rounded-2xl border border-white/10 bg-black/55 backdrop-blur-xl p-6"
-              >
-                <h3 className="text-lg font-semibold mb-2 flex items-center gap-2">
-                  <Code className="h-5 w-5 text-violet-400" />
-                  Sistemas & Plataformas
-                </h3>
-                <p className="text-xs text-zinc-500 mb-4 leading-relaxed">
-                  <span className="text-violet-400 font-medium">
-                    Desenvolvo sistemas 100% personalizados
-                  </span>{" "}
-                  para a sua necessidade: gestão financeira, fluxo de caixa,
-                  diário de obra, controle de estoque, CRM, ERP e muito mais. Do
-                  zero ao deploy.
-                </p>
-                <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
-                  {additionalProjects.map((proj) => (
-                    <div
-                      key={proj.name}
-                      className="group relative p-4 rounded-xl bg-zinc-900/50 border border-zinc-800 hover:border-violet-500/30 transition-all"
-                    >
-                      <div className="absolute top-3 right-3">
-                        <Lock className="h-3 w-3 text-zinc-600" />
-                      </div>
-                      <h4 className="font-medium text-sm mb-1 group-hover:text-violet-300 transition-colors pr-6">
-                        {proj.name}
-                      </h4>
-                      <p className="text-xs text-zinc-500 mb-2">{proj.desc}</p>
-                      <div className="flex flex-wrap gap-1.5">
-                        {proj.tech.map((t) => (
-                          <span
-                            key={t}
-                            className="text-[10px] px-2 py-0.5 rounded bg-zinc-800/70 text-zinc-400 border border-zinc-700/50"
-                          >
-                            {t}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </motion.div>
+            {/* Portfólio com Tabs — Sistemas & Websites */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="relative rounded-2xl border border-white/10 bg-black/55 backdrop-blur-xl p-6"
+            >
+              {/* Tab headers */}
+              <div className="flex items-center gap-1 mb-6 p-1 rounded-xl bg-zinc-900/60 border border-zinc-800/60 w-fit">
+                <button
+                  onClick={() => setActivePortfolioTab("sistemas")}
+                  className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
+                    activePortfolioTab === "sistemas"
+                      ? "bg-violet-500/20 text-violet-300 border border-violet-500/30 shadow-lg shadow-violet-500/10"
+                      : "text-zinc-400 hover:text-zinc-200 border border-transparent"
+                  }`}
+                >
+                  <Code className="h-4 w-4" />
+                  Sistemas Web
+                  <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${
+                    activePortfolioTab === "sistemas"
+                      ? "bg-violet-500/20 text-violet-300"
+                      : "bg-zinc-800 text-zinc-500"
+                  }`}>
+                    {additionalProjects.length}
+                  </span>
+                </button>
+                <button
+                  onClick={() => setActivePortfolioTab("websites")}
+                  className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
+                    activePortfolioTab === "websites"
+                      ? "bg-fuchsia-500/20 text-fuchsia-300 border border-fuchsia-500/30 shadow-lg shadow-fuchsia-500/10"
+                      : "text-zinc-400 hover:text-zinc-200 border border-transparent"
+                  }`}
+                >
+                  <Globe className="h-4 w-4" />
+                  Websites
+                  <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${
+                    activePortfolioTab === "websites"
+                      ? "bg-fuchsia-500/20 text-fuchsia-300"
+                      : "bg-zinc-800 text-zinc-500"
+                  }`}>
+                    {websites.length}
+                  </span>
+                </button>
+              </div>
 
-              {/* Websites desenvolvidos */}
-              <motion.div
-                initial={{ opacity: 0, x: 30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-                className="relative rounded-2xl border border-white/10 bg-black/55 backdrop-blur-xl p-6"
-              >
-                <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                  <Globe className="h-5 w-5 text-fuchsia-400" />
-                  Websites Publicados
-                </h3>
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-2">
-                  {websites.map((site) => (
-                    <a
-                      key={site.url}
-                      href={site.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="group flex items-center justify-between p-3 rounded-lg bg-zinc-900/50 border border-zinc-800 hover:border-fuchsia-500/30 hover:bg-zinc-900/70 transition-all"
-                    >
-                      <div className="min-w-0">
-                        <div className="text-sm text-zinc-300 group-hover:text-fuchsia-300 transition-colors truncate">
-                          {site.name}
+              {/* Tab content — Sistemas */}
+              {activePortfolioTab === "sistemas" && (
+                <motion.div
+                  key="sistemas"
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <p className="text-xs text-zinc-500 mb-4 leading-relaxed">
+                    <span className="text-violet-400 font-medium">
+                      Desenvolvo sistemas 100% personalizados
+                    </span>{" "}
+                    para a sua necessidade: gestão financeira, fluxo de caixa,
+                    diário de obra, controle de estoque, CRM, ERP e muito mais. Do
+                    zero ao deploy.
+                  </p>
+                  <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                    {additionalProjects.map((proj) => (
+                      <div
+                        key={proj.name}
+                        className="group relative p-4 rounded-xl bg-zinc-900/50 border border-zinc-800 hover:border-violet-500/30 hover:bg-zinc-800/40 transition-all duration-300"
+                      >
+                        <div className="absolute top-3 right-3">
+                          <Lock className="h-3 w-3 text-zinc-600" />
                         </div>
-                        <div className="text-[11px] text-zinc-500 leading-snug mt-0.5 line-clamp-2">
-                          {site.desc}
+                        <h4 className="font-medium text-sm mb-1 group-hover:text-violet-300 transition-colors pr-6">
+                          {proj.name}
+                        </h4>
+                        <p className="text-xs text-zinc-500 mb-2">{proj.desc}</p>
+                        <div className="flex flex-wrap gap-1.5">
+                          {proj.tech.map((t) => (
+                            <span
+                              key={t}
+                              className="text-[10px] px-2 py-0.5 rounded bg-zinc-800/70 text-zinc-400 border border-zinc-700/50"
+                            >
+                              {t}
+                            </span>
+                          ))}
                         </div>
                       </div>
-                      <ExternalLink className="h-4 w-4 text-zinc-600 group-hover:text-fuchsia-400 transition-colors shrink-0 ml-2" />
-                    </a>
-                  ))}
-                </div>
-              </motion.div>
-            </div>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+
+              {/* Tab content — Websites */}
+              {activePortfolioTab === "websites" && (
+                <motion.div
+                  key="websites"
+                  initial={{ opacity: 0, x: 10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                    {websites.map((site) => (
+                      <a
+                        key={site.url}
+                        href={site.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group flex items-center justify-between p-4 rounded-xl bg-zinc-900/50 border border-zinc-800 hover:border-fuchsia-500/30 hover:bg-zinc-800/40 transition-all duration-300"
+                      >
+                        <div className="min-w-0">
+                          <div className="text-sm font-medium text-zinc-300 group-hover:text-fuchsia-300 transition-colors truncate">
+                            {site.name}
+                          </div>
+                          <div className="text-[11px] text-zinc-500 leading-snug mt-0.5 line-clamp-2">
+                            {site.desc}
+                          </div>
+                        </div>
+                        <ExternalLink className="h-4 w-4 text-zinc-600 group-hover:text-fuchsia-400 transition-colors shrink-0 ml-3" />
+                      </a>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+            </motion.div>
           </div>
         </section>
 
