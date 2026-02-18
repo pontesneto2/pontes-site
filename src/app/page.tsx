@@ -1087,8 +1087,9 @@ export default function Page() {
                   </div>
                   {"startRole" in exp && exp.startRole ? (
                     <div className="text-[10px] text-zinc-500 mb-1 flex items-center gap-2">
-                      <span className="text-zinc-400">📈</span>
-                      <span className="truncate">Início: {exp.startRole}</span>
+                      <span className="truncate">
+                        Cargo Inicial: {exp.startRole}
+                      </span>
                     </div>
                   ) : null}
                   <p className="text-xs text-violet-300">{exp.role}</p>
