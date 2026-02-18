@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import {
   Rocket,
@@ -12,8 +12,10 @@ import {
   Mail,
   Github,
   Linkedin,
+  Menu,
   ExternalLink,
   Lock,
+  X,
   Layers,
   Server,
   Cloud,
@@ -29,6 +31,73 @@ export default function Page() {
   const [activePortfolioTab, setActivePortfolioTab] = useState<
     "sistemas" | "websites"
   >("sistemas");
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 767px)");
+
+    const update = () => setIsMobile(mediaQuery.matches);
+    update();
+
+    mediaQuery.addEventListener("change", update);
+    return () => mediaQuery.removeEventListener("change", update);
+  }, []);
+
+  const viewportSettings = {
+    once: true,
+    amount: isMobile ? 0.28 : 0.2,
+    margin: isMobile ? "0px 0px -22% 0px" : "0px 0px -14% 0px",
+  } as const;
+
+  const easeOut = [0.16, 1, 0.3, 1] as const;
+
+  const staggerList = {
+    hidden: {},
+    show: {
+      transition: {
+        staggerChildren: isMobile ? 0.14 : 0.12,
+        delayChildren: isMobile ? 0.08 : 0.06,
+      },
+    },
+  };
+
+  const staggerTight = {
+    hidden: {},
+    show: {
+      transition: {
+        staggerChildren: isMobile ? 0.07 : 0.06,
+        delayChildren: isMobile ? 0.06 : 0.05,
+      },
+    },
+  };
+
+  const fadeUpItem = {
+    hidden: { opacity: 0, y: 18 },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.65, ease: easeOut },
+    },
+  };
+
+  const fadeLeftItem = {
+    hidden: { opacity: 0, x: -10, y: 10 },
+    show: {
+      opacity: 1,
+      x: 0,
+      y: 0,
+      transition: { duration: 0.6, ease: easeOut },
+    },
+  };
+
+  const tagItem = {
+    hidden: { opacity: 0, y: 10 },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.45, ease: easeOut },
+    },
+  };
 
   const featuredProjects = [
     {
@@ -260,17 +329,19 @@ export default function Page() {
       <div className="relative z-10">
         {/* NAV */}
         <header className="sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-black/30 border-b border-white/5">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="flex h-16 items-center justify-between">
-              <div className="flex items-center gap-3">
+          <div className="mx-auto max-w-7xl px-3 sm:px-6 lg:px-8">
+            <div className="flex items-center justify-between py-4 md:py-0 md:h-16">
+              <div className="flex items-center gap-2 sm:gap-3">
                 {/* Logo com P */}
-                <div className="relative h-10 w-10 rounded-xl bg-gradient-to-br from-fuchsia-500 to-violet-500 shadow-[0_0_40px_rgba(168,85,247,0.35)] flex items-center justify-center">
-                  <span className="text-white font-black text-xl">FP</span>
+                <div className="relative h-9 w-9 sm:h-10 sm:w-10 rounded-xl bg-gradient-to-br from-fuchsia-500 to-violet-500 shadow-[0_0_40px_rgba(168,85,247,0.35)] flex items-center justify-center">
+                  <span className="text-white font-black text-lg sm:text-xl">
+                    FP
+                  </span>
                 </div>
                 {/* Marca FCOPTS */}
                 <div className="flex flex-col">
                   <span
-                    className="text-xl font-black tracking-[0.15em] bg-gradient-to-r from-violet-400 via-fuchsia-400 to-amber-400 bg-clip-text text-transparent"
+                    className="text-lg sm:text-xl font-black tracking-[0.15em] bg-gradient-to-r from-violet-400 via-fuchsia-400 to-amber-400 bg-clip-text text-transparent"
                     style={{ fontFamily: 'Impact, "Arial Black", sans-serif' }}
                   >
                     FCOPTS
@@ -313,23 +384,27 @@ export default function Page() {
                 </a>
               </nav>
               <button
-                className="md:hidden rounded-xl border border-white/10 p-2"
+                type="button"
+                className="md:hidden inline-flex items-center justify-center rounded-xl border border-white/10 bg-black/25 hover:bg-black/35 p-2.5 transition-colors"
                 onClick={() => setNavOpen(!navOpen)}
+                aria-expanded={navOpen}
+                aria-controls="mobile-nav"
               >
                 <span className="sr-only">Abrir menu</span>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                  <path
-                    d="M4 6h16M4 12h16M4 18h16"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  />
-                </svg>
+                {navOpen ? (
+                  <X className="h-5 w-5 text-zinc-200" />
+                ) : (
+                  <Menu className="h-5 w-5 text-zinc-200" />
+                )}
               </button>
             </div>
           </div>
           {navOpen && (
-            <div className="md:hidden border-t border-white/5 bg-black/50">
-              <div className="mx-auto max-w-7xl px-4 py-3 flex flex-col gap-3">
+            <div
+              id="mobile-nav"
+              className="md:hidden border-t border-white/5 bg-black/50"
+            >
+              <div className="mx-auto max-w-7xl px-3 py-4 flex flex-col gap-2">
                 {[
                   { href: "#services", label: "Serviços" },
                   { href: "#projects", label: "Portfólio" },
@@ -337,7 +412,12 @@ export default function Page() {
                   { href: "#about", label: "Sobre" },
                   { href: "#contact", label: "Contato" },
                 ].map((i) => (
-                  <a key={i.href} href={i.href} className="text-zinc-300">
+                  <a
+                    key={i.href}
+                    href={i.href}
+                    className="text-zinc-200 rounded-xl px-3 py-3 hover:bg-white/5 transition-colors"
+                    onClick={() => setNavOpen(false)}
+                  >
                     {i.label}
                   </a>
                 ))}
@@ -646,18 +726,17 @@ export default function Page() {
             </div>
 
             {/* Cards de projetos principais - Mais elegantes */}
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20 auto-rows-fr">
-              {featuredProjects.map((project, idx) => (
+            <motion.div
+              variants={staggerList}
+              initial="hidden"
+              whileInView="show"
+              viewport={viewportSettings}
+              className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20 auto-rows-fr"
+            >
+              {featuredProjects.map((project) => (
                 <motion.article
                   key={project.title}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.2 }}
-                  transition={{
-                    delay: idx * 0.2,
-                    duration: 0.7,
-                    ease: "easeOut",
-                  }}
+                  variants={fadeUpItem}
                   className="group relative h-full flex flex-col rounded-3xl border border-white/10 bg-black/75 backdrop-blur-xl p-8 hover:bg-black/80 hover:border-violet-500/40 transition-all duration-500 shadow-xl"
                 >
                   {/* Badge de categoria */}
@@ -735,7 +814,7 @@ export default function Page() {
                   </div>
                 </motion.article>
               ))}
-            </div>
+            </motion.div>
 
             {/* Portfólio com Tabs — Sistemas & Websites */}
             <motion.div
@@ -842,10 +921,16 @@ export default function Page() {
                       </p>
                     </div>
                   </div>
-                  <div className="grid sm:grid-cols-2 lg:grid-cols-2 gap-5 lg:gap-6">
+                  <motion.div
+                    variants={staggerList}
+                    initial="hidden"
+                    animate="show"
+                    className="grid sm:grid-cols-2 lg:grid-cols-2 gap-5 lg:gap-6"
+                  >
                     {additionalProjects.map((proj) => (
-                      <div
+                      <motion.div
                         key={proj.name}
+                        variants={fadeUpItem}
                         className="group relative p-5 rounded-2xl bg-gradient-to-br from-white/5 via-transparent to-transparent border border-white/10 hover:border-violet-500/30 transition-all duration-300 shadow-[0_10px_40px_rgba(0,0,0,0.35)]"
                       >
                         <div className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-br from-violet-500/10 via-transparent to-fuchsia-500/10" />
@@ -870,9 +955,9 @@ export default function Page() {
                             </span>
                           ))}
                         </div>
-                      </div>
+                      </motion.div>
                     ))}
-                  </div>
+                  </motion.div>
                 </motion.div>
               )}
 
@@ -900,13 +985,19 @@ export default function Page() {
                     </div>
                   </div>
 
-                  <div className="grid sm:grid-cols-2 lg:grid-cols-2 gap-5 lg:gap-6">
+                  <motion.div
+                    variants={staggerList}
+                    initial="hidden"
+                    animate="show"
+                    className="grid sm:grid-cols-2 lg:grid-cols-2 gap-5 lg:gap-6"
+                  >
                     {websites.map((site) => (
-                      <a
+                      <motion.a
                         key={site.url}
                         href={site.url}
                         target="_blank"
                         rel="noopener noreferrer"
+                        variants={fadeUpItem}
                         className="group relative flex items-center justify-between p-5 rounded-2xl bg-gradient-to-br from-white/5 via-transparent to-transparent border border-white/10 hover:border-fuchsia-500/30 transition-all duration-300 shadow-[0_10px_40px_rgba(0,0,0,0.35)]"
                       >
                         <div className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-br from-fuchsia-500/10 via-transparent to-violet-500/10" />
@@ -924,9 +1015,9 @@ export default function Page() {
                           </span>
                           <ExternalLink className="h-4 w-4 text-zinc-600 group-hover:text-fuchsia-400 transition-colors" />
                         </div>
-                      </a>
+                      </motion.a>
                     ))}
-                  </div>
+                  </motion.div>
                 </motion.div>
               )}
             </motion.div>
@@ -941,18 +1032,17 @@ export default function Page() {
                 Trajetória Profissional
               </span>
             </h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {experience.map((exp, idx) => (
+            <motion.div
+              variants={staggerList}
+              initial="hidden"
+              whileInView="show"
+              viewport={viewportSettings}
+              className="grid md:grid-cols-2 lg:grid-cols-3 gap-4"
+            >
+              {experience.map((exp) => (
                 <motion.div
                   key={exp.company}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.2 }}
-                  transition={{
-                    delay: idx * 0.12,
-                    duration: 0.6,
-                    ease: "easeOut",
-                  }}
+                  variants={fadeUpItem}
                   className="p-5 rounded-xl bg-zinc-900/30 border border-zinc-800/50 hover:border-violet-500/20 transition-all"
                 >
                   <div className="flex items-start justify-between gap-3 mb-2">
@@ -966,7 +1056,7 @@ export default function Page() {
                   <p className="text-xs text-violet-300">{exp.role}</p>
                 </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
         </section>
 
@@ -1005,7 +1095,13 @@ export default function Page() {
                     </h3>
                   </div>
 
-                  <div className="mt-5 grid gap-3">
+                  <motion.div
+                    variants={staggerList}
+                    initial="hidden"
+                    whileInView="show"
+                    viewport={viewportSettings}
+                    className="mt-5 grid gap-3"
+                  >
                     {[
                       {
                         icon: Palette,
@@ -1027,17 +1123,10 @@ export default function Page() {
                         title: "Tecnologia",
                         desc: "Seleciono ferramentas pelo fit do projeto e pela manutenção no longo prazo.",
                       },
-                    ].map((step, idx) => (
+                    ].map((step) => (
                       <motion.div
                         key={step.title}
-                        initial={{ opacity: 0, x: -10 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true, amount: 0.3 }}
-                        transition={{
-                          delay: idx * 0.15,
-                          duration: 0.5,
-                          ease: "easeOut",
-                        }}
+                        variants={fadeLeftItem}
                         className="group relative rounded-2xl border border-white/10 bg-zinc-900/30 p-4 hover:border-violet-500/30 transition-all"
                       >
                         <div className="flex items-start gap-3">
@@ -1055,7 +1144,7 @@ export default function Page() {
                         </div>
                       </motion.div>
                     ))}
-                  </div>
+                  </motion.div>
 
                   <div className="mt-5 p-4 rounded-2xl bg-gradient-to-r from-violet-500/8 to-fuchsia-500/8 border border-violet-500/15">
                     <p className="text-xs text-zinc-300 leading-relaxed">
@@ -1089,8 +1178,14 @@ export default function Page() {
                     </div>
                   </div>
 
-                  <div className="mt-6 flex flex-wrap gap-2">
-                    {topTechTags.map((item, idx) => {
+                  <motion.div
+                    variants={staggerTight}
+                    initial="hidden"
+                    whileInView="show"
+                    viewport={viewportSettings}
+                    className="mt-6 flex flex-wrap gap-2"
+                  >
+                    {topTechTags.map((item) => {
                       const sizeClass =
                         item.count >= 4
                           ? "text-[12px]"
@@ -1108,14 +1203,7 @@ export default function Page() {
                       return (
                         <motion.span
                           key={item.tag}
-                          initial={{ opacity: 0, y: 8 }}
-                          whileInView={{ opacity: 1, y: 0 }}
-                          viewport={{ once: true, amount: 0.3 }}
-                          transition={{
-                            delay: idx * 0.06,
-                            duration: 0.45,
-                            ease: "easeOut",
-                          }}
+                          variants={tagItem}
                           whileHover={{ y: -2, scale: 1.02 }}
                           className={`group inline-flex items-center gap-2 px-2.5 py-1.5 rounded-xl bg-zinc-900/35 border ${accentClass} transition-all duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.22)] ${sizeClass}`}
                         >
@@ -1126,7 +1214,7 @@ export default function Page() {
                         </motion.span>
                       );
                     })}
-                  </div>
+                  </motion.div>
 
                   <div className="mt-6 p-4 rounded-2xl bg-zinc-900/40 border border-white/10">
                     <p className="text-xs text-zinc-400 leading-relaxed">
