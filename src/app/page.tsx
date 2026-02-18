@@ -95,12 +95,7 @@ export default function Page() {
   const additionalProjects = [
     {
       name: "Sistema Especial Fazenda Chapéu",
-      tech: [
-        "Scriptcase",
-        "PHP",
-        "JS",
-        "PostgreSQL",
-      ],
+      tech: ["Scriptcase", "PHP", "JS", "PostgreSQL"],
       desc: "Secretaria de Desenvolvimento Agrário do Ceará",
     },
     {
@@ -752,7 +747,7 @@ export default function Page() {
                   onClick={() => setActivePortfolioTab("sistemas")}
                   className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
                     activePortfolioTab === "sistemas"
-                      ? "bg-violet-500/20 text-violet-200 border border-violet-500/30 shadow-lg shadow-violet-500/10"
+                      ? "bg-violet-500/20 text-violet-200 border border-violet-500/30 shadow-[0_12px_30px_rgba(0,0,0,0.35)]"
                       : "text-zinc-400 hover:text-zinc-200 border border-transparent hover:bg-white/5"
                   }`}
                 >
@@ -772,7 +767,7 @@ export default function Page() {
                   onClick={() => setActivePortfolioTab("websites")}
                   className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
                     activePortfolioTab === "websites"
-                      ? "bg-fuchsia-500/20 text-fuchsia-200 border border-fuchsia-500/30 shadow-lg shadow-fuchsia-500/10"
+                      ? "bg-fuchsia-500/20 text-fuchsia-200 border border-fuchsia-500/30 shadow-[0_12px_30px_rgba(0,0,0,0.35)]"
                       : "text-zinc-400 hover:text-zinc-200 border border-transparent hover:bg-white/5"
                   }`}
                 >
@@ -808,8 +803,8 @@ export default function Page() {
                         <span className="text-violet-400 font-medium">
                           Desenvolvo sistemas 100% personalizados
                         </span>{" "}
-                        para a sua necessidade: gestão financeira, fluxo de caixa,
-                        diário de obra, estoque, CRM, ERP e muito mais.
+                        para a sua necessidade: gestão financeira, fluxo de
+                        caixa, diário de obra, estoque, CRM, ERP e muito mais.
                       </p>
                     </div>
                   </div>
@@ -833,7 +828,7 @@ export default function Page() {
                           {proj.tech.map((t) => (
                             <span
                               key={t}
-                              className="text-[10px] px-2.5 py-1 rounded-lg bg-zinc-900/60 text-zinc-300 border border-white/10 hover:border-violet-500/30 hover:text-white transition-all"
+                              className="text-[9px] px-2 py-0.5 rounded-md bg-zinc-900/40 text-zinc-400 border border-white/10 hover:border-white/20 hover:text-zinc-200 transition-all"
                             >
                               {t}
                             </span>
@@ -932,7 +927,7 @@ export default function Page() {
           </div>
         </section>
 
-        {/* STACK - PROCESSO + NUVEM DE TECNOLOGIAS */}
+        {/* STACK - CRITÉRIOS DE ESCOLHA + NUVEM DE TECNOLOGIAS */}
         <section id="stack" className="relative py-24 border-t border-white/5">
           <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
             <h2 className="text-3xl font-bold text-center">
@@ -941,9 +936,10 @@ export default function Page() {
               </span>
             </h2>
             <p className="text-sm text-zinc-500 text-center mt-3 max-w-3xl mx-auto leading-relaxed">
-              Eu não me amarro em linguagem — tecnologia é ferramenta. Eu estudo o ecossistema,
-              levanto requisitos, defino escopo, desenho a arquitetura e então escolho o stack
-              ideal para o contexto do cliente e do produto.
+              Não fico preso a uma linguagem — tecnologia é ferramenta. Eu
+              entendo o contexto do produto, levanto requisitos, defino escopo,
+              desenho a arquitetura e escolho a stack mais adequada para o
+              cenário do cliente e do projeto.
             </p>
 
             <div className="mt-10 grid lg:grid-cols-5 gap-6 items-stretch">
@@ -986,7 +982,7 @@ export default function Page() {
                       {
                         icon: Rocket,
                         title: "Tecnologia",
-                        desc: "Escolho ferramentas pelo fit do projeto.",
+                        desc: "Seleciono ferramentas pelo fit do projeto e pela manutenção no longo prazo.",
                       },
                     ].map((step, idx) => (
                       <motion.div
@@ -1014,10 +1010,11 @@ export default function Page() {
                     ))}
                   </div>
 
-                  <div className="mt-5 p-4 rounded-2xl bg-gradient-to-r from-violet-500/10 to-fuchsia-500/10 border border-violet-500/20">
+                  <div className="mt-5 p-4 rounded-2xl bg-gradient-to-r from-violet-500/8 to-fuchsia-500/8 border border-violet-500/15">
                     <p className="text-xs text-zinc-300 leading-relaxed">
-                      Resultado: soluções com clareza de decisões, entrega previsível e stack alinhado a custo,
-                      time-to-market e manutenção.
+                      Resultado: decisões claras, entrega previsível e stack
+                      alinhada a custo, time-to-market e sustentabilidade de
+                      manutenção.
                     </p>
                   </div>
                 </div>
@@ -1043,30 +1040,23 @@ export default function Page() {
                         Baseado nas stacks e sistemas do portfólio.
                       </p>
                     </div>
-                    <div className="hidden sm:flex items-center gap-2 text-[11px] text-zinc-500">
-                      <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-zinc-900/50 border border-white/10">
-                        <span className="h-2 w-2 rounded-full bg-violet-400/80" />
-                        Mais frequente
-                      </span>
-                      <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-zinc-900/50 border border-white/10">
-                        <span className="h-2 w-2 rounded-full bg-zinc-500/60" />
-                        Adapto rápido
-                      </span>
-                    </div>
                   </div>
 
                   <div className="mt-6 flex flex-wrap gap-2">
                     {topTechTags.map((item, idx) => {
                       const sizeClass =
                         item.count >= 4
-                          ? "text-sm"
+                          ? "text-[12px]"
                           : item.count === 3
-                            ? "text-[13px]"
-                            : "text-[12px]";
+                            ? "text-[11px]"
+                            : "text-[10px]";
                       const accentClass =
                         item.count >= 3
-                          ? "border-violet-500/30 text-zinc-100 hover:text-white hover:border-fuchsia-500/30"
-                          : "border-white/10 text-zinc-300 hover:text-white hover:border-violet-500/30";
+                          ? "border-violet-500/25 text-zinc-200 hover:text-white hover:border-fuchsia-500/25"
+                          : "border-white/10 text-zinc-400 hover:text-zinc-200 hover:border-white/20";
+
+                      const dotClass =
+                        item.count >= 3 ? "bg-violet-400/70" : "bg-zinc-500/40";
 
                       return (
                         <motion.span
@@ -1076,12 +1066,12 @@ export default function Page() {
                           viewport={{ once: true }}
                           transition={{ delay: idx * 0.03, duration: 0.35 }}
                           whileHover={{ y: -2, scale: 1.02 }}
-                          className={`group inline-flex items-center gap-2 px-3 py-2 rounded-2xl bg-zinc-900/50 border ${accentClass} transition-all duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.25)] ${sizeClass}`}
+                          className={`group inline-flex items-center gap-2 px-2.5 py-1.5 rounded-xl bg-zinc-900/35 border ${accentClass} transition-all duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.22)] ${sizeClass}`}
                         >
+                          <span
+                            className={`h-1.5 w-1.5 rounded-full ${dotClass}`}
+                          />
                           <span className="font-semibold">{item.tag}</span>
-                          <span className="text-[10px] px-2 py-0.5 rounded-full bg-white/5 border border-white/10 text-zinc-500 group-hover:text-zinc-300 transition-colors">
-                            {item.count}x
-                          </span>
                         </motion.span>
                       );
                     })}
@@ -1089,8 +1079,9 @@ export default function Page() {
 
                   <div className="mt-6 p-4 rounded-2xl bg-zinc-900/40 border border-white/10">
                     <p className="text-xs text-zinc-400 leading-relaxed">
-                      E quando o projeto pede algo diferente, eu me adapto ao stack do time e do cliente.
-                      O foco é entregar valor com qualidade e manutenção saudável.
+                      E quando o projeto pede algo diferente, eu me adapto à
+                      stack do time e do cliente. O foco é entregar valor com
+                      qualidade e manutenção saudável.
                     </p>
                   </div>
                 </div>
