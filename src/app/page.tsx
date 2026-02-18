@@ -36,13 +36,13 @@ export default function Page() {
 
   const featuredProjects = [
     {
-      title: "Silva e Duarte Advogados",
-      tags: ["React", "Next.js", "Node.js", "UX/UI", "Responsivo"],
-      link: "https://silvaeduarteadvogados.com/",
+      title: "Meoocarro — App (em desenvolvimento)",
+      tags: ["React Native", "Expo", "TypeScript", "Node.js", "PostgreSQL"],
+      link: "",
       blurb:
-        "Website institucional moderno para escritório de advocacia com foco em credibilidade, profissionalismo e experiência do usuário. Design clean, navegação intuitiva e otimização para conversão de clientes.",
-      category: "Website Institucional",
-      thumb: getProjectThumb("https://silvaeduarteadvogados.com/"),
+        "Aplicativo mobile em desenvolvimento com foco em jornada simples e rápida: catálogo, busca, captação de leads e fluxo de atendimento. Arquitetura preparada para escalar com métricas e evolução contínua.",
+      category: "Aplicativo Mobile",
+      thumb: "/img-card-meoocarro.png",
     },
     {
       title: "Aplicativo de Mídia OOH — Plataforma DOOH",
@@ -59,40 +59,26 @@ export default function Page() {
       blurb:
         "Plataforma completa conectando painéis digitais, campanhas publicitárias e métricas em tempo real. Arquitetura escalável com atuação end-to-end em DevOps e UX-Ops. (Projeto privado em desenvolvimento)",
       category: "Desenvolvimento Full JS",
-      thumb: "",
+      thumb: getProjectThumb(
+        "https://en.wikipedia.org/wiki/Digital_out-of-home_advertising"
+      ),
     },
     {
-      title: "Valor Certo Financeira",
-      tags: ["WordPress", "Elementor", "Custom CSS", "SEO", "Analytics"],
-      link: "https://valorcertofinanceira.com.br/",
-      blurb:
-        "Website institucional de alta conversão com simuladores financeiros integrados. Foco em performance, SEO técnico e governança de conteúdo.",
-      category: "Website & Conversão",
-      thumb: getProjectThumb("https://valorcertofinanceira.com.br/"),
-    },
-    {
-      title: "i3Brasil MIO — Experience Design",
+      title: "Sistema Financeiro ERP Estrela",
       tags: [
-        "UX/UI",
-        "Design System",
-        "Prototipação",
-        "Figma",
-        "High-Fidelity",
+        "Node.js",
+        "Express",
+        "Next.js",
+        "NestJS",
+        "PostgreSQL",
+        "n8n",
+        "Observabilidade",
       ],
       link: "",
       blurb:
-        "Jornada digital completa para plataforma de investimento imobiliário fracionado de alto padrão, com foco em confiança, exclusividade e usabilidade. (Projeto privado entregue)",
-      category: "UX Ops",
-      thumb: "",
-    },
-    {
-      title: "Meoocarro — App (em desenvolvimento)",
-      tags: ["React Native", "Expo", "TypeScript", "Node.js", "PostgreSQL"],
-      link: "",
-      blurb:
-        "Aplicativo mobile em desenvolvimento com foco em jornada simples e rápida: catálogo, busca, captação de leads e fluxo de atendimento. Arquitetura preparada para escalar com métricas e evolução contínua.",
-      category: "Aplicativo Mobile",
-      thumb: "/img-card-meoocarro.png",
+        "ERP financeiro 100% JavaScript/TypeScript com rotinas de contas a pagar/receber, conciliação e relatórios. Automação de processos via n8n e monitoramento de fluxos ponta a ponta para rastreabilidade e confiabilidade.",
+      category: "ERP Financeiro · Automação & Monitoramento",
+      thumb: getProjectThumb("https://n8n.io"),
     },
   ];
 
@@ -134,6 +120,11 @@ export default function Page() {
   ];
 
   const websites = [
+    {
+      url: "https://www.clicksoftwarehouse.com/",
+      name: "Click Software House",
+      desc: "Website institucional com foco em posicionamento, clareza de serviços e conversão.",
+    },
     {
       url: "https://starcapital.stargrupo.com.br/",
       name: "Star Capital",
@@ -194,11 +185,6 @@ export default function Page() {
       name: "Sistemas SDA",
       desc: "Hub de sistemas com navegação padronizada e foco em usabilidade.",
     },
-    {
-      url: "https://www.clicksoftwarehouse.com/",
-      name: "Click Software House",
-      desc: "Website institucional com foco em posicionamento, clareza de serviços e conversão.",
-    },
   ];
 
   const experience = [
@@ -206,6 +192,16 @@ export default function Page() {
       company: "Grupo Star Capital",
       role: "Engenheiro de Software Sênior | Gerente de Projetos",
       period: "2025",
+    },
+    {
+      company: "FlixBus Bilhetes Europa",
+      role: "Desenvolvedor Fullstack",
+      period: "2024–2025",
+    },
+    {
+      company: "FedEX Portugal",
+      role: "Desenvolvedor Fullstack",
+      period: "2024–2025",
     },
     {
       company: "Instituto Anjos Digitais",
@@ -231,6 +227,11 @@ export default function Page() {
       company: "Grupo Laredo Atacado e Varejo",
       role: "Gerente Operacional de Mercado",
       period: "2018–2020",
+    },
+    {
+      company: "White Martins Gases Industriais e Medicinais",
+      role: "Gerente de Unidade Capital — URC Fortaleza",
+      period: "2015–2017",
     },
   ];
 
@@ -396,34 +397,13 @@ export default function Page() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className="text-xl sm:text-2xl md:text-3xl font-light text-zinc-300 max-w-4xl mx-auto mb-12"
+              className="text-xl sm:text-2xl md:text-3xl font-light text-zinc-300 max-w-4xl mx-auto mb-10"
             >
               Do esboço ao deploy:{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-fuchsia-300 font-semibold">
                 design, engenharia e impacto real.
               </span>
             </motion.p>
-
-            {/* Highlights rápidos */}
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.55 }}
-              className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-10"
-            >
-              {[
-                "Arquitetura & Produto",
-                "CI/CD & Observabilidade",
-                "Performance & UX",
-              ].map((item) => (
-                <span
-                  key={item}
-                  className="inline-flex items-center px-4 py-2 rounded-full text-xs sm:text-sm bg-white/5 border border-white/10 text-zinc-300 backdrop-blur-sm"
-                >
-                  {item}
-                </span>
-              ))}
-            </motion.div>
 
             {/* CTAs */}
             <motion.div
@@ -841,7 +821,7 @@ export default function Page() {
                   className="p-5 rounded-xl bg-zinc-900/30 border border-zinc-800/50 hover:border-violet-500/20 transition-all"
                 >
                   <div className="flex items-start justify-between gap-3 mb-2">
-                    <h4 className="font-semibold text-sm text-white flex-1">
+                    <h4 className="font-semibold text-sm text-white flex-1 min-w-0 break-words">
                       {exp.company}
                     </h4>
                     <span className="text-[9px] text-violet-400 bg-violet-500/10 px-2 py-1 rounded border border-violet-500/20 whitespace-nowrap font-semibold">
@@ -1081,6 +1061,8 @@ export default function Page() {
                       { icon: "⚡", label: "Performance" },
                       { icon: "🔧", label: "Boas práticas" },
                       { icon: "🚀", label: "Impacto real" },
+                      { icon: "🧑‍💼", label: "Liderança" },
+                      { icon: "📦", label: "Gerência de Produtos" },
                     ].map((item) => (
                       <span
                         key={item.label}
@@ -1487,8 +1469,8 @@ export default function Page() {
         </section>
 
         <footer className="py-10 border-t border-white/5 text-center text-sm text-zinc-400">
-          © {new Date().getFullYear()} Francisco Pontes de Lima Neto. Todos os
-          Direitos Reservados.
+          <div>© {new Date().getFullYear()} Francisco Pontes de Lima Neto</div>
+          <div>Todos os Direitos Reservados</div>
         </footer>
       </div>
     </div>
