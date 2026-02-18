@@ -5,6 +5,8 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import TopTagsMiniChart from "@/components/TopTagsMiniChart";
+import RobotBuddy from "@/components/RobotBuddy";
+import GithubMetricsCounters from "@/components/GithubMetricsCounters";
 import {
   Rocket,
   MonitorSmartphone,
@@ -74,11 +76,15 @@ export default function Page() {
 
   const fadeUpItem = {
     hidden: { opacity: 0, y: 18 },
-    show: {
+    show: (i: number = 0) => ({
       opacity: 1,
       y: 0,
-      transition: { duration: 0.65, ease: easeOut },
-    },
+      transition: {
+        duration: 0.9,
+        ease: easeOut,
+        delay: i * (isMobile ? 0.08 : 0.06),
+      },
+    }),
   };
 
   const fadeLeftItem = {
@@ -305,6 +311,7 @@ export default function Page() {
     },
     {
       company: "White Martins Gases Industriais e Medicinais",
+      startRole: "Estagiário",
       role: "Gerente de Unidade Capital — URC Fortaleza",
       period: "2015–2017",
     },
@@ -480,12 +487,12 @@ export default function Page() {
               transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
               className="mb-8"
             >
-              <span className="block text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight">
+              <span className="block text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight">
                 <span className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-violet-200 via-fuchsia-200 to-violet-200 drop-shadow-[0_0_50px_rgba(168,85,247,0.5)]">
                   Francisco
                 </span>
               </span>
-              <span className="block text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight mt-2">
+              <span className="block text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight mt-2">
                 <span className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-300 via-violet-300 to-fuchsia-300 drop-shadow-[0_0_50px_rgba(217,70,239,0.5)]">
                   Pontes
                 </span>
@@ -497,7 +504,7 @@ export default function Page() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.6, ease: "easeOut" }}
-              className="text-xl sm:text-2xl md:text-3xl font-light text-zinc-300 max-w-4xl mx-auto mb-10"
+              className="text-lg sm:text-xl md:text-2xl font-light text-zinc-300 max-w-4xl mx-auto mb-10"
             >
               Do esboço ao deploy:{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-fuchsia-300 font-semibold">
@@ -514,14 +521,14 @@ export default function Page() {
             >
               <a
                 href="#projects"
-                className="group relative inline-flex items-center gap-2 rounded-2xl px-8 py-4 bg-gradient-to-r from-violet-600 to-fuchsia-500 text-white text-lg font-semibold shadow-[0_0_50px_rgba(168,85,247,0.4)] hover:shadow-[0_0_80px_rgba(168,85,247,0.6)] transition-all duration-300 hover:scale-105"
+                className="group relative inline-flex items-center gap-2 rounded-2xl px-8 py-3 bg-gradient-to-r from-violet-600 to-fuchsia-500 text-white text-lg font-semibold shadow-[0_0_50px_rgba(168,85,247,0.4)] hover:shadow-[0_0_80px_rgba(168,85,247,0.6)] transition-all duration-300 hover:scale-105"
               >
                 <Rocket className="h-6 w-6 group-hover:rotate-12 transition-transform" />
                 Ver portfólio
               </a>
               <a
                 href="#contact"
-                className="inline-flex items-center gap-2 rounded-2xl px-8 py-4 border-2 border-white/20 backdrop-blur-sm text-lg font-semibold hover:bg-white/5 hover:border-white/30 transition-all duration-300 hover:scale-105"
+                className="inline-flex items-center gap-2 rounded-2xl px-8 py-3 border-2 border-white/20 backdrop-blur-sm text-lg font-semibold hover:bg-white/5 hover:border-white/30 transition-all duration-300 hover:scale-105"
               >
                 <Mail className="h-6 w-6" />
                 Fale comigo
@@ -655,9 +662,9 @@ export default function Page() {
                     ].map((item) => (
                       <div
                         key={item.label}
-                        className="group relative rounded-2xl border border-white/10 bg-gradient-to-b from-white/5 to-transparent p-5 hover:border-violet-500/50 hover:bg-white/10 transition-all duration-300"
+                        className="group relative rounded-2xl border border-white/10 bg-gradient-to-b from-white/5 to-transparent p-4 hover:border-violet-500/50 hover:bg-white/10 transition-all duration-300"
                       >
-                        <item.icon className="h-8 w-8 text-violet-400 mb-3 group-hover:scale-110 transition-transform" />
+                        <item.icon className="h-7 w-7 text-violet-400 mb-2.5 group-hover:scale-110 transition-transform" />
                         <h3 className="font-semibold text-white text-sm leading-tight">
                           {item.label}
                         </h3>
@@ -669,39 +676,25 @@ export default function Page() {
                   </div>
 
                   {/* Proposta de Valor */}
-                  <div className="mt-8 p-5 rounded-2xl bg-gradient-to-r from-violet-500/10 to-fuchsia-500/10 border border-violet-500/20">
-                    <p className="text-lg text-center text-zinc-200 leading-relaxed">
-                      <span className="text-white font-semibold">
-                        Me diga o que você quer
-                      </span>{" "}
-                      e eu te entrego a{" "}
-                      <span className="text-violet-300 font-semibold">
-                        solução pronta para uso
-                      </span>
-                      ,{" "}
-                      <span className="text-fuchsia-300 font-semibold">
-                        rápido
-                      </span>{" "}
-                      e nos{" "}
-                      <span className="text-white font-semibold">
-                        padrões tecnológicos mais atuais
-                      </span>
-                      .
+                  <div className="mt-7 p-4 rounded-2xl bg-gradient-to-r from-violet-500/10 to-fuchsia-500/10 border border-violet-500/20">
+                    <p className="text-sm text-center text-zinc-300 leading-relaxed">
+                      <span className="mr-2">🚀</span>
+                      Solução pronta para uso, rápida e com padrões atuais.
                     </p>
                   </div>
 
                   {/* CTA forte */}
-                  <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+                  <div className="mt-7 flex flex-col sm:flex-row gap-3 justify-center">
                     <a
                       href="#contact"
-                      className="group inline-flex items-center justify-center gap-2 rounded-2xl px-8 py-4 bg-gradient-to-r from-violet-600 to-fuchsia-500 text-white text-lg font-bold shadow-[0_0_50px_rgba(168,85,247,0.4)] hover:shadow-[0_0_80px_rgba(168,85,247,0.6)] transition-all duration-300 hover:scale-105"
+                      className="group inline-flex items-center justify-center gap-2 rounded-2xl px-8 py-3 bg-gradient-to-r from-violet-600 to-fuchsia-500 text-white text-base sm:text-lg font-bold shadow-[0_0_50px_rgba(168,85,247,0.4)] hover:shadow-[0_0_80px_rgba(168,85,247,0.6)] transition-all duration-300 hover:scale-105"
                     >
                       <Mail className="h-5 w-5 group-hover:rotate-12 transition-transform" />
                       Iniciar Projeto
                     </a>
                     <a
                       href="#projects"
-                      className="inline-flex items-center justify-center gap-2 rounded-2xl px-8 py-4 border-2 border-white/20 backdrop-blur-sm text-lg font-semibold hover:bg-white/5 hover:border-white/30 transition-all duration-300"
+                      className="inline-flex items-center justify-center gap-2 rounded-2xl px-8 py-3 border-2 border-white/20 backdrop-blur-sm text-base sm:text-lg font-semibold hover:bg-white/5 hover:border-white/30 transition-all duration-300"
                     >
                       <ExternalLink className="h-5 w-5" />
                       Ver Casos de Sucesso
@@ -735,9 +728,10 @@ export default function Page() {
               viewport={viewportSettings}
               className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20 auto-rows-fr"
             >
-              {featuredProjects.map((project) => (
+              {featuredProjects.map((project, index) => (
                 <motion.article
                   key={project.title}
+                  custom={index}
                   variants={fadeUpItem}
                   className="group relative h-full flex flex-col rounded-3xl border border-white/10 bg-black/75 backdrop-blur-xl p-8 hover:bg-black/80 hover:border-violet-500/40 transition-all duration-500 shadow-xl"
                 >
@@ -832,10 +826,22 @@ export default function Page() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.15 }}
               transition={{ duration: 0.7, ease: "easeOut" }}
-              className="relative rounded-2xl border border-white/10 bg-black/55 backdrop-blur-xl p-6 shadow-2xl"
+              className={`relative rounded-2xl border border-white/10 backdrop-blur-xl p-8 shadow-2xl overflow-hidden ${
+                activePortfolioTab === "sistemas"
+                  ? "bg-violet-950/20"
+                  : "bg-fuchsia-950/20"
+              }`}
             >
+              <div
+                className={`pointer-events-none absolute inset-0 opacity-100 ${
+                  activePortfolioTab === "sistemas"
+                    ? "bg-gradient-to-br from-violet-500/8 via-transparent to-transparent"
+                    : "bg-gradient-to-br from-fuchsia-500/8 via-transparent to-transparent"
+                }`}
+              />
+              <div className="relative">
               {/* Tab headers + Social */}
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+              <div className="relative flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
                 <div className="flex items-center gap-1 p-1 rounded-xl bg-zinc-900/60 border border-zinc-800/60 w-fit shadow-[0_0_0_1px_rgba(255,255,255,0.03)]">
                   <button
                     onClick={() => setActivePortfolioTab("sistemas")}
@@ -916,7 +922,7 @@ export default function Page() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.45, ease: "easeOut" }}
                 >
-                  <div className="flex items-start justify-between gap-4 mb-4">
+                  <div className="flex items-start justify-between gap-4 mb-7 mt-2">
                     <div className="min-w-0">
                       <h3 className="text-lg font-semibold flex items-center gap-2">
                         <Code className="h-5 w-5 text-violet-400" />
@@ -945,12 +951,13 @@ export default function Page() {
                       >
                         <div className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-br from-violet-500/10 via-transparent to-fuchsia-500/10" />
                         <div className="absolute top-3 right-3">
-                          <div className="p-1.5 rounded-lg bg-amber-500/10 border border-amber-500/20">
-                            <Lock className="h-3.5 w-3.5 text-amber-300/80" />
+                          <div className="p-1.5 rounded-lg bg-white/5 border border-white/10">
+                            <Lock className="h-3.5 w-3.5 text-zinc-500" />
                           </div>
                         </div>
-                        <h4 className="relative font-semibold text-sm mb-2 group-hover:text-violet-200 transition-colors pr-6 leading-snug">
-                          {proj.name}
+                        <h4 className="relative font-semibold text-sm mb-2 group-hover:text-violet-200 transition-colors pr-6 leading-snug flex items-start gap-2">
+                          <Code className="h-4 w-4 text-violet-400 mt-[1px] shrink-0" />
+                          <span className="min-w-0">{proj.name}</span>
                         </h4>
                         <p className="relative text-xs text-zinc-500 mb-3">
                           {proj.desc}
@@ -959,7 +966,7 @@ export default function Page() {
                           {proj.tech.map((t) => (
                             <span
                               key={t}
-                              className="text-[10px] px-2.5 py-1 rounded-lg bg-white/5 text-zinc-300 border border-white/10 hover:border-violet-500/25 hover:text-white transition-all"
+                              className="text-[9px] px-2 py-0.5 rounded-md bg-white/5 text-zinc-300 border border-white/10 hover:border-violet-500/25 hover:text-white transition-all"
                             >
                               {t}
                             </span>
@@ -979,7 +986,7 @@ export default function Page() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.45, ease: "easeOut" }}
                 >
-                  <div className="flex items-start justify-between gap-4 mb-4">
+                  <div className="flex items-start justify-between gap-4 mb-7 mt-2">
                     <div className="min-w-0">
                       <h3 className="text-lg font-semibold flex items-center gap-2">
                         <Globe className="h-5 w-5 text-fuchsia-400" />
@@ -1030,6 +1037,7 @@ export default function Page() {
                   </motion.div>
                 </motion.div>
               )}
+              </div>
             </motion.div>
           </div>
         </section>
@@ -1059,10 +1067,16 @@ export default function Page() {
                     <h4 className="font-semibold text-sm text-white flex-1 min-w-0 break-words">
                       {exp.company}
                     </h4>
-                    <span className="text-[9px] text-violet-400 bg-violet-500/10 px-2 py-1 rounded border border-violet-500/20 whitespace-nowrap font-semibold">
+                    <span className="text-[9px] text-violet-400 bg-violet-500/10 px-2 py-1 rounded-lg border border-violet-500/20 whitespace-nowrap font-semibold">
                       {exp.period}
                     </span>
                   </div>
+                  {"startRole" in exp && exp.startRole ? (
+                    <div className="text-[10px] text-zinc-500 mb-1 flex items-center gap-2">
+                      <span className="text-zinc-400">📈</span>
+                      <span className="truncate">Início: {exp.startRole}</span>
+                    </div>
+                  ) : null}
                   <p className="text-xs text-violet-300">{exp.role}</p>
                 </motion.div>
               ))}
@@ -1221,7 +1235,9 @@ export default function Page() {
                         <motion.span
                           key={item.tag}
                           variants={tagItem}
-                          whileHover={isMobile ? undefined : { y: -2, scale: 1.02 }}
+                          whileHover={
+                            isMobile ? undefined : { y: -2, scale: 1.02 }
+                          }
                           className={`group inline-flex items-center gap-2 px-2.5 py-1.5 rounded-xl bg-zinc-900/35 border ${accentClass} transition-all duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.22)] ${sizeClass}`}
                         >
                           <span
@@ -1283,6 +1299,8 @@ export default function Page() {
                       Sobre mim
                     </span>
                   </h2>
+
+                  <GithubMetricsCounters username="pontesneto2" />
 
                   <div className="space-y-4 text-[15px] sm:text-base text-zinc-300 leading-relaxed">
                     <p>
@@ -1349,386 +1367,114 @@ export default function Page() {
           className="relative py-24 border-t border-white/5"
         >
           <div className="mx-auto max-w-6xl px-6 sm:px-8 lg:px-12">
-            <div className="grid md:grid-cols-2 gap-12 items-center">
-              {/* Card de Contato */}
-              <motion.div
-                initial={{ opacity: 0, x: -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, ease: "easeOut" }}
-                viewport={{ once: true, amount: 0.2 }}
-                className="relative group"
-              >
-                <div className="relative bg-black/70 backdrop-blur-xl border border-white/10 group-hover:border-violet-500/30 rounded-2xl p-8 shadow-2xl group-hover:shadow-violet-500/20 transition-all duration-300">
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="w-12 h-12 bg-gradient-to-br from-violet-500 to-fuchsia-500 rounded-lg flex items-center justify-center group-hover:shadow-lg group-hover:shadow-violet-500/50 transition-shadow duration-300">
-                      <Mail className="w-6 h-6 text-white" />
+            <motion.div
+              initial={{ opacity: 0, y: 22 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              viewport={{ once: true, amount: 0.2 }}
+              className="relative mx-auto max-w-5xl"
+            >
+              <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-black/70 backdrop-blur-xl shadow-2xl">
+                <div className="absolute inset-0 bg-gradient-to-br from-violet-500/6 via-transparent to-fuchsia-500/6" />
+                <div className="relative grid md:grid-cols-12">
+                  <div className="md:col-span-7 p-7 sm:p-8">
+                    <div className="flex items-center gap-3 mb-6">
+                      <div className="w-11 h-11 bg-gradient-to-br from-violet-500/90 to-fuchsia-500/90 rounded-xl flex items-center justify-center">
+                        <Mail className="w-5 h-5 text-white" />
+                      </div>
+                      <div>
+                        <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-violet-200">
+                          Vamos conversar?
+                        </h2>
+                        <p className="text-zinc-400 text-sm">
+                          Estou aberto a novos desafios
+                        </p>
+                      </div>
                     </div>
-                    <div>
-                      <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-violet-300 group-hover:from-violet-300 group-hover:to-fuchsia-300 transition-all duration-300">
-                        Vamos conversar?
-                      </h2>
-                      <p className="text-zinc-400 text-sm">
-                        Estou sempre aberto a novos desafios
+
+                    <div className="space-y-4">
+                      <p className="text-zinc-300">
+                        Se você tem um projeto em mente ou quer discutir
+                        oportunidades, ficarei feliz em bater um papo.
                       </p>
+
+                      <motion.a
+                        href="mailto:pontesneto2@gmail.com"
+                        whileHover={isMobile ? undefined : { scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        className="flex items-center gap-3 p-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl transition-all group/link"
+                      >
+                        <Mail className="w-5 h-5 text-violet-400 group-hover/link:text-violet-300 transition-colors" />
+                        <div className="flex-1">
+                          <div className="text-xs text-zinc-400 uppercase tracking-wide">
+                            E-mail
+                          </div>
+                          <div className="text-white font-medium">
+                            pontesneto2@gmail.com
+                          </div>
+                        </div>
+                        <ExternalLink className="w-4 h-4 text-zinc-400 group-hover/link:text-violet-400 transition-colors" />
+                      </motion.a>
+
+                      <div className="flex gap-3 pt-4">
+                        <motion.a
+                          href="https://github.com/pontesneto2"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          whileHover={
+                            isMobile ? undefined : { scale: 1.06, rotate: 2 }
+                          }
+                          whileTap={{ scale: 0.94 }}
+                          className="flex-1 flex items-center justify-center gap-2 p-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl transition-all"
+                        >
+                          <Github className="w-5 h-5 text-zinc-400" />
+                          <span className="text-sm text-zinc-300">GitHub</span>
+                        </motion.a>
+
+                        <motion.a
+                          href="https://www.linkedin.com/in/fcopts"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          whileHover={
+                            isMobile ? undefined : { scale: 1.06, rotate: -2 }
+                          }
+                          whileTap={{ scale: 0.94 }}
+                          className="flex-1 flex items-center justify-center gap-2 p-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl transition-all"
+                        >
+                          <Linkedin className="w-5 h-5 text-zinc-400" />
+                          <span className="text-sm text-zinc-300">
+                            LinkedIn
+                          </span>
+                        </motion.a>
+                      </div>
+
+                      <div className="pt-4">
+                        <a
+                          href="https://drive.google.com/file/d/1NGGBTy9kzAPm5Os6we_jaeevsU-_zavX/view?usp=sharing"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-sm text-violet-300 hover:text-violet-200 transition-colors inline-flex items-center gap-2"
+                        >
+                          Ver currículo completo
+                          <ExternalLink className="w-3 h-3" />
+                        </a>
+                      </div>
                     </div>
                   </div>
 
-                  <div className="space-y-4">
-                    <p className="text-zinc-300">
-                      Se você tem um projeto em mente ou quer discutir
-                      oportunidades, ficarei feliz em bater um papo.
-                    </p>
-
-                    <motion.a
-                      href="mailto:pontesneto2@gmail.com"
-                      whileHover={isMobile ? undefined : { scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      className="flex items-center gap-3 p-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl transition-all group/link"
-                    >
-                      <Mail className="w-5 h-5 text-violet-400 group-hover/link:text-violet-300 transition-colors" />
-                      <div className="flex-1">
-                        <div className="text-xs text-zinc-400 uppercase tracking-wide">
-                          E-mail
-                        </div>
-                        <div className="text-white font-medium">
-                          pontesneto2@gmail.com
-                        </div>
-                      </div>
-                      <ExternalLink className="w-4 h-4 text-zinc-400 group-hover/link:text-violet-400 transition-colors" />
-                    </motion.a>
-
-                    <div className="flex gap-3 pt-4">
-                      <motion.a
-                        href="https://github.com/pontesneto2"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        whileHover={isMobile ? undefined : { scale: 1.1, rotate: 5 }}
-                        whileTap={{ scale: 0.9 }}
-                        className="flex-1 flex items-center justify-center gap-2 p-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg transition-all"
-                      >
-                        <Github className="w-5 h-5 text-zinc-400" />
-                        <span className="text-sm text-zinc-300">GitHub</span>
-                      </motion.a>
-
-                      <motion.a
-                        href="https://www.linkedin.com/in/fcopts"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        whileHover={isMobile ? undefined : { scale: 1.1, rotate: -5 }}
-                        whileTap={{ scale: 0.9 }}
-                        className="flex-1 flex items-center justify-center gap-2 p-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg transition-all"
-                      >
-                        <Linkedin className="w-5 h-5 text-zinc-400" />
-                        <span className="text-sm text-zinc-300">LinkedIn</span>
-                      </motion.a>
-                    </div>
-
-                    <div className="pt-4 text-center">
-                      <a
-                        href="https://drive.google.com/file/d/1NGGBTy9kzAPm5Os6we_jaeevsU-_zavX/view?usp=sharing"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-sm text-violet-300 hover:text-violet-200 transition-colors inline-flex items-center gap-2"
-                      >
-                        Ver currículo completo
-                        <ExternalLink className="w-3 h-3" />
-                      </a>
+                  <div className="md:col-span-5 border-t md:border-t-0 md:border-l border-white/10 p-7 sm:p-8 flex items-center justify-center relative">
+                    <div className="absolute inset-0 bg-gradient-to-b from-violet-500/6 via-transparent to-fuchsia-500/6" />
+                    <div className="relative">
+                      <RobotBuddy
+                        size={220}
+                        showBackdrop={false}
+                        showParticles={false}
+                      />
                     </div>
                   </div>
                 </div>
-              </motion.div>
-
-              {/* Robô Animado */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.8, delay: 0.25, ease: "easeOut" }}
-                viewport={{ once: true, amount: 0.2 }}
-                className="relative flex items-center justify-center"
-              >
-                {/* Círculo de fundo pulsante */}
-                <motion.div
-                  animate={{
-                    scale: [1, 1.2, 1],
-                    opacity: [0.3, 0.5, 0.3],
-                  }}
-                  transition={{
-                    duration: 3,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                  className="absolute w-96 h-96 bg-gradient-to-r from-violet-500/20 to-fuchsia-500/20 rounded-full blur-3xl"
-                />
-
-                {/* Robô SVG animado */}
-                <motion.div
-                  animate={{
-                    y: [0, -20, 0],
-                  }}
-                  transition={{
-                    duration: 4,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                  className="relative z-10"
-                >
-                  <svg
-                    width="280"
-                    height="280"
-                    viewBox="0 0 200 200"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    {/* Antena */}
-                    <motion.line
-                      x1="100"
-                      y1="30"
-                      x2="100"
-                      y2="50"
-                      stroke="url(#gradient1b)"
-                      strokeWidth="3"
-                      strokeLinecap="round"
-                      animate={{ strokeWidth: [3, 4, 3] }}
-                      transition={{ duration: 2, repeat: Infinity }}
-                    />
-                    <motion.circle
-                      cx="100"
-                      cy="25"
-                      r="5"
-                      fill="url(#gradient1b)"
-                      animate={{ scale: [1, 1.3, 1], opacity: [0.7, 1, 0.7] }}
-                      transition={{ duration: 2, repeat: Infinity }}
-                    />
-
-                    {/* Cabeça */}
-                    <rect
-                      x="70"
-                      y="50"
-                      width="60"
-                      height="50"
-                      rx="8"
-                      fill="url(#gradient2b)"
-                      stroke="white"
-                      strokeWidth="2"
-                      opacity="0.9"
-                    />
-
-                    {/* Olhos */}
-                    <motion.circle
-                      cx="85"
-                      cy="70"
-                      r="6"
-                      fill="#a855f7"
-                      animate={{ scale: [1, 0.8, 1] }}
-                      transition={{ duration: 3, repeat: Infinity, delay: 0 }}
-                    />
-                    <motion.circle
-                      cx="115"
-                      cy="70"
-                      r="6"
-                      fill="#a855f7"
-                      animate={{ scale: [1, 0.8, 1] }}
-                      transition={{ duration: 3, repeat: Infinity, delay: 0 }}
-                    />
-
-                    {/* Boca sorridente */}
-                    <motion.path
-                      d="M 85 85 Q 100 92 115 85"
-                      stroke="#d946ef"
-                      strokeWidth="3"
-                      strokeLinecap="round"
-                      fill="none"
-                      animate={{
-                        d: [
-                          "M 85 85 Q 100 92 115 85",
-                          "M 85 85 Q 100 95 115 85",
-                          "M 85 85 Q 100 92 115 85",
-                        ],
-                      }}
-                      transition={{ duration: 4, repeat: Infinity }}
-                    />
-
-                    {/* Corpo */}
-                    <rect
-                      x="60"
-                      y="105"
-                      width="80"
-                      height="70"
-                      rx="10"
-                      fill="url(#gradient3b)"
-                      stroke="white"
-                      strokeWidth="2"
-                      opacity="0.9"
-                    />
-
-                    {/* Detalhes do corpo */}
-                    <motion.circle
-                      cx="100"
-                      cy="130"
-                      r="8"
-                      fill="none"
-                      stroke="#d946ef"
-                      strokeWidth="2"
-                      animate={{ rotate: 360 }}
-                      transition={{
-                        duration: 8,
-                        repeat: Infinity,
-                        ease: "linear",
-                      }}
-                    />
-                    <line
-                      x1="75"
-                      y1="150"
-                      x2="125"
-                      y2="150"
-                      stroke="white"
-                      strokeWidth="2"
-                      opacity="0.3"
-                    />
-                    <line
-                      x1="75"
-                      y1="160"
-                      x2="125"
-                      y2="160"
-                      stroke="white"
-                      strokeWidth="2"
-                      opacity="0.3"
-                    />
-
-                    {/* Braços */}
-                    <motion.rect
-                      x="40"
-                      y="110"
-                      width="15"
-                      height="40"
-                      rx="7"
-                      fill="url(#gradient4b)"
-                      stroke="white"
-                      strokeWidth="1.5"
-                      animate={{ rotate: [-10, 10, -10] }}
-                      transition={{ duration: 3, repeat: Infinity }}
-                      style={{ transformOrigin: "47.5px 115px" }}
-                    />
-                    <motion.rect
-                      x="145"
-                      y="110"
-                      width="15"
-                      height="40"
-                      rx="7"
-                      fill="url(#gradient4b)"
-                      stroke="white"
-                      strokeWidth="1.5"
-                      animate={{ rotate: [10, -10, 10] }}
-                      transition={{ duration: 3, repeat: Infinity }}
-                      style={{ transformOrigin: "152.5px 115px" }}
-                    />
-
-                    {/* Pernas */}
-                    <rect
-                      x="75"
-                      y="180"
-                      width="18"
-                      height="35"
-                      rx="5"
-                      fill="url(#gradient5b)"
-                      stroke="white"
-                      strokeWidth="1.5"
-                    />
-                    <rect
-                      x="107"
-                      y="180"
-                      width="18"
-                      height="35"
-                      rx="5"
-                      fill="url(#gradient5b)"
-                      stroke="white"
-                      strokeWidth="1.5"
-                    />
-
-                    {/* Gradientes */}
-                    <defs>
-                      <linearGradient
-                        id="gradient1b"
-                        x1="0%"
-                        y1="0%"
-                        x2="100%"
-                        y2="100%"
-                      >
-                        <stop offset="0%" stopColor="#a855f7" />
-                        <stop offset="100%" stopColor="#d946ef" />
-                      </linearGradient>
-                      <linearGradient
-                        id="gradient2b"
-                        x1="0%"
-                        y1="0%"
-                        x2="100%"
-                        y2="100%"
-                      >
-                        <stop offset="0%" stopColor="#1a1a2e" />
-                        <stop offset="100%" stopColor="#16213e" />
-                      </linearGradient>
-                      <linearGradient
-                        id="gradient3b"
-                        x1="0%"
-                        y1="0%"
-                        x2="100%"
-                        y2="100%"
-                      >
-                        <stop offset="0%" stopColor="#0f0f23" />
-                        <stop offset="100%" stopColor="#1a1a2e" />
-                      </linearGradient>
-                      <linearGradient
-                        id="gradient4b"
-                        x1="0%"
-                        y1="0%"
-                        x2="100%"
-                        y2="100%"
-                      >
-                        <stop offset="0%" stopColor="#1a1a2e" />
-                        <stop offset="100%" stopColor="#0f0f23" />
-                      </linearGradient>
-                      <linearGradient
-                        id="gradient5b"
-                        x1="0%"
-                        y1="0%"
-                        x2="0%"
-                        y2="100%"
-                      >
-                        <stop offset="0%" stopColor="#16213e" />
-                        <stop offset="100%" stopColor="#0f0f23" />
-                      </linearGradient>
-                    </defs>
-                  </svg>
-
-                  {/* Partículas flutuantes */}
-                  <motion.div
-                    className="absolute top-10 left-10 w-2 h-2 bg-violet-400 rounded-full"
-                    animate={{
-                      y: [-20, -60],
-                      opacity: [1, 0],
-                    }}
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      repeatDelay: 1,
-                    }}
-                  />
-                  <motion.div
-                    className="absolute top-20 right-10 w-2 h-2 bg-fuchsia-400 rounded-full"
-                    animate={{
-                      y: [-20, -60],
-                      opacity: [1, 0],
-                    }}
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      repeatDelay: 1,
-                      delay: 0.5,
-                    }}
-                  />
-                </motion.div>
-              </motion.div>
-            </div>
+              </div>
+            </motion.div>
           </div>
         </section>
 

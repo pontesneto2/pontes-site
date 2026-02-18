@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Cpu, Cloud, Smartphone } from "lucide-react";
+import { Cpu, Cloud, Smartphone, Database, Braces } from "lucide-react";
 import { useEffect, useState } from "react";
 
 export default function FloatingIcons3D() {
@@ -13,9 +13,13 @@ export default function FloatingIcons3D() {
       const viewportHeight = window.innerHeight || 1;
       const ratio = Math.min(Math.max(scrollTop / viewportHeight, 0), 1);
 
-      // 0% -> 1, 40% -> 0 (fade linear)
-      const nextOpacity = 1 - Math.min(ratio / 0.4, 1);
-      setFadeOpacity(nextOpacity);
+      // Fade mais suave: começa após ~10% e termina por volta de ~70% do scroll da viewport
+      const start = 0.1;
+      const end = 0.7;
+      const tRaw = (ratio - start) / Math.max(0.0001, end - start);
+      const t = Math.min(Math.max(tRaw, 0), 1);
+      const easeOut = 1 - Math.pow(1 - t, 2);
+      setFadeOpacity(1 - easeOut);
     };
 
     update();
@@ -92,7 +96,10 @@ export default function FloatingIcons3D() {
         <div className="relative w-full h-full">
           <div className="absolute inset-0 bg-gradient-to-br from-fuchsia-400/15 to-purple-500/15 rounded-xl backdrop-blur-sm border border-fuchsia-300/20 shadow-[0_0_25px_rgba(217,70,239,0.2)]" />
           <div className="absolute inset-0 flex items-center justify-center">
-            <Smartphone className="w-8 h-8 text-fuchsia-300" strokeWidth={1.5} />
+            <Smartphone
+              className="w-8 h-8 text-fuchsia-300"
+              strokeWidth={1.5}
+            />
           </div>
         </div>
       </motion.div>
@@ -124,7 +131,34 @@ export default function FloatingIcons3D() {
           delay: 1,
         }}
       />
+
+      {/* Database Icon - Meio Direita - DISCRETO */}
+      <motion.div
+        className="absolute right-[22%] top-[48%] w-[56px] h-[56px] opacity-90"
+        animate={{ y: [0, -14, 0], rotate: [0, -6, 6, 0] }}
+        transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
+      >
+        <div className="relative w-full h-full">
+          <div className="absolute inset-0 bg-gradient-to-br from-violet-400/10 to-fuchsia-500/10 rounded-2xl backdrop-blur-sm border border-white/10 shadow-[0_0_22px_rgba(168,85,247,0.12)]" />
+          <div className="absolute inset-0 flex items-center justify-center">
+            <Database className="w-7 h-7 text-zinc-200/70" strokeWidth={1.5} />
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Braces Icon - Base Direita - DISCRETO */}
+      <motion.div
+        className="absolute right-[8%] bottom-[12%] w-[52px] h-[52px] opacity-90"
+        animate={{ y: [0, 10, 0], rotate: [0, 8, -8, 0], x: [0, -8, 0] }}
+        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+      >
+        <div className="relative w-full h-full">
+          <div className="absolute inset-0 bg-gradient-to-br from-white/6 to-transparent rounded-2xl backdrop-blur-sm border border-white/10 shadow-[0_0_18px_rgba(217,70,239,0.10)]" />
+          <div className="absolute inset-0 flex items-center justify-center">
+            <Braces className="w-7 h-7 text-zinc-200/65" strokeWidth={1.5} />
+          </div>
+        </div>
+      </motion.div>
     </div>
   );
 }
-

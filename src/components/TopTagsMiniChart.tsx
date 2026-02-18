@@ -8,38 +8,9 @@ type Item = {
   count: number;
 };
 
-const colorTokens = [
-  {
-    dot: "bg-violet-400",
-    track: "bg-violet-500/10",
-    fill: "from-violet-400 to-violet-300",
-    glow: "shadow-[0_0_40px_rgba(168,85,247,0.18)]",
-  },
-  {
-    dot: "bg-fuchsia-400",
-    track: "bg-fuchsia-500/10",
-    fill: "from-fuchsia-400 to-fuchsia-300",
-    glow: "shadow-[0_0_40px_rgba(217,70,239,0.16)]",
-  },
-  {
-    dot: "bg-amber-400",
-    track: "bg-amber-500/10",
-    fill: "from-amber-400 to-amber-300",
-    glow: "shadow-[0_0_40px_rgba(251,191,36,0.12)]",
-  },
-  {
-    dot: "bg-violet-300",
-    track: "bg-violet-500/10",
-    fill: "from-violet-300 to-violet-200",
-    glow: "shadow-[0_0_40px_rgba(196,181,253,0.14)]",
-  },
-  {
-    dot: "bg-fuchsia-300",
-    track: "bg-fuchsia-500/10",
-    fill: "from-fuchsia-300 to-fuchsia-200",
-    glow: "shadow-[0_0_40px_rgba(244,114,182,0.14)]",
-  },
-] as const;
+function formatCount(count: number) {
+  return `${count} ${count === 1 ? "projeto" : "projetos"}`;
+}
 
 export default function TopTagsMiniChart({
   items,
@@ -56,77 +27,157 @@ export default function TopTagsMiniChart({
 
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
+  const points = useMemo(() => {
+    const n = Math.max(1, safeItems.length);
+    const width = 100;
+    const height = 44;
+    const padX = 6;
+    const padY = 6;
+
+    return safeItems.map((item, index) => {
+      const x = n === 1 ? width / 2 : padX + (index / (n - 1)) * (width - padX * 2);
+      const pct = Math.max(0, Math.min(1, item.count / maxCount));
+      const y = padY + (1 - pct) * (height - padY * 2);
+      return { x, y, item };
+    });
+  }, [safeItems, maxCount]);
+
+  const linePath = useMemo(() => {
+    if (points.length === 0) return "";
+    return points
+      .map((p, i) => `${i === 0 ? "M" : "L"}${p.x.toFixed(2)},${p.y.toFixed(2)}`)
+      .join(" ");
+  }, [points]);
+
+  const areaPath = useMemo(() => {
+    if (points.length === 0) return "";
+    const bottom = 44 - 6;
+    const start = points[0];
+    const end = points[points.length - 1];
+    return `${linePath} L${end.x.toFixed(2)},${bottom.toFixed(2)} L${start.x.toFixed(2)},${bottom.toFixed(2)} Z`;
+  }, [points, linePath]);
+
   return (
     <div className="mt-5 rounded-2xl border border-white/10 bg-black/35 backdrop-blur-xl p-4 shadow-[0_16px_60px_rgba(0,0,0,0.35)] overflow-hidden">
       <div className="flex items-center justify-between gap-3">
         <div className="min-w-0">
-          <div className="text-xs font-semibold text-zinc-200">
-            Top 5 (mais citadas)
-          </div>
+          <div className="text-xs font-semibold text-zinc-200">Top 5 (stack)</div>
           <div className="text-[11px] text-zinc-500">
-            Toque para ver detalhes
+            {isMobile ? "Toque nos pontos" : "Passe o mouse nos pontos"}
           </div>
         </div>
-        <div className="text-[10px] text-zinc-500">Interativo</div>
+        <div className="text-[10px] text-zinc-500">Sutil</div>
       </div>
 
-      <div className="mt-4 grid grid-cols-5 gap-2 items-end">
-        {safeItems.map((item, index) => {
-          const color = colorTokens[index % colorTokens.length];
-          const heightPct = Math.max(0.18, item.count / maxCount);
-          const isActive = activeIndex === index;
+      <div className="mt-4 rounded-xl border border-white/10 bg-white/5 px-3 py-3">
+        <svg
+          viewBox="0 0 100 44"
+          className="h-12 w-full text-violet-300/80"
+          role="img"
+          aria-label="Distribuição das tecnologias mais recorrentes"
+        >
+          <defs>
+            <linearGradient id="sparkArea" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="currentColor" stopOpacity="0.22" />
+              <stop offset="100%" stopColor="currentColor" stopOpacity="0" />
+            </linearGradient>
+          </defs>
 
-          return (
-            <button
-              key={item.tag}
-              type="button"
-              className="group relative text-left focus:outline-none"
-              onClick={() =>
-                setActiveIndex((prev) => (prev === index ? null : index))
-              }
-              onMouseEnter={() => {
-                if (!isMobile) setActiveIndex(index);
-              }}
-              onMouseLeave={() => {
-                if (!isMobile) setActiveIndex(null);
-              }}
-              aria-label={`${item.tag}: ${item.count}`}
-            >
-              <div
-                className={`relative h-24 w-full rounded-xl ${color.track} border border-white/10 overflow-hidden`}
-              >
-                <motion.div
-                  initial={{ height: 0 }}
-                  whileInView={{ height: `${Math.round(heightPct * 100)}%` }}
-                  viewport={{ once: true, amount: 0.4 }}
-                  transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                  className={`absolute inset-x-1 bottom-1 rounded-lg bg-gradient-to-b ${color.fill} ${color.glow}`}
+          <path d={areaPath} fill="url(#sparkArea)" />
+
+          <path
+            d={linePath}
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={2}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            opacity={0.9}
+          />
+
+          {points.map((p, index) => {
+            const isActive = activeIndex === index;
+            return (
+              <g key={p.item.tag}>
+                <motion.circle
+                  initial={{ r: 0 }}
+                  whileInView={{ r: 3.2 }}
+                  viewport={{ once: true, amount: 0.6 }}
+                  transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                  cx={p.x}
+                  cy={p.y}
+                  r={3.2}
+                  className={isActive ? "text-violet-200" : "text-violet-300/80"}
+                  fill="currentColor"
+                  onMouseEnter={() => {
+                    if (!isMobile) setActiveIndex(index);
+                  }}
+                  onMouseLeave={() => {
+                    if (!isMobile) setActiveIndex(null);
+                  }}
+                  onClick={() =>
+                    setActiveIndex((prev) => (prev === index ? null : index))
+                  }
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`${p.item.tag}: ${formatCount(p.item.count)}`}
                 />
 
-                <motion.div
-                  animate={{ opacity: isActive ? 1 : 0 }}
-                  transition={{ duration: 0.2 }}
-                  className="absolute left-1/2 -translate-x-1/2 top-2 px-2 py-1 rounded-lg bg-black/70 border border-white/10 text-[10px] text-zinc-200"
-                >
-                  {item.count}
-                </motion.div>
-              </div>
+                <circle
+                  cx={p.x}
+                  cy={p.y}
+                  r={7}
+                  fill="transparent"
+                  onMouseEnter={() => {
+                    if (!isMobile) setActiveIndex(index);
+                  }}
+                  onMouseLeave={() => {
+                    if (!isMobile) setActiveIndex(null);
+                  }}
+                  onClick={() =>
+                    setActiveIndex((prev) => (prev === index ? null : index))
+                  }
+                />
+              </g>
+            );
+          })}
+        </svg>
 
-              <div className="mt-2 flex items-center gap-2">
-                <span className={`h-2 w-2 rounded-full ${color.dot}`} />
-                <span className="text-[10px] text-zinc-300 font-semibold truncate">
-                  {item.tag}
-                </span>
-              </div>
-            </button>
-          );
-        })}
+        <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1">
+          {safeItems.map((item, index) => {
+            const isActive = activeIndex === index;
+            return (
+              <button
+                key={item.tag}
+                type="button"
+                className={`text-[10px] font-semibold tracking-tight transition-colors ${
+                  isActive
+                    ? "text-zinc-100"
+                    : "text-zinc-400 hover:text-zinc-200"
+                }`}
+                onClick={() =>
+                  setActiveIndex((prev) => (prev === index ? null : index))
+                }
+                onMouseEnter={() => {
+                  if (!isMobile) setActiveIndex(index);
+                }}
+                onMouseLeave={() => {
+                  if (!isMobile) setActiveIndex(null);
+                }}
+              >
+                {item.tag}
+              </button>
+            );
+          })}
+        </div>
       </div>
 
       <div className="mt-3 text-[10px] text-zinc-500">
         {activeIndex === null
-          ? "Passe o mouse (desktop) ou toque (mobile)."
-          : `${safeItems[activeIndex]?.tag} aparece ${safeItems[activeIndex]?.count}x.`}
+          ? "Tecnologias mais recorrentes no portfólio."
+          : `${safeItems[activeIndex]?.tag} fez parte da stack em ${formatCount(
+              safeItems[activeIndex]?.count ?? 0,
+            )}.`}
       </div>
     </div>
   );
