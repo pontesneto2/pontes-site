@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import TopTagsMiniChart from "@/components/TopTagsMiniChart";
 import {
   Rocket,
   MonitorSmartphone,
@@ -321,6 +322,7 @@ export default function Page() {
     .map(([tag, count]) => ({ tag, count }));
 
   const topTechTags = techTagsSorted.slice(0, 18);
+  const top5TechTags = techTagsSorted.slice(0, 5);
 
   return (
     <div className="min-h-screen font-sans relative isolate">
@@ -558,7 +560,7 @@ export default function Page() {
               opacity: { delay: 1.5, duration: 1 },
               y: { duration: 2, repeat: Infinity, ease: "easeInOut" },
             }}
-            className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-zinc-500 hover:text-zinc-300 transition-colors"
+            className="absolute bottom-8 left-0 right-0 mx-auto w-fit flex flex-col items-center justify-center gap-2 text-zinc-500 hover:text-zinc-300 transition-colors"
             aria-label="Role para explorar"
           >
             <span className="text-sm">Role para explorar</span>
@@ -592,7 +594,7 @@ export default function Page() {
               <div className="absolute -inset-1 bg-gradient-to-r from-violet-600 via-fuchsia-600 to-violet-600 rounded-3xl blur-2xl opacity-20 animate-pulse" />
 
               {/* Card principal */}
-              <div className="relative rounded-3xl border-2 border-violet-500/50 p-8 md:p-12 bg-gradient-to-br from-black/90 via-violet-950/30 to-black/90 backdrop-blur-xl shadow-2xl">
+              <div className="relative rounded-3xl border-2 border-violet-500/50 p-8 md:px-12 md:py-10 bg-gradient-to-br from-black/90 via-violet-950/30 to-black/90 backdrop-blur-xl shadow-2xl">
                 {/* Padrão de grid no fundo */}
                 <div className="absolute inset-0 bg-[linear-gradient(rgba(168,85,247,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(168,85,247,0.03)_1px,transparent_1px)] bg-[size:32px_32px] rounded-3xl" />
 
@@ -667,7 +669,7 @@ export default function Page() {
                   </div>
 
                   {/* Proposta de Valor */}
-                  <div className="mt-10 p-6 rounded-2xl bg-gradient-to-r from-violet-500/10 to-fuchsia-500/10 border border-violet-500/20">
+                  <div className="mt-8 p-5 rounded-2xl bg-gradient-to-r from-violet-500/10 to-fuchsia-500/10 border border-violet-500/20">
                     <p className="text-lg text-center text-zinc-200 leading-relaxed">
                       <span className="text-white font-semibold">
                         Me diga o que você quer
@@ -689,7 +691,7 @@ export default function Page() {
                   </div>
 
                   {/* CTA forte */}
-                  <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
+                  <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
                     <a
                       href="#contact"
                       className="group inline-flex items-center justify-center gap-2 rounded-2xl px-8 py-4 bg-gradient-to-r from-violet-600 to-fuchsia-500 text-white text-lg font-bold shadow-[0_0_50px_rgba(168,85,247,0.4)] hover:shadow-[0_0_80px_rgba(168,85,247,0.6)] transition-all duration-300 hover:scale-105"
@@ -815,6 +817,14 @@ export default function Page() {
                 </motion.article>
               ))}
             </motion.div>
+
+            <div className="text-center mb-10">
+              <h2 className="text-2xl sm:text-3xl font-bold">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-violet-300">
+                  Conheça mais projetos
+                </span>
+              </h2>
+            </div>
 
             {/* Portfólio com Tabs — Sistemas & Websites */}
             <motion.div
@@ -1043,7 +1053,7 @@ export default function Page() {
                 <motion.div
                   key={exp.company}
                   variants={fadeUpItem}
-                  className="p-5 rounded-xl bg-zinc-900/30 border border-zinc-800/50 hover:border-violet-500/20 transition-all"
+                  className="p-5 rounded-xl bg-black/55 border border-white/10 hover:border-violet-500/25 hover:bg-black/60 transition-all backdrop-blur-xl shadow-[0_10px_40px_rgba(0,0,0,0.35)]"
                 >
                   <div className="flex items-start justify-between gap-3 mb-2">
                     <h4 className="font-semibold text-sm text-white flex-1 min-w-0 break-words">
@@ -1082,7 +1092,7 @@ export default function Page() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.2 }}
                 transition={{ duration: 0.7, ease: "easeOut" }}
-                className="lg:col-span-2 relative rounded-3xl border border-white/10 bg-black/60 backdrop-blur-xl p-6 shadow-2xl overflow-hidden"
+                className="lg:col-span-2 order-2 lg:order-none relative rounded-3xl border border-white/10 bg-black/60 backdrop-blur-xl p-6 shadow-2xl overflow-hidden"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-violet-500/5 via-transparent to-fuchsia-500/5" />
                 <div className="relative">
@@ -1091,7 +1101,10 @@ export default function Page() {
                       <Layers className="h-5 w-5 text-violet-300" />
                     </div>
                     <h3 className="text-lg font-semibold text-white">
-                      Processo de escolha
+                      Processo de escolha da{" "}
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-200 to-fuchsia-200">
+                        linguagem, tecnologia e arquitetura
+                      </span>
                     </h3>
                   </div>
 
@@ -1146,11 +1159,13 @@ export default function Page() {
                     ))}
                   </motion.div>
 
-                  <div className="mt-5 p-4 rounded-2xl bg-gradient-to-r from-violet-500/8 to-fuchsia-500/8 border border-violet-500/15">
+                  <div className="mt-5 p-4 rounded-2xl bg-gradient-to-r from-violet-500/10 to-fuchsia-500/10 border border-violet-500/20 shadow-[0_14px_50px_rgba(0,0,0,0.35)]">
                     <p className="text-xs text-zinc-300 leading-relaxed">
-                      Resultado: decisões claras, entrega previsível e stack
-                      alinhada a custo, time-to-market e sustentabilidade de
-                      manutenção.
+                      <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-violet-200 to-fuchsia-200">
+                        Resultado:
+                      </span>{" "}
+                      decisões claras, entrega previsível e stack alinhada a
+                      custo, time-to-market e sustentabilidade de manutenção.
                     </p>
                   </div>
                 </div>
@@ -1162,7 +1177,7 @@ export default function Page() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.2 }}
                 transition={{ duration: 0.7, delay: 0.15, ease: "easeOut" }}
-                className="lg:col-span-3 relative rounded-3xl border border-white/10 bg-black/60 backdrop-blur-xl p-6 shadow-2xl overflow-hidden"
+                className="lg:col-span-3 order-1 lg:order-none relative rounded-3xl border border-white/10 bg-black/60 backdrop-blur-xl p-6 shadow-2xl overflow-hidden"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-fuchsia-500/5 via-transparent to-violet-500/5" />
                 <div className="relative">
@@ -1170,13 +1185,15 @@ export default function Page() {
                     <div>
                       <h3 className="text-lg font-semibold text-white flex items-center gap-2">
                         <Cloud className="h-5 w-5 text-fuchsia-300" />
-                        Tecnologias mais usadas
+                        Linguagens de Programação mais usadas
                       </h3>
                       <p className="text-xs text-zinc-500 mt-1">
-                        Baseado nas stacks e sistemas do portfólio.
+                        Baseado nos últimos trabalhos realizados.
                       </p>
                     </div>
                   </div>
+
+                  <TopTagsMiniChart items={top5TechTags} isMobile={isMobile} />
 
                   <motion.div
                     variants={staggerTight}
@@ -1204,7 +1221,7 @@ export default function Page() {
                         <motion.span
                           key={item.tag}
                           variants={tagItem}
-                          whileHover={{ y: -2, scale: 1.02 }}
+                          whileHover={isMobile ? undefined : { y: -2, scale: 1.02 }}
                           className={`group inline-flex items-center gap-2 px-2.5 py-1.5 rounded-xl bg-zinc-900/35 border ${accentClass} transition-all duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.22)] ${sizeClass}`}
                         >
                           <span
@@ -1216,7 +1233,7 @@ export default function Page() {
                     })}
                   </motion.div>
 
-                  <div className="mt-6 p-4 rounded-2xl bg-zinc-900/40 border border-white/10">
+                  <div className="mt-6 p-5 rounded-2xl bg-gradient-to-br from-black/70 via-zinc-900/35 to-black/70 border border-white/10 shadow-[0_16px_60px_rgba(0,0,0,0.45)]">
                     <p className="text-xs text-zinc-400 leading-relaxed">
                       E quando o projeto pede algo diferente, eu me adapto à
                       stack do time e do cliente. O foco é entregar valor com
@@ -1267,7 +1284,7 @@ export default function Page() {
                     </span>
                   </h2>
 
-                  <div className="space-y-4 text-zinc-300 leading-relaxed">
+                  <div className="space-y-4 text-[15px] sm:text-base text-zinc-300 leading-relaxed">
                     <p>
                       <span className="text-white font-semibold">
                         Senior Software Engineer
@@ -1313,9 +1330,9 @@ export default function Page() {
                     ].map((item) => (
                       <span
                         key={item.label}
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-violet-500/10 to-fuchsia-500/10 border border-violet-500/20 text-sm font-medium hover:border-violet-500/40 transition-all"
+                        className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-gradient-to-r from-violet-500/12 to-fuchsia-500/12 border border-violet-500/20 text-xs font-semibold text-zinc-200 hover:border-violet-500/35 transition-all shadow-[0_10px_30px_rgba(0,0,0,0.18)]"
                       >
-                        <span className="text-base">{item.icon}</span>
+                        <span className="text-sm">{item.icon}</span>
                         {item.label}
                       </span>
                     ))}
@@ -1364,7 +1381,7 @@ export default function Page() {
 
                     <motion.a
                       href="mailto:pontesneto2@gmail.com"
-                      whileHover={{ scale: 1.02 }}
+                      whileHover={isMobile ? undefined : { scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                       className="flex items-center gap-3 p-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl transition-all group/link"
                     >
@@ -1385,7 +1402,7 @@ export default function Page() {
                         href="https://github.com/pontesneto2"
                         target="_blank"
                         rel="noopener noreferrer"
-                        whileHover={{ scale: 1.1, rotate: 5 }}
+                        whileHover={isMobile ? undefined : { scale: 1.1, rotate: 5 }}
                         whileTap={{ scale: 0.9 }}
                         className="flex-1 flex items-center justify-center gap-2 p-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg transition-all"
                       >
@@ -1397,7 +1414,7 @@ export default function Page() {
                         href="https://www.linkedin.com/in/fcopts"
                         target="_blank"
                         rel="noopener noreferrer"
-                        whileHover={{ scale: 1.1, rotate: -5 }}
+                        whileHover={isMobile ? undefined : { scale: 1.1, rotate: -5 }}
                         whileTap={{ scale: 0.9 }}
                         className="flex-1 flex items-center justify-center gap-2 p-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg transition-all"
                       >
