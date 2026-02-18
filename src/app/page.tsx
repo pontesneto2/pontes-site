@@ -653,7 +653,11 @@ export default function Page() {
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.2 }}
-                  transition={{ delay: idx * 0.2, duration: 0.7, ease: "easeOut" }}
+                  transition={{
+                    delay: idx * 0.2,
+                    duration: 0.7,
+                    ease: "easeOut",
+                  }}
                   className="group relative h-full flex flex-col rounded-3xl border border-white/10 bg-black/75 backdrop-blur-xl p-8 hover:bg-black/80 hover:border-violet-500/40 transition-all duration-500 shadow-xl"
                 >
                   {/* Badge de categoria */}
@@ -944,7 +948,11 @@ export default function Page() {
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.2 }}
-                  transition={{ delay: idx * 0.12, duration: 0.6, ease: "easeOut" }}
+                  transition={{
+                    delay: idx * 0.12,
+                    duration: 0.6,
+                    ease: "easeOut",
+                  }}
                   className="p-5 rounded-xl bg-zinc-900/30 border border-zinc-800/50 hover:border-violet-500/20 transition-all"
                 >
                   <div className="flex items-start justify-between gap-3 mb-2">
@@ -1025,7 +1033,11 @@ export default function Page() {
                         initial={{ opacity: 0, x: -10 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true, amount: 0.3 }}
-                        transition={{ delay: idx * 0.15, duration: 0.5, ease: "easeOut" }}
+                        transition={{
+                          delay: idx * 0.15,
+                          duration: 0.5,
+                          ease: "easeOut",
+                        }}
                         className="group relative rounded-2xl border border-white/10 bg-zinc-900/30 p-4 hover:border-violet-500/30 transition-all"
                       >
                         <div className="flex items-start gap-3">
@@ -1099,7 +1111,11 @@ export default function Page() {
                           initial={{ opacity: 0, y: 8 }}
                           whileInView={{ opacity: 1, y: 0 }}
                           viewport={{ once: true, amount: 0.3 }}
-                          transition={{ delay: idx * 0.06, duration: 0.45, ease: "easeOut" }}
+                          transition={{
+                            delay: idx * 0.06,
+                            duration: 0.45,
+                            ease: "easeOut",
+                          }}
                           whileHover={{ y: -2, scale: 1.02 }}
                           className={`group inline-flex items-center gap-2 px-2.5 py-1.5 rounded-xl bg-zinc-900/35 border ${accentClass} transition-all duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.22)] ${sizeClass}`}
                         >
