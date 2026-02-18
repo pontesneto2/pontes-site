@@ -26,7 +26,9 @@ const FloatingIcons3D = dynamic(() => import("@/components/FloatingIcons3D"), {
 
 export default function Page() {
   const [navOpen, setNavOpen] = useState(false);
-  const [activePortfolioTab, setActivePortfolioTab] = useState<"sistemas" | "websites">("sistemas");
+  const [activePortfolioTab, setActivePortfolioTab] = useState<
+    "sistemas" | "websites"
+  >("sistemas");
 
   const featuredProjects = [
     {
@@ -34,10 +36,10 @@ export default function Page() {
       subtitle: "Em desenvolvimento",
       tags: [
         "React Native",
-        "TypeScript",
-        "Next.js",
-        "Node.js",
-        "Express.js",
+        "Typescript",
+        "NextJS",
+        "NodeJS",
+        "ExpressJS",
         "NestJS",
         "PostgreSQL",
         "Prisma",
@@ -54,10 +56,10 @@ export default function Page() {
       subtitle: "",
       tags: [
         "React Native",
-        "TypeScript",
-        "Next.js",
-        "Node.js",
-        "Express.js",
+        "Typescript",
+        "NextJS",
+        "NodeJS",
+        "ExpressJS",
         "NestJS",
         "PostgreSQL",
         "Prisma",
@@ -73,13 +75,14 @@ export default function Page() {
       title: "Sistema Financeiro ERP Estrela",
       subtitle: "",
       tags: [
-        "React Web",
-        "TypeScript",
-        "Node.js",
-        "Express.js",
-        "TailwindCSS",
+        "NodeJS",
+        "ExpressJS",
+        "Prisma",
         "PostgreSQL",
         "Docker",
+        "TailwindCSS",
+        "NextJS",
+        "Typescript",
       ],
       link: "",
       blurb:
@@ -93,36 +96,36 @@ export default function Page() {
     {
       name: "Sistema Especial Fazenda Chapéu",
       tech: [
-        "PHP",
-        "JavaScript",
         "Scriptcase",
+        "PHP",
+        "JS",
         "PostgreSQL",
-        "Git",
-        "Testes Automatizados",
       ],
-      desc: "Secretaria de Desenvolvimento Agrário do Ceará - Regularização fundiária",
+      desc: "Secretaria de Desenvolvimento Agrário do Ceará",
     },
     {
       name: "Sistema Financeiro ERP Estrela",
       tech: [
-        "Node.js",
-        "React",
+        "NodeJS",
+        "ExpressJS",
+        "Prisma",
         "PostgreSQL",
         "Docker",
-        "APIs",
-        "Observabilidade",
+        "TailwindCSS",
+        "NextJS",
+        "TypeScript",
       ],
-      desc: "ERP financeiro para rotinas de contas a pagar/receber, conciliação, relatórios e governança de dados. Foco em confiabilidade, performance e rastreabilidade.",
+      desc: "Grupo Star",
     },
     {
       name: "Sistema SIGMA",
-      tech: ["Node.js", "React", "PostgreSQL", "Express"],
-      desc: "Instituto Agropolos do Ceará - Sistema de Gestão",
+      tech: [".NET", "C#", "Angular", "MongoDB", "Docker"],
+      desc: "Instituto Agropolos do Ceará",
     },
     {
-      name: "Sistema de Inscrições - Letramento Digital",
-      tech: ["JavaScript", "WordPress", "PHP"],
-      desc: "Inclusão digital pelo Brasil",
+      name: "Inscrições - Letramento Digital",
+      tech: ["WordPress", "PHP", "JS", "Bootstrap"],
+      desc: "Anjos Digitais",
     },
   ];
 
@@ -130,67 +133,67 @@ export default function Page() {
     {
       url: "https://www.clicksoftwarehouse.com/",
       name: "Click Software House",
-      desc: "Website institucional com foco em posicionamento, clareza de serviços e conversão.",
+      desc: "Site institucional com serviços, posicionamento e contato.",
     },
     {
       url: "https://starcapital.stargrupo.com.br/",
       name: "Star Capital",
-      desc: "Website institucional com foco em credibilidade, performance e clareza de proposta.",
+      desc: "Institucional da Star Capital com proposta e canais de contato.",
     },
     {
       url: "https://www.stargrupo.com.br/",
       name: "Star Grupo",
-      desc: "Presença digital corporativa com estrutura de navegação e conteúdo orientados a conversão.",
+      desc: "Site corporativo do grupo com visão geral e empresas.",
     },
     {
       url: "https://starpesquisas.stargrupo.com.br/",
       name: "Star Pesquisas",
-      desc: "Landing institucional para serviços de pesquisa, com copy objetiva e escaneável.",
+      desc: "Landing de serviços com mensagem direta e CTA claro.",
     },
     {
       url: "https://starreciclagem.stargrupo.com.br/",
       name: "Star Reciclagem",
-      desc: "Website com posicionamento sustentável e foco em serviços e captação de contatos.",
+      desc: "Institucional com serviços, áreas de atuação e contato.",
     },
     {
       url: "https://silvaeduarteadvogados.com/",
       name: "Silva e Duarte Advogados",
-      desc: "Institucional moderno com foco em credibilidade e geração de leads.",
+      desc: "Institucional jurídico com áreas de atuação e captação.",
     },
     {
       url: "https://2.0.movimentafilmes.com/",
       name: "Movimenta Filmes",
-      desc: "Portfólio com destaque para identidade visual e experiência de navegação.",
+      desc: "Portfólio de trabalhos com navegação rápida e objetiva.",
     },
     {
       url: "https://anjosdigitais.org",
       name: "Anjos Digitais",
-      desc: "Website de impacto social com estrutura clara de conteúdo e chamadas para ação.",
+      desc: "Institucional de impacto social com campanhas e chamadas.",
     },
     {
       url: "https://institutoagropolos.org.br",
       name: "Instituto Agropolos",
-      desc: "Institucional com organização de conteúdo, performance e manutenção simplificada.",
+      desc: "Institucional com conteúdo organizado e acesso rápido.",
     },
     {
       url: "https://fastcall.com.br/2.0",
       name: "FastCall 2.0",
-      desc: "Site com foco em conversão e comunicação objetiva do serviço.",
+      desc: "Página do serviço com proposta clara e conversão.",
     },
     {
       url: "https://com3brasil.com.br/wp",
       name: "COM3 Brasil",
-      desc: "Website corporativo com gestão de conteúdo e melhorias contínuas de UX.",
+      desc: "Institucional da agência com serviços e portfólio.",
     },
     {
       url: "https://www.sda.ce.gov.br",
       name: "SDA Ceará",
-      desc: "Portal institucional com governança de conteúdo e acesso rápido a serviços.",
+      desc: "Portal institucional com notícias, programas e serviços.",
     },
     {
       url: "https://sistemas2.sda.ce.gov.br",
       name: "Sistemas SDA",
-      desc: "Hub de sistemas com navegação padronizada e foco em usabilidade.",
+      desc: "Hub de acesso aos sistemas e serviços digitais.",
     },
   ];
 
@@ -241,6 +244,19 @@ export default function Page() {
       period: "2015–2017",
     },
   ];
+
+  const techTagsFrequency = [...featuredProjects, ...additionalProjects]
+    .flatMap((item) => ("tags" in item ? item.tags : item.tech))
+    .reduce<Record<string, number>>((acc, tag) => {
+      acc[tag] = (acc[tag] ?? 0) + 1;
+      return acc;
+    }, {});
+
+  const techTagsSorted = Object.entries(techTagsFrequency)
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+    .map(([tag, count]) => ({ tag, count }));
+
+  const topTechTags = techTagsSorted.slice(0, 18);
 
   return (
     <div className="min-h-screen font-sans relative isolate">
@@ -728,25 +744,27 @@ export default function Page() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="relative rounded-2xl border border-white/10 bg-black/55 backdrop-blur-xl p-6"
+              className="relative rounded-2xl border border-white/10 bg-black/55 backdrop-blur-xl p-6 shadow-2xl"
             >
               {/* Tab headers */}
-              <div className="flex items-center gap-1 mb-6 p-1 rounded-xl bg-zinc-900/60 border border-zinc-800/60 w-fit">
+              <div className="flex items-center gap-1 mb-6 p-1 rounded-xl bg-zinc-900/60 border border-zinc-800/60 w-fit shadow-[0_0_0_1px_rgba(255,255,255,0.03)]">
                 <button
                   onClick={() => setActivePortfolioTab("sistemas")}
                   className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
                     activePortfolioTab === "sistemas"
-                      ? "bg-violet-500/20 text-violet-300 border border-violet-500/30 shadow-lg shadow-violet-500/10"
-                      : "text-zinc-400 hover:text-zinc-200 border border-transparent"
+                      ? "bg-violet-500/20 text-violet-200 border border-violet-500/30 shadow-lg shadow-violet-500/10"
+                      : "text-zinc-400 hover:text-zinc-200 border border-transparent hover:bg-white/5"
                   }`}
                 >
                   <Code className="h-4 w-4" />
                   Sistemas Web
-                  <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${
-                    activePortfolioTab === "sistemas"
-                      ? "bg-violet-500/20 text-violet-300"
-                      : "bg-zinc-800 text-zinc-500"
-                  }`}>
+                  <span
+                    className={`text-[10px] px-1.5 py-0.5 rounded-full ${
+                      activePortfolioTab === "sistemas"
+                        ? "bg-violet-500/20 text-violet-300"
+                        : "bg-zinc-800 text-zinc-500"
+                    }`}
+                  >
                     {additionalProjects.length}
                   </span>
                 </button>
@@ -754,17 +772,19 @@ export default function Page() {
                   onClick={() => setActivePortfolioTab("websites")}
                   className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
                     activePortfolioTab === "websites"
-                      ? "bg-fuchsia-500/20 text-fuchsia-300 border border-fuchsia-500/30 shadow-lg shadow-fuchsia-500/10"
-                      : "text-zinc-400 hover:text-zinc-200 border border-transparent"
+                      ? "bg-fuchsia-500/20 text-fuchsia-200 border border-fuchsia-500/30 shadow-lg shadow-fuchsia-500/10"
+                      : "text-zinc-400 hover:text-zinc-200 border border-transparent hover:bg-white/5"
                   }`}
                 >
                   <Globe className="h-4 w-4" />
                   Websites
-                  <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${
-                    activePortfolioTab === "websites"
-                      ? "bg-fuchsia-500/20 text-fuchsia-300"
-                      : "bg-zinc-800 text-zinc-500"
-                  }`}>
+                  <span
+                    className={`text-[10px] px-1.5 py-0.5 rounded-full ${
+                      activePortfolioTab === "websites"
+                        ? "bg-fuchsia-500/20 text-fuchsia-300"
+                        : "bg-zinc-800 text-zinc-500"
+                    }`}
+                  >
                     {websites.length}
                   </span>
                 </button>
@@ -778,32 +798,42 @@ export default function Page() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <p className="text-xs text-zinc-500 mb-4 leading-relaxed">
-                    <span className="text-violet-400 font-medium">
-                      Desenvolvo sistemas 100% personalizados
-                    </span>{" "}
-                    para a sua necessidade: gestão financeira, fluxo de caixa,
-                    diário de obra, controle de estoque, CRM, ERP e muito mais. Do
-                    zero ao deploy.
-                  </p>
+                  <div className="flex items-start justify-between gap-4 mb-4">
+                    <div className="min-w-0">
+                      <h3 className="text-lg font-semibold flex items-center gap-2">
+                        <Code className="h-5 w-5 text-violet-400" />
+                        Sistemas Web
+                      </h3>
+                      <p className="text-xs text-zinc-500 leading-relaxed mt-1">
+                        <span className="text-violet-400 font-medium">
+                          Desenvolvo sistemas 100% personalizados
+                        </span>{" "}
+                        para a sua necessidade: gestão financeira, fluxo de caixa,
+                        diário de obra, estoque, CRM, ERP e muito mais.
+                      </p>
+                    </div>
+                  </div>
                   <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
                     {additionalProjects.map((proj) => (
                       <div
                         key={proj.name}
-                        className="group relative p-4 rounded-xl bg-zinc-900/50 border border-zinc-800 hover:border-violet-500/30 hover:bg-zinc-800/40 transition-all duration-300"
+                        className="group relative p-5 rounded-2xl bg-gradient-to-br from-white/5 via-transparent to-transparent border border-white/10 hover:border-violet-500/30 transition-all duration-300 shadow-[0_10px_40px_rgba(0,0,0,0.35)]"
                       >
+                        <div className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-br from-violet-500/10 via-transparent to-fuchsia-500/10" />
                         <div className="absolute top-3 right-3">
                           <Lock className="h-3 w-3 text-zinc-600" />
                         </div>
-                        <h4 className="font-medium text-sm mb-1 group-hover:text-violet-300 transition-colors pr-6">
+                        <h4 className="relative font-semibold text-sm mb-2 group-hover:text-violet-200 transition-colors pr-6 leading-snug">
                           {proj.name}
                         </h4>
-                        <p className="text-xs text-zinc-500 mb-2">{proj.desc}</p>
-                        <div className="flex flex-wrap gap-1.5">
+                        <p className="relative text-xs text-zinc-500 mb-3">
+                          {proj.desc}
+                        </p>
+                        <div className="relative flex flex-wrap gap-1.5">
                           {proj.tech.map((t) => (
                             <span
                               key={t}
-                              className="text-[10px] px-2 py-0.5 rounded bg-zinc-800/70 text-zinc-400 border border-zinc-700/50"
+                              className="text-[10px] px-2.5 py-1 rounded-lg bg-zinc-900/60 text-zinc-300 border border-white/10 hover:border-violet-500/30 hover:text-white transition-all"
                             >
                               {t}
                             </span>
@@ -823,6 +853,19 @@ export default function Page() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.3 }}
                 >
+                  <div className="flex items-start justify-between gap-4 mb-4">
+                    <div className="min-w-0">
+                      <h3 className="text-lg font-semibold flex items-center gap-2">
+                        <Globe className="h-5 w-5 text-fuchsia-400" />
+                        Websites
+                      </h3>
+                      <p className="text-xs text-zinc-500 leading-relaxed mt-1">
+                        Websites publicados com foco em clareza, performance e
+                        conversão — do conteúdo à experiência.
+                      </p>
+                    </div>
+                  </div>
+
                   <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
                     {websites.map((site) => (
                       <a
@@ -830,17 +873,23 @@ export default function Page() {
                         href={site.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="group flex items-center justify-between p-4 rounded-xl bg-zinc-900/50 border border-zinc-800 hover:border-fuchsia-500/30 hover:bg-zinc-800/40 transition-all duration-300"
+                        className="group relative flex items-center justify-between p-5 rounded-2xl bg-gradient-to-br from-white/5 via-transparent to-transparent border border-white/10 hover:border-fuchsia-500/30 transition-all duration-300 shadow-[0_10px_40px_rgba(0,0,0,0.35)]"
                       >
+                        <div className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-br from-fuchsia-500/10 via-transparent to-violet-500/10" />
                         <div className="min-w-0">
-                          <div className="text-sm font-medium text-zinc-300 group-hover:text-fuchsia-300 transition-colors truncate">
+                          <div className="relative text-sm font-semibold text-zinc-200 group-hover:text-fuchsia-200 transition-colors truncate">
                             {site.name}
                           </div>
-                          <div className="text-[11px] text-zinc-500 leading-snug mt-0.5 line-clamp-2">
+                          <div className="relative text-[11px] text-zinc-500 leading-snug mt-1 line-clamp-2">
                             {site.desc}
                           </div>
                         </div>
-                        <ExternalLink className="h-4 w-4 text-zinc-600 group-hover:text-fuchsia-400 transition-colors shrink-0 ml-3" />
+                        <div className="relative flex items-center gap-3 shrink-0 ml-3">
+                          <span className="hidden sm:inline-flex text-[10px] px-2 py-1 rounded-lg bg-zinc-900/60 border border-white/10 text-zinc-400 group-hover:text-zinc-200 transition-colors">
+                            Ver
+                          </span>
+                          <ExternalLink className="h-4 w-4 text-zinc-600 group-hover:text-fuchsia-400 transition-colors" />
+                        </div>
                       </a>
                     ))}
                   </div>
@@ -883,64 +932,169 @@ export default function Page() {
           </div>
         </section>
 
-        {/* STACK PREFERIDA - COMPACTA */}
+        {/* STACK - PROCESSO + NUVEM DE TECNOLOGIAS */}
         <section id="stack" className="relative py-24 border-t border-white/5">
           <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
-            <h2 className="text-3xl font-bold mb-12 text-center">
+            <h2 className="text-3xl font-bold text-center">
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-violet-300">
                 Stack Preferida
               </span>
             </h2>
+            <p className="text-sm text-zinc-500 text-center mt-3 max-w-3xl mx-auto leading-relaxed">
+              Eu não me amarro em linguagem — tecnologia é ferramenta. Eu estudo o ecossistema,
+              levanto requisitos, defino escopo, desenho a arquitetura e então escolho o stack
+              ideal para o contexto do cliente e do produto.
+            </p>
 
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-              {[
-                {
-                  title: "Front-end",
-                  icon: Layers,
-                  techs: ["React", "Next.js", "TypeScript", "React Native", "Tailwind", "Vue.js"],
-                },
-                {
-                  title: "Back-end",
-                  icon: Server,
-                  techs: ["Node.js", "Express", "NestJS", "PostgreSQL", "MongoDB", "REST/GraphQL"],
-                },
-                {
-                  title: "DevOps",
-                  icon: Cloud,
-                  techs: ["Docker", "CI/CD", "GitHub Actions", "AWS", "Grafana", "Sentry"],
-                },
-                {
-                  title: "UX/UI",
-                  icon: Palette,
-                  techs: ["Figma", "Design Systems", "Prototipação", "User Research", "Acessibilidade"],
-                },
-              ].map((stack, idx) => (
-                <motion.div
-                  key={stack.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: idx * 0.1, duration: 0.5 }}
-                  className="group rounded-2xl border border-white/10 bg-black/60 backdrop-blur-xl p-5 hover:border-violet-500/40 transition-all duration-300"
-                >
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="p-2 rounded-lg bg-violet-500/10 border border-violet-500/20">
-                      <stack.icon className="h-5 w-5 text-violet-400" />
+            <div className="mt-10 grid lg:grid-cols-5 gap-6 items-stretch">
+              {/* Processo */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5 }}
+                className="lg:col-span-2 relative rounded-3xl border border-white/10 bg-black/60 backdrop-blur-xl p-6 shadow-2xl overflow-hidden"
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-violet-500/5 via-transparent to-fuchsia-500/5" />
+                <div className="relative">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 rounded-xl bg-violet-500/10 border border-violet-500/20">
+                      <Layers className="h-5 w-5 text-violet-300" />
                     </div>
-                    <h3 className="text-sm font-bold text-white">{stack.title}</h3>
+                    <h3 className="text-lg font-semibold text-white">
+                      Processo de escolha
+                    </h3>
                   </div>
-                  <div className="flex flex-wrap gap-1.5">
-                    {stack.techs.map((tech) => (
-                      <span
-                        key={tech}
-                        className="text-[11px] px-2 py-1 rounded-md bg-zinc-900/60 border border-zinc-800/50 text-zinc-400 hover:border-violet-500/30 hover:text-zinc-200 transition-all"
+
+                  <div className="mt-5 grid gap-3">
+                    {[
+                      {
+                        icon: Palette,
+                        title: "Discovery + Requisitos",
+                        desc: "Entendo o problema, contexto e restrições.",
+                      },
+                      {
+                        icon: Code,
+                        title: "Escopo + Prioridades",
+                        desc: "Defino entregáveis, roadmap e riscos.",
+                      },
+                      {
+                        icon: Server,
+                        title: "Arquitetura",
+                        desc: "Desenho integrações, dados e padrões de qualidade.",
+                      },
+                      {
+                        icon: Rocket,
+                        title: "Tecnologia",
+                        desc: "Escolho ferramentas pelo fit do projeto.",
+                      },
+                    ].map((step, idx) => (
+                      <motion.div
+                        key={step.title}
+                        initial={{ opacity: 0, x: -10 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: idx * 0.08, duration: 0.4 }}
+                        className="group relative rounded-2xl border border-white/10 bg-zinc-900/30 p-4 hover:border-violet-500/30 transition-all"
                       >
-                        {tech}
-                      </span>
+                        <div className="flex items-start gap-3">
+                          <div className="mt-0.5 p-2 rounded-xl bg-violet-500/10 border border-violet-500/20">
+                            <step.icon className="h-4 w-4 text-violet-300" />
+                          </div>
+                          <div className="min-w-0">
+                            <div className="text-sm font-semibold text-zinc-100 group-hover:text-white transition-colors">
+                              {step.title}
+                            </div>
+                            <div className="text-xs text-zinc-500 mt-1">
+                              {step.desc}
+                            </div>
+                          </div>
+                        </div>
+                      </motion.div>
                     ))}
                   </div>
-                </motion.div>
-              ))}
+
+                  <div className="mt-5 p-4 rounded-2xl bg-gradient-to-r from-violet-500/10 to-fuchsia-500/10 border border-violet-500/20">
+                    <p className="text-xs text-zinc-300 leading-relaxed">
+                      Resultado: soluções com clareza de decisões, entrega previsível e stack alinhado a custo,
+                      time-to-market e manutenção.
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Nuvem de tecnologias */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5 }}
+                className="lg:col-span-3 relative rounded-3xl border border-white/10 bg-black/60 backdrop-blur-xl p-6 shadow-2xl overflow-hidden"
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-fuchsia-500/5 via-transparent to-violet-500/5" />
+                <div className="relative">
+                  <div className="flex items-center justify-between gap-4">
+                    <div>
+                      <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+                        <Cloud className="h-5 w-5 text-fuchsia-300" />
+                        Tecnologias mais usadas
+                      </h3>
+                      <p className="text-xs text-zinc-500 mt-1">
+                        Baseado nas stacks e sistemas do portfólio.
+                      </p>
+                    </div>
+                    <div className="hidden sm:flex items-center gap-2 text-[11px] text-zinc-500">
+                      <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-zinc-900/50 border border-white/10">
+                        <span className="h-2 w-2 rounded-full bg-violet-400/80" />
+                        Mais frequente
+                      </span>
+                      <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-zinc-900/50 border border-white/10">
+                        <span className="h-2 w-2 rounded-full bg-zinc-500/60" />
+                        Adapto rápido
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="mt-6 flex flex-wrap gap-2">
+                    {topTechTags.map((item, idx) => {
+                      const sizeClass =
+                        item.count >= 4
+                          ? "text-sm"
+                          : item.count === 3
+                            ? "text-[13px]"
+                            : "text-[12px]";
+                      const accentClass =
+                        item.count >= 3
+                          ? "border-violet-500/30 text-zinc-100 hover:text-white hover:border-fuchsia-500/30"
+                          : "border-white/10 text-zinc-300 hover:text-white hover:border-violet-500/30";
+
+                      return (
+                        <motion.span
+                          key={item.tag}
+                          initial={{ opacity: 0, y: 8 }}
+                          whileInView={{ opacity: 1, y: 0 }}
+                          viewport={{ once: true }}
+                          transition={{ delay: idx * 0.03, duration: 0.35 }}
+                          whileHover={{ y: -2, scale: 1.02 }}
+                          className={`group inline-flex items-center gap-2 px-3 py-2 rounded-2xl bg-zinc-900/50 border ${accentClass} transition-all duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.25)] ${sizeClass}`}
+                        >
+                          <span className="font-semibold">{item.tag}</span>
+                          <span className="text-[10px] px-2 py-0.5 rounded-full bg-white/5 border border-white/10 text-zinc-500 group-hover:text-zinc-300 transition-colors">
+                            {item.count}x
+                          </span>
+                        </motion.span>
+                      );
+                    })}
+                  </div>
+
+                  <div className="mt-6 p-4 rounded-2xl bg-zinc-900/40 border border-white/10">
+                    <p className="text-xs text-zinc-400 leading-relaxed">
+                      E quando o projeto pede algo diferente, eu me adapto ao stack do time e do cliente.
+                      O foco é entregar valor com qualidade e manutenção saudável.
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
             </div>
           </div>
         </section>
