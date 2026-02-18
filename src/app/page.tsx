@@ -383,7 +383,7 @@ export default function Page() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
+              transition={{ duration: 1, ease: "easeOut" }}
               className="mb-6"
             >
               <span className="inline-block px-4 py-2 rounded-full border border-violet-500/30 bg-violet-500/10 text-violet-300 text-sm font-medium backdrop-blur-sm">
@@ -395,7 +395,7 @@ export default function Page() {
             <motion.h1
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
+              transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
               className="mb-8"
             >
               <span className="block text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight">
@@ -414,7 +414,7 @@ export default function Page() {
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
+              transition={{ duration: 1, delay: 0.6, ease: "easeOut" }}
               className="text-xl sm:text-2xl md:text-3xl font-light text-zinc-300 max-w-4xl mx-auto mb-10"
             >
               Do esboço ao deploy:{" "}
@@ -427,7 +427,7 @@ export default function Page() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
+              transition={{ duration: 1, delay: 0.9, ease: "easeOut" }}
               className="flex flex-col sm:flex-row items-center justify-center gap-4"
             >
               <a
@@ -450,7 +450,7 @@ export default function Page() {
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.8 }}
+              transition={{ duration: 1, delay: 1.2 }}
               className="mt-12 flex items-center justify-center gap-4"
             >
               <a
@@ -475,7 +475,7 @@ export default function Page() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1, y: [0, 10, 0] }}
             transition={{
-              opacity: { delay: 1, duration: 0.8 },
+              opacity: { delay: 1.5, duration: 1 },
               y: { duration: 2, repeat: Infinity, ease: "easeInOut" },
             }}
             className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-zinc-500 hover:text-zinc-300 transition-colors"
@@ -504,8 +504,8 @@ export default function Page() {
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
+              viewport={{ once: true, amount: 0.15 }}
+              transition={{ duration: 0.9, ease: "easeOut" }}
               className="relative"
             >
               {/* Glow effect externo */}
@@ -652,8 +652,8 @@ export default function Page() {
                   key={project.title}
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: idx * 0.15, duration: 0.6 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ delay: idx * 0.2, duration: 0.7, ease: "easeOut" }}
                   className="group relative h-full flex flex-col rounded-3xl border border-white/10 bg-black/75 backdrop-blur-xl p-8 hover:bg-black/80 hover:border-violet-500/40 transition-all duration-500 shadow-xl"
                 >
                   {/* Badge de categoria */}
@@ -737,8 +737,8 @@ export default function Page() {
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
+              viewport={{ once: true, amount: 0.15 }}
+              transition={{ duration: 0.7, ease: "easeOut" }}
               className="relative rounded-2xl border border-white/10 bg-black/55 backdrop-blur-xl p-6 shadow-2xl"
             >
               {/* Tab headers + Social */}
@@ -821,7 +821,7 @@ export default function Page() {
                   key="sistemas"
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.3 }}
+                  transition={{ duration: 0.45, ease: "easeOut" }}
                 >
                   <div className="flex items-start justify-between gap-4 mb-4">
                     <div className="min-w-0">
@@ -878,7 +878,7 @@ export default function Page() {
                   key="websites"
                   initial={{ opacity: 0, x: 10 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.3 }}
+                  transition={{ duration: 0.45, ease: "easeOut" }}
                 >
                   <div className="flex items-start justify-between gap-4 mb-4">
                     <div className="min-w-0">
@@ -887,8 +887,11 @@ export default function Page() {
                         Websites
                       </h3>
                       <p className="text-xs text-zinc-500 leading-relaxed mt-1">
-                        Websites publicados com foco em clareza, performance e
-                        conversão — do conteúdo à experiência.
+                        <span className="text-fuchsia-400 font-medium">
+                          Websites desenhados e desenvolvidos
+                        </span>{" "}
+                        com foco em clareza, performance e conversão — do
+                        conteúdo à experiência.
                       </p>
                     </div>
                   </div>
@@ -940,8 +943,8 @@ export default function Page() {
                   key={exp.company}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: idx * 0.1, duration: 0.5 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ delay: idx * 0.12, duration: 0.6, ease: "easeOut" }}
                   className="p-5 rounded-xl bg-zinc-900/30 border border-zinc-800/50 hover:border-violet-500/20 transition-all"
                 >
                   <div className="flex items-start justify-between gap-3 mb-2">
@@ -979,8 +982,8 @@ export default function Page() {
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.7, ease: "easeOut" }}
                 className="lg:col-span-2 relative rounded-3xl border border-white/10 bg-black/60 backdrop-blur-xl p-6 shadow-2xl overflow-hidden"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-violet-500/5 via-transparent to-fuchsia-500/5" />
@@ -1021,8 +1024,8 @@ export default function Page() {
                         key={step.title}
                         initial={{ opacity: 0, x: -10 }}
                         whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: idx * 0.08, duration: 0.4 }}
+                        viewport={{ once: true, amount: 0.3 }}
+                        transition={{ delay: idx * 0.15, duration: 0.5, ease: "easeOut" }}
                         className="group relative rounded-2xl border border-white/10 bg-zinc-900/30 p-4 hover:border-violet-500/30 transition-all"
                       >
                         <div className="flex items-start gap-3">
@@ -1056,8 +1059,8 @@ export default function Page() {
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.7, delay: 0.15, ease: "easeOut" }}
                 className="lg:col-span-3 relative rounded-3xl border border-white/10 bg-black/60 backdrop-blur-xl p-6 shadow-2xl overflow-hidden"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-fuchsia-500/5 via-transparent to-violet-500/5" />
@@ -1095,8 +1098,8 @@ export default function Page() {
                           key={item.tag}
                           initial={{ opacity: 0, y: 8 }}
                           whileInView={{ opacity: 1, y: 0 }}
-                          viewport={{ once: true }}
-                          transition={{ delay: idx * 0.03, duration: 0.35 }}
+                          viewport={{ once: true, amount: 0.3 }}
+                          transition={{ delay: idx * 0.06, duration: 0.45, ease: "easeOut" }}
                           whileHover={{ y: -2, scale: 1.02 }}
                           className={`group inline-flex items-center gap-2 px-2.5 py-1.5 rounded-xl bg-zinc-900/35 border ${accentClass} transition-all duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.22)] ${sizeClass}`}
                         >
@@ -1230,8 +1233,8 @@ export default function Page() {
               <motion.div
                 initial={{ opacity: 0, x: -50 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8 }}
-                viewport={{ once: true }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+                viewport={{ once: true, amount: 0.2 }}
                 className="relative group"
               >
                 <div className="relative bg-black/70 backdrop-blur-xl border border-white/10 group-hover:border-violet-500/30 rounded-2xl p-8 shadow-2xl group-hover:shadow-violet-500/20 transition-all duration-300">
@@ -1318,8 +1321,8 @@ export default function Page() {
               <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.25, ease: "easeOut" }}
+                viewport={{ once: true, amount: 0.2 }}
                 className="relative flex items-center justify-center"
               >
                 {/* Círculo de fundo pulsante */}
