@@ -637,17 +637,17 @@ export default function Page() {
                   </div>
 
                   {/* Miniatura do projeto */}
-                  <div className="relative mb-5 h-40 w-full overflow-hidden rounded-2xl border border-white/10 bg-zinc-900/40 flex items-center justify-center p-3">
+                  <div className="relative mb-5 h-44 w-full overflow-hidden rounded-2xl border border-white/10 bg-zinc-900/40">
                     {project.thumb ? (
                       <Image
                         src={project.thumb}
                         alt={`Capa do projeto: ${project.title}`}
                         fill
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                        className="object-contain opacity-90 group-hover:opacity-100 transition-opacity p-2"
+                        className="object-cover object-center opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
                       />
                     ) : (
-                      <div className="h-40 w-full bg-gradient-to-br from-violet-500/10 via-transparent to-fuchsia-500/10" />
+                      <div className="h-44 w-full bg-gradient-to-br from-violet-500/10 via-transparent to-fuchsia-500/10" />
                     )}
                   </div>
 
