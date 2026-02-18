@@ -741,48 +741,78 @@ export default function Page() {
               transition={{ duration: 0.6 }}
               className="relative rounded-2xl border border-white/10 bg-black/55 backdrop-blur-xl p-6 shadow-2xl"
             >
-              {/* Tab headers */}
-              <div className="flex items-center gap-1 mb-6 p-1 rounded-xl bg-zinc-900/60 border border-zinc-800/60 w-fit shadow-[0_0_0_1px_rgba(255,255,255,0.03)]">
-                <button
-                  onClick={() => setActivePortfolioTab("sistemas")}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
-                    activePortfolioTab === "sistemas"
-                      ? "bg-violet-500/20 text-violet-200 border border-violet-500/30 shadow-[0_12px_30px_rgba(0,0,0,0.35)]"
-                      : "text-zinc-400 hover:text-zinc-200 border border-transparent hover:bg-white/5"
-                  }`}
-                >
-                  <Code className="h-4 w-4" />
-                  Sistemas Web
-                  <span
-                    className={`text-[10px] px-1.5 py-0.5 rounded-full ${
+              {/* Tab headers + Social */}
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+                <div className="flex items-center gap-1 p-1 rounded-xl bg-zinc-900/60 border border-zinc-800/60 w-fit shadow-[0_0_0_1px_rgba(255,255,255,0.03)]">
+                  <button
+                    onClick={() => setActivePortfolioTab("sistemas")}
+                    className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
                       activePortfolioTab === "sistemas"
-                        ? "bg-violet-500/20 text-violet-300"
-                        : "bg-zinc-800 text-zinc-500"
+                        ? "bg-violet-500/20 text-violet-200 border border-violet-500/30 shadow-[0_12px_30px_rgba(0,0,0,0.35)]"
+                        : "text-zinc-400 hover:text-zinc-200 border border-transparent hover:bg-white/5"
                     }`}
                   >
-                    {additionalProjects.length}
-                  </span>
-                </button>
-                <button
-                  onClick={() => setActivePortfolioTab("websites")}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
-                    activePortfolioTab === "websites"
-                      ? "bg-fuchsia-500/20 text-fuchsia-200 border border-fuchsia-500/30 shadow-[0_12px_30px_rgba(0,0,0,0.35)]"
-                      : "text-zinc-400 hover:text-zinc-200 border border-transparent hover:bg-white/5"
-                  }`}
-                >
-                  <Globe className="h-4 w-4" />
-                  Websites
-                  <span
-                    className={`text-[10px] px-1.5 py-0.5 rounded-full ${
+                    <Code className="h-4 w-4" />
+                    Sistemas Web
+                    <span
+                      className={`text-[10px] px-1.5 py-0.5 rounded-full ${
+                        activePortfolioTab === "sistemas"
+                          ? "bg-violet-500/20 text-violet-300"
+                          : "bg-zinc-800 text-zinc-500"
+                      }`}
+                    >
+                      {additionalProjects.length}
+                    </span>
+                  </button>
+                  <button
+                    onClick={() => setActivePortfolioTab("websites")}
+                    className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
                       activePortfolioTab === "websites"
-                        ? "bg-fuchsia-500/20 text-fuchsia-300"
-                        : "bg-zinc-800 text-zinc-500"
+                        ? "bg-fuchsia-500/20 text-fuchsia-200 border border-fuchsia-500/30 shadow-[0_12px_30px_rgba(0,0,0,0.35)]"
+                        : "text-zinc-400 hover:text-zinc-200 border border-transparent hover:bg-white/5"
                     }`}
                   >
-                    {websites.length}
-                  </span>
-                </button>
+                    <Globe className="h-4 w-4" />
+                    Websites
+                    <span
+                      className={`text-[10px] px-1.5 py-0.5 rounded-full ${
+                        activePortfolioTab === "websites"
+                          ? "bg-fuchsia-500/20 text-fuchsia-300"
+                          : "bg-zinc-800 text-zinc-500"
+                      }`}
+                    >
+                      {websites.length}
+                    </span>
+                  </button>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <a
+                    aria-label="GitHub"
+                    href="https://github.com/pontesneto2"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center p-2.5 rounded-xl border border-white/10 bg-zinc-900/40 hover:bg-zinc-900/60 hover:border-violet-500/30 transition-all"
+                  >
+                    <Github className="h-4 w-4 text-zinc-300" />
+                  </a>
+                  <a
+                    aria-label="LinkedIn"
+                    href="https://www.linkedin.com/in/fcopts"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center p-2.5 rounded-xl border border-white/10 bg-zinc-900/40 hover:bg-zinc-900/60 hover:border-fuchsia-500/30 transition-all"
+                  >
+                    <Linkedin className="h-4 w-4 text-zinc-300" />
+                  </a>
+                  <a
+                    aria-label="E-mail"
+                    href="mailto:pontesneto2@gmail.com"
+                    className="inline-flex items-center justify-center p-2.5 rounded-xl border border-white/10 bg-zinc-900/40 hover:bg-zinc-900/60 hover:border-amber-500/30 transition-all"
+                  >
+                    <Mail className="h-4 w-4 text-zinc-300" />
+                  </a>
+                </div>
               </div>
 
               {/* Tab content — Sistemas */}
@@ -808,7 +838,7 @@ export default function Page() {
                       </p>
                     </div>
                   </div>
-                  <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                  <div className="grid sm:grid-cols-2 lg:grid-cols-2 gap-5 lg:gap-6">
                     {additionalProjects.map((proj) => (
                       <div
                         key={proj.name}
@@ -816,7 +846,9 @@ export default function Page() {
                       >
                         <div className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-br from-violet-500/10 via-transparent to-fuchsia-500/10" />
                         <div className="absolute top-3 right-3">
-                          <Lock className="h-3 w-3 text-zinc-600" />
+                          <div className="p-1.5 rounded-lg bg-amber-500/10 border border-amber-500/20">
+                            <Lock className="h-3.5 w-3.5 text-amber-300/80" />
+                          </div>
                         </div>
                         <h4 className="relative font-semibold text-sm mb-2 group-hover:text-violet-200 transition-colors pr-6 leading-snug">
                           {proj.name}
@@ -824,11 +856,11 @@ export default function Page() {
                         <p className="relative text-xs text-zinc-500 mb-3">
                           {proj.desc}
                         </p>
-                        <div className="relative flex flex-wrap gap-1.5">
+                        <div className="relative flex flex-wrap gap-1.5 mt-4 pt-2 border-t border-white/5">
                           {proj.tech.map((t) => (
                             <span
                               key={t}
-                              className="text-[9px] px-2 py-0.5 rounded-md bg-zinc-900/40 text-zinc-400 border border-white/10 hover:border-white/20 hover:text-zinc-200 transition-all"
+                              className="text-[10px] px-2.5 py-1 rounded-lg bg-white/5 text-zinc-300 border border-white/10 hover:border-violet-500/25 hover:text-white transition-all"
                             >
                               {t}
                             </span>
@@ -861,7 +893,7 @@ export default function Page() {
                     </div>
                   </div>
 
-                  <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                  <div className="grid sm:grid-cols-2 lg:grid-cols-2 gap-5 lg:gap-6">
                     {websites.map((site) => (
                       <a
                         key={site.url}
