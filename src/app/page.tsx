@@ -38,7 +38,7 @@ export default function Page() {
       thumb: "/img-card-meoocarro.png",
     },
     {
-      title: "Aplicativo de Mídia OOH — Plataforma DOOH",
+      title: "iMidooh — Gerenciamento de Mídia DOOH",
       tags: [
         "React Native",
         "Expo",
@@ -611,14 +611,11 @@ export default function Page() {
         >
           <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
             <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold mb-3">
+              <h2 className="text-3xl font-bold">
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-violet-300">
                   Projetos em Destaque
                 </span>
               </h2>
-              <p className="text-sm text-zinc-500">
-                Seleção de entregas técnicas e resultados mensuráveis
-              </p>
             </div>
 
             {/* Cards de projetos principais - Mais elegantes */}
@@ -640,17 +637,17 @@ export default function Page() {
                   </div>
 
                   {/* Miniatura do projeto */}
-                  <div className="relative mb-5 h-36 w-full overflow-hidden rounded-2xl border border-white/10 bg-zinc-900/40">
+                  <div className="relative mb-5 h-40 w-full overflow-hidden rounded-2xl border border-white/10 bg-zinc-900/40 flex items-center justify-center p-3">
                     {project.thumb ? (
                       <Image
                         src={project.thumb}
                         alt={`Capa do projeto: ${project.title}`}
                         fill
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                        className="object-cover object-top opacity-90 group-hover:opacity-100 transition-opacity"
+                        className="object-contain opacity-90 group-hover:opacity-100 transition-opacity p-2"
                       />
                     ) : (
-                      <div className="h-36 w-full bg-gradient-to-br from-violet-500/10 via-transparent to-fuchsia-500/10" />
+                      <div className="h-40 w-full bg-gradient-to-br from-violet-500/10 via-transparent to-fuchsia-500/10" />
                     )}
                   </div>
 
@@ -704,8 +701,8 @@ export default function Page() {
               ))}
             </div>
 
-            {/* Outros projetos e websites - Grid compacto */}
-            <div className="grid md:grid-cols-2 gap-8">
+            {/* Outros projetos e websites - Coluna única com scroll */}
+            <div className="grid grid-cols-1 gap-8">
               {/* Sistemas desenvolvidos */}
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
@@ -726,13 +723,12 @@ export default function Page() {
                   diário de obra, controle de estoque, CRM, ERP e muito mais. Do
                   zero ao deploy.
                 </p>
-                <div className="space-y-3">
+                <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
                   {additionalProjects.map((proj) => (
                     <div
                       key={proj.name}
                       className="group relative p-4 rounded-xl bg-zinc-900/50 border border-zinc-800 hover:border-violet-500/30 transition-all"
                     >
-                      {/* Badge de projeto privado - canto superior direito */}
                       <div className="absolute top-3 right-3">
                         <Lock className="h-3 w-3 text-zinc-600" />
                       </div>
@@ -767,7 +763,7 @@ export default function Page() {
                   <Globe className="h-5 w-5 text-fuchsia-400" />
                   Websites Publicados
                 </h3>
-                <div className="space-y-2">
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-2">
                   {websites.map((site) => (
                     <a
                       key={site.url}
@@ -784,7 +780,7 @@ export default function Page() {
                           {site.desc}
                         </div>
                       </div>
-                      <ExternalLink className="h-4 w-4 text-zinc-600 group-hover:text-fuchsia-400 transition-colors" />
+                      <ExternalLink className="h-4 w-4 text-zinc-600 group-hover:text-fuchsia-400 transition-colors shrink-0 ml-2" />
                     </a>
                   ))}
                 </div>
@@ -826,148 +822,63 @@ export default function Page() {
           </div>
         </section>
 
-        {/* STACK PREFERIDA - PREMIUM & MINIMALISTA */}
+        {/* STACK PREFERIDA - COMPACTA */}
         <section id="stack" className="relative py-24 border-t border-white/5">
           <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
-            {/* Título */}
-            <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold mb-3">
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-violet-300">
-                  Stack Preferida
-                </span>
-              </h2>
-              <p className="text-sm text-zinc-500">
-                Ferramentas e práticas para entregar valor técnico com
-                excelência
-              </p>
-            </div>
+            <h2 className="text-3xl font-bold mb-12 text-center">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-violet-300">
+                Stack Preferida
+              </span>
+            </h2>
 
-            {/* Grid de Stack */}
-            <div className="grid md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
               {[
                 {
                   title: "Front-end",
                   icon: Layers,
-                  intro:
-                    "Construção de interfaces modernas, performáticas e orientadas à experiência do usuário.",
-                  techs: [
-                    "React",
-                    "Next.js",
-                    "TypeScript",
-                    "React Native",
-                    "Tailwind CSS",
-                    "Framer Motion",
-                    "Vue.js",
-                    "WordPress",
-                  ],
+                  techs: ["React", "Next.js", "TypeScript", "React Native", "Tailwind", "Vue.js"],
                 },
                 {
                   title: "Back-end",
                   icon: Server,
-                  intro:
-                    "Arquiteturas escaláveis e seguras, com foco em alta disponibilidade e integridade dos dados.",
-                  techs: [
-                    "Node.js",
-                    "Express.js",
-                    "PHP",
-                    "PostgreSQL",
-                    "MySQL",
-                    "MongoDB",
-                    "REST APIs",
-                    "GraphQL",
-                    "Prisma ORM",
-                    "Firebase",
-                  ],
+                  techs: ["Node.js", "Express", "NestJS", "PostgreSQL", "MongoDB", "REST/GraphQL"],
                 },
                 {
-                  title: "DevOps & Infraestrutura",
+                  title: "DevOps",
                   icon: Cloud,
-                  intro:
-                    "Cultura de automação, observabilidade e entrega contínua para garantir confiabilidade em escala.",
-                  techs: [
-                    "Docker",
-                    "CI/CD",
-                    "GitHub Actions",
-                    "Prometheus",
-                    "Grafana",
-                    "AWS",
-                    "Azure",
-                    "Vercel",
-                    "Nginx",
-                    "Sentry",
-                  ],
+                  techs: ["Docker", "CI/CD", "GitHub Actions", "AWS", "Grafana", "Sentry"],
                 },
                 {
-                  title: "UX/UI & Produto",
+                  title: "UX/UI",
                   icon: Palette,
-                  intro:
-                    "Design centrado no usuário aliado à estratégia de produto para criar experiências digitais consistentes.",
-                  techs: [
-                    "Figma",
-                    "Design Systems",
-                    "Prototipação",
-                    "Wireframes",
-                    "User Research",
-                    "Testes de Usabilidade",
-                    "Acessibilidade",
-                    "Design Tokens",
-                  ],
+                  techs: ["Figma", "Design Systems", "Prototipação", "User Research", "Acessibilidade"],
                 },
               ].map((stack, idx) => (
-                <motion.article
+                <motion.div
                   key={stack.title}
-                  initial={{ opacity: 0, y: 30 }}
+                  initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: idx * 0.1, duration: 0.6 }}
-                  className="group relative rounded-3xl border border-white/10 bg-gradient-to-br from-black/80 via-black/60 to-black/80 backdrop-blur-xl p-8 hover:border-violet-500/40 hover:shadow-[0_0_40px_rgba(168,85,247,0.15)] transition-all duration-500 shadow-xl"
+                  transition={{ delay: idx * 0.1, duration: 0.5 }}
+                  className="group rounded-2xl border border-white/10 bg-black/60 backdrop-blur-xl p-5 hover:border-violet-500/40 transition-all duration-300"
                 >
-                  {/* Glow sutil no hover */}
-                  <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-violet-500/0 via-violet-500/10 to-fuchsia-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-                  {/* Orbe de fundo animado */}
-                  <motion.div
-                    className="absolute -top-20 -right-20 w-40 h-40 bg-violet-500/20 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"
-                    animate={{ scale: [1, 1.2, 1] }}
-                    transition={{ duration: 4, repeat: Infinity }}
-                  />
-
-                  <div className="relative z-10">
-                    {/* Cabeçalho */}
-                    <div className="flex items-start gap-4 mb-4">
-                      <div className="p-3 rounded-xl bg-violet-500/10 border border-violet-500/20 group-hover:bg-violet-500/20 group-hover:border-violet-500/40 group-hover:shadow-[0_0_20px_rgba(168,85,247,0.3)] transition-all duration-500">
-                        <stack.icon className="h-6 w-6 text-violet-400 group-hover:text-violet-300 group-hover:scale-110 transition-all duration-500" />
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="text-xl font-bold text-white mb-2 group-hover:text-violet-100 transition-colors duration-300">
-                          {stack.title}
-                        </h3>
-                        <p className="text-sm text-zinc-400 leading-relaxed group-hover:text-zinc-300 transition-colors duration-300">
-                          {stack.intro}
-                        </p>
-                      </div>
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="p-2 rounded-lg bg-violet-500/10 border border-violet-500/20">
+                      <stack.icon className="h-5 w-5 text-violet-400" />
                     </div>
-
-                    {/* Tecnologias */}
-                    <div className="flex flex-wrap gap-2 mt-6">
-                      {stack.techs.map((tech, i) => (
-                        <motion.span
-                          key={tech}
-                          initial={{ opacity: 0, scale: 0.9 }}
-                          whileInView={{ opacity: 1, scale: 1 }}
-                          viewport={{ once: true }}
-                          transition={{
-                            delay: idx * 0.1 + i * 0.03,
-                            duration: 0.3,
-                          }}
-                          className="inline-block px-3 py-1.5 rounded-lg bg-zinc-900/50 border border-zinc-800/50 text-xs text-zinc-300 hover:border-violet-500/40 hover:text-white hover:bg-zinc-800/70 hover:shadow-[0_0_15px_rgba(168,85,247,0.2)] transition-all duration-300"
-                        >
-                          {tech}
-                        </motion.span>
-                      ))}
-                    </div>
+                    <h3 className="text-sm font-bold text-white">{stack.title}</h3>
                   </div>
-                </motion.article>
+                  <div className="flex flex-wrap gap-1.5">
+                    {stack.techs.map((tech) => (
+                      <span
+                        key={tech}
+                        className="text-[11px] px-2 py-1 rounded-md bg-zinc-900/60 border border-zinc-800/50 text-zinc-400 hover:border-violet-500/30 hover:text-zinc-200 transition-all"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </motion.div>
               ))}
             </div>
           </div>
