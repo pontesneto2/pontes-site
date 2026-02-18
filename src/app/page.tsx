@@ -676,10 +676,24 @@ export default function Page() {
                   </div>
 
                   {/* Proposta de Valor */}
-                  <div className="mt-7 p-4 rounded-2xl bg-gradient-to-r from-violet-500/10 to-fuchsia-500/10 border border-violet-500/20">
-                    <p className="text-sm text-center text-zinc-300 leading-relaxed">
-                      <span className="mr-2">🚀</span>
-                      Solução pronta para uso, rápida e com padrões atuais.
+                  <div className="mt-8 p-5 rounded-2xl bg-gradient-to-r from-violet-500/10 to-fuchsia-500/10 border border-violet-500/20">
+                    <p className="text-lg text-center text-zinc-200 leading-relaxed">
+                      <span className="text-white font-semibold">
+                        Me diga o que você quer
+                      </span>{" "}
+                      e eu te entrego a{" "}
+                      <span className="text-violet-300 font-semibold">
+                        solução pronta para uso
+                      </span>
+                      ,{" "}
+                      <span className="text-fuchsia-300 font-semibold">
+                        rápido
+                      </span>{" "}
+                      e nos{" "}
+                      <span className="text-white font-semibold">
+                        padrões tecnológicos mais atuais
+                      </span>
+                      .
                     </p>
                   </div>
 
@@ -687,16 +701,16 @@ export default function Page() {
                   <div className="mt-7 flex flex-col sm:flex-row gap-3 justify-center">
                     <a
                       href="#contact"
-                      className="group inline-flex items-center justify-center gap-2 rounded-2xl px-8 py-3 bg-gradient-to-r from-violet-600 to-fuchsia-500 text-white text-base sm:text-lg font-bold shadow-[0_0_50px_rgba(168,85,247,0.4)] hover:shadow-[0_0_80px_rgba(168,85,247,0.6)] transition-all duration-300 hover:scale-105"
+                      className="group inline-flex items-center justify-center gap-2 rounded-2xl px-6 py-2.5 bg-gradient-to-r from-violet-600 to-fuchsia-500 text-white text-sm sm:text-base font-bold shadow-[0_0_50px_rgba(168,85,247,0.4)] hover:shadow-[0_0_80px_rgba(168,85,247,0.6)] transition-all duration-300 hover:scale-105"
                     >
-                      <Mail className="h-5 w-5 group-hover:rotate-12 transition-transform" />
+                      <Mail className="h-4 w-4 group-hover:rotate-12 transition-transform" />
                       Iniciar Projeto
                     </a>
                     <a
                       href="#projects"
-                      className="inline-flex items-center justify-center gap-2 rounded-2xl px-8 py-3 border-2 border-white/20 backdrop-blur-sm text-base sm:text-lg font-semibold hover:bg-white/5 hover:border-white/30 transition-all duration-300"
+                      className="inline-flex items-center justify-center gap-2 rounded-2xl px-6 py-2.5 border-2 border-white/20 backdrop-blur-sm text-sm sm:text-base font-semibold hover:bg-white/5 hover:border-white/30 transition-all duration-300"
                     >
-                      <ExternalLink className="h-5 w-5" />
+                      <ExternalLink className="h-4 w-4" />
                       Ver Casos de Sucesso
                     </a>
                   </div>
