@@ -27,21 +27,14 @@ const FloatingIcons3D = dynamic(() => import("@/components/FloatingIcons3D"), {
 export default function Page() {
   const [navOpen, setNavOpen] = useState(false);
 
-  const getProjectThumb = (link?: string) => {
-    if (!link) return "";
-    const safe = link.trim();
-    if (!safe) return "";
-    return `https://image.thum.io/get/width/1200/crop/900/${safe}`;
-  };
-
   const featuredProjects = [
     {
       title: "Meoocarro — App (em desenvolvimento)",
       tags: ["React Native", "Expo", "TypeScript", "Node.js", "PostgreSQL"],
       link: "",
       blurb:
-        "Aplicativo mobile em desenvolvimento com foco em jornada simples e rápida: catálogo, busca, captação de leads e fluxo de atendimento. Arquitetura preparada para escalar com métricas e evolução contínua.",
-      category: "Aplicativo Mobile",
+        "Aplicativo para organizar a jornada de compra e atendimento, com experiência simples, rápida e pronta para evoluir conforme o negócio cresce.",
+      category: "Aplicativo Mobile + Painel Admin",
       thumb: "/img-card-meoocarro.png",
     },
     {
@@ -57,11 +50,9 @@ export default function Page() {
       ],
       link: "",
       blurb:
-        "Plataforma completa conectando painéis digitais, campanhas publicitárias e métricas em tempo real. Arquitetura escalável com atuação end-to-end em DevOps e UX-Ops. (Projeto privado em desenvolvimento)",
-      category: "Desenvolvimento Full JS",
-      thumb: getProjectThumb(
-        "https://en.wikipedia.org/wiki/Digital_out-of-home_advertising"
-      ),
+        "Plataforma para operar mídia digital OOH com campanhas, telas e resultados em um só lugar, priorizando controle, clareza e acompanhamento contínuo.",
+      category: "Aplicativo Mobile + Painel Admin",
+      thumb: "/logo-dooh.png",
     },
     {
       title: "Sistema Financeiro ERP Estrela",
@@ -76,9 +67,9 @@ export default function Page() {
       ],
       link: "",
       blurb:
-        "ERP financeiro 100% JavaScript/TypeScript com rotinas de contas a pagar/receber, conciliação e relatórios. Automação de processos via n8n e monitoramento de fluxos ponta a ponta para rastreabilidade e confiabilidade.",
-      category: "ERP Financeiro · Automação & Monitoramento",
-      thumb: getProjectThumb("https://n8n.io"),
+        "Sistema web para rotinas financeiras do dia a dia, com padronização de processos, relatórios e visibilidade para decisões mais rápidas e seguras.",
+      category: "Sistema Web",
+      thumb: "/logo-estrela.png",
     },
   ];
 
@@ -247,7 +238,7 @@ export default function Page() {
               <div className="flex items-center gap-3">
                 {/* Logo com P */}
                 <div className="relative h-10 w-10 rounded-xl bg-gradient-to-br from-fuchsia-500 to-violet-500 shadow-[0_0_40px_rgba(168,85,247,0.35)] flex items-center justify-center">
-                  <span className="text-white font-black text-xl">P</span>
+                  <span className="text-white font-black text-xl">FP</span>
                 </div>
                 {/* Marca FCOPTS */}
                 <div className="flex flex-col">
@@ -666,7 +657,7 @@ export default function Page() {
                   <h3 className="text-xl font-semibold mb-3 group-hover:text-violet-300 transition-colors">
                     {project.title}
                   </h3>
-                  <p className="text-sm text-zinc-400 leading-relaxed mb-6 overflow-hidden [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:4]">
+                  <p className="text-sm text-zinc-400 leading-relaxed mb-6">
                     {project.blurb}
                   </p>
 
