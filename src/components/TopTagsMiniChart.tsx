@@ -144,14 +144,16 @@ export default function TopTagsMiniChart({
             {safeItems.map((item, index) => {
               const isActive = activeIndex === index;
               return (
-                <button
+                <motion.button
                   key={`${item.tag}-tag`}
                   type="button"
                   className={`min-w-0 w-full text-center rounded-full border px-1.5 sm:px-2 py-1 text-[9px] sm:text-[10px] font-semibold tracking-tight truncate transition-colors ${
                     isActive
-                      ? "bg-black/65 border-white/15 text-zinc-100"
+                      ? "bg-black/65 border-white/20 text-zinc-100 shadow-[0_12px_30px_rgba(168,85,247,0.14)]"
                       : "bg-black/40 border-white/10 text-zinc-300"
                   }`}
+                  animate={{ scale: isActive ? 1.04 : 1 }}
+                  transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
                   title={`${item.tag}: ${formatCount(item.count)}`}
                   onClick={() =>
                     setActiveIndex((prev) => (prev === index ? null : index))
@@ -164,7 +166,7 @@ export default function TopTagsMiniChart({
                   }}
                 >
                   {item.tag}
-                </button>
+                </motion.button>
               );
             })}
           </div>
