@@ -469,6 +469,8 @@ export default function Page() {
           )}
         </header>
 
+        <main id="content">
+
         {/* HERO - BANNER TRIUNFAL */}
         <section className="relative h-[100vh] flex items-center justify-center overflow-hidden">
           {/* Gradiente de fundo animado */}
@@ -1159,7 +1161,7 @@ export default function Page() {
                     initial="hidden"
                     whileInView="show"
                     viewport={viewportSettings}
-                    className="mt-5 grid gap-3"
+                    className="mt-5 grid gap-4"
                   >
                     {[
                       {
@@ -1186,7 +1188,7 @@ export default function Page() {
                       <motion.div
                         key={step.title}
                         variants={fadeLeftItem}
-                        className="group relative rounded-2xl border border-white/10 bg-zinc-900/30 p-4 hover:border-violet-500/30 transition-all"
+                        className="group relative"
                       >
                         <div className="flex items-start gap-3">
                           <div className="mt-0.5 p-2 rounded-xl bg-violet-500/10 border border-violet-500/20">
@@ -1576,6 +1578,8 @@ export default function Page() {
             </motion.div>
           </div>
         </section>
+
+        </main>
 
         <footer className="py-10 border-t border-white/5 text-center text-sm text-zinc-400">
           <div>© {new Date().getFullYear()} Francisco Pontes de Lima Neto</div>
