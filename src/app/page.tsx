@@ -270,48 +270,57 @@ export default function Page() {
 
   const experience = [
     {
-      company: "Grupo Star Capital",
-      role: "Engenheiro de Software Sênior | Gerente de Projetos",
-      period: "2025",
+      company: "Grupo Star Financeira",
+      role: "Engenheiro de Software | Gerenciamento de Projetos",
+      period: "2025–presente",
     },
     {
-      company: "FlixBus Bilhetes Europa",
-      role: "Desenvolvedor Fullstack",
+      company: "Terceirizada - FlixBus Tickets (Europa)",
+      role: "Sênior Desenvolvedor Full Stack",
       period: "2024–2025",
+      remote: true,
     },
     {
-      company: "FedEX Portugal",
-      role: "Desenvolvedor Fullstack",
+      company: "Terceirizada - FedEX Services (Portugal)",
+      role: "Sênior Desenvolvedor Full Stack",
       period: "2024–2025",
+      remote: true,
     },
     {
       company: "Instituto Anjos Digitais",
-      role: "Desenvolvedor Sênior de Produtos Digitais | Gerente de Projetos",
-      period: "2023–2025",
+      startRole: "Desenvolvedor Full Stack",
+      role: "Sênior Desenvolvedor Full Stack | Gerenciamento de projetos de Produtos Digitais",
+      period: "2023–2024",
+      remote: true,
     },
     {
       company: "Secretaria do Desenvolvimento Agrário (CE)",
-      role: "Desenvolvedor Fullstack | Product Designer",
+      startRole: "Programador Jr",
+      role: "Analista de Sistemas Pleno | Product Designer",
       period: "2021–2023",
     },
     {
       company: "Instituto Agropolos do Ceará",
-      role: "Desenvolvedor Fullstack | Product Designer",
+      startRole: "Programador Jr",
+      role: "Analista de Sistemas Pleno | UX/UI Designer",
       period: "2021–2023",
+      remote: true,
     },
     {
       company: "Com3 Brasil",
-      role: "Desenvolvedor Fullstack | UX/UI Designer",
+      startRole: "Programador Jr",
+      role: "Programador de Softwares | UX/UI Designer",
       period: "2020–2021",
     },
     {
-      company: "Grupo Laredo Atacado e Varejo",
+      company: "Grupo Laredo Atacadista",
+      startRole: "Auxiliar de gerência",
       role: "Gerente Operacional de Mercado",
-      period: "2018–2020",
+      period: "2017–2020",
     },
     {
       company: "White Martins Gases Industriais e Medicinais",
-      startRole: "Estagiário",
+      startRole: "Encarregado de Operações",
       role: "Gerente de Unidade Capital — URC Fortaleza",
       period: "2015–2017",
     },
@@ -1081,9 +1090,16 @@ export default function Page() {
                     <h4 className="font-semibold text-sm text-white flex-1 min-w-0 break-words">
                       {exp.company}
                     </h4>
-                    <span className="text-[9px] text-violet-400 bg-violet-500/10 px-2 py-1 rounded-lg border border-violet-500/20 whitespace-nowrap font-semibold">
-                      {exp.period}
-                    </span>
+                    <div className="flex items-center gap-2 shrink-0">
+                      <span className="text-[9px] text-violet-400 bg-violet-500/10 px-2 py-1 rounded-lg border border-violet-500/20 whitespace-nowrap font-semibold">
+                        {exp.period}
+                      </span>
+                      {"remote" in exp && exp.remote ? (
+                        <span className="text-[9px] text-fuchsia-300 bg-fuchsia-500/10 px-2 py-1 rounded-lg border border-fuchsia-500/20 whitespace-nowrap font-semibold">
+                          Trabalho remoto
+                        </span>
+                      ) : null}
+                    </div>
                   </div>
                   {"startRole" in exp && exp.startRole ? (
                     <div className="text-[10px] text-zinc-500 mb-1 flex items-center gap-2">
