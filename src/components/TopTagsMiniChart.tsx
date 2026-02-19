@@ -38,7 +38,7 @@ export default function TopTagsMiniChart({
     const n = Math.max(1, safeItems.length);
     const width = 100;
     const height = chartHeight;
-    const padX = 0;
+    const padX = isMobile ? 12 : 6;
     const padY = chartPadY;
 
     return safeItems.map((item, index) => {
@@ -48,7 +48,7 @@ export default function TopTagsMiniChart({
       const y = padY + (1 - pct) * (height - padY * 2);
       return { x, y, item };
     });
-  }, [safeItems, maxCount]);
+  }, [safeItems, maxCount, isMobile]);
 
   const linePath = useMemo(() => {
     if (points.length === 0) return "";
@@ -158,18 +158,11 @@ export default function TopTagsMiniChart({
               const yPercent = (p.y / chartHeight) * 100;
               const yPx = Math.max(0, yPercent);
 
-              const edgeTranslate =
-                index === 0
-                  ? "translate-x-0"
-                  : index === points.length - 1
-                    ? "-translate-x-full"
-                    : "-translate-x-1/2";
-
               return (
                 <button
                   key={`${p.item.tag}-label`}
                   type="button"
-                  className={`absolute left-0 top-0 ${edgeTranslate} rounded-full border px-1.5 py-0.5 text-[9px] font-semibold tracking-tight transition-colors max-w-[42%] truncate ${
+                  className={`absolute left-0 top-0 -translate-x-1/2 rounded-full border px-1.5 py-0.5 text-[9px] font-semibold tracking-tight transition-colors max-w-[42%] truncate ${
                     isActive
                       ? "bg-black/65 border-white/15 text-zinc-100"
                       : "bg-black/45 border-white/10 text-zinc-300"
