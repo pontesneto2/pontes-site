@@ -91,7 +91,11 @@ export default function TopTagsMiniChart({
                 return (
                   <g key={b.item.tag}>
                     <motion.rect
-                      initial={{ y: chartHeight - chartPadY, height: 0, opacity: 0 }}
+                      initial={{
+                        y: chartHeight - chartPadY,
+                        height: 0,
+                        opacity: 0,
+                      }}
                       whileInView={{ y: b.y, height: b.h, opacity: 1 }}
                       viewport={{ once: true, amount: 0.6 }}
                       transition={{
@@ -111,7 +115,9 @@ export default function TopTagsMiniChart({
                         if (!isMobile) setActiveIndex(null);
                       }}
                       onClick={() =>
-                        setActiveIndex((prev) => (prev === index ? null : index))
+                        setActiveIndex((prev) =>
+                          prev === index ? null : index,
+                        )
                       }
                       role="button"
                       tabIndex={0}
@@ -131,7 +137,9 @@ export default function TopTagsMiniChart({
                         if (!isMobile) setActiveIndex(null);
                       }}
                       onClick={() =>
-                        setActiveIndex((prev) => (prev === index ? null : index))
+                        setActiveIndex((prev) =>
+                          prev === index ? null : index,
+                        )
                       }
                     />
                   </g>
@@ -147,7 +155,7 @@ export default function TopTagsMiniChart({
                 <motion.button
                   key={`${item.tag}-tag`}
                   type="button"
-                  className={`min-w-0 w-full text-center rounded-full border px-1.5 sm:px-2 py-1 text-[9px] sm:text-[10px] font-semibold tracking-tight truncate transition-colors ${
+                  className={`min-w-0 w-full text-center rounded-full border px-1 sm:px-1.5 py-0.5 text-[8px] sm:text-[9px] font-semibold tracking-tight truncate transition-colors ${
                     isActive
                       ? "bg-black/65 border-white/20 text-zinc-100 shadow-[0_12px_30px_rgba(168,85,247,0.14)]"
                       : "bg-black/40 border-white/10 text-zinc-300"

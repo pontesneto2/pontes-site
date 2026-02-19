@@ -474,32 +474,7 @@ export default function Page() {
           {/* Gradiente de fundo animado */}
           <div className="absolute inset-0 bg-gradient-to-b from-violet-950/20 via-transparent to-black/50" />
 
-          {/* Orbs grandes de fundo */}
-          <motion.div
-            animate={{
-              scale: [1, 1.2, 1],
-              opacity: [0.3, 0.5, 0.3],
-            }}
-            transition={{
-              duration: 8,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-            className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-violet-500/20 rounded-full blur-3xl"
-          />
-          <motion.div
-            animate={{
-              scale: [1, 1.3, 1],
-              opacity: [0.2, 0.4, 0.2],
-            }}
-            transition={{
-              duration: 10,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 1,
-            }}
-            className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-fuchsia-500/20 rounded-full blur-3xl"
-          />
+
 
           <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
             {/* Subtítulo animado */}
@@ -509,7 +484,7 @@ export default function Page() {
               transition={{ duration: 1, ease: "easeOut" }}
               className="mb-6"
             >
-              <span className="inline-block px-4 py-2 rounded-full border border-violet-500/30 bg-violet-500/10 text-violet-300 text-sm font-medium backdrop-blur-sm">
+              <span className="inline-block px-2 py-1 rounded-full border border-violet-500/30 bg-violet-500/10 text-violet-300 text-[11px] font-medium backdrop-blur-sm">
                 Senior Software Engineer · UX Ops
               </span>
             </motion.div>
@@ -519,17 +494,13 @@ export default function Page() {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
-              className="mb-8"
+              className="mb-8 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight"
             >
-              <span className="block text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight">
-                <span className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-violet-200 via-fuchsia-200 to-violet-200 drop-shadow-[0_0_50px_rgba(168,85,247,0.5)]">
-                  Francisco
-                </span>
-              </span>
-              <span className="block text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight mt-2">
-                <span className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-300 via-violet-300 to-fuchsia-300 drop-shadow-[0_0_50px_rgba(217,70,239,0.5)]">
-                  Pontes
-                </span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-200 via-fuchsia-200 to-violet-200">
+                Francisco
+              </span>{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-300 via-violet-300 to-fuchsia-300">
+                Pontes
               </span>
             </motion.h1>
 
@@ -641,8 +612,8 @@ export default function Page() {
 
                 {/* Badge de destaque */}
                 <div className="relative z-10 mb-6">
-                  <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-violet-600/20 to-fuchsia-600/20 border border-violet-500/30 text-violet-300 text-sm font-semibold backdrop-blur-sm">
-                    <Rocket className="h-4 w-4" />
+                  <span className="inline-flex items-center gap-2 px-2 py-1 rounded-full bg-gradient-to-r from-violet-600/20 to-fuchsia-600/20 border border-violet-500/30 text-violet-300 text-[11px] font-semibold backdrop-blur-sm">
+                    <Rocket className="h-3.5 w-3.5" />
                     Projetos Sob Medida
                   </span>
                 </div>
@@ -785,7 +756,7 @@ export default function Page() {
                 >
                   {/* Badge de categoria */}
                   <div className="mb-4">
-                    <span className="inline-block px-3 py-1 rounded-full text-xs font-medium bg-violet-500/10 text-violet-300 border border-violet-500/20">
+                    <span className="inline-block px-1.5 py-0.5 rounded-md text-[9px] font-medium bg-violet-500/10 text-violet-300 border border-violet-500/20">
                       {project.category}
                     </span>
                   </div>
@@ -822,7 +793,7 @@ export default function Page() {
                     {project.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="text-xs px-3 py-1 rounded-lg bg-zinc-800/50 text-zinc-300 border border-zinc-700/50 hover:border-violet-500/30 transition-colors"
+                        className="text-[9px] px-1.5 py-0.5 rounded-md bg-zinc-800/50 text-zinc-300 border border-zinc-700/50 hover:border-violet-500/30 transition-colors"
                       >
                         {tag}
                       </span>
@@ -874,235 +845,232 @@ export default function Page() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.15 }}
               transition={{ duration: 0.7, ease: "easeOut" }}
-              className={`relative rounded-2xl border border-white/10 backdrop-blur-xl p-8 shadow-2xl overflow-hidden ${
-                activePortfolioTab === "sistemas"
-                  ? "bg-[#050505]"
-                  : "bg-[#1B1528]"
-              }`}
+              className="relative rounded-2xl border border-white/10 bg-black/20 backdrop-blur-2xl p-8 shadow-2xl overflow-hidden"
             >
+              <div className="pointer-events-none absolute inset-0 bg-white/5" />
               <div
-                className={`pointer-events-none absolute inset-0 opacity-100 ${
+                className={`pointer-events-none absolute inset-0 ${
                   activePortfolioTab === "sistemas"
-                    ? "bg-gradient-to-br from-violet-500/8 via-transparent to-transparent"
-                    : "bg-gradient-to-br from-fuchsia-500/8 via-transparent to-transparent"
+                    ? "bg-gradient-to-br from-violet-500/10 via-transparent to-transparent"
+                    : "bg-gradient-to-br from-fuchsia-500/10 via-transparent to-transparent"
                 }`}
               />
               <div className="relative">
-              {/* Tab headers + Social */}
-              <div className="relative flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
-                <div className="flex items-center gap-1 p-1 rounded-xl bg-zinc-900/60 border border-zinc-800/60 w-fit shadow-[0_0_0_1px_rgba(255,255,255,0.03)]">
-                  <button
-                    onClick={() => setActivePortfolioTab("sistemas")}
-                    className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
-                      activePortfolioTab === "sistemas"
-                        ? "bg-violet-500/20 text-violet-200 border border-violet-500/30 shadow-[0_12px_30px_rgba(0,0,0,0.35)]"
-                        : "text-zinc-400 hover:text-zinc-200 border border-transparent hover:bg-white/5"
-                    }`}
-                  >
-                    <Code className="h-4 w-4" />
-                    Sistemas Web
-                    <span
-                      className={`text-[10px] px-1.5 py-0.5 rounded-full ${
+                {/* Tab headers + Social */}
+                <div className="relative flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
+                  <div className="flex items-center gap-1 p-1 rounded-xl bg-zinc-900/60 border border-zinc-800/60 w-fit shadow-[0_0_0_1px_rgba(255,255,255,0.03)]">
+                    <button
+                      onClick={() => setActivePortfolioTab("sistemas")}
+                      className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
                         activePortfolioTab === "sistemas"
-                          ? "bg-violet-500/20 text-violet-300"
-                          : "bg-zinc-800 text-zinc-500"
+                          ? "bg-violet-500/20 text-violet-200 border border-violet-500/30 shadow-[0_12px_30px_rgba(0,0,0,0.35)]"
+                          : "text-zinc-400 hover:text-zinc-200 border border-transparent hover:bg-white/5"
                       }`}
                     >
-                      {additionalProjects.length}
-                    </span>
-                  </button>
-                  <button
-                    onClick={() => setActivePortfolioTab("websites")}
-                    className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
-                      activePortfolioTab === "websites"
-                        ? "bg-fuchsia-500/20 text-fuchsia-200 border border-fuchsia-500/30 shadow-[0_12px_30px_rgba(0,0,0,0.35)]"
-                        : "text-zinc-400 hover:text-zinc-200 border border-transparent hover:bg-white/5"
-                    }`}
-                  >
-                    <Globe className="h-4 w-4" />
-                    Websites
-                    <span
-                      className={`text-[10px] px-1.5 py-0.5 rounded-full ${
+                      <Code className="h-4 w-4" />
+                      Sistemas Web
+                      <span
+                        className={`text-[8px] px-1 py-[1px] rounded-full ${
+                          activePortfolioTab === "sistemas"
+                            ? "bg-violet-500/20 text-violet-300"
+                            : "bg-zinc-800 text-zinc-500"
+                        }`}
+                      >
+                        {additionalProjects.length}
+                      </span>
+                    </button>
+                    <button
+                      onClick={() => setActivePortfolioTab("websites")}
+                      className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
                         activePortfolioTab === "websites"
-                          ? "bg-fuchsia-500/20 text-fuchsia-300"
-                          : "bg-zinc-800 text-zinc-500"
+                          ? "bg-fuchsia-500/20 text-fuchsia-200 border border-fuchsia-500/30 shadow-[0_12px_30px_rgba(0,0,0,0.35)]"
+                          : "text-zinc-400 hover:text-zinc-200 border border-transparent hover:bg-white/5"
                       }`}
                     >
-                      {websites.length}
-                    </span>
-                  </button>
-                </div>
-
-                <div className="flex items-center gap-2">
-                  <a
-                    aria-label="GitHub"
-                    href="https://github.com/pontesneto2"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center p-2.5 rounded-xl border border-white/10 bg-zinc-900/40 hover:bg-zinc-900/60 hover:border-violet-500/30 transition-all"
-                  >
-                    <Github className="h-4 w-4 text-zinc-300" />
-                  </a>
-                  <a
-                    aria-label="LinkedIn"
-                    href="https://www.linkedin.com/in/fcopts"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center p-2.5 rounded-xl border border-white/10 bg-zinc-900/40 hover:bg-zinc-900/60 hover:border-fuchsia-500/30 transition-all"
-                  >
-                    <Linkedin className="h-4 w-4 text-zinc-300" />
-                  </a>
-                  <a
-                    aria-label="E-mail"
-                    href="mailto:pontesneto2@gmail.com"
-                    className="inline-flex items-center justify-center p-2.5 rounded-xl border border-white/10 bg-zinc-900/40 hover:bg-zinc-900/60 hover:border-amber-500/30 transition-all"
-                  >
-                    <Mail className="h-4 w-4 text-zinc-300" />
-                  </a>
-                </div>
-              </div>
-
-              {/* Tab content — Sistemas */}
-              {activePortfolioTab === "sistemas" && (
-                <motion.div
-                  key="sistemas"
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.45, ease: "easeOut" }}
-                >
-                  <div className="flex items-start justify-between gap-4 mb-7 mt-2">
-                    <div className="min-w-0">
-                      <h3 className="text-lg font-semibold flex items-center gap-2">
-                        <Code className="h-5 w-5 text-violet-400" />
-                        Sistemas Web
-                      </h3>
-                      <p className="text-xs text-zinc-500 leading-relaxed mt-1">
-                        <span className="text-violet-400 font-medium">
-                          Desenvolvo sistemas 100% personalizados
-                        </span>{" "}
-                        para a sua necessidade: gestão financeira, fluxo de
-                        caixa, diário de obra, estoque, CRM, ERP e muito mais.
-                      </p>
-                    </div>
-                  </div>
-                  <motion.div
-                    variants={staggerList}
-                    initial="hidden"
-                    animate="show"
-                    className="grid sm:grid-cols-2 lg:grid-cols-2 gap-5 lg:gap-6"
-                  >
-                    {additionalProjects.map((proj) => (
-                      <motion.div
-                        key={proj.name}
-                        variants={fadeUpItem}
-                        className="group relative p-5 rounded-2xl bg-gradient-to-br from-white/5 via-transparent to-transparent border border-white/10 hover:border-violet-500/30 transition-all duration-300 shadow-[0_10px_40px_rgba(0,0,0,0.35)]"
+                      <Globe className="h-4 w-4" />
+                      Websites
+                      <span
+                        className={`text-[8px] px-1 py-[1px] rounded-full ${
+                          activePortfolioTab === "websites"
+                            ? "bg-fuchsia-500/20 text-fuchsia-300"
+                            : "bg-zinc-800 text-zinc-500"
+                        }`}
                       >
-                        <div className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-br from-violet-500/10 via-transparent to-fuchsia-500/10" />
-                        <div className="absolute top-3 right-3">
-                          <div className="p-1.5 rounded-lg bg-white/5 border border-white/10">
-                            <Lock className="h-3.5 w-3.5 text-zinc-500" />
-                          </div>
-                        </div>
-                        <h4 className="relative font-semibold text-sm mb-2 group-hover:text-violet-200 transition-colors pr-6 leading-snug flex items-start gap-2">
-                          <Code className="h-4 w-4 text-violet-400 mt-[1px] shrink-0" />
-                          <span className="min-w-0">{proj.name}</span>
-                        </h4>
-                        <p className="relative text-xs text-zinc-500 mb-3">
-                          {proj.desc}
+                        {websites.length}
+                      </span>
+                    </button>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <a
+                      aria-label="GitHub"
+                      href="https://github.com/pontesneto2"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center p-2.5 rounded-xl border border-white/10 bg-zinc-900/40 hover:bg-zinc-900/60 hover:border-violet-500/30 transition-all"
+                    >
+                      <Github className="h-4 w-4 text-zinc-300" />
+                    </a>
+                    <a
+                      aria-label="LinkedIn"
+                      href="https://www.linkedin.com/in/fcopts"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center p-2.5 rounded-xl border border-white/10 bg-zinc-900/40 hover:bg-zinc-900/60 hover:border-fuchsia-500/30 transition-all"
+                    >
+                      <Linkedin className="h-4 w-4 text-zinc-300" />
+                    </a>
+                    <a
+                      aria-label="E-mail"
+                      href="mailto:pontesneto2@gmail.com"
+                      className="inline-flex items-center justify-center p-2.5 rounded-xl border border-white/10 bg-zinc-900/40 hover:bg-zinc-900/60 hover:border-amber-500/30 transition-all"
+                    >
+                      <Mail className="h-4 w-4 text-zinc-300" />
+                    </a>
+                  </div>
+                </div>
+
+                {/* Tab content — Sistemas */}
+                {activePortfolioTab === "sistemas" && (
+                  <motion.div
+                    key="sistemas"
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.45, ease: "easeOut" }}
+                  >
+                    <div className="flex items-start justify-between gap-4 mb-7 mt-2">
+                      <div className="min-w-0">
+                        <h3 className="text-lg font-semibold flex items-center gap-2">
+                          <Code className="h-5 w-5 text-violet-400" />
+                          Sistemas Web
+                        </h3>
+                        <p className="text-xs text-zinc-500 leading-relaxed mt-1">
+                          <span className="text-violet-400 font-medium">
+                            Desenvolvo sistemas 100% personalizados
+                          </span>{" "}
+                          para a sua necessidade: gestão financeira, fluxo de
+                          caixa, diário de obra, estoque, CRM, ERP e muito mais.
                         </p>
-                        <div className="relative flex flex-wrap gap-1.5 mt-4 pt-2 border-t border-white/5">
-                          {proj.tech.map((t) => (
-                            <span
-                              key={t}
-                              className="text-[9px] px-2 py-0.5 rounded-md bg-white/5 text-zinc-300 border border-white/10 hover:border-violet-500/25 hover:text-white transition-all"
-                            >
-                              {t}
-                            </span>
-                          ))}
-                        </div>
-                      </motion.div>
-                    ))}
-                  </motion.div>
-                </motion.div>
-              )}
-
-              {/* Tab content — Websites */}
-              {activePortfolioTab === "websites" && (
-                <motion.div
-                  key="websites"
-                  initial={{ opacity: 0, x: 10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.45, ease: "easeOut" }}
-                >
-                  <div className="flex items-start justify-between gap-4 mb-7 mt-2">
-                    <div className="min-w-0">
-                      <h3 className="text-lg font-semibold flex items-center gap-2">
-                        <Globe className="h-5 w-5 text-fuchsia-400" />
-                        Websites
-                      </h3>
-                      <p className="text-xs text-zinc-500 leading-relaxed mt-1">
-                        <span className="text-fuchsia-400 font-medium">
-                          Websites desenhados e desenvolvidos
-                        </span>{" "}
-                        com foco em clareza, performance e conversão — do
-                        conteúdo à experiência.
-                      </p>
+                      </div>
                     </div>
-                  </div>
-
-                  <motion.div
-                    variants={staggerList}
-                    initial="hidden"
-                    animate="show"
-                    className="grid sm:grid-cols-2 lg:grid-cols-2 gap-5 lg:gap-6"
-                  >
-                    {websites.map((site) => (
-                      <motion.div
-                        key={site.url || site.name}
-                        variants={fadeUpItem}
-                        className="group relative flex items-center justify-between p-5 rounded-2xl bg-gradient-to-br from-white/5 via-transparent to-transparent border border-white/10 hover:border-fuchsia-500/30 transition-all duration-300 shadow-[0_10px_40px_rgba(0,0,0,0.35)]"
-                      >
-                        <div className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-br from-fuchsia-500/10 via-transparent to-violet-500/10" />
-                        <div className="min-w-0">
-                          <div className="relative text-sm font-semibold text-zinc-200 group-hover:text-fuchsia-200 transition-colors truncate">
-                            {site.name}
+                    <motion.div
+                      variants={staggerList}
+                      initial="hidden"
+                      animate="show"
+                      className="grid sm:grid-cols-2 lg:grid-cols-2 gap-5 lg:gap-6"
+                    >
+                      {additionalProjects.map((proj) => (
+                        <motion.div
+                          key={proj.name}
+                          variants={fadeUpItem}
+                          className="group relative p-5 rounded-2xl bg-black/60 border border-white/10 hover:border-violet-500/30 hover:bg-black/65 transition-all duration-300 shadow-[0_10px_40px_rgba(0,0,0,0.35)]"
+                        >
+                          <div className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-br from-violet-500/10 via-transparent to-fuchsia-500/10" />
+                          <div className="absolute top-3 right-3">
+                            <div className="p-1.5 rounded-lg bg-white/5 border border-white/10">
+                              <Lock className="h-3.5 w-3.5 text-zinc-500" />
+                            </div>
                           </div>
-                          <div className="relative text-[11px] text-zinc-500 leading-snug mt-1 line-clamp-2">
-                            {site.desc}
+                          <h4 className="relative font-semibold text-sm mb-2 group-hover:text-violet-200 transition-colors pr-6 leading-snug flex items-start gap-2">
+                            <Code className="h-4 w-4 text-violet-400 mt-[1px] shrink-0" />
+                            <span className="min-w-0">{proj.name}</span>
+                          </h4>
+                          <p className="relative text-xs text-zinc-500 mb-3">
+                            {proj.desc}
+                          </p>
+                          <div className="relative flex flex-wrap gap-1.5 mt-4 pt-2 border-t border-white/5">
+                            {proj.tech.map((t) => (
+                              <span
+                                key={t}
+                                className="text-[8px] px-1 py-[1px] rounded bg-white/5 text-zinc-300 border border-white/10 hover:border-violet-500/25 hover:text-white transition-all"
+                              >
+                                {t}
+                              </span>
+                            ))}
                           </div>
-                        </div>
-                        <div className="relative flex items-center gap-3 shrink-0 ml-3">
-                          {"discontinued" in site && site.discontinued ? (
-                            <span className="text-[10px] px-2 py-1 rounded-lg bg-zinc-900/60 border border-white/10 text-zinc-400 whitespace-nowrap">
-                              Descontinuado
-                            </span>
-                          ) : (
-                            <>
-                              <a
-                                href={site.url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="hidden sm:inline-flex text-[10px] px-2 py-1 rounded-lg bg-zinc-900/60 border border-white/10 text-zinc-400 group-hover:text-zinc-200 transition-colors"
-                              >
-                                Ver
-                              </a>
-                              <a
-                                href={site.url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="inline-flex"
-                                aria-label={`Abrir ${site.name}`}
-                              >
-                                <ExternalLink className="h-4 w-4 text-zinc-600 group-hover:text-fuchsia-400 transition-colors" />
-                              </a>
-                            </>
-                          )}
-                        </div>
-                      </motion.div>
-                    ))}
+                        </motion.div>
+                      ))}
+                    </motion.div>
                   </motion.div>
-                </motion.div>
-              )}
+                )}
+
+                {/* Tab content — Websites */}
+                {activePortfolioTab === "websites" && (
+                  <motion.div
+                    key="websites"
+                    initial={{ opacity: 0, x: 10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.45, ease: "easeOut" }}
+                  >
+                    <div className="flex items-start justify-between gap-4 mb-7 mt-2">
+                      <div className="min-w-0">
+                        <h3 className="text-lg font-semibold flex items-center gap-2">
+                          <Globe className="h-5 w-5 text-fuchsia-400" />
+                          Websites
+                        </h3>
+                        <p className="text-xs text-zinc-500 leading-relaxed mt-1">
+                          <span className="text-fuchsia-400 font-medium">
+                            Websites desenhados e desenvolvidos
+                          </span>{" "}
+                          com foco em clareza, performance e conversão — do
+                          conteúdo à experiência.
+                        </p>
+                      </div>
+                    </div>
+
+                    <motion.div
+                      variants={staggerList}
+                      initial="hidden"
+                      animate="show"
+                      className="grid sm:grid-cols-2 lg:grid-cols-2 gap-5 lg:gap-6"
+                    >
+                      {websites.map((site) => (
+                        <motion.div
+                          key={site.url || site.name}
+                          variants={fadeUpItem}
+                          className="group relative flex items-center justify-between p-5 rounded-2xl bg-black/60 border border-white/10 hover:border-fuchsia-500/30 hover:bg-black/65 transition-all duration-300 shadow-[0_10px_40px_rgba(0,0,0,0.35)]"
+                        >
+                          <div className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-br from-fuchsia-500/10 via-transparent to-violet-500/10" />
+                          <div className="min-w-0">
+                            <div className="relative text-sm font-semibold text-zinc-200 group-hover:text-fuchsia-200 transition-colors truncate">
+                              {site.name}
+                            </div>
+                            <div className="relative text-[11px] text-zinc-500 leading-snug mt-1 line-clamp-2">
+                              {site.desc}
+                            </div>
+                          </div>
+                          <div className="relative flex items-center gap-3 shrink-0 ml-3">
+                            {"discontinued" in site && site.discontinued ? (
+                              <span className="text-[8px] px-1.5 py-0.5 rounded-md bg-zinc-900/60 border border-white/10 text-zinc-400 whitespace-nowrap">
+                                Descontinuado
+                              </span>
+                            ) : (
+                              <>
+                                <a
+                                  href={site.url}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="hidden sm:inline-flex text-[8px] px-1.5 py-0.5 rounded-md bg-zinc-900/60 border border-white/10 text-zinc-400 group-hover:text-zinc-200 transition-colors"
+                                >
+                                  Ver
+                                </a>
+                                <a
+                                  href={site.url}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="inline-flex"
+                                  aria-label={`Abrir ${site.name}`}
+                                >
+                                  <ExternalLink className="h-4 w-4 text-zinc-600 group-hover:text-fuchsia-400 transition-colors" />
+                                </a>
+                              </>
+                            )}
+                          </div>
+                        </motion.div>
+                      ))}
+                    </motion.div>
+                  </motion.div>
+                )}
               </div>
             </motion.div>
           </div>
@@ -1134,16 +1102,16 @@ export default function Page() {
                       {exp.company}
                     </h4>
                     <div className="flex items-center gap-2 shrink-0">
-                      <span className="text-[8px] text-violet-400 bg-violet-500/10 px-1.5 py-0.5 rounded-md border border-violet-500/20 whitespace-nowrap font-semibold">
+                      <span className="text-[7px] text-violet-400 bg-violet-500/10 px-1 py-[1px] rounded border border-violet-500/20 whitespace-nowrap font-semibold">
                         {exp.period}
                       </span>
                       {"remote" in exp && exp.remote ? (
-                        <span className="text-[8px] text-fuchsia-300 bg-fuchsia-500/10 px-1.5 py-0.5 rounded-md border border-fuchsia-500/20 whitespace-nowrap font-semibold">
+                        <span className="text-[7px] text-fuchsia-300 bg-fuchsia-500/10 px-1 py-[1px] rounded border border-fuchsia-500/20 whitespace-nowrap font-semibold">
                           Trabalho remoto
                         </span>
                       ) : null}
                       {"languages" in exp && exp.languages ? (
-                        <span className="text-[8px] text-zinc-300 bg-white/5 px-1.5 py-0.5 rounded-md border border-white/10 whitespace-nowrap font-semibold">
+                        <span className="text-[7px] text-zinc-300 bg-white/5 px-1 py-[1px] rounded border border-white/10 whitespace-nowrap font-semibold">
                           {exp.languages}
                         </span>
                       ) : null}
@@ -1298,10 +1266,10 @@ export default function Page() {
                     {topTechTags.map((item) => {
                       const sizeClass =
                         item.count >= 4
-                          ? "text-[11px]"
+                          ? "text-[9px]"
                           : item.count === 3
-                            ? "text-[10px]"
-                            : "text-[9px]";
+                            ? "text-[8px]"
+                            : "text-[7px]";
                       const accentClass =
                         item.count >= 3
                           ? "border-violet-500/25 text-zinc-200 hover:text-white hover:border-fuchsia-500/25"
@@ -1317,10 +1285,10 @@ export default function Page() {
                           whileHover={
                             isMobile ? undefined : { y: -2, scale: 1.02 }
                           }
-                          className={`group inline-flex items-center gap-1.5 px-2 py-1 rounded-lg bg-zinc-900/35 border ${accentClass} transition-all duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.22)] ${sizeClass}`}
+                          className={`group inline-flex items-center gap-1 px-1 py-0.5 rounded-md bg-zinc-900/35 border ${accentClass} transition-all duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.22)] ${sizeClass}`}
                         >
                           <span
-                            className={`h-1 w-1 rounded-full ${dotClass}`}
+                            className={`h-0.5 w-0.5 rounded-full ${dotClass}`}
                           />
                           <span className="font-semibold">{item.tag}</span>
                         </motion.span>
@@ -1438,9 +1406,9 @@ export default function Page() {
                     ].map((item) => (
                       <span
                         key={item.label}
-                        className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-gradient-to-r from-violet-500/12 to-fuchsia-500/12 border border-violet-500/20 text-xs font-semibold text-zinc-200 hover:border-violet-500/35 transition-all shadow-[0_10px_30px_rgba(0,0,0,0.18)]"
+                        className="inline-flex items-center gap-1.5 px-1.5 py-0.5 rounded-lg bg-gradient-to-r from-violet-500/12 to-fuchsia-500/12 border border-violet-500/20 text-[9px] font-semibold text-zinc-200 hover:border-violet-500/35 transition-all shadow-[0_10px_30px_rgba(0,0,0,0.18)]"
                       >
-                        <span className="text-sm">{item.icon}</span>
+                        <span className="text-[10px]">{item.icon}</span>
                         {item.label}
                       </span>
                     ))}
