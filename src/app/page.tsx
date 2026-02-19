@@ -1250,10 +1250,10 @@ export default function Page() {
                     {topTechTags.map((item) => {
                       const sizeClass =
                         item.count >= 4
-                          ? "text-[12px]"
+                          ? "text-[11px]"
                           : item.count === 3
-                            ? "text-[11px]"
-                            : "text-[10px]";
+                            ? "text-[10px]"
+                            : "text-[9px]";
                       const accentClass =
                         item.count >= 3
                           ? "border-violet-500/25 text-zinc-200 hover:text-white hover:border-fuchsia-500/25"
@@ -1269,10 +1269,10 @@ export default function Page() {
                           whileHover={
                             isMobile ? undefined : { y: -2, scale: 1.02 }
                           }
-                          className={`group inline-flex items-center gap-2 px-2.5 py-1.5 rounded-xl bg-zinc-900/35 border ${accentClass} transition-all duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.22)] ${sizeClass}`}
+                          className={`group inline-flex items-center gap-1.5 px-2 py-1 rounded-lg bg-zinc-900/35 border ${accentClass} transition-all duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.22)] ${sizeClass}`}
                         >
                           <span
-                            className={`h-1.5 w-1.5 rounded-full ${dotClass}`}
+                            className={`h-1 w-1 rounded-full ${dotClass}`}
                           />
                           <span className="font-semibold">{item.tag}</span>
                         </motion.span>

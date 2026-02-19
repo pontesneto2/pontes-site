@@ -19,6 +19,9 @@ export default function TopTagsMiniChart({
   items: Item[];
   isMobile: boolean;
 }) {
+  const chartHeight = 44;
+  const chartPadY = 10;
+
   const safeItems = useMemo(() => {
     return [...items]
       .sort((a, b) => b.count - a.count || a.tag.localeCompare(b.tag))
@@ -34,9 +37,9 @@ export default function TopTagsMiniChart({
   const points = useMemo(() => {
     const n = Math.max(1, safeItems.length);
     const width = 100;
-    const height = 44;
+    const height = chartHeight;
     const padX = 0;
-    const padY = 6;
+    const padY = chartPadY;
 
     return safeItems.map((item, index) => {
       const x =
@@ -56,25 +59,24 @@ export default function TopTagsMiniChart({
 
   const areaPath = useMemo(() => {
     if (points.length === 0) return "";
-    const bottom = 44 - 6;
+    const bottom = chartHeight - chartPadY;
     const start = points[0];
     const end = points[points.length - 1];
     return `${linePath} L${end.x.toFixed(2)},${bottom.toFixed(2)} L${start.x.toFixed(2)},${bottom.toFixed(2)} Z`;
-  }, [points, linePath]);
+  }, [points, linePath, chartHeight, chartPadY]);
 
   return (
     <div className="mt-5 rounded-2xl border border-white/10 bg-black/35 backdrop-blur-xl p-4 shadow-[0_16px_60px_rgba(0,0,0,0.35)] overflow-hidden">
       <div className="flex items-center justify-between gap-3">
         <div className="min-w-0">
-          <div className="text-xs font-semibold text-zinc-200">Top 5 (stack)</div>
+          <div className="text-xs font-semibold text-zinc-200">Top 5</div>
           <div className="text-[11px] text-zinc-500">
             {isMobile ? "Toque nos pontos" : "Passe o mouse nos pontos"}
           </div>
         </div>
-        <div className="text-[10px] text-zinc-500">Sutil</div>
       </div>
 
-      <div className="mt-4 rounded-xl border border-white/10 bg-white/5 p-3">
+      <div className="mt-4 rounded-xl bg-white/5 p-3 shadow-[0_14px_50px_rgba(0,0,0,0.35)]">
         <div className="w-full md:max-w-xl mx-auto">
           <div className="relative aspect-[100/22]">
             <svg
@@ -153,18 +155,29 @@ export default function TopTagsMiniChart({
             {points.map((p, index) => {
               const isActive = activeIndex === index;
               const xPct = `${p.x}%`;
-              const yPct = `${Math.min(96, (p.y / 44) * 100 + 10)}%`;
+              const yPercent = (p.y / chartHeight) * 100;
+              const yPx = Math.max(0, yPercent);
+
+              const edgeTranslate =
+                index === 0
+                  ? "translate-x-0"
+                  : index === points.length - 1
+                    ? "-translate-x-full"
+                    : "-translate-x-1/2";
 
               return (
                 <button
                   key={`${p.item.tag}-label`}
                   type="button"
-                  className={`absolute left-0 top-0 -translate-x-1/2 rounded-full border px-2 py-0.5 text-[10px] font-semibold tracking-tight transition-colors max-w-[42%] truncate ${
+                  className={`absolute left-0 top-0 ${edgeTranslate} rounded-full border px-1.5 py-0.5 text-[9px] font-semibold tracking-tight transition-colors max-w-[42%] truncate ${
                     isActive
                       ? "bg-black/65 border-white/15 text-zinc-100"
                       : "bg-black/45 border-white/10 text-zinc-300"
                   }`}
-                  style={{ left: xPct, top: yPct }}
+                  style={{
+                    left: xPct,
+                    top: `calc(${yPx.toFixed(2)}% + 8px)`,
+                  }}
                   onClick={() =>
                     setActiveIndex((prev) => (prev === index ? null : index))
                   }
