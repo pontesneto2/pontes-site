@@ -851,8 +851,8 @@ export default function Page() {
               transition={{ duration: 0.7, ease: "easeOut" }}
               className={`relative rounded-2xl border border-white/10 backdrop-blur-xl p-8 shadow-2xl overflow-hidden ${
                 activePortfolioTab === "sistemas"
-                  ? "bg-violet-950/20"
-                  : "bg-fuchsia-950/20"
+                  ? "bg-[#050505]"
+                  : "bg-[#1B1528]"
               }`}
             >
               <div
