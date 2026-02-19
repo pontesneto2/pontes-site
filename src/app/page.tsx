@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import TopTagsMiniChart from "@/components/TopTagsMiniChart";
 import RobotBuddy from "@/components/RobotBuddy";
-import GithubMetricsCounters from "@/components/GithubMetricsCounters";
+import ImpactCounters from "@/components/ImpactCounters";
 import {
   Rocket,
   MonitorSmartphone,
@@ -1280,13 +1280,16 @@ export default function Page() {
                     })}
                   </motion.div>
 
-                  <div className="mt-6 p-5 rounded-2xl bg-gradient-to-br from-black/70 via-zinc-900/35 to-black/70 border border-white/10 shadow-[0_16px_60px_rgba(0,0,0,0.45)]">
-                    <p className="text-xs text-zinc-400 leading-relaxed">
+                  <p className="mt-6 text-xs text-zinc-500 leading-relaxed flex items-start gap-2">
+                    <span aria-hidden className="mt-[1px]">
+                      💡
+                    </span>
+                    <span>
                       E quando o projeto pede algo diferente, eu me adapto à
                       stack do time e do cliente. O foco é entregar valor com
                       qualidade e manutenção saudável.
-                    </p>
-                  </div>
+                    </span>
+                  </p>
                 </div>
               </motion.div>
             </div>
@@ -1388,7 +1391,7 @@ export default function Page() {
               </div>
             </div>
 
-            <GithubMetricsCounters username="pontesneto2" className="mt-6" />
+            <ImpactCounters className="mt-6" />
           </div>
         </section>
 

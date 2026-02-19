@@ -69,7 +69,7 @@ export default function TopTagsMiniChart({
 
       <div className="mt-4 rounded-xl bg-white/5 p-3 shadow-[0_14px_50px_rgba(0,0,0,0.35)]">
         <div className="w-full md:max-w-xl mx-auto">
-          <div className="relative aspect-[100/22]">
+          <div className="relative aspect-[100/16]">
             <svg
               viewBox="0 0 100 44"
               className="h-full w-full text-violet-200/55"
