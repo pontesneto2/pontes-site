@@ -777,7 +777,7 @@ export default function Page() {
                   </p>
 
                   {/* Tags estilizadas */}
-                  <div className="flex flex-wrap gap-2 mb-6 max-h-16 overflow-hidden">
+                  <div className="flex flex-wrap gap-2 mb-7">
                     {project.tags.map((tag) => (
                       <span
                         key={tag}
@@ -801,13 +801,13 @@ export default function Page() {
                       </a>
                     ) : (
                       <div className="flex flex-col gap-2 mt-2">
-                        <div className="inline-flex items-center gap-2 text-sm font-medium text-zinc-500">
-                          <Lock className="h-4 w-4" />
+                        <div className="inline-flex items-center gap-2 text-xs font-medium text-zinc-500">
+                          <Lock className="h-3.5 w-3.5" />
                           Projeto Privado
                         </div>
                         <a
                           href="mailto:pontesneto2@gmail.com?subject=Solicita%C3%A7%C3%A3o%20de%20acesso%20ao%20projeto"
-                          className="inline-flex items-center gap-2 text-xs font-medium text-violet-400 hover:text-violet-300 transition-colors"
+                          className="inline-flex items-center gap-2 text-[11px] font-medium text-violet-400 hover:text-violet-300 transition-colors"
                         >
                           <Mail className="h-3 w-3" />
                           Solicite acesso via email
@@ -1024,8 +1024,9 @@ export default function Page() {
                         >
                           <div className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-br from-fuchsia-500/10 via-transparent to-violet-500/10" />
                           <div className="min-w-0">
-                            <div className="relative text-sm font-semibold text-zinc-200 group-hover:text-fuchsia-200 transition-colors truncate">
-                              {site.name}
+                            <div className="relative flex items-center gap-2 text-sm font-semibold text-zinc-200 group-hover:text-fuchsia-200 transition-colors min-w-0">
+                              <Globe className="h-4 w-4 text-zinc-600 group-hover:text-fuchsia-300 transition-colors shrink-0" />
+                              <span className="truncate">{site.name}</span>
                             </div>
                             <div className="relative text-[11px] text-zinc-500 leading-snug mt-1 line-clamp-2">
                               {site.desc}
@@ -1037,25 +1038,15 @@ export default function Page() {
                                 Descontinuado
                               </span>
                             ) : (
-                              <>
-                                <a
-                                  href={site.url}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="hidden sm:inline-flex text-[9px] px-1.5 py-0.5 rounded-md bg-zinc-900/60 border border-white/10 text-zinc-400 group-hover:text-zinc-200 transition-colors"
-                                >
-                                  Ver
-                                </a>
-                                <a
-                                  href={site.url}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="inline-flex"
-                                  aria-label={`Abrir ${site.name}`}
-                                >
-                                  <ExternalLink className="h-4 w-4 text-zinc-600 group-hover:text-fuchsia-400 transition-colors" />
-                                </a>
-                              </>
+                              <a
+                                href={site.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex text-[9px] px-1.5 py-0.5 rounded-md bg-zinc-900/60 border border-white/10 text-zinc-400 group-hover:text-zinc-200 transition-colors"
+                                aria-label={`Abrir ${site.name}`}
+                              >
+                                Ver
+                              </a>
                             )}
                           </div>
                         </motion.div>
@@ -1081,14 +1072,16 @@ export default function Page() {
               initial="hidden"
               whileInView="show"
               viewport={viewportSettings}
-              className="grid md:grid-cols-2 lg:grid-cols-3 gap-4"
+              className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-8"
             >
               {experience.map((exp) => (
                 <motion.div
                   key={exp.company}
                   variants={fadeUpItem}
-                  className="p-5 rounded-xl bg-black/55 border border-white/10 hover:border-violet-500/25 hover:bg-black/60 transition-all backdrop-blur-xl shadow-[0_10px_40px_rgba(0,0,0,0.35)]"
+                  className="relative pl-5"
                 >
+                  <div className="absolute left-0 top-2 h-full w-px bg-white/10" />
+                  <div className="absolute left-[-3px] top-2 h-2 w-2 rounded-full bg-violet-400/60" />
                   <div className="flex items-start justify-between gap-3 mb-2">
                     <h4 className="font-semibold text-sm text-white flex-1 min-w-0 break-words">
                       {exp.company}
