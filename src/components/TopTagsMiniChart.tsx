@@ -19,7 +19,11 @@ export default function TopTagsMiniChart({
   items: Item[];
   isMobile: boolean;
 }) {
-  const safeItems = items.slice(0, 5);
+  const safeItems = useMemo(() => {
+    return [...items]
+      .sort((a, b) => b.count - a.count || a.tag.localeCompare(b.tag))
+      .slice(0, 5);
+  }, [items]);
   const maxCount = useMemo(
     () => Math.max(1, ...safeItems.map((i) => i.count)),
     [safeItems],
@@ -31,11 +35,12 @@ export default function TopTagsMiniChart({
     const n = Math.max(1, safeItems.length);
     const width = 100;
     const height = 44;
-    const padX = 6;
+    const padX = 0;
     const padY = 6;
 
     return safeItems.map((item, index) => {
-      const x = n === 1 ? width / 2 : padX + (index / (n - 1)) * (width - padX * 2);
+      const x =
+        n === 1 ? width / 2 : padX + (index / (n - 1)) * (width - padX * 2);
       const pct = Math.max(0, Math.min(1, item.count / maxCount));
       const y = padY + (1 - pct) * (height - padY * 2);
       return { x, y, item };
@@ -69,13 +74,15 @@ export default function TopTagsMiniChart({
         <div className="text-[10px] text-zinc-500">Sutil</div>
       </div>
 
-      <div className="mt-4 rounded-xl border border-white/10 bg-white/5 px-3 py-3">
-        <svg
-          viewBox="0 0 100 44"
-          className="h-12 w-full text-violet-300/80"
-          role="img"
-          aria-label="Distribuição das tecnologias mais recorrentes"
-        >
+      <div className="mt-4 rounded-xl border border-white/10 bg-white/5 p-3">
+        <div className="w-full md:max-w-xl mx-auto">
+          <div className="aspect-[100/44]">
+            <svg
+              viewBox="0 0 100 44"
+              className="h-full w-full text-violet-300/80"
+              role="img"
+              aria-label="Distribuição das tecnologias mais recorrentes"
+            >
           <defs>
             <linearGradient id="sparkArea" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0%" stopColor="currentColor" stopOpacity="0.22" />
@@ -141,7 +148,9 @@ export default function TopTagsMiniChart({
               </g>
             );
           })}
-        </svg>
+            </svg>
+          </div>
+        </div>
 
         <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1">
           {safeItems.map((item, index) => {
