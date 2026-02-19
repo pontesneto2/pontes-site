@@ -129,7 +129,7 @@ export default function Page() {
     },
     {
       title: "iMidooh — Gerenciamento de Mídia DOOH",
-      subtitle: "",
+      subtitle: "Em desenvolvimento",
       tags: [
         "React Native",
         "Typescript",
@@ -371,7 +371,7 @@ export default function Page() {
 
       <div className="relative z-10">
         {/* NAV */}
-        <header className="sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-black/30 border-b border-white/5">
+        <header className="sticky top-0 z-50 border-b border-white/5 bg-[#141418] md:backdrop-blur md:supports-[backdrop-filter]:bg-black/30">
           <div className="mx-auto max-w-7xl px-3 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between py-4 md:py-0 md:h-16">
               <div className="flex items-center gap-2 sm:gap-3">
@@ -445,7 +445,7 @@ export default function Page() {
           {navOpen && (
             <div
               id="mobile-nav"
-              className="md:hidden border-t border-white/5 bg-black/50"
+              className="md:hidden border-t border-white/5 bg-[#141418]"
             >
               <div className="mx-auto max-w-7xl px-3 py-4 flex flex-col gap-2">
                 {[
@@ -1246,47 +1246,101 @@ export default function Page() {
                     </div>
                   </div>
 
-                  <TopTagsMiniChart items={top5TechTags} isMobile={isMobile} />
+                  <div className="hidden xl:block">
+                    <TopTagsMiniChart
+                      items={top5TechTags}
+                      isMobile={isMobile}
+                    />
+                  </div>
 
-                  <motion.div
-                    variants={staggerTight}
-                    initial="hidden"
-                    whileInView="show"
-                    viewport={viewportSettings}
-                    className="mt-6 flex flex-wrap gap-2"
-                  >
-                    {topTechTags.map((item) => {
-                      const sizeClass =
-                        item.count >= 4
-                          ? "text-[10px]"
-                          : item.count === 3
-                            ? "text-[9px]"
-                            : "text-[8px]";
-                      const accentClass =
-                        item.count >= 3
-                          ? "border-violet-500/25 text-zinc-200 hover:text-white hover:border-fuchsia-500/25"
-                          : "border-white/10 text-zinc-400 hover:text-zinc-200 hover:border-white/20";
+                  <div className="mt-6">
+                    <div className="text-[11px] uppercase tracking-wide text-zinc-500 mb-2">
+                      Top 10
+                    </div>
+                    <motion.div
+                      variants={staggerTight}
+                      initial="hidden"
+                      whileInView="show"
+                      viewport={viewportSettings}
+                      className="flex flex-wrap gap-2"
+                    >
+                      {topTechTags.slice(0, 10).map((item) => {
+                        const sizeClass =
+                          item.count >= 4
+                            ? "text-[10px]"
+                            : item.count === 3
+                              ? "text-[9px]"
+                              : "text-[8px]";
+                        const accentClass =
+                          item.count >= 3
+                            ? "border-violet-500/25 text-zinc-200 hover:text-white hover:border-fuchsia-500/25"
+                            : "border-white/10 text-zinc-400 hover:text-zinc-200 hover:border-white/20";
 
-                      const dotClass =
-                        item.count >= 3 ? "bg-violet-400/70" : "bg-zinc-500/40";
+                        const dotClass =
+                          item.count >= 3
+                            ? "bg-violet-400/70"
+                            : "bg-zinc-500/40";
 
-                      return (
-                        <motion.span
-                          key={item.tag}
-                          variants={tagItem}
-                          whileHover={
-                            isMobile ? undefined : { y: -2, scale: 1.02 }
-                          }
-                          className={`group inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-zinc-900/35 border ${accentClass} transition-all duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.22)] ${sizeClass}`}
-                        >
-                          <span
-                            className={`h-0.5 w-0.5 rounded-full ${dotClass}`}
-                          />
-                          <span className="font-semibold">{item.tag}</span>
-                        </motion.span>
-                      );
-                    })}
-                  </motion.div>
+                        return (
+                          <motion.span
+                            key={item.tag}
+                            variants={tagItem}
+                            whileHover={
+                              isMobile ? undefined : { y: -2, scale: 1.02 }
+                            }
+                            className={`group inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-zinc-900/35 border ${accentClass} transition-all duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.22)] ${sizeClass}`}
+                          >
+                            <span
+                              className={`h-0.5 w-0.5 rounded-full ${dotClass}`}
+                            />
+                            <span className="font-semibold">{item.tag}</span>
+                          </motion.span>
+                        );
+                      })}
+                    </motion.div>
+
+                    <motion.div
+                      variants={staggerTight}
+                      initial="hidden"
+                      whileInView="show"
+                      viewport={viewportSettings}
+                      className="mt-2 flex flex-wrap gap-2"
+                    >
+                      {topTechTags.slice(10).map((item) => {
+                        const sizeClass =
+                          item.count >= 4
+                            ? "text-[10px]"
+                            : item.count === 3
+                              ? "text-[9px]"
+                              : "text-[8px]";
+                        const accentClass =
+                          item.count >= 3
+                            ? "border-violet-500/25 text-zinc-200 hover:text-white hover:border-fuchsia-500/25"
+                            : "border-white/10 text-zinc-400 hover:text-zinc-200 hover:border-white/20";
+
+                        const dotClass =
+                          item.count >= 3
+                            ? "bg-violet-400/70"
+                            : "bg-zinc-500/40";
+
+                        return (
+                          <motion.span
+                            key={item.tag}
+                            variants={tagItem}
+                            whileHover={
+                              isMobile ? undefined : { y: -2, scale: 1.02 }
+                            }
+                            className={`group inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-zinc-900/35 border ${accentClass} transition-all duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.22)] ${sizeClass}`}
+                          >
+                            <span
+                              className={`h-0.5 w-0.5 rounded-full ${dotClass}`}
+                            />
+                            <span className="font-semibold">{item.tag}</span>
+                          </motion.span>
+                        );
+                      })}
+                    </motion.div>
+                  </div>
 
                   <p className="mt-6 text-xs text-zinc-500 leading-relaxed flex items-start gap-2">
                     <span aria-hidden className="mt-[1px]">
