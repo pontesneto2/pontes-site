@@ -390,7 +390,7 @@ export default function Page() {
                     FCOPTS
                   </span>
                   <span className="text-[10px] text-zinc-500 tracking-wide -mt-0.5">
-                    Senior Software Engineer · UX Ops
+                    Engenheiro de Software | UX Ops
                   </span>
                 </div>
               </div>
@@ -477,18 +477,6 @@ export default function Page() {
 
 
           <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
-            {/* Subtítulo animado */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, ease: "easeOut" }}
-              className="mb-6"
-            >
-              <span className="inline-block px-2 py-1 rounded-full border border-violet-500/30 bg-violet-500/10 text-violet-300 text-[11px] font-medium backdrop-blur-sm">
-                Senior Software Engineer · UX Ops
-              </span>
-            </motion.div>
-
             {/* Nome - DESTAQUE MÁXIMO */}
             <motion.h1
               initial={{ opacity: 0, scale: 0.9 }}
@@ -845,7 +833,11 @@ export default function Page() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.15 }}
               transition={{ duration: 0.7, ease: "easeOut" }}
-              className="relative rounded-2xl border border-white/10 bg-black/20 backdrop-blur-2xl p-8 shadow-2xl overflow-hidden"
+              className={`relative rounded-2xl border border-white/10 backdrop-blur-2xl p-8 shadow-2xl overflow-hidden ${
+                activePortfolioTab === "sistemas"
+                  ? "bg-[#050505]"
+                  : "bg-black/20"
+              }`}
             >
               <div className="pointer-events-none absolute inset-0 bg-white/5" />
               <div
