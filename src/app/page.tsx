@@ -1378,7 +1378,7 @@ export default function Page() {
                     <div className="mx-auto max-w-[340px] md:max-w-[360px] aspect-square rounded-2xl overflow-hidden border border-violet-500/30 shadow-[0_0_50px_rgba(168,85,247,0.2)]">
                       <div className="relative w-full h-full">
                         <Image
-                          src="/pontes.jpg"
+                          src="/pontes-institucional.png"
                           alt="Francisco Pontes"
                           fill
                           sizes="(max-width: 768px) 100vw, 40vw"
@@ -1434,9 +1434,10 @@ export default function Page() {
                         Formação &amp; Background
                       </div>
                       <p className="mt-1 text-xs text-zinc-400 leading-relaxed">
-                        Profissional formado em Análise e Desenvolvimento de
-                        Sistemas, pós-graduado em Engenharia de Software com
-                        ênfase em DevOps pela UNIFOR, com especializações em
+                        29 anos e residindo em Fortaleza-CE, profissional
+                        formado em Análise e Desenvolvimento de Sistemas,
+                        pós-graduado em Engenharia de Software com ênfase em
+                        DevOps pela UNIFOR, com especializações em
                         Desenvolvimento Full Stack (Digital College) e UX/UI
                         &amp; Produtos Digitais (EBAC). Vivência internacional
                         com intercâmbio de língua inglesa na Irlanda-UE (nível
