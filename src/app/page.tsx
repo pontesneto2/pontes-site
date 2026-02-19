@@ -1108,11 +1108,11 @@ export default function Page() {
                       {exp.company}
                     </h4>
                     <div className="flex items-center gap-2 shrink-0">
-                      <span className="text-[9px] text-violet-400 bg-violet-500/10 px-2 py-1 rounded-lg border border-violet-500/20 whitespace-nowrap font-semibold">
+                      <span className="text-[8px] text-violet-400 bg-violet-500/10 px-1.5 py-0.5 rounded-md border border-violet-500/20 whitespace-nowrap font-semibold">
                         {exp.period}
                       </span>
                       {"remote" in exp && exp.remote ? (
-                        <span className="text-[9px] text-fuchsia-300 bg-fuchsia-500/10 px-2 py-1 rounded-lg border border-fuchsia-500/20 whitespace-nowrap font-semibold">
+                        <span className="text-[8px] text-fuchsia-300 bg-fuchsia-500/10 px-1.5 py-0.5 rounded-md border border-fuchsia-500/20 whitespace-nowrap font-semibold">
                           Trabalho remoto
                         </span>
                       ) : null}
