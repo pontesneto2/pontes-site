@@ -170,11 +170,6 @@ export default function Page() {
 
   const additionalProjects = [
     {
-      name: "Sistema Especial Fazenda Chapéu",
-      tech: ["Scriptcase", "PHP", "JS", "PostgreSQL"],
-      desc: "Secretaria de Desenvolvimento Agrário do Ceará",
-    },
-    {
       name: "Sistema Financeiro ERP Estrela",
       tech: [
         "NodeJS",
@@ -187,6 +182,28 @@ export default function Page() {
         "TypeScript",
       ],
       desc: "Grupo Star",
+    },
+    {
+      name: "Sistema Escolar",
+      tech: ["PHP", "JS", "PostgreSQL", "Scriptcase"],
+      desc: "Colégio da Polícia Militar do Ceará",
+    },
+    {
+      name: "Sistema Diário de Obras",
+      tech: [
+        "NodeJS",
+        "ExpressJS",
+        "Prisma",
+        "PostgreSQL",
+        "Docker",
+        "TailwindCSS",
+      ],
+      desc: "Alfa Construções e Locações",
+    },
+    {
+      name: "Sistema Especial Fazenda Chapéu",
+      tech: ["Scriptcase", "PHP", "JS", "PostgreSQL"],
+      desc: "Secretaria de Desenvolvimento Agrário do Ceará",
     },
     {
       name: "Sistema SIGMA",
