@@ -1331,8 +1331,6 @@ export default function Page() {
                     </span>
                   </h2>
 
-                  <GithubMetricsCounters username="pontesneto2" />
-
                   <div className="space-y-4 text-[15px] sm:text-base text-zinc-300 leading-relaxed">
                     <p>
                       <span className="text-white font-semibold">
@@ -1389,6 +1387,8 @@ export default function Page() {
                 </div>
               </div>
             </div>
+
+            <GithubMetricsCounters username="pontesneto2" className="mt-6" />
           </div>
         </section>
 

@@ -70,8 +70,10 @@ function animateCount(
 
 export default function GithubMetricsCounters({
   username = "pontesneto2",
+  className = "",
 }: {
   username?: string;
+  className?: string;
 }) {
   const { ref, isInView } = useInViewOnce<HTMLDivElement>(0.35);
 
@@ -160,8 +162,8 @@ export default function GithubMetricsCounters({
   ] as const;
 
   return (
-    <div ref={ref} className="mt-7">
-      <div className="grid grid-cols-3 gap-3">
+    <div ref={ref} className={className}>
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
         {items.map((item) => (
           <motion.div
             key={item.label}
@@ -169,13 +171,15 @@ export default function GithubMetricsCounters({
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.6 }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="rounded-2xl border border-white/10 bg-white/5 px-3 py-3"
+            className="rounded-2xl border border-white/10 bg-black/35 backdrop-blur-xl px-4 py-4 shadow-[0_16px_60px_rgba(0,0,0,0.35)]"
           >
             <div className="text-[10px] uppercase tracking-wide text-zinc-500">
               {item.label}
             </div>
-            <div className="mt-1 text-lg font-semibold text-zinc-100 tabular-nums">
-              {loading && metrics === null ? "…" : formatNumber(item.value)}
+            <div className="mt-2 text-2xl font-semibold tabular-nums leading-none">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-zinc-100 via-violet-200 to-fuchsia-200">
+                {loading && metrics === null ? "…" : formatNumber(item.value)}
+              </span>
             </div>
           </motion.div>
         ))}
