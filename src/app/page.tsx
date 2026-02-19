@@ -1355,7 +1355,7 @@ export default function Page() {
                 {/* Coluna da imagem - 2 colunas */}
                 <div className="md:col-span-2 flex items-center">
                   <div className="relative w-full">
-                    <div className="aspect-square rounded-2xl overflow-hidden border border-violet-500/30 shadow-[0_0_50px_rgba(168,85,247,0.2)]">
+                    <div className="mx-auto max-w-[340px] md:max-w-[360px] aspect-square rounded-2xl overflow-hidden border border-violet-500/30 shadow-[0_0_50px_rgba(168,85,247,0.2)]">
                       <div className="relative w-full h-full">
                         <Image
                           src="/pontes.jpg"
@@ -1368,8 +1368,8 @@ export default function Page() {
                       </div>
                     </div>
                     {/* Badge flutuante */}
-                    <div className="absolute -bottom-4 -right-4 bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white px-6 py-3 rounded-2xl shadow-xl font-semibold text-sm">
-                      5+ anos de impacto
+                    <div className="absolute -bottom-3 -right-3 bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white px-4 py-2 rounded-xl shadow-xl font-semibold text-xs">
+                      5+ anos de experiência
                     </div>
                   </div>
                 </div>
@@ -1409,11 +1409,21 @@ export default function Page() {
                       observabilidade e garanto ambientes confiáveis para
                       evolução contínua.
                     </p>
-                    <p className="text-sm text-zinc-400">
-                      Formação em ADS, especializações em Full-Stack e UX/UI
-                      @EBAC. Cursando pós em Engenharia de Software + DevOps
-                      @UNIFOR e segunda graduação em Ciência da Computação.
-                    </p>
+                    <div className="pt-2">
+                      <div className="text-[11px] font-semibold text-zinc-200 tracking-wide">
+                        Formação &amp; Background
+                      </div>
+                      <p className="mt-1 text-xs text-zinc-400 leading-relaxed">
+                        Profissional formado em Análise e Desenvolvimento de
+                        Sistemas, pós-graduado em Engenharia de Software com
+                        ênfase em DevOps pela UNIFOR, com especializações em
+                        Desenvolvimento Full Stack (Digital College) e UX/UI
+                        &amp; Produtos Digitais (EBAC). Vivência internacional
+                        com intercâmbio de língua inglesa na Irlanda-UE (nível
+                        C1). Une engenharia, design e estratégia de produto para
+                        desenvolver soluções.
+                      </p>
+                    </div>
                   </div>
 
                   {/* Tags redesenhadas e alinhadas */}
