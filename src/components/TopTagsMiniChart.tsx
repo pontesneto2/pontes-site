@@ -34,36 +34,27 @@ export default function TopTagsMiniChart({
 
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
-  const points = useMemo(() => {
+  const bars = useMemo(() => {
     const n = Math.max(1, safeItems.length);
     const width = 100;
     const height = chartHeight;
     const padX = isMobile ? 12 : 6;
     const padY = chartPadY;
+    const bottom = height - padY;
+
+    const availableW = width - padX * 2;
+    const segmentW = n === 1 ? availableW : availableW / n;
+    const barW = Math.max(6, segmentW * (isMobile ? 0.62 : 0.54));
 
     return safeItems.map((item, index) => {
-      const x =
-        n === 1 ? width / 2 : padX + (index / (n - 1)) * (width - padX * 2);
+      const centerX = padX + segmentW * (index + 0.5);
+      const x = centerX - barW / 2;
       const pct = Math.max(0, Math.min(1, item.count / maxCount));
       const y = padY + (1 - pct) * (height - padY * 2);
-      return { x, y, item };
+      const h = Math.max(0, bottom - y);
+      return { x, y, h, w: barW, item };
     });
-  }, [safeItems, maxCount, isMobile]);
-
-  const linePath = useMemo(() => {
-    if (points.length === 0) return "";
-    return points
-      .map((p, i) => `${i === 0 ? "M" : "L"}${p.x.toFixed(2)},${p.y.toFixed(2)}`)
-      .join(" ");
-  }, [points]);
-
-  const areaPath = useMemo(() => {
-    if (points.length === 0) return "";
-    const bottom = chartHeight - chartPadY;
-    const start = points[0];
-    const end = points[points.length - 1];
-    return `${linePath} L${end.x.toFixed(2)},${bottom.toFixed(2)} L${start.x.toFixed(2)},${bottom.toFixed(2)} Z`;
-  }, [points, linePath, chartHeight, chartPadY]);
+  }, [safeItems, maxCount, isMobile, chartHeight, chartPadY]);
 
   return (
     <div className="mt-5 rounded-2xl border border-white/10 bg-black/35 backdrop-blur-xl p-4 shadow-[0_16px_60px_rgba(0,0,0,0.35)] overflow-hidden">
@@ -71,7 +62,7 @@ export default function TopTagsMiniChart({
         <div className="min-w-0">
           <div className="text-xs font-semibold text-zinc-200">Top 5</div>
           <div className="text-[11px] text-zinc-500">
-            {isMobile ? "Toque nos pontos" : "Passe o mouse nos pontos"}
+            {isMobile ? "Toque nas barras" : "Passe o mouse nas barras"}
           </div>
         </div>
       </div>
@@ -81,96 +72,87 @@ export default function TopTagsMiniChart({
           <div className="relative aspect-[100/22]">
             <svg
               viewBox="0 0 100 44"
-              className="h-full w-full text-violet-300/80"
+              className="h-full w-full text-violet-200/55"
               role="img"
               aria-label="Distribuição das tecnologias mais recorrentes"
             >
-          <defs>
-            <linearGradient id="sparkArea" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="currentColor" stopOpacity="0.22" />
-              <stop offset="100%" stopColor="currentColor" stopOpacity="0" />
-            </linearGradient>
-          </defs>
+              <line
+                x1={isMobile ? 12 : 6}
+                y1={chartHeight - chartPadY}
+                x2={isMobile ? 88 : 94}
+                y2={chartHeight - chartPadY}
+                stroke="currentColor"
+                strokeWidth={1}
+                opacity={0.35}
+              />
 
-          <path d={areaPath} fill="url(#sparkArea)" />
+              {bars.map((b, index) => {
+                const isActive = activeIndex === index;
+                return (
+                  <g key={b.item.tag}>
+                    <motion.rect
+                      initial={{ y: chartHeight - chartPadY, height: 0, opacity: 0 }}
+                      whileInView={{ y: b.y, height: b.h, opacity: 1 }}
+                      viewport={{ once: true, amount: 0.6 }}
+                      transition={{
+                        duration: 0.85,
+                        ease: [0.16, 1, 0.3, 1],
+                        delay: index * (isMobile ? 0.06 : 0.05),
+                      }}
+                      x={b.x}
+                      width={b.w}
+                      rx={2.5}
+                      fill="currentColor"
+                      opacity={isActive ? 0.85 : 0.55}
+                      onMouseEnter={() => {
+                        if (!isMobile) setActiveIndex(index);
+                      }}
+                      onMouseLeave={() => {
+                        if (!isMobile) setActiveIndex(null);
+                      }}
+                      onClick={() =>
+                        setActiveIndex((prev) => (prev === index ? null : index))
+                      }
+                      role="button"
+                      tabIndex={0}
+                      aria-label={`${b.item.tag}: ${formatCount(b.item.count)}`}
+                    />
 
-          <path
-            d={linePath}
-            fill="none"
-            stroke="currentColor"
-            strokeWidth={2}
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            opacity={0.9}
-          />
-
-          {points.map((p, index) => {
-            const isActive = activeIndex === index;
-            return (
-              <g key={p.item.tag}>
-                <motion.circle
-                  initial={{ r: 0 }}
-                  whileInView={{ r: 1.6 }}
-                  viewport={{ once: true, amount: 0.6 }}
-                  transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                  cx={p.x}
-                  cy={p.y}
-                  r={1.6}
-                  className={isActive ? "text-violet-200" : "text-violet-300/80"}
-                  fill="currentColor"
-                  onMouseEnter={() => {
-                    if (!isMobile) setActiveIndex(index);
-                  }}
-                  onMouseLeave={() => {
-                    if (!isMobile) setActiveIndex(null);
-                  }}
-                  onClick={() =>
-                    setActiveIndex((prev) => (prev === index ? null : index))
-                  }
-                  role="button"
-                  tabIndex={0}
-                  aria-label={`${p.item.tag}: ${formatCount(p.item.count)}`}
-                />
-
-                <circle
-                  cx={p.x}
-                  cy={p.y}
-                  r={3.5}
-                  fill="transparent"
-                  onMouseEnter={() => {
-                    if (!isMobile) setActiveIndex(index);
-                  }}
-                  onMouseLeave={() => {
-                    if (!isMobile) setActiveIndex(null);
-                  }}
-                  onClick={() =>
-                    setActiveIndex((prev) => (prev === index ? null : index))
-                  }
-                />
-              </g>
-            );
-          })}
+                    <rect
+                      x={b.x - 2}
+                      y={0}
+                      width={b.w + 4}
+                      height={chartHeight}
+                      fill="transparent"
+                      onMouseEnter={() => {
+                        if (!isMobile) setActiveIndex(index);
+                      }}
+                      onMouseLeave={() => {
+                        if (!isMobile) setActiveIndex(null);
+                      }}
+                      onClick={() =>
+                        setActiveIndex((prev) => (prev === index ? null : index))
+                      }
+                    />
+                  </g>
+                );
+              })}
             </svg>
+          </div>
 
-            {points.map((p, index) => {
+          <div className="mt-3 grid grid-cols-5 gap-1.5 sm:gap-2">
+            {safeItems.map((item, index) => {
               const isActive = activeIndex === index;
-              const xPct = `${p.x}%`;
-              const yPercent = (p.y / chartHeight) * 100;
-              const yPx = Math.max(0, yPercent);
-
               return (
                 <button
-                  key={`${p.item.tag}-label`}
+                  key={`${item.tag}-tag`}
                   type="button"
-                  className={`absolute left-0 top-0 -translate-x-1/2 rounded-full border px-1.5 py-0.5 text-[9px] font-semibold tracking-tight transition-colors max-w-[42%] truncate ${
+                  className={`min-w-0 w-full text-center rounded-full border px-1.5 sm:px-2 py-1 text-[9px] sm:text-[10px] font-semibold tracking-tight truncate transition-colors ${
                     isActive
                       ? "bg-black/65 border-white/15 text-zinc-100"
-                      : "bg-black/45 border-white/10 text-zinc-300"
+                      : "bg-black/40 border-white/10 text-zinc-300"
                   }`}
-                  style={{
-                    left: xPct,
-                    top: `calc(${yPx.toFixed(2)}% + 8px)`,
-                  }}
+                  title={`${item.tag}: ${formatCount(item.count)}`}
                   onClick={() =>
                     setActiveIndex((prev) => (prev === index ? null : index))
                   }
@@ -181,7 +163,7 @@ export default function TopTagsMiniChart({
                     if (!isMobile) setActiveIndex(null);
                   }}
                 >
-                  {p.item.tag}
+                  {item.tag}
                 </button>
               );
             })}
