@@ -1161,8 +1161,12 @@ export default function Page() {
                     initial="hidden"
                     whileInView="show"
                     viewport={viewportSettings}
-                    className="mt-5 grid gap-4"
+                    className="relative mt-6 flex flex-col gap-6"
                   >
+                    <div
+                      aria-hidden
+                      className="pointer-events-none absolute left-5 top-5 bottom-5 w-px bg-white/10"
+                    />
                     {[
                       {
                         icon: Palette,
@@ -1190,11 +1194,18 @@ export default function Page() {
                         variants={fadeLeftItem}
                         className="group relative"
                       >
-                        <div className="flex items-start gap-3">
-                          <div className="mt-0.5 p-2 rounded-xl bg-violet-500/10 border border-violet-500/20">
-                            <step.icon className="h-4 w-4 text-violet-300" />
+                        <div className="flex items-start gap-4">
+                          <div className="relative shrink-0">
+                            <div className="h-10 w-10 rounded-xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center">
+                              <step.icon className="h-4 w-4 text-violet-300" />
+                            </div>
+                            <div
+                              aria-hidden
+                              className="pointer-events-none absolute left-1/2 top-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-violet-400/25"
+                            />
                           </div>
-                          <div className="min-w-0">
+
+                          <div className="min-w-0 pt-0.5">
                             <div className="text-sm font-semibold text-zinc-100 group-hover:text-white transition-colors">
                               {step.title}
                             </div>
