@@ -283,6 +283,12 @@ export default function Page() {
       name: "Sistemas SDA",
       desc: "Hub de acesso aos sistemas e serviços digitais.",
     },
+    {
+      url: "",
+      name: "Programa de Imigração Hey Canadá",
+      desc: "Voltado para atrair e prospectar pessoas que querem imigrar para o Canadá. Projeto 100% em inglês.",
+      discontinued: true,
+    },
   ];
 
   const experience = [
@@ -296,12 +302,14 @@ export default function Page() {
       role: "Sênior Desenvolvedor Full Stack",
       period: "2024–2025",
       remote: true,
+      languages: "PT/EN",
     },
     {
       company: "Terceirizada - FedEX Services (Portugal)",
       role: "Sênior Desenvolvedor Full Stack",
       period: "2024–2025",
       remote: true,
+      languages: "PT/EN",
     },
     {
       company: "Instituto Anjos Digitais",
@@ -1049,11 +1057,8 @@ export default function Page() {
                     className="grid sm:grid-cols-2 lg:grid-cols-2 gap-5 lg:gap-6"
                   >
                     {websites.map((site) => (
-                      <motion.a
-                        key={site.url}
-                        href={site.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                      <motion.div
+                        key={site.url || site.name}
                         variants={fadeUpItem}
                         className="group relative flex items-center justify-between p-5 rounded-2xl bg-gradient-to-br from-white/5 via-transparent to-transparent border border-white/10 hover:border-fuchsia-500/30 transition-all duration-300 shadow-[0_10px_40px_rgba(0,0,0,0.35)]"
                       >
@@ -1067,12 +1072,33 @@ export default function Page() {
                           </div>
                         </div>
                         <div className="relative flex items-center gap-3 shrink-0 ml-3">
-                          <span className="hidden sm:inline-flex text-[10px] px-2 py-1 rounded-lg bg-zinc-900/60 border border-white/10 text-zinc-400 group-hover:text-zinc-200 transition-colors">
-                            Ver
-                          </span>
-                          <ExternalLink className="h-4 w-4 text-zinc-600 group-hover:text-fuchsia-400 transition-colors" />
+                          {"discontinued" in site && site.discontinued ? (
+                            <span className="text-[10px] px-2 py-1 rounded-lg bg-zinc-900/60 border border-white/10 text-zinc-400 whitespace-nowrap">
+                              Descontinuado
+                            </span>
+                          ) : (
+                            <>
+                              <a
+                                href={site.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="hidden sm:inline-flex text-[10px] px-2 py-1 rounded-lg bg-zinc-900/60 border border-white/10 text-zinc-400 group-hover:text-zinc-200 transition-colors"
+                              >
+                                Ver
+                              </a>
+                              <a
+                                href={site.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex"
+                                aria-label={`Abrir ${site.name}`}
+                              >
+                                <ExternalLink className="h-4 w-4 text-zinc-600 group-hover:text-fuchsia-400 transition-colors" />
+                              </a>
+                            </>
+                          )}
                         </div>
-                      </motion.a>
+                      </motion.div>
                     ))}
                   </motion.div>
                 </motion.div>
@@ -1114,6 +1140,11 @@ export default function Page() {
                       {"remote" in exp && exp.remote ? (
                         <span className="text-[8px] text-fuchsia-300 bg-fuchsia-500/10 px-1.5 py-0.5 rounded-md border border-fuchsia-500/20 whitespace-nowrap font-semibold">
                           Trabalho remoto
+                        </span>
+                      ) : null}
+                      {"languages" in exp && exp.languages ? (
+                        <span className="text-[8px] text-zinc-300 bg-white/5 px-1.5 py-0.5 rounded-md border border-white/10 whitespace-nowrap font-semibold">
+                          {exp.languages}
                         </span>
                       ) : null}
                     </div>
