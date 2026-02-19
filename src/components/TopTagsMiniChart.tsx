@@ -76,7 +76,7 @@ export default function TopTagsMiniChart({
 
       <div className="mt-4 rounded-xl border border-white/10 bg-white/5 p-3">
         <div className="w-full md:max-w-xl mx-auto">
-          <div className="aspect-[100/44]">
+          <div className="relative aspect-[100/22]">
             <svg
               viewBox="0 0 100 44"
               className="h-full w-full text-violet-300/80"
@@ -108,12 +108,12 @@ export default function TopTagsMiniChart({
               <g key={p.item.tag}>
                 <motion.circle
                   initial={{ r: 0 }}
-                  whileInView={{ r: 3.2 }}
+                  whileInView={{ r: 1.6 }}
                   viewport={{ once: true, amount: 0.6 }}
                   transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                   cx={p.x}
                   cy={p.y}
-                  r={3.2}
+                  r={1.6}
                   className={isActive ? "text-violet-200" : "text-violet-300/80"}
                   fill="currentColor"
                   onMouseEnter={() => {
@@ -133,7 +133,7 @@ export default function TopTagsMiniChart({
                 <circle
                   cx={p.x}
                   cy={p.y}
-                  r={7}
+                  r={3.5}
                   fill="transparent"
                   onMouseEnter={() => {
                     if (!isMobile) setActiveIndex(index);
@@ -149,35 +149,37 @@ export default function TopTagsMiniChart({
             );
           })}
             </svg>
-          </div>
-        </div>
 
-        <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1">
-          {safeItems.map((item, index) => {
-            const isActive = activeIndex === index;
-            return (
-              <button
-                key={item.tag}
-                type="button"
-                className={`text-[10px] font-semibold tracking-tight transition-colors ${
-                  isActive
-                    ? "text-zinc-100"
-                    : "text-zinc-400 hover:text-zinc-200"
-                }`}
-                onClick={() =>
-                  setActiveIndex((prev) => (prev === index ? null : index))
-                }
-                onMouseEnter={() => {
-                  if (!isMobile) setActiveIndex(index);
-                }}
-                onMouseLeave={() => {
-                  if (!isMobile) setActiveIndex(null);
-                }}
-              >
-                {item.tag}
-              </button>
-            );
-          })}
+            {points.map((p, index) => {
+              const isActive = activeIndex === index;
+              const xPct = `${p.x}%`;
+              const yPct = `${Math.min(96, (p.y / 44) * 100 + 10)}%`;
+
+              return (
+                <button
+                  key={`${p.item.tag}-label`}
+                  type="button"
+                  className={`absolute left-0 top-0 -translate-x-1/2 rounded-full border px-2 py-0.5 text-[10px] font-semibold tracking-tight transition-colors max-w-[42%] truncate ${
+                    isActive
+                      ? "bg-black/65 border-white/15 text-zinc-100"
+                      : "bg-black/45 border-white/10 text-zinc-300"
+                  }`}
+                  style={{ left: xPct, top: yPct }}
+                  onClick={() =>
+                    setActiveIndex((prev) => (prev === index ? null : index))
+                  }
+                  onMouseEnter={() => {
+                    if (!isMobile) setActiveIndex(index);
+                  }}
+                  onMouseLeave={() => {
+                    if (!isMobile) setActiveIndex(null);
+                  }}
+                >
+                  {p.item.tag}
+                </button>
+              );
+            })}
+          </div>
         </div>
       </div>
 
