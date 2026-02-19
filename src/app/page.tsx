@@ -600,7 +600,7 @@ export default function Page() {
 
                 {/* Badge de destaque */}
                 <div className="relative z-10 mb-6">
-                  <span className="inline-flex items-center gap-2 px-2 py-1 rounded-full bg-gradient-to-r from-violet-600/20 to-fuchsia-600/20 border border-violet-500/30 text-violet-300 text-[11px] font-semibold backdrop-blur-sm">
+                  <span className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-gradient-to-r from-violet-600/20 to-fuchsia-600/20 border border-violet-500/30 text-violet-300 text-[12px] font-semibold backdrop-blur-sm">
                     <Rocket className="h-3.5 w-3.5" />
                     Projetos Sob Medida
                   </span>
@@ -716,7 +716,7 @@ export default function Page() {
         {/* PROJETOS EM DESTAQUE - REDESENHADO */}
         <section
           id="projects"
-          className="relative py-24 border-t border-white/5 bg-zinc-900/40"
+          className="relative py-24 border-t border-white/5 bg-zinc-900/40 overflow-x-hidden"
         >
           <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
             <div className="text-center mb-16">
@@ -744,7 +744,7 @@ export default function Page() {
                 >
                   {/* Badge de categoria */}
                   <div className="mb-4">
-                    <span className="inline-block px-1.5 py-0.5 rounded-md text-[9px] font-medium bg-violet-500/10 text-violet-300 border border-violet-500/20">
+                    <span className="inline-block px-2 py-0.5 rounded-md text-[10px] font-medium bg-violet-500/10 text-violet-300 border border-violet-500/20">
                       {project.category}
                     </span>
                   </div>
@@ -781,7 +781,7 @@ export default function Page() {
                     {project.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="text-[9px] px-1.5 py-0.5 rounded-md bg-zinc-800/50 text-zinc-300 border border-zinc-700/50 hover:border-violet-500/30 transition-colors"
+                        className="text-[10px] px-2 py-0.5 rounded-md bg-zinc-800/50 text-zinc-300 border border-zinc-700/50 hover:border-violet-500/30 transition-colors"
                       >
                         {tag}
                       </span>
@@ -833,7 +833,7 @@ export default function Page() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.15 }}
               transition={{ duration: 0.7, ease: "easeOut" }}
-              className={`relative rounded-2xl border border-white/10 backdrop-blur-2xl p-8 shadow-2xl overflow-hidden ${
+              className={`relative rounded-2xl border border-white/10 backdrop-blur-2xl p-5 sm:p-8 shadow-2xl overflow-hidden ${
                 activePortfolioTab === "sistemas"
                   ? "bg-[#050505]"
                   : "bg-black/20"
@@ -860,9 +860,9 @@ export default function Page() {
                       }`}
                     >
                       <Code className="h-4 w-4" />
-                      Sistemas Web
+                      Sistemas
                       <span
-                        className={`text-[8px] px-1 py-[1px] rounded-full ${
+                        className={`text-[9px] px-1.5 py-[1px] rounded-full ${
                           activePortfolioTab === "sistemas"
                             ? "bg-violet-500/20 text-violet-300"
                             : "bg-zinc-800 text-zinc-500"
@@ -882,7 +882,7 @@ export default function Page() {
                       <Globe className="h-4 w-4" />
                       Websites
                       <span
-                        className={`text-[8px] px-1 py-[1px] rounded-full ${
+                        className={`text-[9px] px-1.5 py-[1px] rounded-full ${
                           activePortfolioTab === "websites"
                             ? "bg-fuchsia-500/20 text-fuchsia-300"
                             : "bg-zinc-800 text-zinc-500"
@@ -949,13 +949,13 @@ export default function Page() {
                       variants={staggerList}
                       initial="hidden"
                       animate="show"
-                      className="grid sm:grid-cols-2 lg:grid-cols-2 gap-5 lg:gap-6"
+                      className="min-w-0 grid sm:grid-cols-2 lg:grid-cols-2 gap-5 lg:gap-6"
                     >
                       {additionalProjects.map((proj) => (
                         <motion.div
                           key={proj.name}
                           variants={fadeUpItem}
-                          className="group relative p-5 rounded-2xl bg-black/60 border border-white/10 hover:border-violet-500/30 hover:bg-black/65 transition-all duration-300 shadow-[0_10px_40px_rgba(0,0,0,0.35)]"
+                          className="group relative min-w-0 w-full p-5 rounded-2xl bg-black/60 border border-white/10 hover:border-violet-500/30 hover:bg-black/65 transition-all duration-300 shadow-[0_10px_40px_rgba(0,0,0,0.35)]"
                         >
                           <div className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-br from-violet-500/10 via-transparent to-fuchsia-500/10" />
                           <div className="absolute top-3 right-3">
@@ -974,7 +974,7 @@ export default function Page() {
                             {proj.tech.map((t) => (
                               <span
                                 key={t}
-                                className="text-[8px] px-1 py-[1px] rounded bg-white/5 text-zinc-300 border border-white/10 hover:border-violet-500/25 hover:text-white transition-all"
+                                className="text-[9px] px-1.5 py-[2px] rounded bg-white/5 text-zinc-300 border border-white/10 hover:border-violet-500/25 hover:text-white transition-all"
                               >
                                 {t}
                               </span>
@@ -1014,13 +1014,13 @@ export default function Page() {
                       variants={staggerList}
                       initial="hidden"
                       animate="show"
-                      className="grid sm:grid-cols-2 lg:grid-cols-2 gap-5 lg:gap-6"
+                      className="min-w-0 grid sm:grid-cols-2 lg:grid-cols-2 gap-5 lg:gap-6"
                     >
                       {websites.map((site) => (
                         <motion.div
                           key={site.url || site.name}
                           variants={fadeUpItem}
-                          className="group relative flex items-center justify-between p-5 rounded-2xl bg-black/60 border border-white/10 hover:border-fuchsia-500/30 hover:bg-black/65 transition-all duration-300 shadow-[0_10px_40px_rgba(0,0,0,0.35)]"
+                          className="group relative min-w-0 w-full flex items-center justify-between p-5 rounded-2xl bg-black/60 border border-white/10 hover:border-fuchsia-500/30 hover:bg-black/65 transition-all duration-300 shadow-[0_10px_40px_rgba(0,0,0,0.35)]"
                         >
                           <div className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-br from-fuchsia-500/10 via-transparent to-violet-500/10" />
                           <div className="min-w-0">
@@ -1033,7 +1033,7 @@ export default function Page() {
                           </div>
                           <div className="relative flex items-center gap-3 shrink-0 ml-3">
                             {"discontinued" in site && site.discontinued ? (
-                              <span className="text-[8px] px-1.5 py-0.5 rounded-md bg-zinc-900/60 border border-white/10 text-zinc-400 whitespace-nowrap">
+                              <span className="text-[9px] px-1.5 py-0.5 rounded-md bg-zinc-900/60 border border-white/10 text-zinc-400 whitespace-nowrap">
                                 Descontinuado
                               </span>
                             ) : (
@@ -1042,7 +1042,7 @@ export default function Page() {
                                   href={site.url}
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  className="hidden sm:inline-flex text-[8px] px-1.5 py-0.5 rounded-md bg-zinc-900/60 border border-white/10 text-zinc-400 group-hover:text-zinc-200 transition-colors"
+                                  className="hidden sm:inline-flex text-[9px] px-1.5 py-0.5 rounded-md bg-zinc-900/60 border border-white/10 text-zinc-400 group-hover:text-zinc-200 transition-colors"
                                 >
                                   Ver
                                 </a>
@@ -1094,16 +1094,16 @@ export default function Page() {
                       {exp.company}
                     </h4>
                     <div className="flex items-center gap-2 shrink-0">
-                      <span className="text-[7px] text-violet-400 bg-violet-500/10 px-1 py-[1px] rounded border border-violet-500/20 whitespace-nowrap font-semibold">
+                      <span className="text-[8px] text-violet-400 bg-violet-500/10 px-1.5 py-[2px] rounded border border-violet-500/20 whitespace-nowrap font-semibold">
                         {exp.period}
                       </span>
                       {"remote" in exp && exp.remote ? (
-                        <span className="text-[7px] text-fuchsia-300 bg-fuchsia-500/10 px-1 py-[1px] rounded border border-fuchsia-500/20 whitespace-nowrap font-semibold">
+                        <span className="text-[8px] text-fuchsia-300 bg-fuchsia-500/10 px-1.5 py-[2px] rounded border border-fuchsia-500/20 whitespace-nowrap font-semibold">
                           Trabalho remoto
                         </span>
                       ) : null}
                       {"languages" in exp && exp.languages ? (
-                        <span className="text-[7px] text-zinc-300 bg-white/5 px-1 py-[1px] rounded border border-white/10 whitespace-nowrap font-semibold">
+                        <span className="text-[8px] text-zinc-300 bg-white/5 px-1.5 py-[2px] rounded border border-white/10 whitespace-nowrap font-semibold">
                           {exp.languages}
                         </span>
                       ) : null}
@@ -1258,10 +1258,10 @@ export default function Page() {
                     {topTechTags.map((item) => {
                       const sizeClass =
                         item.count >= 4
-                          ? "text-[9px]"
+                          ? "text-[10px]"
                           : item.count === 3
-                            ? "text-[8px]"
-                            : "text-[7px]";
+                            ? "text-[9px]"
+                            : "text-[8px]";
                       const accentClass =
                         item.count >= 3
                           ? "border-violet-500/25 text-zinc-200 hover:text-white hover:border-fuchsia-500/25"
@@ -1277,7 +1277,7 @@ export default function Page() {
                           whileHover={
                             isMobile ? undefined : { y: -2, scale: 1.02 }
                           }
-                          className={`group inline-flex items-center gap-1 px-1 py-0.5 rounded-md bg-zinc-900/35 border ${accentClass} transition-all duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.22)] ${sizeClass}`}
+                          className={`group inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-zinc-900/35 border ${accentClass} transition-all duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.22)] ${sizeClass}`}
                         >
                           <span
                             className={`h-0.5 w-0.5 rounded-full ${dotClass}`}
@@ -1328,7 +1328,7 @@ export default function Page() {
                       </div>
                     </div>
                     {/* Badge flutuante */}
-                    <div className="absolute -bottom-3 -right-3 bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white px-4 py-2 rounded-xl shadow-xl font-semibold text-xs">
+                    <div className="absolute -bottom-3 -right-3 bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white px-4 py-2 rounded-xl shadow-xl font-semibold text-[13px]">
                       5+ anos de experiência
                     </div>
                   </div>
@@ -1398,9 +1398,9 @@ export default function Page() {
                     ].map((item) => (
                       <span
                         key={item.label}
-                        className="inline-flex items-center gap-1.5 px-1.5 py-0.5 rounded-lg bg-gradient-to-r from-violet-500/12 to-fuchsia-500/12 border border-violet-500/20 text-[9px] font-semibold text-zinc-200 hover:border-violet-500/35 transition-all shadow-[0_10px_30px_rgba(0,0,0,0.18)]"
+                        className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-lg bg-gradient-to-r from-violet-500/12 to-fuchsia-500/12 border border-violet-500/20 text-[10px] font-semibold text-zinc-200 hover:border-violet-500/35 transition-all shadow-[0_10px_30px_rgba(0,0,0,0.18)]"
                       >
-                        <span className="text-[10px]">{item.icon}</span>
+                        <span className="text-[11px]">{item.icon}</span>
                         {item.label}
                       </span>
                     ))}

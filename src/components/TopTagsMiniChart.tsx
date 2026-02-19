@@ -19,8 +19,8 @@ export default function TopTagsMiniChart({
   items: Item[];
   isMobile: boolean;
 }) {
-  const chartHeight = 44;
-  const chartPadY = 10;
+  const chartHeight = 56;
+  const chartPadY = 12;
 
   const safeItems = useMemo(() => {
     return [...items]
@@ -61,17 +61,17 @@ export default function TopTagsMiniChart({
       <div className="flex items-center justify-between gap-3">
         <div className="min-w-0">
           <div className="text-xs font-semibold text-zinc-200">Top 5</div>
-          <div className="text-[11px] text-zinc-500">
+          <div className="text-[12px] text-zinc-500">
             {isMobile ? "Toque nas barras" : "Passe o mouse nas barras"}
           </div>
         </div>
       </div>
 
-      <div className="mt-4 rounded-xl bg-white/5 p-3 shadow-[0_14px_50px_rgba(0,0,0,0.35)]">
+      <div className="mt-4 rounded-xl bg-white/5 p-4 shadow-[0_14px_50px_rgba(0,0,0,0.35)]">
         <div className="w-full md:max-w-xl mx-auto">
-          <div className="relative aspect-[100/16]">
+          <div className="relative h-20 sm:h-24">
             <svg
-              viewBox="0 0 100 44"
+              viewBox="0 0 100 56"
               className="h-full w-full text-violet-200/55"
               role="img"
               aria-label="Distribuição das tecnologias mais recorrentes"
@@ -148,14 +148,14 @@ export default function TopTagsMiniChart({
             </svg>
           </div>
 
-          <div className="mt-3 grid grid-cols-5 gap-1.5 sm:gap-2">
+          <div className="mt-4 grid grid-cols-5 gap-2 sm:gap-2.5">
             {safeItems.map((item, index) => {
               const isActive = activeIndex === index;
               return (
                 <motion.button
                   key={`${item.tag}-tag`}
                   type="button"
-                  className={`min-w-0 w-full text-center rounded-full border px-1 sm:px-1.5 py-0.5 text-[8px] sm:text-[9px] font-semibold tracking-tight truncate transition-colors ${
+                  className={`min-w-0 w-full text-center rounded-full border px-2 sm:px-2.5 py-1 text-[10px] sm:text-[11px] font-semibold tracking-tight truncate transition-colors ${
                     isActive
                       ? "bg-black/65 border-white/20 text-zinc-100 shadow-[0_12px_30px_rgba(168,85,247,0.14)]"
                       : "bg-black/40 border-white/10 text-zinc-300"
@@ -181,7 +181,7 @@ export default function TopTagsMiniChart({
         </div>
       </div>
 
-      <div className="mt-3 text-[10px] text-zinc-500">
+      <div className="mt-4 text-[11px] text-zinc-500">
         {activeIndex === null
           ? "Tecnologias mais recorrentes no portfólio."
           : `${safeItems[activeIndex]?.tag} fez parte da stack em ${formatCount(
