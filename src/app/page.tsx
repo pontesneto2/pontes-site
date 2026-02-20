@@ -191,6 +191,7 @@ export default function Page() {
         "Typescript",
       ],
       link: "",
+      caseStudy: "/case/erp-estrela",
       blurb:
         "Sistema web para rotinas financeiras do dia a dia, com padronização de processos, relatórios e visibilidade para decisões mais rápidas e seguras.",
       category: "Sistema Web",

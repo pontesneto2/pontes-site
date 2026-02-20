@@ -86,6 +86,7 @@ interface CaseContentProps {
   sections: SectionProps[];
   challenges: BulletSectionProps;
   kpis: KpiCard[];
+  kpisVariant?: "bullets" | "grid";
   stack: string[];
 }
 
@@ -114,6 +115,7 @@ export default function CaseContent({
   sections,
   challenges,
   kpis,
+  kpisVariant = "bullets",
   stack,
 }: CaseContentProps) {
   return (
@@ -210,16 +212,31 @@ export default function CaseContent({
           Indicadores Técnicos Estruturais
         </h3>
         <div className="w-12 h-[2px] rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500 mb-6" />
-        <ul className="space-y-3">
-          {kpis.map((kpi) => (
-            <li key={kpi.text} className="flex items-start gap-3">
-              <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-violet-500" />
-              <span className="text-[15px] sm:text-base text-zinc-300 leading-relaxed">
-                {kpi.text}
-              </span>
-            </li>
-          ))}
-        </ul>
+        {kpisVariant === "grid" ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+            {kpis.map((kpi) => (
+              <div
+                key={kpi.text}
+                className="group rounded-2xl bg-white/[0.025] border border-white/[0.06] p-5 hover:border-violet-500/30 hover:bg-violet-500/[0.04] transition-all duration-300"
+              >
+                <p className="text-sm text-zinc-300 leading-relaxed group-hover:text-zinc-200 transition-colors">
+                  {kpi.text}
+                </p>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <ul className="space-y-3">
+            {kpis.map((kpi) => (
+              <li key={kpi.text} className="flex items-start gap-3">
+                <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-violet-500" />
+                <span className="text-[15px] sm:text-base text-zinc-300 leading-relaxed">
+                  {kpi.text}
+                </span>
+              </li>
+            ))}
+          </ul>
+        )}
       </motion.section>
 
       {/* ── Stack Utilizada ── */}

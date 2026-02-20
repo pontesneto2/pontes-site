@@ -9,7 +9,11 @@ const fadeUp = {
   show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" as const } },
 };
 
-export default function CaseCTA() {
+interface CaseCTAProps {
+  description?: string;
+}
+
+export default function CaseCTA({ description }: CaseCTAProps) {
   return (
     <motion.section
       variants={fadeUp}
@@ -27,6 +31,11 @@ export default function CaseCTA() {
           <h3 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             Gostou? Fale comigo!
           </h3>
+          {description && (
+            <p className="mx-auto max-w-2xl text-sm sm:text-[15px] text-zinc-300 leading-relaxed">
+              {description}
+            </p>
+          )}
           <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3">
             <a
               href="mailto:pontesneto2@gmail.com?subject=Contato%20via%20Portfolio"
