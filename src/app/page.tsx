@@ -981,14 +981,14 @@ export default function Page() {
                         variants={staggerList}
                         initial="hidden"
                         animate="show"
-                        className="divide-y divide-white/5 border-y border-white/5"
+                        className="divide-y divide-white/5 border-y border-white/5 lg:divide-y-0 lg:grid lg:grid-cols-2 lg:gap-x-12"
                       >
                         {additionalProjects.map((proj, index) => (
                           <motion.li
                             key={proj.name}
                             variants={fadeUpItem}
                             custom={index}
-                            className="group py-5"
+                            className="group py-5 lg:border-b lg:border-white/5"
                           >
                             <div className="flex items-start gap-4 min-w-0">
                               <div className="shrink-0 mt-0.5">
@@ -1062,7 +1062,7 @@ export default function Page() {
                         variants={staggerList}
                         initial="hidden"
                         animate="show"
-                        className="divide-y divide-white/5 border-y border-white/5"
+                        className="divide-y divide-white/5 border-y border-white/5 lg:divide-y-0 lg:grid lg:grid-cols-2 lg:gap-x-12"
                       >
                         {websites.map((site, index) => {
                           const isDiscontinued =
@@ -1074,7 +1074,7 @@ export default function Page() {
                               key={site.url || site.name}
                               variants={fadeUpItem}
                               custom={index}
-                              className="py-5"
+                              className="py-5 lg:border-b lg:border-white/5"
                             >
                               <div className="flex items-start gap-4 min-w-0">
                                 <div className="shrink-0 mt-0.5">
