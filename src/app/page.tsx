@@ -1274,7 +1274,7 @@ export default function Page() {
                           custom={stepIndex}
                           className="relative"
                         >
-                          <div className="relative rounded-2xl border border-white/10 bg-white/5 p-4 h-full">
+                          <div className="relative rounded-2xl border border-white/10 bg-transparent p-4 h-full">
                             <div className="flex items-center justify-between">
                               <div className="flex items-center gap-3">
                                 <div className="relative shrink-0">
@@ -1366,24 +1366,21 @@ export default function Page() {
                             viewport={viewportSettings}
                             className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-2"
                           >
-                            {topTechTags.slice(0, 15).map((item, index) => (
+                            {topTechTags.slice(0, 15).map((item) => (
                               <motion.li
                                 key={item.tag}
                                 variants={tagItem}
-                                className="flex items-center justify-between gap-3 py-1"
+                                className="flex items-center gap-3 py-1"
                               >
                                 <div className="min-w-0 flex items-center gap-2">
-                                  <span className="text-[10px] text-zinc-500 font-semibold shrink-0 w-6">
-                                    {String(index + 1).padStart(2, "0")}
-                                  </span>
                                   <TechGlyph tag={item.tag} />
                                   <span className="min-w-0 truncate text-sm font-semibold text-zinc-200">
                                     {item.tag}
                                   </span>
+                                  <span className="shrink-0 text-[10px] px-2 py-0.5 rounded-full bg-white/[0.05] border border-white/[0.10] text-zinc-100 font-semibold">
+                                    {item.count}x
+                                  </span>
                                 </div>
-                                <span className="text-[10px] text-zinc-500 whitespace-nowrap">
-                                  {item.count}x
-                                </span>
                               </motion.li>
                             ))}
                           </motion.ul>
