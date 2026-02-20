@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import RobotBuddy from "@/components/RobotBuddy";
@@ -170,6 +171,7 @@ export default function Page() {
         "Docker",
       ],
       link: "",
+      caseStudy: "/case/imidooh",
       blurb:
         "Plataforma mobile para operar mídia DOOH em painéis de LED dos mais diversos tipos, com gestão de campanhas, monitoramento em tempo real e relatórios de performance.",
       category: "Aplicativo Mobile + Painel Admin",
@@ -829,6 +831,18 @@ export default function Page() {
                             Solicite acesso via email
                           </a>
                         </div>
+                      )}
+                      {"caseStudy" in project && project.caseStudy && (
+                        <Link
+                          href={project.caseStudy}
+                          className="mt-3 inline-flex items-center gap-2 text-[12px] font-semibold text-violet-300 hover:text-violet-200 transition-colors group/case"
+                        >
+                          <span className="inline-flex items-center justify-center h-5 w-5 rounded-md bg-violet-500/15 border border-violet-500/25">
+                            <ExternalLink className="h-3 w-3" />
+                          </span>
+                          Ver estudo de caso
+                          <span className="inline-block transition-transform duration-200 group-hover/case:translate-x-0.5">→</span>
+                        </Link>
                       )}
                     </div>
                   </motion.article>
