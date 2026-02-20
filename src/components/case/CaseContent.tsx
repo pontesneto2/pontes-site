@@ -48,11 +48,11 @@ function Section({ title, children }: SectionProps) {
       initial="hidden"
       whileInView="show"
       viewport={{ once: true, amount: 0.2 }}
-      className="mb-20"
+      className="mb-16"
     >
       <h3 className="text-xl sm:text-2xl font-bold text-white mb-1">{title}</h3>
       <div className="w-12 h-[2px] rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500 mb-6" />
-      <div className="text-[15px] sm:text-base text-zinc-400 leading-[1.85] space-y-5">
+      <div className="text-[15px] sm:text-base text-zinc-400 leading-[1.85] space-y-4">
         {children}
       </div>
     </motion.section>
@@ -68,14 +68,14 @@ export default function CaseContent({
   stack,
 }: CaseContentProps) {
   return (
-    <div className="mx-auto max-w-3xl px-6 py-16 md:py-24">
+    <div className="mx-auto max-w-4xl px-6 sm:px-8 py-12 md:py-16">
       {/* ── Resumo Executivo ── */}
       <motion.div
         variants={fadeUp}
         initial="hidden"
         whileInView="show"
         viewport={{ once: true, amount: 0.25 }}
-        className="mb-20 grid grid-cols-2 sm:grid-cols-3 gap-4"
+        className="mb-14 grid grid-cols-2 sm:grid-cols-3 gap-4"
       >
         {summary.map((item) => (
           <div
@@ -98,7 +98,7 @@ export default function CaseContent({
         initial="hidden"
         whileInView="show"
         viewport={{ once: true, amount: 0.3 }}
-        className="mb-20 text-base sm:text-lg text-zinc-400 leading-relaxed border-l-2 border-violet-500/40 pl-5 italic"
+        className="mb-14 text-base sm:text-lg text-zinc-400 leading-relaxed border-l-2 border-violet-500/40 pl-5 italic"
       >
         {intro}
       </motion.p>
@@ -116,7 +116,7 @@ export default function CaseContent({
         initial="hidden"
         whileInView="show"
         viewport={{ once: true, amount: 0.2 }}
-        className="mb-20"
+        className="mb-16"
       >
         <h3 className="text-xl sm:text-2xl font-bold text-white mb-1">
           {challenges.title}
@@ -127,17 +127,26 @@ export default function CaseContent({
             {challenges.intro}
           </p>
         )}
-        <ul className="space-y-3">
-          {challenges.items.map((item) => (
-            <li
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+          {challenges.items.map((item, idx) => (
+            <div
               key={item}
-              className="flex items-start gap-3 text-[15px] text-zinc-400 leading-relaxed"
+              className="group rounded-2xl bg-white/[0.025] border border-white/[0.06] p-5 hover:border-violet-500/30 hover:bg-violet-500/[0.04] transition-all duration-300"
             >
-              <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-violet-500" />
-              {item}
-            </li>
+              <div className="flex items-center gap-3 mb-3">
+                <span className="inline-flex items-center justify-center h-7 w-7 rounded-xl bg-violet-500/15 border border-violet-500/25 text-violet-200 text-xs font-bold">
+                  {idx + 1}
+                </span>
+                <span className="text-[11px] uppercase tracking-[0.22em] text-zinc-500">
+                  Desafio
+                </span>
+              </div>
+              <p className="text-sm text-zinc-300 leading-relaxed group-hover:text-zinc-200 transition-colors">
+                {item}
+              </p>
+            </div>
           ))}
-        </ul>
+        </div>
       </motion.section>
 
       {/* ── KPIs Técnicos ── */}
@@ -146,7 +155,7 @@ export default function CaseContent({
         initial="hidden"
         whileInView="show"
         viewport={{ once: true, amount: 0.2 }}
-        className="mb-20"
+        className="mb-16"
       >
         <h3 className="text-xl sm:text-2xl font-bold text-white mb-1">
           Indicadores Técnicos Estruturais
@@ -172,7 +181,7 @@ export default function CaseContent({
         initial="hidden"
         whileInView="show"
         viewport={{ once: true, amount: 0.2 }}
-        className="mb-20"
+        className="mb-10"
       >
         <h3 className="text-xl sm:text-2xl font-bold text-white mb-1">
           Stack Utilizada

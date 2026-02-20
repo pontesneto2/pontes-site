@@ -158,7 +158,7 @@ export default function Page() {
     },
     {
       title: "iMidooh — Gerenciamento de Mídia DOOH",
-      subtitle: "Em desenvolvimento",
+      subtitle: "",
       tags: [
         "React Native",
         "Typescript",
@@ -512,7 +512,7 @@ export default function Page() {
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
-                className="mb-8 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight"
+                className="mb-4 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight"
               >
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-200 via-fuchsia-200 to-violet-200">
                   Francisco
@@ -527,11 +527,22 @@ export default function Page() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, delay: 0.6, ease: "easeOut" }}
-                className="text-lg sm:text-xl md:text-2xl font-light text-zinc-300 max-w-4xl mx-auto mb-10"
+                className="text-lg sm:text-xl md:text-2xl font-light text-zinc-300 max-w-4xl mx-auto mb-4"
               >
                 Do esboço ao deploy:{" "}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-fuchsia-300 font-semibold">
                   design, engenharia e impacto real.
+                </span>
+              </motion.p>
+
+              <motion.p
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.9, delay: 0.78, ease: "easeOut" }}
+                className="text-base sm:text-lg md:text-xl font-semibold mb-10"
+              >
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-300 via-violet-300 to-fuchsia-200">
+                  vamos conversar?
                 </span>
               </motion.p>
 
@@ -818,19 +829,21 @@ export default function Page() {
                           <ExternalLink className="h-4 w-4" />
                         </a>
                       ) : (
-                        <div className="flex flex-col gap-2 mt-2">
-                          <div className="inline-flex items-center gap-2 text-xs font-medium text-zinc-500">
-                            <Lock className="h-3.5 w-3.5" />
-                            Projeto Privado
+                        !("caseStudy" in project && project.caseStudy) && (
+                          <div className="flex flex-col gap-2 mt-2">
+                            <div className="inline-flex items-center gap-2 text-xs font-medium text-zinc-500">
+                              <Lock className="h-3.5 w-3.5" />
+                              Projeto Privado
+                            </div>
+                            <a
+                              href="mailto:pontesneto2@gmail.com?subject=Solicita%C3%A7%C3%A3o%20de%20acesso%20ao%20projeto"
+                              className="inline-flex items-center gap-2 text-[11px] font-medium text-violet-400 hover:text-violet-300 transition-colors"
+                            >
+                              <Mail className="h-3 w-3" />
+                              Solicite acesso via email
+                            </a>
                           </div>
-                          <a
-                            href="mailto:pontesneto2@gmail.com?subject=Solicita%C3%A7%C3%A3o%20de%20acesso%20ao%20projeto"
-                            className="inline-flex items-center gap-2 text-[11px] font-medium text-violet-400 hover:text-violet-300 transition-colors"
-                          >
-                            <Mail className="h-3 w-3" />
-                            Solicite acesso via email
-                          </a>
-                        </div>
+                        )
                       )}
                       {"caseStudy" in project && project.caseStudy && (
                         <Link

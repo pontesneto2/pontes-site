@@ -1,11 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import CaseHero from "@/components/case/CaseHero";
 import CaseContent from "@/components/case/CaseContent";
-import CaseLearnings from "@/components/case/CaseLearnings";
 import CaseCTA from "@/components/case/CaseCTA";
 
 /* ═══════════════════════════════════════════
@@ -13,7 +13,7 @@ import CaseCTA from "@/components/case/CaseCTA";
    ═══════════════════════════════════════════ */
 
 const heroData = {
-  title: "iMidooh",
+  title: "iMidooh — Gerenciamento de Mídia DOOH",
   subtitle: "Plataforma de Gerenciamento de Mídia DOOH",
   description:
     "Construção de uma base SaaS escalável voltada para operações de mídia Digital Out Of Home, com foco em arquitetura sólida, organização modular e preparação para expansão multi-tenant.",
@@ -32,7 +32,7 @@ const heroData = {
 const summaryData = [
   { label: "Tipo de projeto", value: "Plataforma SaaS" },
   { label: "Papel exercido", value: "Full-Stack / Arquitetura" },
-  { label: "Modelo", value: "B2B · White-label ready" },
+  { label: "Modelo", value: "B2B2C · White-label ready" },
   { label: "Status", value: "Em desenvolvimento" },
   { label: "Ano", value: "2024–2025" },
   { label: "Plataformas", value: "Web + Mobile" },
@@ -69,19 +69,6 @@ const stackData = [
   "Prisma",
 ];
 
-const learningsData = [
-  "Arquitetura SaaS",
-  "Modelagem relacional avançada",
-  "Escalabilidade estrutural",
-  "Separação de responsabilidades",
-  "Preparação para multi-tenant",
-  "Padronização de ambientes",
-  "Containerização com Docker",
-  "Design orientado a expansão",
-  "Integração Mobile + Backend",
-  "Organização modular Node.js",
-];
-
 /* ═══════════════════════════════════════════
    SEÇÕES NARRATIVAS (JSX)
    ═══════════════════════════════════════════ */
@@ -100,15 +87,42 @@ const sectionsData = [
           O iMidooh nasceu com o objetivo de estruturar e escalar operações de
           mídia DOOH (Digital Out Of Home), oferecendo uma plataforma
           centralizada para gerenciamento de campanhas em painéis de LED
-          distribuídos em múltiplas localidades.
+          distribuídos em múltiplas localidades — com base sólida para evolução
+          SaaS.
         </p>
-        <p>
-          O desafio não era apenas técnico, mas operacional. Empresas que atuam
-          com mídia externa enfrentam dificuldades para atualizar conteúdos
-          remotamente, monitorar exibições em tempo real e consolidar relatórios
-          de performance de forma confiável. O projeto exigia uma solução
-          robusta, preparada para crescimento e com base sólida para modelo SaaS.
-        </p>
+
+        <div className="mt-6 grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-6 items-start">
+          <div className="rounded-2xl bg-white/[0.025] border border-white/[0.06] p-6">
+            <h4 className="text-sm font-semibold text-white mb-3">
+              O que precisava funcionar desde o dia 1
+            </h4>
+            <ul className="space-y-2">
+              {[
+                "Atualizar conteúdos remotamente com previsibilidade",
+                "Monitorar exibições e estado operacional em tempo real",
+                "Consolidar relatórios de performance com confiança",
+              ].map((item) => (
+                <li key={item} className="flex items-start gap-3 text-sm text-zinc-300">
+                  <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-violet-500" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="rounded-2xl bg-white/[0.02] border border-white/[0.06] overflow-hidden">
+            <div className="relative h-48 sm:h-56">
+              <Image
+                src="/logo-dooh.png"
+                alt="iMidooh — Gerenciamento de Mídia DOOH"
+                fill
+                sizes="(max-width: 768px) 100vw, 520px"
+                className="object-cover object-center opacity-90"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#141418] via-transparent to-transparent" />
+            </div>
+          </div>
+        </div>
       </>
     ),
   },
@@ -117,21 +131,36 @@ const sectionsData = [
     children: (
       <>
         <p>
-          O desenvolvimento começou com uma etapa profunda de discovery. Foram
-          levantados fluxos operacionais, perfis de usuários, regras de exibição
-          de campanhas e limitações do ecossistema físico dos painéis.
+          O desenvolvimento começou com um discovery profundo: fluxos
+          operacionais, perfis de usuários, regras de exibição e limitações do
+          ecossistema físico dos painéis. A estratégia foi evitar improviso e
+          construir uma base modular pronta para escalar.
         </p>
-        <p>
-          A estratégia adotada foi construir um backend modular, preparado para
-          expansão futura multi-tenant, garantindo integridade de dados e
-          escalabilidade. Desde o início, o foco foi evitar soluções
-          improvisadas e estruturar uma base que suportasse crescimento
-          sustentável.
-        </p>
-        <p>
-          O produto foi desenhado com clara separação de responsabilidades entre
-          API, painel administrativo e aplicação mobile operacional.
-        </p>
+
+        <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-3">
+          {[
+            {
+              title: "API",
+              desc: "Regras de campanhas, painéis, exibição e integridade de dados.",
+            },
+            {
+              title: "Admin (Next.js)",
+              desc: "Gestão operacional, configuração e visão consolidada.",
+            },
+            {
+              title: "Mobile (React Native)",
+              desc: "Operação em campo e acompanhamento prático.",
+            },
+          ].map((card) => (
+            <div
+              key={card.title}
+              className="rounded-2xl bg-white/[0.025] border border-white/[0.06] p-5"
+            >
+              <h4 className="text-sm font-semibold text-white">{card.title}</h4>
+              <p className="mt-2 text-sm text-zinc-300 leading-relaxed">{card.desc}</p>
+            </div>
+          ))}
+        </div>
       </>
     ),
   },
@@ -140,23 +169,42 @@ const sectionsData = [
     children: (
       <>
         <p>
-          A arquitetura foi pensada de forma desacoplada, priorizando organização
-          modular, clareza nas regras de negócio e facilidade de manutenção.
+          A arquitetura foi desenhada para ser desacoplada, modular e fácil de
+          manter — com decisões que sustentam evolução contínua.
         </p>
-        <p>
-          A modelagem relacional com PostgreSQL garantiu consistência dos dados,
-          enquanto a utilização de Prisma trouxe segurança e produtividade na
-          camada de acesso ao banco.
-        </p>
-        <p>
-          A aplicação foi containerizada com Docker para padronizar ambientes e
-          preparar o projeto para deploy em infraestrutura cloud, mantendo
-          previsibilidade entre desenvolvimento e produção.
-        </p>
-        <p>
-          O sistema foi estruturado para permitir futura implementação completa
-          de multi-tenancy e expansão white-label.
-        </p>
+
+        <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-3">
+          {[
+            {
+              title: "Dados consistentes",
+              desc: "PostgreSQL com modelagem relacional para integridade e previsibilidade.",
+            },
+            {
+              title: "Produtividade com segurança",
+              desc: "Prisma para acelerar acesso a dados com camada tipada e estável.",
+            },
+            {
+              title: "Ambientes padronizados",
+              desc: "Docker para previsibilidade e preparação para deploy cloud.",
+            },
+          ].map((card) => (
+            <div
+              key={card.title}
+              className="group rounded-2xl bg-white/[0.025] border border-white/[0.06] p-5 hover:border-violet-500/25 hover:bg-violet-500/[0.03] transition-all duration-300"
+            >
+              <h4 className="text-sm font-semibold text-white">{card.title}</h4>
+              <p className="mt-2 text-sm text-zinc-300 leading-relaxed">{card.desc}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-6 rounded-2xl bg-violet-500/[0.06] border border-violet-500/20 p-6">
+          <p className="text-sm text-violet-100 leading-relaxed">
+            O sistema foi estruturado para permitir futura implementação completa
+            de <span className="font-semibold text-violet-50">multi-tenancy</span> e expansão
+            <span className="font-semibold text-violet-50"> white-label</span>.
+          </p>
+        </div>
       </>
     ),
   },
@@ -165,19 +213,29 @@ const sectionsData = [
     children: (
       <>
         <p>
-          A execução envolveu a implementação das regras de campanhas, controle
-          de exibição, gerenciamento de painéis e integração entre backend,
-          painel administrativo em Next.js e aplicação mobile em React Native.
+          A execução cobriu regras de campanhas, controle de exibição e gestão de
+          painéis — com integração clara entre backend, painel administrativo e
+          operação mobile.
         </p>
-        <p>
-          A preocupação central foi manter o código organizado, previsível e
-          escalável, aplicando boas práticas de estruturação de projetos Node.js
-          e separação de camadas.
-        </p>
-        <p>
-          A comunicação entre as aplicações foi projetada para ser clara e
-          evolutiva, permitindo futuras integrações estratégicas.
-        </p>
+
+        <div className="mt-6 rounded-2xl bg-white/[0.02] border border-white/[0.06] p-6">
+          <h4 className="text-sm font-semibold text-white mb-3">
+            Princípios de implementação
+          </h4>
+          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {[
+              "Código organizado e previsível",
+              "Separação de camadas e responsabilidades",
+              "Comunicação evolutiva entre aplicações",
+              "Base pronta para integrações futuras",
+            ].map((item) => (
+              <li key={item} className="flex items-start gap-3 text-sm text-zinc-300">
+                <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-violet-500" />
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
       </>
     ),
   },
@@ -186,9 +244,8 @@ const sectionsData = [
     children: (
       <>
         <p>
-          A aplicação foi preparada para ambientes distintos — desenvolvimento,
-          staging e produção —, utilizando containerização e versionamento
-          estruturado.
+          A aplicação foi preparada para ambientes distintos (desenvolvimento,
+          staging e produção) com containerização e versionamento estruturado.
         </p>
         <p>A infraestrutura foi pensada para garantir:</p>
         <ul className="space-y-2 ml-1">
@@ -221,14 +278,18 @@ const sectionsData = [
     children: (
       <>
         <p>
-          O iMidooh estabeleceu uma base sólida para centralização da operação
-          de mídia DOOH, reduzindo dependência de processos manuais e criando
-          estrutura preparada para expansão comercial.
+          O iMidooh consolidou uma base robusta para centralização da operação de
+          mídia DOOH, reduzindo dependência de processos manuais e preparando o
+          caminho para expansão comercial.
         </p>
-        <p>
-          Além da solução técnica, o projeto consolidou um modelo arquitetural
-          replicável para produtos SaaS.
-        </p>
+
+        <div className="mt-6 rounded-2xl bg-white/[0.02] border border-white/[0.06] p-6">
+          <p className="text-sm text-zinc-300 leading-relaxed">
+            Além da solução técnica, o projeto consolidou um modelo arquitetural
+            replicável para produtos SaaS — com foco em organização, escalabilidade
+            e manutenção.
+          </p>
+        </div>
       </>
     ),
   },
@@ -339,17 +400,16 @@ export default function ImidoohCasePage() {
           stack={stackData}
         />
 
-        {/* ── LEARNINGS ── */}
-        <CaseLearnings items={learningsData} />
-
         {/* ── CTA ── */}
         <CaseCTA />
 
         {/* ── FOOTER ── */}
-        <footer className="py-10 border-t border-white/5 text-center text-[11px] text-zinc-400">
+        <footer className="py-10 border-t border-white/5 text-center text-[11px] text-zinc-500">
           <div>© 2026 Francisco Pontes</div>
           <div>Todos os Direitos Reservados</div>
-          <div>pontesneto2@gmail.com</div>
+          <div className="text-[10px] font-normal text-zinc-300">
+            pontesneto2@gmail.com
+          </div>
         </footer>
       </div>
     </div>

@@ -16,7 +16,7 @@ export default function CaseCTA() {
       initial="hidden"
       whileInView="show"
       viewport={{ once: true, amount: 0.3 }}
-      className="mx-auto max-w-3xl px-6 pt-8 pb-24"
+      className="mx-auto max-w-4xl px-6 sm:px-8 pt-6 pb-20"
     >
       <div className="relative rounded-3xl overflow-hidden">
         {/* Fundo com glow sutil */}
@@ -27,12 +27,7 @@ export default function CaseCTA() {
           <h3 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             Gostou? Fale comigo!
           </h3>
-          <p className="text-sm sm:text-base text-zinc-400 max-w-md mx-auto mb-8 leading-relaxed">
-            Se você busca desenvolver um produto digital estruturado, escalável
-            e preparado para crescimento real, vamos conversar.
-          </p>
-
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+          <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3">
             <a
               href="mailto:pontesneto2@gmail.com?subject=Contato%20via%20Portfolio"
               className="group inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-gradient-to-r from-violet-600 to-fuchsia-500 text-white text-sm font-semibold shadow-lg shadow-violet-500/20 hover:shadow-violet-500/35 hover:scale-[1.03] transition-all duration-300"
