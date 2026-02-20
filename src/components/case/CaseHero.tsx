@@ -1,12 +1,61 @@
 "use client";
 
 import { motion } from "framer-motion";
+import {
+  Box,
+  Braces,
+  Code,
+  Database,
+  MonitorSmartphone,
+  Palette,
+  Server,
+} from "lucide-react";
 
 interface CaseHeroProps {
   title: string;
   subtitle: string;
   description: string;
   tags: string[];
+}
+
+function TechGlyph({ tag }: { tag: string }) {
+  const normalized = tag.trim().toLowerCase();
+
+  const Icon = (() => {
+    if (
+      normalized.includes("postgres") ||
+      normalized.includes("postgre") ||
+      normalized.includes("mongo") ||
+      normalized.includes("prisma")
+    )
+      return Database;
+
+    if (normalized.includes("docker")) return Box;
+
+    if (
+      normalized === "js" ||
+      normalized.includes("javascript") ||
+      normalized.includes("typescript")
+    )
+      return Braces;
+
+    if (normalized.includes("next") || normalized.includes("react"))
+      return MonitorSmartphone;
+
+    if (normalized.includes("tailwind") || normalized.includes("ux"))
+      return Palette;
+
+    if (normalized.includes("node") || normalized.includes("express") || normalized.includes("nest"))
+      return Server;
+
+    return Code;
+  })();
+
+  return (
+    <span className="inline-flex items-center justify-center h-5 w-5 rounded-md bg-white/[0.06] border border-white/[0.10] text-zinc-100">
+      <Icon className="h-3.5 w-3.5" />
+    </span>
+  );
 }
 
 export default function CaseHero({
@@ -70,8 +119,9 @@ export default function CaseHero({
           {tags.map((tag) => (
             <span
               key={tag}
-              className="text-[11px] px-3 py-1 rounded-full bg-white/[0.05] text-zinc-100 border border-white/[0.10] font-semibold hover:bg-white/[0.07] hover:border-violet-500/25 transition-colors"
+              className="inline-flex items-center gap-2 text-[11px] pl-2.5 pr-3 py-1.5 rounded-full bg-white/[0.05] text-zinc-100 border border-white/[0.10] font-semibold hover:bg-white/[0.07] hover:border-violet-500/25 transition-colors"
             >
+              <TechGlyph tag={tag} />
               {tag}
             </span>
           ))}
