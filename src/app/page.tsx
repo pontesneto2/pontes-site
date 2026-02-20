@@ -1015,14 +1015,16 @@ export default function Page() {
                                   </div>
                                 </div>
 
-                                <div className="mt-3 flex flex-wrap gap-x-3 gap-y-1 text-[11px] text-zinc-400">
+                                <div className="mt-3 flex flex-wrap gap-1.5">
                                   {proj.tech.map((t) => (
                                     <span
                                       key={t}
-                                      className="inline-flex items-center gap-2"
+                                      className="inline-flex items-center gap-1.5 rounded-full bg-white/[0.04] border border-white/[0.08] px-2 py-1 text-[9px] font-semibold text-zinc-200"
                                     >
-                                      <span className="h-1 w-1 rounded-full bg-violet-400/40" />
-                                      <span className="font-medium">{t}</span>
+                                      <span className="scale-90 origin-left">
+                                        <TechGlyph tag={t} />
+                                      </span>
+                                      <span className="leading-none">{t}</span>
                                     </span>
                                   ))}
                                 </div>
