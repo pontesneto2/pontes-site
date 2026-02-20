@@ -1274,7 +1274,7 @@ export default function Page() {
                           custom={stepIndex}
                           className="relative"
                         >
-                          <div className="relative rounded-2xl border border-white/10 bg-transparent p-4 h-full">
+                          <div className="relative rounded-2xl bg-transparent p-4 h-full">
                             <div className="flex items-center justify-between">
                               <div className="flex items-center gap-3">
                                 <div className="relative shrink-0">
