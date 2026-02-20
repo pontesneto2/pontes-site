@@ -4,7 +4,6 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import TopTagsMiniChart from "@/components/TopTagsMiniChart";
 import RobotBuddy from "@/components/RobotBuddy";
 import ImpactCounters from "@/components/ImpactCounters";
 import {
@@ -474,7 +473,8 @@ export default function Page() {
         {/* HERO - BANNER TRIUNFAL */}
         <section className="relative h-[100vh] flex items-center justify-center overflow-hidden">
           {/* Gradiente de fundo animado */}
-          <div className="absolute inset-0 bg-gradient-to-b from-violet-950/20 via-transparent to-black/50" />
+          <div className="absolute inset-0 bg-gradient-to-b from-violet-950/35 via-black/40 to-black/85" />
+          <div className="absolute inset-0 bg-black/25" />
 
 
 
@@ -507,49 +507,37 @@ export default function Page() {
               </span>
             </motion.p>
 
-            {/* CTAs */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.9, ease: "easeOut" }}
-              className="flex flex-col sm:flex-row items-center justify-center gap-4"
-            >
-              <a
-                href="#projects"
-                className="group relative inline-flex items-center gap-2 rounded-2xl px-8 py-3 bg-gradient-to-r from-violet-600 to-fuchsia-500 text-white text-lg font-semibold shadow-[0_0_50px_rgba(168,85,247,0.4)] hover:shadow-[0_0_80px_rgba(168,85,247,0.6)] transition-all duration-300 hover:scale-105"
-              >
-                <Rocket className="h-6 w-6 group-hover:rotate-12 transition-transform" />
-                Ver portfólio
-              </a>
-              <a
-                href="#contact"
-                className="inline-flex items-center gap-2 rounded-2xl px-8 py-3 border-2 border-white/20 backdrop-blur-sm text-lg font-semibold hover:bg-white/5 hover:border-white/30 transition-all duration-300 hover:scale-105"
-              >
-                <Mail className="h-6 w-6" />
-                Fale comigo
-              </a>
-            </motion.div>
-
             {/* Social Links */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1, delay: 1.2 }}
-              className="mt-12 flex items-center justify-center gap-4"
+              className="mt-10 flex items-center justify-center gap-3"
             >
               <a
                 aria-label="GitHub"
                 href="https://github.com/pontesneto2"
-                className="p-3 rounded-xl border border-white/10 hover:bg-white/5 hover:border-violet-500/50 hover:shadow-[0_0_20px_rgba(168,85,247,0.3)] transition-all duration-300"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative p-3.5 rounded-2xl border border-white/15 bg-black/20 backdrop-blur-sm shadow-[0_18px_70px_rgba(0,0,0,0.45)] hover:bg-white/5 hover:border-violet-500/40 hover:shadow-[0_0_32px_rgba(168,85,247,0.28)] transition-all duration-300"
               >
-                <Github className="h-6 w-6" />
+                <Github className="h-6 w-6 text-zinc-100 group-hover:text-white transition-colors" />
               </a>
               <a
                 aria-label="LinkedIn"
                 href="https://www.linkedin.com/in/fcopts"
-                className="p-3 rounded-xl border border-white/10 hover:bg-white/5 hover:border-fuchsia-500/50 hover:shadow-[0_0_20px_rgba(217,70,239,0.3)] transition-all duration-300"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative p-3.5 rounded-2xl border border-white/15 bg-black/20 backdrop-blur-sm shadow-[0_18px_70px_rgba(0,0,0,0.45)] hover:bg-white/5 hover:border-fuchsia-500/40 hover:shadow-[0_0_32px_rgba(217,70,239,0.26)] transition-all duration-300"
               >
-                <Linkedin className="h-6 w-6" />
+                <Linkedin className="h-6 w-6 text-zinc-100 group-hover:text-white transition-colors" />
+              </a>
+              <a
+                aria-label="E-mail"
+                href="mailto:pontesneto2@gmail.com"
+                className="group relative p-3.5 rounded-2xl border border-white/15 bg-black/20 backdrop-blur-sm shadow-[0_18px_70px_rgba(0,0,0,0.45)] hover:bg-white/5 hover:border-amber-500/40 hover:shadow-[0_0_32px_rgba(251,191,36,0.18)] transition-all duration-300"
+              >
+                <Mail className="h-6 w-6 text-zinc-100 group-hover:text-white transition-colors" />
               </a>
             </motion.div>
           </div>
@@ -835,20 +823,8 @@ export default function Page() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.15 }}
               transition={{ duration: 0.7, ease: "easeOut" }}
-              className={`relative rounded-2xl border border-white/10 backdrop-blur-2xl p-5 sm:p-8 shadow-2xl overflow-hidden ${
-                activePortfolioTab === "sistemas"
-                  ? "bg-[#050505]"
-                  : "bg-black/20"
-              }`}
+              className="relative"
             >
-              <div className="pointer-events-none absolute inset-0 bg-white/5" />
-              <div
-                className={`pointer-events-none absolute inset-0 ${
-                  activePortfolioTab === "sistemas"
-                    ? "bg-gradient-to-br from-violet-500/10 via-transparent to-transparent"
-                    : "bg-gradient-to-br from-fuchsia-500/10 via-transparent to-transparent"
-                }`}
-              />
               <div className="relative">
                 {/* Tab headers + Social */}
                 <div className="relative flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
@@ -947,44 +923,57 @@ export default function Page() {
                         </p>
                       </div>
                     </div>
-                    <motion.div
+                    <motion.ul
                       variants={staggerList}
                       initial="hidden"
                       animate="show"
-                      className="min-w-0 grid sm:grid-cols-2 lg:grid-cols-2 gap-5 lg:gap-6"
+                      className="divide-y divide-white/5 border-y border-white/5"
                     >
-                      {additionalProjects.map((proj) => (
-                        <motion.div
+                      {additionalProjects.map((proj, index) => (
+                        <motion.li
                           key={proj.name}
                           variants={fadeUpItem}
-                          className="group relative min-w-0 w-full p-5 rounded-2xl bg-black/60 border border-white/10 hover:border-violet-500/30 hover:bg-black/65 transition-all duration-300 shadow-[0_10px_40px_rgba(0,0,0,0.35)]"
+                          custom={index}
+                          className="group py-5"
                         >
-                          <div className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-br from-violet-500/10 via-transparent to-fuchsia-500/10" />
-                          <div className="absolute top-3 right-3">
-                            <div className="p-1.5 rounded-lg bg-white/5 border border-white/10">
-                              <Lock className="h-3.5 w-3.5 text-zinc-500" />
+                          <div className="flex items-start gap-4 min-w-0">
+                            <div className="shrink-0 mt-0.5">
+                              <div className="h-11 w-11 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:border-violet-500/25 group-hover:bg-violet-500/10 transition-colors">
+                                <Code className="h-4 w-4 text-violet-300" />
+                              </div>
+                            </div>
+
+                            <div className="min-w-0 flex-1">
+                              <div className="flex items-start justify-between gap-3">
+                                <div className="min-w-0">
+                                  <div className="text-sm font-semibold text-zinc-100 group-hover:text-white transition-colors truncate">
+                                    {proj.name}
+                                  </div>
+                                  <div className="text-xs text-zinc-500 mt-1 leading-relaxed">
+                                    {proj.desc}
+                                  </div>
+                                </div>
+                                <div className="shrink-0 mt-0.5">
+                                  <div className="inline-flex items-center gap-1.5 text-[10px] text-zinc-500 bg-white/5 border border-white/10 rounded-xl px-2 py-1">
+                                    <Lock className="h-3 w-3" />
+                                    Privado
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div className="mt-3 flex flex-wrap gap-x-3 gap-y-1 text-[11px] text-zinc-400">
+                                {proj.tech.map((t) => (
+                                  <span key={t} className="inline-flex items-center gap-2">
+                                    <span className="h-1 w-1 rounded-full bg-violet-400/40" />
+                                    <span className="font-medium">{t}</span>
+                                  </span>
+                                ))}
+                              </div>
                             </div>
                           </div>
-                          <h4 className="relative font-semibold text-sm mb-2 group-hover:text-violet-200 transition-colors pr-6 leading-snug flex items-start gap-2">
-                            <Code className="h-4 w-4 text-violet-400 mt-[1px] shrink-0" />
-                            <span className="min-w-0">{proj.name}</span>
-                          </h4>
-                          <p className="relative text-xs text-zinc-500 mb-3">
-                            {proj.desc}
-                          </p>
-                          <div className="relative flex flex-wrap gap-1.5 mt-4 pt-2 border-t border-white/5">
-                            {proj.tech.map((t) => (
-                              <span
-                                key={t}
-                                className="text-[9px] px-1.5 py-[2px] rounded bg-white/5 text-zinc-300 border border-white/10 hover:border-violet-500/25 hover:text-white transition-all"
-                              >
-                                {t}
-                              </span>
-                            ))}
-                          </div>
-                        </motion.div>
+                        </motion.li>
                       ))}
-                    </motion.div>
+                    </motion.ul>
                   </motion.div>
                 )}
 
@@ -1012,48 +1001,67 @@ export default function Page() {
                       </div>
                     </div>
 
-                    <motion.div
+                    <motion.ul
                       variants={staggerList}
                       initial="hidden"
                       animate="show"
-                      className="min-w-0 grid sm:grid-cols-2 lg:grid-cols-2 gap-5 lg:gap-6"
+                      className="divide-y divide-white/5 border-y border-white/5"
                     >
-                      {websites.map((site) => (
-                        <motion.div
-                          key={site.url || site.name}
-                          variants={fadeUpItem}
-                          className="group relative min-w-0 w-full flex items-center justify-between p-5 rounded-2xl bg-black/60 border border-white/10 hover:border-fuchsia-500/30 hover:bg-black/65 transition-all duration-300 shadow-[0_10px_40px_rgba(0,0,0,0.35)]"
-                        >
-                          <div className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-br from-fuchsia-500/10 via-transparent to-violet-500/10" />
-                          <div className="min-w-0">
-                            <div className="relative flex items-center gap-2 text-sm font-semibold text-zinc-200 group-hover:text-fuchsia-200 transition-colors min-w-0">
-                              <Globe className="h-4 w-4 text-zinc-600 group-hover:text-fuchsia-300 transition-colors shrink-0" />
-                              <span className="truncate">{site.name}</span>
+                      {websites.map((site, index) => {
+                        const isDiscontinued =
+                          "discontinued" in site && Boolean(site.discontinued);
+
+                        return (
+                          <motion.li
+                            key={site.url || site.name}
+                            variants={fadeUpItem}
+                            custom={index}
+                            className="py-5"
+                          >
+                            <div className="flex items-start gap-4 min-w-0">
+                              <div className="shrink-0 mt-0.5">
+                                <div className="h-11 w-11 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center">
+                                  <Globe className="h-4 w-4 text-fuchsia-300" />
+                                </div>
+                              </div>
+
+                              <div className="min-w-0 flex-1">
+                                <div className="flex items-start justify-between gap-3">
+                                  <div className="min-w-0">
+                                    <div className="text-sm font-semibold text-zinc-100 truncate">
+                                      {site.name}
+                                    </div>
+                                    <div className="text-xs text-zinc-500 mt-1 leading-relaxed">
+                                      {site.desc}
+                                    </div>
+                                  </div>
+
+                                  <div className="shrink-0 mt-0.5">
+                                    {isDiscontinued ? (
+                                      <span className="inline-flex items-center gap-1.5 text-[10px] text-zinc-500 bg-white/5 border border-white/10 rounded-xl px-2 py-1 whitespace-nowrap">
+                                        <Lock className="h-3 w-3" />
+                                        Descontinuado
+                                      </span>
+                                    ) : (
+                                      <a
+                                        href={site.url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="inline-flex items-center gap-1.5 text-[10px] text-zinc-300 bg-white/5 border border-white/10 rounded-xl px-2 py-1 hover:border-fuchsia-500/25 hover:text-white transition-colors whitespace-nowrap"
+                                        aria-label={`Abrir ${site.name}`}
+                                      >
+                                        Abrir
+                                        <ExternalLink className="h-3 w-3" />
+                                      </a>
+                                    )}
+                                  </div>
+                                </div>
+                              </div>
                             </div>
-                            <div className="relative text-[11px] text-zinc-500 leading-snug mt-1 line-clamp-2">
-                              {site.desc}
-                            </div>
-                          </div>
-                          <div className="relative flex items-center gap-3 shrink-0 ml-3">
-                            {"discontinued" in site && site.discontinued ? (
-                              <span className="text-[9px] px-1.5 py-0.5 rounded-md bg-zinc-900/60 border border-white/10 text-zinc-400 whitespace-nowrap">
-                                Descontinuado
-                              </span>
-                            ) : (
-                              <a
-                                href={site.url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="inline-flex text-[9px] px-1.5 py-0.5 rounded-md bg-zinc-900/60 border border-white/10 text-zinc-400 group-hover:text-zinc-200 transition-colors"
-                                aria-label={`Abrir ${site.name}`}
-                              >
-                                Ver
-                              </a>
-                            )}
-                          </div>
-                        </motion.div>
-                      ))}
-                    </motion.div>
+                          </motion.li>
+                        );
+                      })}
+                    </motion.ul>
                   </motion.div>
                 )}
               </div>
@@ -1074,7 +1082,7 @@ export default function Page() {
               initial="hidden"
               whileInView="show"
               viewport={viewportSettings}
-              className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-8"
+              className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-12"
             >
               {experience.map((exp) => (
                 <motion.div
@@ -1084,7 +1092,7 @@ export default function Page() {
                 >
                   <div className="absolute left-0 top-2 h-full w-px bg-white/10" />
                   <div className="absolute left-[-3px] top-2 h-2 w-2 rounded-full bg-violet-400/60" />
-                  <div className="flex items-start justify-between gap-3 mb-2">
+                  <div className="flex items-start justify-between gap-3 mb-4">
                     <h4 className="font-semibold text-sm text-white flex-1 min-w-0 break-words">
                       {exp.company}
                     </h4>
@@ -1105,13 +1113,15 @@ export default function Page() {
                     </div>
                   </div>
                   {"startRole" in exp && exp.startRole ? (
-                    <div className="text-[10px] text-zinc-500 mb-1 flex items-center gap-2">
+                    <div className="text-[10px] text-zinc-500 mb-2 flex items-center gap-2">
                       <span className="truncate">
                         Cargo Inicial: {exp.startRole}
                       </span>
                     </div>
                   ) : null}
-                  <p className="text-xs text-violet-300">{exp.role}</p>
+                  <p className="text-xs text-violet-300 leading-relaxed">
+                    {exp.role}
+                  </p>
                 </motion.div>
               ))}
             </motion.div>
@@ -1133,17 +1143,18 @@ export default function Page() {
               cenário do cliente e do projeto.
             </p>
 
-            <div className="mt-10 grid lg:grid-cols-5 gap-6 items-stretch">
-              {/* Processo */}
+            <div className="mt-10">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.2 }}
                 transition={{ duration: 0.7, ease: "easeOut" }}
-                className="lg:col-span-2 order-2 lg:order-none relative rounded-3xl border border-white/10 bg-black/60 backdrop-blur-xl p-6 shadow-2xl overflow-hidden"
+                className="relative rounded-3xl border border-white/10 bg-black/55 backdrop-blur-xl p-6 md:p-8 shadow-2xl overflow-hidden"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-violet-500/5 via-transparent to-fuchsia-500/5" />
+
                 <div className="relative">
+                  {/* Processo */}
                   <div className="flex items-center gap-3">
                     <div className="p-2 rounded-xl bg-violet-500/10 border border-violet-500/20">
                       <Layers className="h-5 w-5 text-violet-300" />
@@ -1227,137 +1238,96 @@ export default function Page() {
                       custo, time-to-market e sustentabilidade de manutenção.
                     </p>
                   </div>
-                </div>
-              </motion.div>
 
-              {/* Nuvem de tecnologias */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ duration: 0.7, delay: 0.15, ease: "easeOut" }}
-                className="lg:col-span-3 order-1 lg:order-none relative rounded-3xl border border-white/10 bg-black/60 backdrop-blur-xl p-6 shadow-2xl overflow-hidden"
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-fuchsia-500/5 via-transparent to-violet-500/5" />
-                <div className="relative">
-                  <div className="flex items-center justify-between gap-4">
-                    <div>
-                      <h3 className="text-lg font-semibold text-white flex items-center gap-2">
-                        <Cloud className="h-5 w-5 text-fuchsia-300" />
-                        Linguagens de Programação mais usadas
-                      </h3>
-                      <p className="text-xs text-zinc-500 mt-1">
-                        Baseado nos últimos trabalhos realizados.
+                  {/* Linguagens */}
+                  <div className="mt-10 pt-8 border-t border-white/10">
+                    <div className="flex items-start justify-between gap-4">
+                      <div>
+                        <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+                          <Cloud className="h-5 w-5 text-fuchsia-300" />
+                          Linguagens de Programação mais usadas
+                        </h3>
+                        <p className="text-xs text-zinc-500 mt-1">
+                          Baseado nos últimos trabalhos realizados.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="mt-6">
+                      <div className="text-[11px] uppercase tracking-wide text-zinc-500 mb-3">
+                        Mais usadas
+                      </div>
+                      <motion.ol
+                        variants={staggerTight}
+                        initial="hidden"
+                        whileInView="show"
+                        viewport={viewportSettings}
+                        className="grid sm:grid-cols-2 lg:grid-cols-5 gap-3"
+                      >
+                        {top5TechTags.map((item, index) => (
+                          <motion.li
+                            key={item.tag}
+                            variants={tagItem}
+                            className="rounded-2xl border border-white/10 bg-white/5 p-3"
+                          >
+                            <div className="flex items-center justify-between text-[10px] text-zinc-500">
+                              <span className="font-semibold">#{index + 1}</span>
+                              <span className="whitespace-nowrap">
+                                {item.count} {item.count === 1 ? "projeto" : "projetos"}
+                              </span>
+                            </div>
+                            <div className="mt-1 text-sm font-semibold text-zinc-100">
+                              {item.tag}
+                            </div>
+                          </motion.li>
+                        ))}
+                      </motion.ol>
+
+                      <div className="mt-7">
+                        <div className="text-[11px] uppercase tracking-wide text-zinc-500 mb-3">
+                          Top 10 (destaque)
+                        </div>
+                        <motion.ol
+                          variants={staggerTight}
+                          initial="hidden"
+                          whileInView="show"
+                          viewport={viewportSettings}
+                          className="grid sm:grid-cols-2 lg:grid-cols-3 gap-2.5"
+                        >
+                          {topTechTags.slice(0, 10).map((item, index) => (
+                            <motion.li
+                              key={item.tag}
+                              variants={tagItem}
+                              className="flex items-center justify-between gap-3 rounded-2xl border border-white/10 bg-zinc-900/30 px-3 py-2"
+                            >
+                              <div className="min-w-0 flex items-center gap-2">
+                                <span className="text-[10px] text-zinc-500 font-semibold shrink-0">
+                                  {String(index + 1).padStart(2, "0")}
+                                </span>
+                                <span className="min-w-0 truncate text-sm font-semibold text-zinc-200">
+                                  {item.tag}
+                                </span>
+                              </div>
+                              <span className="text-[10px] text-zinc-500 whitespace-nowrap">
+                                {item.count}x
+                              </span>
+                            </motion.li>
+                          ))}
+                        </motion.ol>
+                      </div>
+
+                      <p className="mt-6 text-xs text-zinc-500 leading-relaxed flex items-start gap-2">
+                        <span aria-hidden className="mt-[1px]">
+                          💡
+                        </span>
+                        <span>
+                          E quando o projeto pede algo diferente, eu me adapto à
+                          stack do time e do cliente. O foco é entregar valor
+                          com qualidade e manutenção saudável.
+                        </span>
                       </p>
                     </div>
                   </div>
-
-                  <div className="hidden xl:block">
-                    <TopTagsMiniChart
-                      items={top5TechTags}
-                      isMobile={isMobile}
-                    />
-                  </div>
-
-                  <div className="mt-6">
-                    <div className="text-[11px] uppercase tracking-wide text-zinc-500 mb-2">
-                      Top 10
-                    </div>
-                    <motion.div
-                      variants={staggerTight}
-                      initial="hidden"
-                      whileInView="show"
-                      viewport={viewportSettings}
-                      className="flex flex-wrap gap-2"
-                    >
-                      {topTechTags.slice(0, 10).map((item) => {
-                        const sizeClass =
-                          item.count >= 4
-                            ? "text-[10px]"
-                            : item.count === 3
-                              ? "text-[9px]"
-                              : "text-[8px]";
-                        const accentClass =
-                          item.count >= 3
-                            ? "border-violet-500/25 text-zinc-200 hover:text-white hover:border-fuchsia-500/25"
-                            : "border-white/10 text-zinc-400 hover:text-zinc-200 hover:border-white/20";
-
-                        const dotClass =
-                          item.count >= 3
-                            ? "bg-violet-400/70"
-                            : "bg-zinc-500/40";
-
-                        return (
-                          <motion.span
-                            key={item.tag}
-                            variants={tagItem}
-                            whileHover={
-                              isMobile ? undefined : { y: -2, scale: 1.02 }
-                            }
-                            className={`group inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-zinc-900/35 border ${accentClass} transition-all duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.22)] ${sizeClass}`}
-                          >
-                            <span
-                              className={`h-0.5 w-0.5 rounded-full ${dotClass}`}
-                            />
-                            <span className="font-semibold">{item.tag}</span>
-                          </motion.span>
-                        );
-                      })}
-                    </motion.div>
-
-                    <motion.div
-                      variants={staggerTight}
-                      initial="hidden"
-                      whileInView="show"
-                      viewport={viewportSettings}
-                      className="mt-2 flex flex-wrap gap-2"
-                    >
-                      {topTechTags.slice(10).map((item) => {
-                        const sizeClass =
-                          item.count >= 4
-                            ? "text-[10px]"
-                            : item.count === 3
-                              ? "text-[9px]"
-                              : "text-[8px]";
-                        const accentClass =
-                          item.count >= 3
-                            ? "border-violet-500/25 text-zinc-200 hover:text-white hover:border-fuchsia-500/25"
-                            : "border-white/10 text-zinc-400 hover:text-zinc-200 hover:border-white/20";
-
-                        const dotClass =
-                          item.count >= 3
-                            ? "bg-violet-400/70"
-                            : "bg-zinc-500/40";
-
-                        return (
-                          <motion.span
-                            key={item.tag}
-                            variants={tagItem}
-                            whileHover={
-                              isMobile ? undefined : { y: -2, scale: 1.02 }
-                            }
-                            className={`group inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-zinc-900/35 border ${accentClass} transition-all duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.22)] ${sizeClass}`}
-                          >
-                            <span
-                              className={`h-0.5 w-0.5 rounded-full ${dotClass}`}
-                            />
-                            <span className="font-semibold">{item.tag}</span>
-                          </motion.span>
-                        );
-                      })}
-                    </motion.div>
-                  </div>
-
-                  <p className="mt-6 text-xs text-zinc-500 leading-relaxed flex items-start gap-2">
-                    <span aria-hidden className="mt-[1px]">
-                      💡
-                    </span>
-                    <span>
-                      E quando o projeto pede algo diferente, eu me adapto à
-                      stack do time e do cliente. O foco é entregar valor com
-                      qualidade e manutenção saudável.
-                    </span>
-                  </p>
                 </div>
               </motion.div>
             </div>
@@ -1404,40 +1374,40 @@ export default function Page() {
 
                   <div className="space-y-4 text-[15px] sm:text-base text-zinc-300 leading-relaxed">
                     <p>
-                      <span className="text-white font-semibold">
-                        Senior Software Engineer
-                      </span>{" "}
-                      com atuação em{" "}
-                      <span className="text-violet-300 font-semibold">
-                        Web/Mobile
+                      Engenheiro de Software com atuação em desenvolvimento{" "}
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-300 to-fuchsia-300 font-semibold">
+                        Web/Mobile, DevOps e UX/UI
                       </span>
-                      ,{" "}
-                      <span className="text-fuchsia-300 font-semibold">
-                        DevOps
-                      </span>{" "}
-                      e <span className="text-white font-semibold">UX/UI</span>.
-                      Meu foco é transformar objetivos de negócio em produto
-                      funcionando: arquitetura bem definida, entrega previsível
-                      e experiência consistente.
+                      , especializado em transformar estratégias de negócio em
+                      soluções digitais completas.
                     </p>
                     <p>
-                      Experiência em{" "}
-                      <span className="text-violet-300">setor público</span> com
-                      sistemas críticos e modernização orientada à usabilidade.
-                      No <span className="text-fuchsia-300">setor privado</span>
-                      , desenho soluções escaláveis, automatizo CI/CD, fortaleço
-                      observabilidade e garanto ambientes confiáveis para
-                      evolução contínua.
+                      Atuação no{" "}
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-300 to-fuchsia-300 font-semibold">
+                        setor público
+                      </span>{" "}
+                      com sistemas críticos e iniciativas de modernização
+                      orientadas à usabilidade. No{" "}
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-300 to-fuchsia-300 font-semibold">
+                        setor privado
+                      </span>
+                      , estrutura arquiteturas robustas, automatiza processos,
+                      fortalece observabilidade e garante ambientes de produção
+                      confiáveis. Possui experiência em{" "}
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-300 to-fuchsia-300 font-semibold">
+                        projetos internacionais
+                      </span>
+                      , ampliando a visão técnica, cultural e de mercado na
+                      construção de produtos digitais e visão negócio.
                     </p>
                     <div className="pt-2">
                       <div className="text-[11px] font-semibold text-zinc-200 tracking-wide">
                         Formação &amp; Background
                       </div>
                       <p className="mt-1 text-xs text-zinc-400 leading-relaxed">
-                        29 anos e residindo em Fortaleza-CE, profissional
-                        formado em Análise e Desenvolvimento de Sistemas,
-                        pós-graduado em Engenharia de Software com ênfase em
-                        DevOps pela UNIFOR, com especializações em
+                        Profissional formado em Análise e Desenvolvimento de
+                        Sistemas, pós-graduado em Engenharia de Software com
+                        ênfase em DevOps pela UNIFOR, com especializações em
                         Desenvolvimento Full Stack (Digital College) e UX/UI
                         &amp; Produtos Digitais (EBAC). Vivência internacional
                         com intercâmbio de língua inglesa na Irlanda-UE (nível
@@ -1452,9 +1422,9 @@ export default function Page() {
                     {[
                       { icon: "🎯", label: "Visão de produto" },
                       { icon: "⚡", label: "Performance" },
-                      { icon: "🔧", label: "Boas práticas" },
+                      { icon: "🔧", label: "Visão de negócio" },
                       { icon: "🚀", label: "Impacto real" },
-                      { icon: "🧑‍💼", label: "Liderança" },
+                      { icon: "🧑‍💼", label: "Gestão" },
                       { icon: "📦", label: "Gerência de Produtos" },
                     ].map((item) => (
                       <span
