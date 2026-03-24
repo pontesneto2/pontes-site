@@ -141,7 +141,7 @@ export default function Page() {
       subtitle: "Em desenvolvimento",
       tags: [
         "React Native",
-        "Typescript",
+        "TypeScript",
         "NextJS",
         "NodeJS",
         "ExpressJS",
@@ -161,7 +161,7 @@ export default function Page() {
       subtitle: "",
       tags: [
         "React Native",
-        "Typescript",
+        "TypeScript",
         "NextJS",
         "NodeJS",
         "ExpressJS",
@@ -188,7 +188,7 @@ export default function Page() {
         "Docker",
         "TailwindCSS",
         "NextJS",
-        "Typescript",
+        "TypeScript",
       ],
       link: "",
       caseStudy: "/case/erp-estrela",
@@ -228,6 +228,7 @@ export default function Page() {
         "PostgreSQL",
         "Docker",
         "TailwindCSS",
+        "TypeScript",
       ],
       desc: "Alfa Construções e Locações",
     },
@@ -238,7 +239,7 @@ export default function Page() {
     },
     {
       name: "Sistema SIGMA",
-      tech: [".NET", "C#", "Angular", "MongoDB", "Docker"],
+      tech: [".NET", "C#", "Angular", "MongoDB", "Docker", "TypeScript"],
       desc: "Instituto Agropolos do Ceará",
     },
     {
@@ -288,6 +289,11 @@ export default function Page() {
       url: "https://anjosdigitais.org",
       name: "Anjos Digitais",
       desc: "Institucional de impacto social com campanhas e chamadas.",
+    },
+    {
+      url: "https://ujvp.org.br/",
+      name: "União dos Jovens do Vicente Pinzon - UJVP",
+      desc: "Site institucional da Organização Social.",
     },
     {
       url: "https://institutoagropolos.org.br",
@@ -1016,13 +1022,13 @@ export default function Page() {
                                   </div>
                                 </div>
 
-                                <div className="mt-3 flex flex-wrap gap-1.5">
+                                <div className="mt-2 flex flex-wrap gap-1">
                                   {proj.tech.map((t) => (
                                     <span
                                       key={t}
-                                      className="inline-flex items-center gap-1.5 rounded-full bg-white/[0.04] border border-white/[0.08] px-2 py-1 text-[9px] font-semibold text-zinc-200"
+                                      className="inline-flex items-center gap-1 rounded-full bg-white/[0.04] border border-white/[0.08] px-1.5 py-0.5 text-[8px] font-medium text-zinc-300"
                                     >
-                                      <span className="scale-90 origin-left">
+                                      <span className="scale-75 origin-left">
                                         <TechGlyph tag={t} />
                                       </span>
                                       <span className="leading-none">{t}</span>
@@ -1230,91 +1236,13 @@ export default function Page() {
                   <div className="absolute inset-0 bg-gradient-to-br from-violet-500/5 via-transparent to-fuchsia-500/5" />
 
                   <div className="relative">
-                    {/* Processo */}
-                    <h3 className="text-lg font-semibold text-white">
-                      Processo de escolha da{" "}
-                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-200 to-fuchsia-200">
-                        linguagem, tecnologia e arquitetura
-                      </span>
-                    </h3>
-
-                    <motion.ol
-                      variants={staggerList}
-                      initial="hidden"
-                      whileInView="show"
-                      viewport={viewportSettings}
-                      className="relative mt-6 grid sm:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6"
-                    >
-                      <div
-                        aria-hidden
-                        className="pointer-events-none hidden lg:block absolute left-6 right-6 top-5 h-px bg-white/10"
-                      />
-                      {[
-                        {
-                          icon: Palette,
-                          title: "Discovery + Requisitos",
-                          desc: "Entendo o problema, contexto e restrições.",
-                        },
-                        {
-                          icon: Code,
-                          title: "Escopo + Prioridades",
-                          desc: "Defino entregáveis, roadmap e riscos.",
-                        },
-                        {
-                          icon: Server,
-                          title: "Arquitetura",
-                          desc: "Desenho integrações, dados e padrões de qualidade.",
-                        },
-                        {
-                          icon: Rocket,
-                          title: "Tecnologia",
-                          desc: "Seleciono ferramentas pelo fit do projeto e pela manutenção no longo prazo.",
-                        },
-                      ].map((step, stepIndex) => (
-                        <motion.li
-                          key={step.title}
-                          variants={fadeUpItem}
-                          custom={stepIndex}
-                          className="relative"
-                        >
-                          <div className="relative rounded-2xl bg-transparent p-4 h-full">
-                            <div className="flex items-center justify-between">
-                              <div className="flex items-center gap-3">
-                                <div className="relative shrink-0">
-                                  <div className="h-10 w-10 rounded-xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center">
-                                    <step.icon className="h-4 w-4 text-violet-300" />
-                                  </div>
-                                  <div
-                                    aria-hidden
-                                    className="pointer-events-none hidden lg:block absolute left-1/2 -top-[7px] h-3.5 w-3.5 -translate-x-1/2 rounded-full bg-[#141418] border border-white/10"
-                                  />
-                                </div>
-                                <div className="text-[10px] text-zinc-500 font-semibold tracking-[0.22em]">
-                                  {String(stepIndex + 1).padStart(2, "0")}
-                                </div>
-                              </div>
-                            </div>
-
-                            <div className="mt-3">
-                              <div className="text-sm font-semibold text-zinc-100">
-                                {step.title}
-                              </div>
-                              <div className="text-xs text-zinc-500 mt-1 leading-relaxed">
-                                {step.desc}
-                              </div>
-                            </div>
-                          </div>
-                        </motion.li>
-                      ))}
-                    </motion.ol>
-
                     {/* Linguagens */}
-                    <div className="mt-10 pt-8 border-t border-white/10">
+                    <div>
                       <div className="flex items-start justify-between gap-4">
                         <div>
                           <h3 className="text-lg font-semibold text-white flex items-center gap-2">
                             <Cloud className="h-5 w-5 text-fuchsia-300" />
-                            Linguagens de Programação mais usadas
+                            Ferramentas mais usadas
                           </h3>
                           <p className="text-xs text-zinc-500 mt-1">
                             Baseado nos últimos trabalhos realizados.
