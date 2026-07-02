@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Osiris de Castro",
+    "role": "Data Engineer | Modern Data Platforms | ETL, ELT, Python, SQL, Spark, Airflow, AWS, BigQuery, Microsoft Fabric",
+    "context": {
+      "pt": "Osiris e Francisco estudaram juntos",
+      "en": "Osiris and Francisco studied together"
+    },
+    "text": {
+      "pt": "Tive a oportunidade de acompanhar de perto o trabalho do Pontes e posso dizer com tranquilidade que ele é um profissional acima da média. Recomendo o Pontes para projetos e times que precisam de alguém técnico, estratégico, comprometido e com visão de ponta a ponta sobre produto e tecnologia.",
+      "en": "I had the opportunity to closely follow Pontes's work and I can confidently say he is an above-average professional. I recommend Pontes for projects and teams that need someone technical, strategic, committed, and with an end-to-end vision of product and technology."
+    }
+  },
+  {
+    "name": "Luan Rodrigues",
+    "role": "Software Developer | PHP, Node, Angular, ReactJS, SQL, Docker",
+    "context": {
+      "pt": "Luan e Francisco estudaram juntos",
+      "en": "Luan and Francisco studied together"
+    },
+    "text": {
+      "pt": "O Pontes é um excelente profissional! Extremamente dedicado, atento e resolutivo.",
+      "en": "Pontes is an excellent professional! Extremely dedicated, attentive, and resourceful."
+    }
+  }
+]

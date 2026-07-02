@@ -14,6 +14,16 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "pontes-portfolio.vercel.app" }],
+        destination: "https://fcopts.com.br/:path*",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

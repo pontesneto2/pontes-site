@@ -61,7 +61,7 @@ export default function TopTagsMiniChart({
       <div className="flex items-center justify-between gap-3">
         <div className="min-w-0">
           <div className="text-xs font-semibold text-zinc-200">Top 5</div>
-          <div className="text-[12px] text-zinc-500">
+          <div className="text-[12px] text-zinc-400">
             {isMobile ? "Toque nas barras" : "Passe o mouse nas barras"}
           </div>
         </div>
@@ -181,7 +181,7 @@ export default function TopTagsMiniChart({
         </div>
       </div>
 
-      <div className="mt-4 text-[11px] text-zinc-500">
+      <div className="mt-4 text-[11px] text-zinc-400">
         {activeIndex === null
           ? "Tecnologias mais recorrentes no portfólio."
           : `${safeItems[activeIndex]?.tag} fez parte da stack em ${formatCount(

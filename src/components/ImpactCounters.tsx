@@ -148,7 +148,7 @@ function CounterCard({
       }}
       className="rounded-2xl bg-black/30 backdrop-blur-xl px-5 py-4 shadow-[0_16px_60px_rgba(0,0,0,0.35)]"
     >
-      <div className="text-[11px] font-medium tracking-wide text-zinc-500 leading-snug min-h-[2.2em]">
+      <div className="text-[11px] font-medium tracking-wide text-zinc-400 leading-snug min-h-[2.2em]">
         {label}
       </div>
 

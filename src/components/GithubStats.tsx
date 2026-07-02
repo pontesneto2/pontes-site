@@ -1,0 +1,183 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import { Github, Star, GitFork, Users } from "lucide-react";
+import { useLanguage, tr } from "@/lib/language-context";
+
+const GITHUB_USER = "pontesneto2";
+
+type GithubUser = {
+  public_repos: number;
+  followers: number;
+  created_at: string;
+};
+
+type GithubRepo = {
+  stargazers_count: number;
+  forks_count: number;
+  language: string | null;
+  fork: boolean;
+};
+
+type Stats = {
+  publicRepos: number;
+  followers: number;
+  totalStars: number;
+  totalForks: number;
+  topLanguages: string[];
+};
+
+async function fetchGithubData(): Promise<Stats | null> {
+  const headers = { Accept: "application/vnd.github+json" };
+
+  const [userRes, reposRes] = await Promise.all([
+    fetch(`https://api.github.com/users/${GITHUB_USER}`, { headers }),
+    fetch(
+      `https://api.github.com/users/${GITHUB_USER}/repos?per_page=100&sort=updated`,
+      { headers }
+    ),
+  ]);
+
+  if (!userRes.ok || !reposRes.ok) return null;
+
+  const user = (await userRes.json()) as GithubUser;
+  const repos = (await reposRes.json()) as GithubRepo[];
+
+  const ownRepos = repos.filter((r) => !r.fork);
+  const totalStars = ownRepos.reduce((sum, r) => sum + r.stargazers_count, 0);
+  const totalForks = ownRepos.reduce((sum, r) => sum + r.forks_count, 0);
+
+  const languageCounts = ownRepos.reduce<Record<string, number>>((acc, r) => {
+    if (r.language) acc[r.language] = (acc[r.language] ?? 0) + 1;
+    return acc;
+  }, {});
+
+  const topLanguages = Object.entries(languageCounts)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 5)
+    .map(([lang]) => lang);
+
+  return {
+    publicRepos: user.public_repos,
+    followers: user.followers,
+    totalStars,
+    totalForks,
+    topLanguages,
+  };
+}
+
+export default function GithubStats() {
+  const { lang } = useLanguage();
+  const t = (pt: string, en: string) => tr(lang, { pt, en });
+  const [data, setData] = useState<Stats | null>(null);
+  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetchGithubData()
+      .then((result) => {
+        if (!cancelled) {
+          if (result) setData(result);
+          else setError(true);
+        }
+      })
+      .catch(() => {
+        if (!cancelled) setError(true);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  if (error) return null;
+
+  const stats = data
+    ? [
+        { icon: Github, label: t("Repositórios públicos", "Public repos"), value: data.publicRepos },
+        { icon: Star, label: t("Stars recebidas", "Stars earned"), value: data.totalStars },
+        { icon: GitFork, label: t("Forks", "Forks"), value: data.totalForks },
+        { icon: Users, label: t("Seguidores", "Followers"), value: data.followers },
+      ]
+    : [];
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.7, ease: "easeOut" }}
+      className="relative rounded-3xl border border-white/10 bg-black/55 backdrop-blur-xl p-6 md:p-8 shadow-2xl overflow-hidden"
+    >
+      <div className="absolute inset-0 bg-gradient-to-br from-violet-500/5 via-transparent to-fuchsia-500/5" />
+      <div className="relative">
+        <div className="flex items-center justify-between gap-4 mb-6">
+          <div>
+            <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+              <Github className="h-5 w-5 text-violet-300" />
+              {t("GitHub ao vivo", "GitHub live")}
+            </h3>
+            <p className="text-xs text-zinc-400 mt-1">
+              {t(
+                "Dados reais, atualizados direto da API do GitHub.",
+                "Real data, fetched live from the GitHub API."
+              )}
+            </p>
+          </div>
+          <a
+            href={`https://github.com/${GITHUB_USER}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-xs font-medium text-violet-300 hover:text-violet-200 transition-colors whitespace-nowrap"
+          >
+            @{GITHUB_USER}
+          </a>
+        </div>
+
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+          {(data ? stats : Array.from({ length: 4 })).map((stat, index) => (
+            <div
+              key={stat ? (stat as { label: string }).label : index}
+              className="rounded-2xl border border-white/10 bg-gradient-to-br from-white/10 via-white/5 to-transparent p-4 min-h-[92px]"
+            >
+              {stat ? (
+                <>
+                  {(() => {
+                    const Icon = (stat as { icon: typeof Github }).icon;
+                    return <Icon className="h-4 w-4 text-violet-400 mb-2" />;
+                  })()}
+                  <div className="text-2xl font-semibold text-zinc-100 tabular-nums">
+                    {(stat as { value: number }).value.toLocaleString(
+                      "pt-BR"
+                    )}
+                  </div>
+                  <div className="text-[11px] text-zinc-400 mt-0.5">
+                    {(stat as { label: string }).label}
+                  </div>
+                </>
+              ) : (
+                <div className="h-full w-full animate-pulse rounded-lg bg-white/5" />
+              )}
+            </div>
+          ))}
+        </div>
+
+        {data && data.topLanguages.length > 0 && (
+          <div className="mt-5 flex flex-wrap items-center gap-2">
+            <span className="text-[11px] uppercase tracking-wide text-zinc-400 mr-1">
+              {t("Linguagens ativas:", "Active languages:")}
+            </span>
+            {data.topLanguages.map((lang) => (
+              <span
+                key={lang}
+                className="text-[11px] px-2 py-0.5 rounded-md bg-zinc-800/50 text-zinc-300 border border-zinc-700/50"
+              >
+                {lang}
+              </span>
+            ))}
+          </div>
+        )}
+      </div>
+    </motion.div>
+  );
+}

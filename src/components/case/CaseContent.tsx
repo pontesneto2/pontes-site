@@ -133,7 +133,7 @@ export default function CaseContent({
             key={item.label}
             className="rounded-2xl bg-white/[0.03] border border-white/[0.06] px-5 py-4"
           >
-            <span className="block text-[10px] uppercase tracking-[0.18em] text-zinc-500 mb-1">
+            <span className="block text-[10px] uppercase tracking-[0.18em] text-zinc-400 mb-1">
               {item.label}
             </span>
             <span className="text-sm font-semibold text-zinc-200">
@@ -188,7 +188,7 @@ export default function CaseContent({
                 <span className="inline-flex items-center justify-center h-7 w-7 rounded-xl bg-violet-500/15 border border-violet-500/25 text-violet-200 text-xs font-bold">
                   {idx + 1}
                 </span>
-                <span className="text-[11px] uppercase tracking-[0.22em] text-zinc-500">
+                <span className="text-[11px] uppercase tracking-[0.22em] text-zinc-400">
                   Desafio
                 </span>
               </div>

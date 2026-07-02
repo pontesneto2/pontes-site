@@ -7,8 +7,11 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import RobotBuddy from "@/components/RobotBuddy";
 import ImpactCounters from "@/components/ImpactCounters";
+import GithubStats from "@/components/GithubStats";
+import Testimonials from "@/components/Testimonials";
+import ContactForm from "@/components/ContactForm";
+import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
 import {
-  Rocket,
   MonitorSmartphone,
   Globe,
   Code,
@@ -30,6 +33,44 @@ import {
 const FloatingIcons3D = dynamic(() => import("@/components/FloatingIcons3D"), {
   ssr: false,
 });
+
+function LanguageSwitch({
+  lang,
+  setLang,
+  compact = false,
+}: {
+  lang: "pt" | "en";
+  setLang: (lang: "pt" | "en") => void;
+  compact?: boolean;
+}) {
+  const base = compact
+    ? "px-2 py-1 text-[11px]"
+    : "px-2.5 py-1 text-xs";
+
+  return (
+    <div
+      role="group"
+      aria-label="Language"
+      className="inline-flex items-center rounded-lg border border-white/10 bg-white/5 p-0.5"
+    >
+      {(["pt", "en"] as const).map((option) => (
+        <button
+          key={option}
+          type="button"
+          onClick={() => setLang(option)}
+          aria-pressed={lang === option}
+          className={`${base} rounded-md font-bold uppercase tracking-wide transition-colors ${
+            lang === option
+              ? "bg-gradient-to-r from-violet-600 to-fuchsia-500 text-white shadow-[0_0_16px_rgba(168,85,247,0.35)]"
+              : "text-zinc-400 hover:text-zinc-200"
+          }`}
+        >
+          {option}
+        </button>
+      ))}
+    </div>
+  );
+}
 
 function TechGlyph({ tag }: { tag: string }) {
   const normalized = tag.trim().toLowerCase();
@@ -69,6 +110,9 @@ function TechGlyph({ tag }: { tag: string }) {
 }
 
 export default function Page() {
+  const { lang, setLang } = useLanguage();
+  const t = (v: Bilingual) => tr(lang, v);
+
   const [navOpen, setNavOpen] = useState(false);
   const [activePortfolioTab, setActivePortfolioTab] = useState<
     "sistemas" | "websites"
@@ -135,10 +179,19 @@ export default function Page() {
     },
   };
 
-  const featuredProjects = [
+  const featuredProjects: Array<{
+    title: string;
+    subtitle: Bilingual;
+    tags: string[];
+    link: string;
+    caseStudy?: string;
+    blurb: Bilingual;
+    category: Bilingual;
+    thumb: string;
+  }> = [
     {
       title: "Meoocarro — App",
-      subtitle: "Em desenvolvimento",
+      subtitle: { pt: "Em desenvolvimento", en: "In development" },
       tags: [
         "React Native",
         "TypeScript",
@@ -151,14 +204,16 @@ export default function Page() {
         "Docker",
       ],
       link: "",
-      blurb:
-        "Aplicativo para conectar motoristas e oficinas de maneira inteligente, simplificando agendamentos, orçamentos e o acompanhamento de serviços automotivos.",
-      category: "Aplicativo Mobile + Painel Admin",
+      blurb: {
+        pt: "Aplicativo para conectar motoristas e oficinas de maneira inteligente, simplificando agendamentos, orçamentos e o acompanhamento de serviços automotivos.",
+        en: "App that connects drivers and repair shops intelligently, simplifying bookings, quotes and tracking of automotive services.",
+      },
+      category: { pt: "Aplicativo Mobile + Painel Admin", en: "Mobile App + Admin Panel" },
       thumb: "/img-card-meoocarro.png",
     },
     {
       title: "iMidooh — Gerenciamento de Mídia DOOH",
-      subtitle: "",
+      subtitle: { pt: "", en: "" },
       tags: [
         "React Native",
         "TypeScript",
@@ -172,14 +227,16 @@ export default function Page() {
       ],
       link: "",
       caseStudy: "/case/imidooh",
-      blurb:
-        "Plataforma mobile para operar mídia DOOH em painéis de LED dos mais diversos tipos, com gestão de campanhas, monitoramento em tempo real e relatórios de performance.",
-      category: "Aplicativo Mobile + Painel Admin",
+      blurb: {
+        pt: "Plataforma mobile para operar mídia DOOH em painéis de LED dos mais diversos tipos, com gestão de campanhas, monitoramento em tempo real e relatórios de performance.",
+        en: "Mobile platform to operate DOOH media across all kinds of LED panels, with campaign management, real-time monitoring and performance reports.",
+      },
+      category: { pt: "Aplicativo Mobile + Painel Admin", en: "Mobile App + Admin Panel" },
       thumb: "/logo-dooh.png",
     },
     {
       title: "Sistema Financeiro ERP Estrela",
-      subtitle: "",
+      subtitle: { pt: "", en: "" },
       tags: [
         "NodeJS",
         "ExpressJS",
@@ -192,14 +249,20 @@ export default function Page() {
       ],
       link: "",
       caseStudy: "/case/erp-estrela",
-      blurb:
-        "Sistema web para rotinas financeiras do dia a dia, com padronização de processos, relatórios e visibilidade para decisões mais rápidas e seguras.",
-      category: "Sistema Web",
+      blurb: {
+        pt: "Sistema web para rotinas financeiras do dia a dia, com padronização de processos, relatórios e visibilidade para decisões mais rápidas e seguras.",
+        en: "Web system for day-to-day financial routines, standardizing processes, reporting and giving visibility for faster, safer decisions.",
+      },
+      category: { pt: "Sistema Web", en: "Web System" },
       thumb: "/logo-estrela.png",
     },
   ];
 
-  const additionalProjects = [
+  const additionalProjects: Array<{
+    name: string;
+    tech: string[];
+    desc: Bilingual;
+  }> = [
     {
       name: "Sistema Financeiro ERP Estrela",
       tech: [
@@ -212,12 +275,15 @@ export default function Page() {
         "NextJS",
         "TypeScript",
       ],
-      desc: "Grupo Star",
+      desc: { pt: "Grupo Star", en: "Grupo Star" },
     },
     {
       name: "Sistema Escolar",
       tech: ["PHP", "JS", "PostgreSQL", "Scriptcase"],
-      desc: "Colégio da Polícia Militar do Ceará",
+      desc: {
+        pt: "Colégio da Polícia Militar do Ceará",
+        en: "Ceará Military Police School",
+      },
     },
     {
       name: "Sistema Diário de Obras",
@@ -230,160 +296,241 @@ export default function Page() {
         "TailwindCSS",
         "TypeScript",
       ],
-      desc: "Alfa Construções e Locações",
+      desc: { pt: "Alfa Construções e Locações", en: "Alfa Construções e Locações" },
     },
     {
       name: "Sistema Especial Fazenda Chapéu",
       tech: ["Scriptcase", "PHP", "JS", "PostgreSQL"],
-      desc: "Secretaria de Desenvolvimento Agrário do Ceará",
+      desc: {
+        pt: "Secretaria de Desenvolvimento Agrário do Ceará",
+        en: "Ceará State Department of Agrarian Development",
+      },
     },
     {
       name: "Sistema SIGMA",
       tech: [".NET", "C#", "Angular", "MongoDB", "Docker", "TypeScript"],
-      desc: "Instituto Agropolos do Ceará",
+      desc: {
+        pt: "Instituto Agropolos do Ceará",
+        en: "Instituto Agropolos do Ceará",
+      },
     },
     {
       name: "Inscrições - Letramento Digital",
       tech: ["WordPress", "PHP", "JS", "Bootstrap"],
-      desc: "Anjos Digitais",
+      desc: { pt: "Anjos Digitais", en: "Anjos Digitais" },
     },
   ];
 
-  const websites = [
+  const websites: Array<{
+    url: string;
+    name: string;
+    desc: Bilingual;
+    discontinued?: boolean;
+  }> = [
     {
       url: "https://www.clicksoftwarehouse.com/",
       name: "Click Software House",
-      desc: "Site institucional com serviços, posicionamento e contato.",
+      desc: {
+        pt: "Site institucional com serviços, posicionamento e contato.",
+        en: "Corporate site with services, positioning and contact.",
+      },
     },
     {
       url: "https://starcapital.stargrupo.com.br/",
       name: "Star Capital",
-      desc: "Institucional da Star Capital com proposta e canais de contato.",
+      desc: {
+        pt: "Institucional da Star Capital com proposta e canais de contato.",
+        en: "Star Capital corporate site with value proposition and contact channels.",
+      },
     },
     {
       url: "https://www.stargrupo.com.br/",
       name: "Star Grupo",
-      desc: "Site corporativo do grupo com visão geral e empresas.",
+      desc: {
+        pt: "Site corporativo do grupo com visão geral e empresas.",
+        en: "Group's corporate site with overview and business units.",
+      },
     },
     {
       url: "https://starpesquisas.stargrupo.com.br/",
       name: "Star Pesquisas",
-      desc: "Landing de serviços com mensagem direta e CTA claro.",
+      desc: {
+        pt: "Landing de serviços com mensagem direta e CTA claro.",
+        en: "Services landing page with a direct message and clear CTA.",
+      },
     },
     {
       url: "https://starreciclagem.stargrupo.com.br/",
       name: "Star Reciclagem",
-      desc: "Institucional com serviços, áreas de atuação e contato.",
+      desc: {
+        pt: "Institucional com serviços, áreas de atuação e contato.",
+        en: "Corporate site with services, focus areas and contact.",
+      },
     },
     {
       url: "https://silvaeduarteadvogados.com/",
       name: "Silva e Duarte Advogados",
-      desc: "Institucional jurídico com áreas de atuação e captação.",
+      desc: {
+        pt: "Institucional jurídico com áreas de atuação e captação.",
+        en: "Law firm site with practice areas and lead capture.",
+      },
     },
     {
       url: "https://2.0.movimentafilmes.com/",
       name: "Movimenta Filmes",
-      desc: "Portfólio de trabalhos com navegação rápida e objetiva.",
+      desc: {
+        pt: "Portfólio de trabalhos com navegação rápida e objetiva.",
+        en: "Portfolio site with fast, straightforward navigation.",
+      },
     },
     {
       url: "https://anjosdigitais.org",
       name: "Anjos Digitais",
-      desc: "Institucional de impacto social com campanhas e chamadas.",
+      desc: {
+        pt: "Institucional de impacto social com campanhas e chamadas.",
+        en: "Social-impact site with campaigns and calls to action.",
+      },
     },
     {
       url: "https://ujvp.org.br/",
       name: "União dos Jovens do Vicente Pinzon - UJVP",
-      desc: "Site institucional da Organização Social.",
+      desc: {
+        pt: "Site institucional da Organização Social.",
+        en: "Institutional site for the nonprofit organization.",
+      },
     },
     {
       url: "https://institutoagropolos.org.br",
       name: "Instituto Agropolos",
-      desc: "Institucional com conteúdo organizado e acesso rápido.",
+      desc: {
+        pt: "Institucional com conteúdo organizado e acesso rápido.",
+        en: "Corporate site with organized content and quick access.",
+      },
     },
     {
       url: "https://fastcall.com.br/2.0",
       name: "FastCall 2.0",
-      desc: "Página do serviço com proposta clara e conversão.",
+      desc: {
+        pt: "Página do serviço com proposta clara e conversão.",
+        en: "Service page with a clear proposition and conversion focus.",
+      },
     },
     {
       url: "https://com3brasil.com.br/wp",
       name: "COM3 Brasil",
-      desc: "Institucional da agência com serviços e portfólio.",
+      desc: {
+        pt: "Institucional da agência com serviços e portfólio.",
+        en: "Agency site with services and portfolio.",
+      },
     },
     {
       url: "https://www.sda.ce.gov.br",
       name: "SDA Ceará",
-      desc: "Portal institucional com notícias, programas e serviços.",
+      desc: {
+        pt: "Portal institucional com notícias, programas e serviços.",
+        en: "Government portal with news, programs and services.",
+      },
     },
     {
       url: "https://sistemas2.sda.ce.gov.br",
       name: "Sistemas SDA",
-      desc: "Hub de acesso aos sistemas e serviços digitais.",
+      desc: {
+        pt: "Hub de acesso aos sistemas e serviços digitais.",
+        en: "Access hub for digital systems and services.",
+      },
     },
     {
       url: "",
       name: "Programa de Imigração Hey Canadá",
-      desc: "Voltado para atrair e prospectar pessoas que querem imigrar para o Canadá. Projeto 100% em inglês.",
+      desc: {
+        pt: "Voltado para atrair e prospectar pessoas que querem imigrar para o Canadá. Projeto 100% em inglês.",
+        en: "Built to attract and qualify leads interested in immigrating to Canada. Project fully in English.",
+      },
       discontinued: true,
     },
   ];
 
-  const experience = [
+  const experience: Array<{
+    company: string;
+    startRole?: Bilingual;
+    role: Bilingual;
+    period: string;
+    remote?: boolean;
+    languages?: string;
+  }> = [
     {
       company: "Grupo Star Financeira",
-      role: "Engenheiro de Software | Gerenciamento de Projetos",
+      role: {
+        pt: "Engenheiro de Software | Gerenciamento de Projetos",
+        en: "Software Engineer | Project Management",
+      },
       period: "2025–presente",
     },
     {
       company: "Terceirizada - FlixBus Tickets (Europa)",
-      role: "Sênior Desenvolvedor Full Stack",
+      role: { pt: "Sênior Desenvolvedor Full Stack", en: "Senior Full Stack Developer" },
       period: "2024–2025",
       remote: true,
       languages: "PT/EN",
     },
     {
       company: "Terceirizada - FedEX Services (Portugal)",
-      role: "Sênior Desenvolvedor Full Stack",
+      role: { pt: "Sênior Desenvolvedor Full Stack", en: "Senior Full Stack Developer" },
       period: "2024–2025",
       remote: true,
       languages: "PT/EN",
     },
     {
       company: "Instituto Anjos Digitais",
-      startRole: "Desenvolvedor Full Stack",
-      role: "Sênior Desenvolvedor Full Stack | Gerenciamento de projetos de Produtos Digitais",
+      startRole: { pt: "Desenvolvedor Full Stack", en: "Full Stack Developer" },
+      role: {
+        pt: "Sênior Desenvolvedor Full Stack | Gerenciamento de projetos de Produtos Digitais",
+        en: "Senior Full Stack Developer | Digital Product Project Management",
+      },
       period: "2023–2024",
       remote: true,
     },
     {
       company: "Secretaria do Desenvolvimento Agrário (CE)",
-      startRole: "Programador Jr",
-      role: "Analista de Sistemas Pleno | Product Designer",
+      startRole: { pt: "Programador Jr", en: "Jr Programmer" },
+      role: {
+        pt: "Analista de Sistemas Pleno | Product Designer",
+        en: "Mid-level Systems Analyst | Product Designer",
+      },
       period: "2021–2023",
     },
     {
       company: "Instituto Agropolos do Ceará",
-      startRole: "Programador Jr",
-      role: "Analista de Sistemas Pleno | UX/UI Designer",
+      startRole: { pt: "Programador Jr", en: "Jr Programmer" },
+      role: {
+        pt: "Analista de Sistemas Pleno | UX/UI Designer",
+        en: "Mid-level Systems Analyst | UX/UI Designer",
+      },
       period: "2021–2023",
       remote: true,
     },
     {
       company: "Com3 Brasil",
-      startRole: "Programador Jr",
-      role: "Programador de Softwares | UX/UI Designer",
+      startRole: { pt: "Programador Jr", en: "Jr Programmer" },
+      role: {
+        pt: "Programador de Softwares | UX/UI Designer",
+        en: "Software Programmer | UX/UI Designer",
+      },
       period: "2020–2021",
     },
     {
       company: "Grupo Laredo Atacadista",
-      startRole: "Auxiliar de gerência",
-      role: "Gerente Operacional de Mercado",
+      startRole: { pt: "Auxiliar de gerência", en: "Assistant Manager" },
+      role: { pt: "Gerente Operacional de Mercado", en: "Store Operations Manager" },
       period: "2017–2020",
     },
     {
       company: "White Martins Gases Industriais e Medicinais",
-      startRole: "Encarregado de Operações",
-      role: "Gerente de Unidade Capital — URC Fortaleza",
+      startRole: { pt: "Encarregado de Operações", en: "Operations Supervisor" },
+      role: {
+        pt: "Gerente de Unidade Capital — URC Fortaleza",
+        en: "Unit Manager — URC Fortaleza",
+      },
       period: "2015–2017",
     },
   ];
@@ -401,6 +548,14 @@ export default function Page() {
 
   const topTechTags = techTagsSorted.slice(0, 18);
   const top5TechTags = techTagsSorted.slice(0, 5);
+
+  const navLinks = [
+    { href: "#projects", label: { pt: "Portfólio", en: "Portfolio" } },
+    { href: "#experience", label: { pt: "Experiência", en: "Experience" } },
+    { href: "#stack", label: { pt: "Stack", en: "Stack" } },
+    { href: "#about", label: { pt: "Sobre", en: "About" } },
+    { href: "#contact", label: { pt: "Contato", en: "Contact" } },
+  ];
 
   return (
     <div className="min-h-screen font-sans relative isolate">
@@ -426,57 +581,46 @@ export default function Page() {
                   >
                     FCOPTS
                   </span>
-                  <span className="text-[10px] text-zinc-500 tracking-wide -mt-0.5">
-                    Engenheiro de Software | UX Ops
+                  <span className="text-[10px] text-zinc-400 tracking-wide -mt-0.5">
+                    {t({ pt: "Engenheiro de Software | UX Ops", en: "Software Engineer | UX Ops" })}
                   </span>
                 </div>
               </div>
               <nav className="hidden md:flex items-center gap-8 text-sm">
-                <a
-                  href="#services"
-                  className="hover:text-white/90 text-zinc-300"
-                >
-                  Serviços
-                </a>
-                <a
-                  href="#projects"
-                  className="hover:text-white/90 text-zinc-300"
-                >
-                  Portfólio
-                </a>
-                <a href="#stack" className="hover:text-white/90 text-zinc-300">
-                  Stack
-                </a>
-                <a href="#about" className="hover:text-white/90 text-zinc-300">
-                  Sobre
-                </a>
-                <a
-                  href="#contact"
-                  className="hover:text-white/90 text-zinc-300"
-                >
-                  Contato
-                </a>
+                {navLinks.map((link) => (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    className="hover:text-white/90 text-zinc-300"
+                  >
+                    {t(link.label)}
+                  </a>
+                ))}
+                <LanguageSwitch lang={lang} setLang={setLang} />
                 <a
                   href="https://drive.google.com/file/d/1NGGBTy9kzAPm5Os6we_jaeevsU-_zavX/view?usp=sharing"
                   className="px-3 py-1.5 rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-500 text-white shadow-lg shadow-fuchsia-700/20"
                 >
-                  Baixar CV
+                  {t({ pt: "Baixar CV", en: "Download CV" })}
                 </a>
               </nav>
-              <button
-                type="button"
-                className="md:hidden inline-flex items-center justify-center rounded-xl border border-white/10 bg-black/25 hover:bg-black/35 p-2.5 transition-colors"
-                onClick={() => setNavOpen(!navOpen)}
-                aria-expanded={navOpen}
-                aria-controls="mobile-nav"
-              >
-                <span className="sr-only">Abrir menu</span>
-                {navOpen ? (
-                  <X className="h-5 w-5 text-zinc-200" />
-                ) : (
-                  <Menu className="h-5 w-5 text-zinc-200" />
-                )}
-              </button>
+              <div className="flex items-center gap-2 md:hidden">
+                <LanguageSwitch lang={lang} setLang={setLang} compact />
+                <button
+                  type="button"
+                  className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-black/25 hover:bg-black/35 p-2.5 transition-colors"
+                  onClick={() => setNavOpen(!navOpen)}
+                  aria-expanded={navOpen}
+                  aria-controls="mobile-nav"
+                >
+                  <span className="sr-only">{t({ pt: "Abrir menu", en: "Open menu" })}</span>
+                  {navOpen ? (
+                    <X className="h-5 w-5 text-zinc-200" />
+                  ) : (
+                    <Menu className="h-5 w-5 text-zinc-200" />
+                  )}
+                </button>
+              </div>
             </div>
           </div>
           {navOpen && (
@@ -485,20 +629,14 @@ export default function Page() {
               className="md:hidden border-t border-white/5 bg-[#141418]"
             >
               <div className="mx-auto max-w-7xl px-3 py-4 flex flex-col gap-2">
-                {[
-                  { href: "#services", label: "Serviços" },
-                  { href: "#projects", label: "Portfólio" },
-                  { href: "#stack", label: "Stack" },
-                  { href: "#about", label: "Sobre" },
-                  { href: "#contact", label: "Contato" },
-                ].map((i) => (
+                {navLinks.map((i) => (
                   <a
                     key={i.href}
                     href={i.href}
                     className="text-zinc-200 rounded-xl px-3 py-3 hover:bg-white/5 transition-colors"
                     onClick={() => setNavOpen(false)}
                   >
-                    {i.label}
+                    {t(i.label)}
                   </a>
                 ))}
               </div>
@@ -514,17 +652,27 @@ export default function Page() {
             <div className="absolute inset-0 bg-black/25" />
 
             <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
+              {/* Saudação */}
+              <motion.p
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.9, delay: 0.2, ease: "easeOut" }}
+                className="text-base sm:text-lg md:text-xl font-light text-zinc-300 mb-2"
+              >
+                {t({ pt: "Olá, meu nome é", en: "Hi, my name is" })}
+              </motion.p>
+
               {/* Nome - DESTAQUE MÁXIMO */}
               <motion.h1
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
-                className="mb-4 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight"
+                className="mb-6 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight md:tracking-wide"
               >
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-200 via-fuchsia-200 to-violet-200">
+                <span className="text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-violet-300">
                   Francisco
                 </span>{" "}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-300 via-violet-300 to-fuchsia-300">
+                <span className="text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-violet-400">
                   Pontes
                 </span>
               </motion.h1>
@@ -536,70 +684,85 @@ export default function Page() {
                 transition={{ duration: 1, delay: 0.6, ease: "easeOut" }}
                 className="text-lg sm:text-xl md:text-2xl font-light text-zinc-300 max-w-4xl mx-auto mb-4"
               >
-                Do esboço ao deploy:{" "}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-fuchsia-300 font-semibold">
-                  design, engenharia e impacto real.
-                </span>
-              </motion.p>
-
-              <motion.p
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.9, delay: 0.78, ease: "easeOut" }}
-                className="text-base sm:text-lg md:text-xl font-semibold mb-10"
-              >
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-300 via-violet-300 to-fuchsia-200">
-                  vamos conversar?
-                </span>
+                {lang === "pt" ? (
+                  <>
+                    Sou{" "}
+                    <span className="text-violet-300 font-semibold">
+                      engenheiro de software
+                    </span>{" "}
+                    em Fortaleza, Brasil.
+                    <br />
+                    Uso código e engenharia para dar vida a{" "}
+                    <span className="text-violet-300 font-semibold">
+                      novas ideias.
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    I&apos;m a{" "}
+                    <span className="text-violet-300 font-semibold">
+                      software engineer
+                    </span>{" "}
+                    based in Fortaleza, Brazil.
+                    <br />
+                    I use code and engineering to bring{" "}
+                    <span className="text-violet-300 font-semibold">
+                      new ideas
+                    </span>{" "}
+                    to life.
+                  </>
+                )}
               </motion.p>
 
               {/* Social Links */}
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ duration: 1, delay: 1.2 }}
-                className="mt-10 flex items-center justify-center gap-3"
+                transition={{ duration: 1, delay: 0.95 }}
+                className="mt-10 flex items-center justify-center gap-5"
               >
                 <a
                   aria-label="GitHub"
                   href="https://github.com/pontesneto2"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group relative p-3.5 rounded-2xl border border-white/15 bg-black/20 backdrop-blur-sm shadow-[0_18px_70px_rgba(0,0,0,0.45)] hover:bg-white/5 hover:border-violet-500/40 hover:shadow-[0_0_32px_rgba(168,85,247,0.28)] transition-all duration-300"
+                  className="group text-zinc-300 hover:text-violet-300 transition-colors"
                 >
-                  <Github className="h-6 w-6 text-zinc-100 group-hover:text-white transition-colors" />
+                  <Github className="h-6 w-6" />
                 </a>
                 <a
                   aria-label="LinkedIn"
                   href="https://www.linkedin.com/in/fcopts"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group relative p-3.5 rounded-2xl border border-white/15 bg-black/20 backdrop-blur-sm shadow-[0_18px_70px_rgba(0,0,0,0.45)] hover:bg-white/5 hover:border-fuchsia-500/40 hover:shadow-[0_0_32px_rgba(217,70,239,0.26)] transition-all duration-300"
+                  className="group text-zinc-300 hover:text-fuchsia-300 transition-colors"
                 >
-                  <Linkedin className="h-6 w-6 text-zinc-100 group-hover:text-white transition-colors" />
+                  <Linkedin className="h-6 w-6" />
                 </a>
                 <a
                   aria-label="E-mail"
                   href="mailto:pontesneto2@gmail.com"
-                  className="group relative p-3.5 rounded-2xl border border-white/15 bg-black/20 backdrop-blur-sm shadow-[0_18px_70px_rgba(0,0,0,0.45)] hover:bg-white/5 hover:border-amber-500/40 hover:shadow-[0_0_32px_rgba(251,191,36,0.18)] transition-all duration-300"
+                  className="group text-zinc-300 hover:text-amber-300 transition-colors"
                 >
-                  <Mail className="h-6 w-6 text-zinc-100 group-hover:text-white transition-colors" />
+                  <Mail className="h-6 w-6" />
                 </a>
               </motion.div>
             </div>
             {/* Scroll Indicator - CENTRALIZADO (relativo à seção inteira) */}
             <motion.a
-              href="#services"
+              href="#intro"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1, y: [0, 10, 0] }}
               transition={{
                 opacity: { delay: 1.5, duration: 1 },
                 y: { duration: 2, repeat: Infinity, ease: "easeInOut" },
               }}
-              className="absolute bottom-8 left-0 right-0 mx-auto w-fit flex flex-col items-center justify-center gap-2 text-zinc-500 hover:text-zinc-300 transition-colors"
-              aria-label="Role para explorar"
+              className="absolute bottom-8 left-0 right-0 mx-auto w-fit flex flex-col items-center justify-center gap-2 text-zinc-400 hover:text-zinc-300 transition-colors"
+              aria-label={t({ pt: "Role para explorar", en: "Scroll to explore" })}
             >
-              <span className="text-sm">Role para explorar</span>
+              <span className="text-sm">
+                {t({ pt: "Role para explorar", en: "Scroll to explore" })}
+              </span>
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                 <path
                   d="M12 5v14M19 12l-7 7-7-7"
@@ -612,140 +775,99 @@ export default function Page() {
             </motion.a>
           </section>
 
-          {/* CARD COMERCIAL - DESTAQUE MÁXIMO */}
+          {/* SOBRE - placeholder provisório */}
           <section
-            id="services"
-            className="relative py-16 md:py-20 border-t border-white/5"
+            id="intro"
+            className="relative py-24 border-t border-white/5"
           >
-            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-              {/* Card com múltiplas camadas de destaque */}
-              <motion.div
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.15 }}
-                transition={{ duration: 0.9, ease: "easeOut" }}
-                className="relative"
-              >
-                {/* Glow effect externo */}
-                <div className="absolute -inset-1 bg-gradient-to-r from-violet-600 via-fuchsia-600 to-violet-600 rounded-3xl blur-2xl opacity-20 animate-pulse" />
+            <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center">
+              <p className="text-white text-base sm:text-lg leading-relaxed">
+                {t({
+                  pt: "Graduado em Análise e Desenvolvimento de Sistemas pela Universidade Farias Brito, em Fortaleza. Pós Graduado em Engenharia de Software com ênfase em Devops*. Especializado em Desenvolvimento Full Stack pela Digital College. Especializado em UX/UI e design de Produtos Digitais pela EBAC*.",
+                  en: "Bachelor's degree in Systems Analysis and Development from Universidade Farias Brito, in Fortaleza. Postgraduate in Software Engineering with an emphasis on DevOps*. Specialized in Full Stack Development from Digital College. Specialized in UX/UI and Digital Product Design from EBAC*.",
+                })}
+              </p>
 
-                {/* Card principal */}
-                <div className="relative rounded-3xl border-2 border-violet-500/50 p-8 md:px-12 md:py-10 bg-gradient-to-br from-black/90 via-violet-950/30 to-black/90 backdrop-blur-xl shadow-2xl">
-                  {/* Padrão de grid no fundo */}
-                  <div className="absolute inset-0 bg-[linear-gradient(rgba(168,85,247,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(168,85,247,0.03)_1px,transparent_1px)] bg-[size:32px_32px] rounded-3xl" />
+              <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a
+                  href="https://github.com/pontesneto2"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 rounded-full px-6 py-2.5 border border-white/30 text-white text-sm font-medium hover:bg-white/5 hover:border-white/50 transition-all duration-300"
+                >
+                  {t({ pt: "Visite-me no GitHub", en: "Visit me on GitHub" })}
+                </a>
+                <a
+                  href="https://www.linkedin.com/in/fcopts"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex items-center gap-1 text-white text-sm font-medium hover:text-zinc-200 transition-colors"
+                >
+                  {t({ pt: "Visite-me no LinkedIn", en: "Visit me on LinkedIn" })}
+                  <span className="inline-block transition-transform duration-200 group-hover:translate-x-0.5">
+                    ›
+                  </span>
+                </a>
+              </div>
+            </div>
+          </section>
 
-                  {/* Badge de destaque */}
-                  <div className="relative z-10 mb-6">
-                    <span className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-gradient-to-r from-violet-600/20 to-fuchsia-600/20 border border-violet-500/30 text-violet-300 text-[12px] font-semibold backdrop-blur-sm">
-                      <Rocket className="h-3.5 w-3.5" />
-                      Projetos Sob Medida
-                    </span>
-                  </div>
-
-                  <div className="relative z-10">
-                    {/* Título com gradiente forte */}
-                    <h2 className="text-3xl md:text-4xl font-bold leading-tight">
-                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-violet-200 to-fuchsia-200">
-                        Desenvolvo Aplicativos, Sistemas e Websites
+          {/* SOBRE - Tecnologia, Engenharia & Design */}
+          <section
+            id="tech-engineering-design"
+            className="relative py-24 border-t border-white/5"
+          >
+            <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
+              <div className="relative rounded-3xl bg-black/70 backdrop-blur-xl overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-violet-500/5 via-transparent to-fuchsia-500/5" />
+                <div className="relative grid md:grid-cols-2 gap-6 items-stretch">
+                  <div className="p-8 md:p-12 flex flex-col justify-center">
+                    <h2 className="text-4xl md:text-3xl lg:text-4xl font-black leading-tight text-white">
+                      <span className="md:whitespace-nowrap">
+                        {t({ pt: "Tecnologia,", en: "Technology," })}{" "}
+                        <br className="md:hidden" />
+                        {t({ pt: "Engenharia", en: "Engineering" })}
                       </span>
                       <br />
-                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-fuchsia-400">
-                        — projetos 100% personalizados
-                      </span>
+                      {t({ pt: "& Design", en: "& Design" })}
                     </h2>
 
-                    {/* Descrição com destaque */}
-                    <p className="mt-6 text-lg text-zinc-200 max-w-4xl leading-relaxed">
-                      Do{" "}
-                      <span className="text-violet-300 font-semibold">
-                        discovery
-                      </span>{" "}
-                      ao{" "}
-                      <span className="text-fuchsia-300 font-semibold">
-                        deploy
-                      </span>
-                      : requisitos, protótipos, desenvolvimento, integrações,
-                      CI/CD e observabilidade.
-                      <br />
-                      <span className="text-white font-medium">
-                        Tecnologia + Padrão + Rentabilidade
-                      </span>{" "}
-                      para entregar valor real.
-                    </p>
-
-                    {/* Grid de serviços com ícones */}
-                    <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                      {[
-                        {
-                          icon: MonitorSmartphone,
-                          label: "Aplicativos Mobile",
-                          desc: "",
-                        },
-                        { icon: Globe, label: "Sistemas Web", desc: "" },
-                        {
-                          icon: Rocket,
-                          label: "Websites de Alta Conversão",
-                          desc: "",
-                        },
-                        { icon: Code, label: "Integrações & APIs", desc: "" },
-                      ].map((item) => (
-                        <div
-                          key={item.label}
-                          className="group relative rounded-2xl border border-white/10 bg-gradient-to-b from-white/5 to-transparent p-4 hover:border-violet-500/50 hover:bg-white/10 transition-all duration-300"
-                        >
-                          <item.icon className="h-7 w-7 text-violet-400 mb-2.5 group-hover:scale-110 transition-transform" />
-                          <h3 className="font-semibold text-white text-sm leading-tight">
-                            {item.label}
-                          </h3>
-                          <p className="text-xs text-zinc-400 mt-1">
-                            {item.desc}
-                          </p>
-                        </div>
-                      ))}
-                    </div>
-
-                    {/* Proposta de Valor */}
-                    <div className="mt-8 p-5 rounded-2xl bg-gradient-to-r from-violet-500/10 to-fuchsia-500/10 border border-violet-500/20">
-                      <p className="text-lg text-center text-zinc-200 leading-relaxed">
-                        <span className="text-white font-semibold">
-                          Me diga o que você quer
-                        </span>{" "}
-                        e eu te entrego a{" "}
-                        <span className="text-violet-300 font-semibold">
-                          solução pronta para uso
-                        </span>
-                        ,{" "}
-                        <span className="text-fuchsia-300 font-semibold">
-                          rápido
-                        </span>{" "}
-                        e nos{" "}
-                        <span className="text-white font-semibold">
-                          padrões tecnológicos mais atuais
-                        </span>
-                        .
+                    <div className="mt-6 space-y-4 text-zinc-300 text-[15px] sm:text-base leading-relaxed">
+                      <p>
+                        {t({
+                          pt: "Sou Engenheiro de Software com mais de 6 anos de experiência em desenvolvimento Web/Mobile, DevOps e entusiasta de operações UX/UI. Tenho perfil multidisciplinar e atuo na construção de soluções digitais de ponta a ponta.",
+                          en: "I'm a Software Engineer with over 6 years of experience in Web/Mobile development, DevOps, and I'm an enthusiast of UX/UI operations. I have a multidisciplinary profile and work on building end-to-end digital solutions.",
+                        })}
+                      </p>
+                      <p>
+                        {t({
+                          pt: "Ao longo da minha trajetória, participei de projetos em sistemas legado para o setor público, setor privado e iniciativas internacionais, passando por empresas como Star Capital, Instituto Anjos Digitais, Secretaria do Desenvolvimento Agrário do Ceará, Instituto Agropolos do Ceará, Com3 Brasil, Grupo Laredo, White Martins Gases do Ar e experiências internacionais. Essa vivência me permitiu atuar em produtos digitais de diferentes complexidades*. Uso, automatizo e me especializo cada vez mais em Inteligência Artificial mas geração old school que codificava na mão e consultando o stackoverflow* ainda vive, rs.",
+                          en: "Throughout my career, I've worked on legacy system projects for the public sector, private sector and international initiatives, passing through companies such as Star Capital, Instituto Anjos Digitais, Secretaria do Desenvolvimento Agrário do Ceará, Instituto Agropolos do Ceará, Com3 Brasil, Grupo Laredo, White Martins Gases do Ar, and international experiences. That journey let me work on digital products of different complexities*. I use, automate and keep specializing in Artificial Intelligence — but the old-school generation that used to hand-code while checking StackOverflow* is still alive, ha.",
+                        })}
                       </p>
                     </div>
 
-                    {/* CTA forte */}
-                    <div className="mt-7 flex flex-col sm:flex-row gap-3 justify-center">
-                      <a
-                        href="#contact"
-                        className="group inline-flex items-center justify-center gap-2 rounded-2xl px-6 py-2.5 bg-gradient-to-r from-violet-600 to-fuchsia-500 text-white text-sm sm:text-base font-bold shadow-[0_0_50px_rgba(168,85,247,0.4)] hover:shadow-[0_0_80px_rgba(168,85,247,0.6)] transition-all duration-300 hover:scale-105"
-                      >
-                        <Mail className="h-4 w-4 group-hover:rotate-12 transition-transform" />
-                        Iniciar Projeto
-                      </a>
-                      <a
-                        href="#projects"
-                        className="inline-flex items-center justify-center gap-2 rounded-2xl px-6 py-2.5 border-2 border-white/20 backdrop-blur-sm text-sm sm:text-base font-semibold hover:bg-white/5 hover:border-white/30 transition-all duration-300"
-                      >
-                        <ExternalLink className="h-4 w-4" />
-                        Ver Casos de Sucesso
-                      </a>
-                    </div>
+                    <a
+                      href="https://drive.google.com/file/d/1NGGBTy9kzAPm5Os6we_jaeevsU-_zavX/view?usp=sharing"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-8 self-start w-[40%] min-w-fit flex items-center justify-center rounded-full px-6 py-2.5 border border-violet-400/50 text-violet-300 text-sm font-medium hover:bg-violet-500/10 hover:border-violet-400/70 transition-all duration-300"
+                    >
+                      {t({ pt: "Veja o currículo completo", en: "See the full résumé" })}
+                    </a>
+                  </div>
+
+                  <div className="relative min-h-[320px] md:min-h-full">
+                    <Image
+                      src="/images/img-site-pn.webp"
+                      alt="Francisco Pontes — código e engenharia"
+                      fill
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      className="object-cover object-left"
+                    />
                   </div>
                 </div>
-              </motion.div>
+              </div>
             </div>
           </section>
 
@@ -758,7 +880,7 @@ export default function Page() {
               <div className="text-center mb-16">
                 <h2 className="text-3xl font-bold">
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-violet-300">
-                    Projetos em Destaque
+                    {t({ pt: "Projetos em Destaque", en: "Featured Projects" })}
                   </span>
                 </h2>
               </div>
@@ -781,7 +903,7 @@ export default function Page() {
                     {/* Badge de categoria */}
                     <div className="mb-4">
                       <span className="inline-block px-2 py-0.5 rounded-md text-[10px] font-medium bg-violet-500/10 text-violet-300 border border-violet-500/20">
-                        {project.category}
+                        {t(project.category)}
                       </span>
                     </div>
 
@@ -790,7 +912,7 @@ export default function Page() {
                       {project.thumb ? (
                         <Image
                           src={project.thumb}
-                          alt={`Capa do projeto: ${project.title}`}
+                          alt={`${t({ pt: "Capa do projeto", en: "Project cover" })}: ${project.title}`}
                           fill
                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                           className="object-cover object-center opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
@@ -803,13 +925,13 @@ export default function Page() {
                     <h3 className="text-xl font-semibold group-hover:text-violet-300 transition-colors">
                       {project.title}
                     </h3>
-                    {project.subtitle && (
+                    {t(project.subtitle) && (
                       <span className="inline-block text-xs text-amber-400/80 font-medium mt-1 mb-2">
-                        {project.subtitle}
+                        {t(project.subtitle)}
                       </span>
                     )}
                     <p className="text-sm text-zinc-400 leading-relaxed mb-6 mt-2">
-                      {project.blurb}
+                      {t(project.blurb)}
                     </p>
 
                     {/* Tags estilizadas */}
@@ -832,27 +954,27 @@ export default function Page() {
                           rel="noopener noreferrer"
                           className="inline-flex items-center gap-2 text-sm font-medium text-fuchsia-400 hover:text-fuchsia-300 transition-colors group-hover:gap-3"
                         >
-                          Ver projeto
+                          {t({ pt: "Ver projeto", en: "View project" })}
                           <ExternalLink className="h-4 w-4" />
                         </a>
                       ) : (
-                        !("caseStudy" in project && project.caseStudy) && (
+                        !project.caseStudy && (
                           <div className="flex flex-col gap-2 mt-2">
-                            <div className="inline-flex items-center gap-2 text-xs font-medium text-zinc-500">
+                            <div className="inline-flex items-center gap-2 text-xs font-medium text-zinc-400">
                               <Lock className="h-3.5 w-3.5" />
-                              Projeto Privado
+                              {t({ pt: "Projeto Privado", en: "Private Project" })}
                             </div>
                             <a
                               href="mailto:pontesneto2@gmail.com?subject=Solicita%C3%A7%C3%A3o%20de%20acesso%20ao%20projeto"
                               className="inline-flex items-center gap-2 text-[11px] font-medium text-violet-400 hover:text-violet-300 transition-colors"
                             >
                               <Mail className="h-3 w-3" />
-                              Solicite acesso via email
+                              {t({ pt: "Solicite acesso via email", en: "Request access via email" })}
                             </a>
                           </div>
                         )
                       )}
-                      {"caseStudy" in project && project.caseStudy && (
+                      {project.caseStudy && (
                         <Link
                           href={project.caseStudy}
                           className="mt-3 inline-flex items-center gap-2 text-[12px] font-semibold text-violet-300 hover:text-violet-200 transition-colors group/case"
@@ -860,7 +982,7 @@ export default function Page() {
                           <span className="inline-flex items-center justify-center h-5 w-5 rounded-md bg-violet-500/15 border border-violet-500/25">
                             <ExternalLink className="h-3 w-3" />
                           </span>
-                          Ver estudo de caso
+                          {t({ pt: "Ver estudo de caso", en: "View case study" })}
                           <span className="inline-block transition-transform duration-200 group-hover/case:translate-x-0.5">→</span>
                         </Link>
                       )}
@@ -872,7 +994,7 @@ export default function Page() {
               <div className="text-center mb-10">
                 <h2 className="text-2xl sm:text-3xl font-bold">
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-violet-300">
-                    Conheça mais projetos
+                    {t({ pt: "Conheça mais projetos", en: "See more projects" })}
                   </span>
                 </h2>
               </div>
@@ -898,12 +1020,12 @@ export default function Page() {
                         }`}
                       >
                         <Code className="h-4 w-4" />
-                        Sistemas
+                        {t({ pt: "Sistemas", en: "Systems" })}
                         <span
                           className={`text-[9px] px-1.5 py-[1px] rounded-full ${
                             activePortfolioTab === "sistemas"
                               ? "bg-violet-500/20 text-violet-300"
-                              : "bg-zinc-800 text-zinc-500"
+                              : "bg-zinc-800 text-zinc-400"
                           }`}
                         >
                           {additionalProjects.length}
@@ -918,12 +1040,12 @@ export default function Page() {
                         }`}
                       >
                         <Globe className="h-4 w-4" />
-                        Websites
+                        {t({ pt: "Websites", en: "Websites" })}
                         <span
                           className={`text-[9px] px-1.5 py-[1px] rounded-full ${
                             activePortfolioTab === "websites"
                               ? "bg-fuchsia-500/20 text-fuchsia-300"
-                              : "bg-zinc-800 text-zinc-500"
+                              : "bg-zinc-800 text-zinc-400"
                           }`}
                         >
                           {websites.length}
@@ -972,15 +1094,19 @@ export default function Page() {
                         <div className="min-w-0">
                           <h3 className="text-lg font-semibold flex items-center gap-2">
                             <Code className="h-5 w-5 text-violet-400" />
-                            Sistemas Web
+                            {t({ pt: "Sistemas Web", en: "Web Systems" })}
                           </h3>
-                          <p className="text-xs text-zinc-500 leading-relaxed mt-1">
+                          <p className="text-xs text-zinc-400 leading-relaxed mt-1">
                             <span className="text-violet-400 font-medium">
-                              Desenvolvo sistemas 100% personalizados
+                              {t({
+                                pt: "Desenvolvo sistemas 100% personalizados",
+                                en: "I build 100% custom systems",
+                              })}
                             </span>{" "}
-                            para a sua necessidade: gestão financeira, fluxo de
-                            caixa, diário de obra, estoque, CRM, ERP e muito
-                            mais.
+                            {t({
+                              pt: "para a sua necessidade: gestão financeira, fluxo de caixa, diário de obra, estoque, CRM, ERP e muito mais.",
+                              en: "for your needs: financial management, cash flow, work logs, inventory, CRM, ERP and much more.",
+                            })}
                           </p>
                         </div>
                       </div>
@@ -1011,27 +1137,27 @@ export default function Page() {
                                       {proj.name}
                                     </div>
                                     <div className="text-xs text-violet-300 mt-1 leading-relaxed font-medium">
-                                      {proj.desc}
+                                      {t(proj.desc)}
                                     </div>
                                   </div>
                                   <div className="shrink-0 mt-0.5">
-                                    <div className="inline-flex items-center gap-1.5 text-[10px] text-zinc-500 bg-white/5 border border-white/10 rounded-xl px-2 py-1">
+                                    <div className="inline-flex items-center gap-1.5 text-[10px] text-zinc-400 bg-white/5 border border-white/10 rounded-xl px-2 py-1">
                                       <Lock className="h-3 w-3" />
-                                      Privado
+                                      {t({ pt: "Privado", en: "Private" })}
                                     </div>
                                   </div>
                                 </div>
 
                                 <div className="mt-2 flex flex-wrap gap-1">
-                                  {proj.tech.map((t) => (
+                                  {proj.tech.map((tech) => (
                                     <span
-                                      key={t}
+                                      key={tech}
                                       className="inline-flex items-center gap-1 rounded-full bg-white/[0.04] border border-white/[0.08] px-1.5 py-0.5 text-[8px] font-medium text-zinc-300"
                                     >
                                       <span className="scale-75 origin-left">
-                                        <TechGlyph tag={t} />
+                                        <TechGlyph tag={tech} />
                                       </span>
-                                      <span className="leading-none">{t}</span>
+                                      <span className="leading-none">{tech}</span>
                                     </span>
                                   ))}
                                 </div>
@@ -1055,14 +1181,19 @@ export default function Page() {
                         <div className="min-w-0">
                           <h3 className="text-lg font-semibold flex items-center gap-2">
                             <Globe className="h-5 w-5 text-fuchsia-400" />
-                            Websites
+                            {t({ pt: "Websites", en: "Websites" })}
                           </h3>
-                          <p className="text-xs text-zinc-500 leading-relaxed mt-1">
+                          <p className="text-xs text-zinc-400 leading-relaxed mt-1">
                             <span className="text-fuchsia-400 font-medium">
-                              Websites desenhados e desenvolvidos
+                              {t({
+                                pt: "Websites desenhados e desenvolvidos",
+                                en: "Websites designed and built",
+                              })}
                             </span>{" "}
-                            com foco em clareza, performance e conversão — do
-                            conteúdo à experiência.
+                            {t({
+                              pt: "com foco em clareza, performance e conversão — do conteúdo à experiência.",
+                              en: "with a focus on clarity, performance and conversion — from content to experience.",
+                            })}
                           </p>
                         </div>
                       </div>
@@ -1074,9 +1205,7 @@ export default function Page() {
                         className="divide-y divide-white/5 border-y border-white/5 lg:divide-y-0 lg:grid lg:grid-cols-2 lg:gap-x-12"
                       >
                         {websites.map((site, index) => {
-                          const isDiscontinued =
-                            "discontinued" in site &&
-                            Boolean(site.discontinued);
+                          const isDiscontinued = Boolean(site.discontinued);
 
                           return (
                             <motion.li
@@ -1105,21 +1234,21 @@ export default function Page() {
                                           target="_blank"
                                           rel="noopener noreferrer"
                                           className="text-sm font-semibold text-zinc-100 truncate hover:text-fuchsia-200 transition-colors"
-                                          aria-label={`Abrir ${site.name}`}
+                                          aria-label={`${t({ pt: "Abrir", en: "Open" })} ${site.name}`}
                                         >
                                           {site.name}
                                         </a>
                                       )}
-                                      <div className="text-xs text-zinc-500 mt-1 leading-relaxed">
-                                        {site.desc}
+                                      <div className="text-xs text-zinc-400 mt-1 leading-relaxed">
+                                        {t(site.desc)}
                                       </div>
                                     </div>
 
                                     <div className="shrink-0 mt-0.5">
                                       {isDiscontinued ? (
-                                        <span className="inline-flex items-center gap-1.5 text-[10px] text-zinc-500 bg-white/5 border border-white/10 rounded-xl px-2 py-1 whitespace-nowrap">
+                                        <span className="inline-flex items-center gap-1.5 text-[10px] text-zinc-400 bg-white/5 border border-white/10 rounded-xl px-2 py-1 whitespace-nowrap">
                                           <Lock className="h-3 w-3" />
-                                          Descontinuado
+                                          {t({ pt: "Descontinuado", en: "Discontinued" })}
                                         </span>
                                       ) : (
                                         <a
@@ -1127,9 +1256,9 @@ export default function Page() {
                                           target="_blank"
                                           rel="noopener noreferrer"
                                           className="inline-flex items-center gap-1.5 text-[10px] text-zinc-300 bg-white/5 border border-white/10 rounded-xl px-2 py-1 hover:border-fuchsia-500/25 hover:text-white transition-colors whitespace-nowrap"
-                                          aria-label={`Abrir ${site.name}`}
+                                          aria-label={`${t({ pt: "Abrir", en: "Open" })} ${site.name}`}
                                         >
-                                          Abrir
+                                          {t({ pt: "Abrir", en: "Open" })}
                                           <ExternalLink className="h-3 w-3" />
                                         </a>
                                       )}
@@ -1149,11 +1278,11 @@ export default function Page() {
           </section>
 
           {/* TRAJETÓRIA PROFISSIONAL - Discreto e Elegante */}
-          <section className="relative py-24 border-t border-white/5">
+          <section id="experience" className="relative py-24 border-t border-white/5">
             <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
               <h2 className="text-3xl font-bold mb-12 text-center">
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-violet-300">
-                  Trajetória Profissional
+                  {t({ pt: "Trajetória Profissional", en: "Professional Journey" })}
                 </span>
               </h2>
               <motion.div
@@ -1179,27 +1308,27 @@ export default function Page() {
                         <span className="text-[8px] text-violet-400 bg-violet-500/10 px-1.5 py-[2px] rounded border border-violet-500/20 whitespace-nowrap font-semibold">
                           {exp.period}
                         </span>
-                        {"remote" in exp && exp.remote ? (
+                        {exp.remote ? (
                           <span className="text-[8px] text-fuchsia-300 bg-fuchsia-500/10 px-1.5 py-[2px] rounded border border-fuchsia-500/20 whitespace-nowrap font-semibold">
-                            Trabalho remoto
+                            {t({ pt: "Trabalho remoto", en: "Remote" })}
                           </span>
                         ) : null}
-                        {"languages" in exp && exp.languages ? (
+                        {exp.languages ? (
                           <span className="text-[8px] text-zinc-300 bg-white/5 px-1.5 py-[2px] rounded border border-white/10 whitespace-nowrap font-semibold">
                             {exp.languages}
                           </span>
                         ) : null}
                       </div>
                     </div>
-                    {"startRole" in exp && exp.startRole ? (
-                      <div className="text-[10px] text-zinc-500 mb-2 flex items-center gap-2">
+                    {exp.startRole ? (
+                      <div className="text-[10px] text-zinc-400 mb-2 flex items-center gap-2">
                         <span className="truncate">
-                          Cargo Inicial: {exp.startRole}
+                          {t({ pt: "Cargo Inicial", en: "Starting Role" })}: {t(exp.startRole)}
                         </span>
                       </div>
                     ) : null}
                     <p className="text-xs text-violet-300 leading-relaxed">
-                      {exp.role}
+                      {t(exp.role)}
                     </p>
                   </motion.div>
                 ))}
@@ -1215,14 +1344,14 @@ export default function Page() {
             <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
               <h2 className="text-3xl font-bold text-center">
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-violet-300">
-                  Stack Preferida
+                  {t({ pt: "Stack Preferida", en: "Preferred Stack" })}
                 </span>
               </h2>
-              <p className="text-sm text-zinc-500 text-center mt-3 max-w-3xl mx-auto leading-relaxed">
-                Não fico preso a uma linguagem — tecnologia é ferramenta. Eu
-                entendo o contexto do produto, levanto requisitos, defino
-                escopo, desenho a arquitetura e escolho a stack mais adequada
-                para o cenário do cliente e do projeto.
+              <p className="text-sm text-zinc-400 text-center mt-3 max-w-3xl mx-auto leading-relaxed">
+                {t({
+                  pt: "Não fico preso a uma linguagem — tecnologia é ferramenta. Eu entendo o contexto do produto, levanto requisitos, defino escopo, desenho a arquitetura e escolho a stack mais adequada para o cenário do cliente e do projeto.",
+                  en: "I'm not tied to one language — technology is a tool. I understand the product context, gather requirements, define scope, design the architecture and choose the stack that best fits the client and the project.",
+                })}
               </p>
 
               <div className="mt-10">
@@ -1242,10 +1371,13 @@ export default function Page() {
                         <div>
                           <h3 className="text-lg font-semibold text-white flex items-center gap-2">
                             <Cloud className="h-5 w-5 text-fuchsia-300" />
-                            Ferramentas mais usadas
+                            {t({ pt: "Ferramentas mais usadas", en: "Most-used tools" })}
                           </h3>
-                          <p className="text-xs text-zinc-500 mt-1">
-                            Baseado nos últimos trabalhos realizados.
+                          <p className="text-xs text-zinc-400 mt-1">
+                            {t({
+                              pt: "Baseado nos últimos trabalhos realizados.",
+                              en: "Based on recent completed work.",
+                            })}
                           </p>
                         </div>
                       </div>
@@ -1265,13 +1397,19 @@ export default function Page() {
                               className="group relative rounded-2xl border border-white/10 bg-gradient-to-br from-white/10 via-white/5 to-transparent p-3 overflow-hidden hover:border-violet-500/20 transition-colors"
                             >
                               <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity bg-gradient-to-br from-violet-500/10 via-transparent to-fuchsia-500/10" />
-                              <div className="flex items-center justify-between text-[10px] text-zinc-500">
+                              <div className="flex items-center justify-between text-[10px] text-zinc-400">
                                 <span className="font-semibold">
                                   #{index + 1}
                                 </span>
                                 <span className="whitespace-nowrap">
                                   {item.count}{" "}
-                                  {item.count === 1 ? "projeto" : "projetos"}
+                                  {lang === "pt"
+                                    ? item.count === 1
+                                      ? "projeto"
+                                      : "projetos"
+                                    : item.count === 1
+                                      ? "project"
+                                      : "projects"}
                                 </span>
                               </div>
                               <div className="mt-1 flex items-center justify-between gap-3">
@@ -1287,8 +1425,8 @@ export default function Page() {
                         </motion.ol>
 
                         <div className="mt-7">
-                          <div className="text-[11px] uppercase tracking-wide text-zinc-500 mb-3">
-                            Top 15 (recente)
+                          <div className="text-[11px] uppercase tracking-wide text-zinc-400 mb-3">
+                            {t({ pt: "Top 15 (recente)", en: "Top 15 (recent)" })}
                           </div>
                           <motion.ul
                             variants={staggerTight}
@@ -1317,20 +1455,25 @@ export default function Page() {
                           </motion.ul>
                         </div>
 
-                        <p className="mt-6 text-xs text-zinc-500 leading-relaxed flex items-start gap-2">
+                        <p className="mt-6 text-xs text-zinc-400 leading-relaxed flex items-start gap-2">
                           <span aria-hidden className="mt-[1px]">
                             💡
                           </span>
                           <span>
-                            E quando o projeto pede algo diferente, eu me adapto
-                            à stack do time e do cliente. O foco é entregar
-                            valor com qualidade e manutenção saudável.
+                            {t({
+                              pt: "E quando o projeto pede algo diferente, eu me adapto à stack do time e do cliente. O foco é entregar valor com qualidade e manutenção saudável.",
+                              en: "And when a project calls for something different, I adapt to the team's and client's stack. The focus is delivering value with quality and healthy maintainability.",
+                            })}
                           </span>
                         </p>
                       </div>
                     </div>
                   </div>
                 </motion.div>
+              </div>
+
+              <div className="mt-8">
+                <GithubStats />
               </div>
             </div>
           </section>
@@ -1363,7 +1506,7 @@ export default function Page() {
                       </div>
                       {/* Badge flutuante */}
                       <div className="absolute -bottom-3 -right-3 bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white px-4 py-2 rounded-xl shadow-xl font-semibold text-[13px]">
-                        5+ anos de experiência
+                        {t({ pt: "5+ anos de experiência", en: "5+ years of experience" })}
                       </div>
                     </div>
                   </div>
@@ -1372,71 +1515,120 @@ export default function Page() {
                   <div className="md:col-span-3 flex flex-col justify-center">
                     <h2 className="text-3xl font-bold mb-6">
                       <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-violet-300">
-                        Sobre mim
+                        {t({ pt: "Sobre mim", en: "About me" })}
                       </span>
                     </h2>
 
                     <div className="space-y-4 text-[15px] sm:text-base text-zinc-300 leading-relaxed">
-                      <p>
-                        Engenheiro de Software com atuação em desenvolvimento{" "}
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-300 to-fuchsia-300 font-semibold">
-                          Web/Mobile, DevOps e UX/UI
-                        </span>
-                        , especializado em transformar estratégias de negócio em
-                        soluções digitais completas.
-                      </p>
-                      <p>
-                        Atuação no{" "}
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-300 to-fuchsia-300 font-semibold">
-                          setor público
-                        </span>{" "}
-                        com sistemas críticos e iniciativas de modernização
-                        orientadas à usabilidade. No{" "}
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-300 to-fuchsia-300 font-semibold">
-                          setor privado
-                        </span>
-                        , estrutura arquiteturas robustas, automatiza processos,
-                        fortalece observabilidade e garante ambientes de
-                        produção confiáveis. Possui experiência em{" "}
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-300 to-fuchsia-300 font-semibold">
-                          projetos internacionais
-                        </span>
-                        , ampliando a visão técnica, cultural e de mercado na
-                        construção de produtos digitais e visão negócio.
-                      </p>
-                      <div className="pt-2">
-                        <div className="text-[11px] font-semibold text-zinc-200 tracking-wide">
-                          Formação &amp; Background
-                        </div>
-                        <p className="mt-1 text-xs text-zinc-400 leading-relaxed">
-                          Profissional formado em Análise e Desenvolvimento de
-                          Sistemas, pós-graduado em Engenharia de Software com
-                          ênfase em DevOps pela UNIFOR, com especializações em
-                          Desenvolvimento Full Stack (Digital College) e UX/UI
-                          &amp; Produtos Digitais (EBAC). Vivência internacional
-                          com intercâmbio de língua inglesa na Irlanda-UE (nível
-                          C1). Une engenharia, design e estratégia de produto
-                          para desenvolver soluções.
-                        </p>
-                      </div>
+                      {lang === "pt" ? (
+                        <>
+                          <p>
+                            Engenheiro de Software com atuação em desenvolvimento{" "}
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-300 to-fuchsia-300 font-semibold">
+                              Web/Mobile, DevOps e UX/UI
+                            </span>
+                            , especializado em transformar estratégias de negócio em
+                            soluções digitais completas.
+                          </p>
+                          <p>
+                            Atuação no{" "}
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-300 to-fuchsia-300 font-semibold">
+                              setor público
+                            </span>{" "}
+                            com sistemas críticos e iniciativas de modernização
+                            orientadas à usabilidade. No{" "}
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-300 to-fuchsia-300 font-semibold">
+                              setor privado
+                            </span>
+                            , estrutura arquiteturas robustas, automatiza processos,
+                            fortalece observabilidade e garante ambientes de
+                            produção confiáveis. Possui experiência em{" "}
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-300 to-fuchsia-300 font-semibold">
+                              projetos internacionais
+                            </span>
+                            , ampliando a visão técnica, cultural e de mercado na
+                            construção de produtos digitais e visão negócio.
+                          </p>
+                          <div className="pt-2">
+                            <div className="text-[11px] font-semibold text-zinc-200 tracking-wide">
+                              Formação &amp; Background
+                            </div>
+                            <p className="mt-1 text-xs text-zinc-400 leading-relaxed">
+                              Profissional formado em Análise e Desenvolvimento de
+                              Sistemas, pós-graduado em Engenharia de Software com
+                              ênfase em DevOps pela UNIFOR, com especializações em
+                              Desenvolvimento Full Stack (Digital College) e UX/UI
+                              &amp; Produtos Digitais (EBAC). Vivência internacional
+                              com intercâmbio de língua inglesa na Irlanda-UE (nível
+                              C1). Une engenharia, design e estratégia de produto
+                              para desenvolver soluções.
+                            </p>
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <p>
+                            Software Engineer working across{" "}
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-300 to-fuchsia-300 font-semibold">
+                              Web/Mobile development, DevOps and UX/UI
+                            </span>
+                            , specialized in turning business strategy into complete
+                            digital solutions.
+                          </p>
+                          <p>
+                            Experience in the{" "}
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-300 to-fuchsia-300 font-semibold">
+                              public sector
+                            </span>{" "}
+                            with critical systems and usability-driven modernization
+                            initiatives. In the{" "}
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-300 to-fuchsia-300 font-semibold">
+                              private sector
+                            </span>
+                            , building robust architectures, automating processes,
+                            strengthening observability and ensuring reliable
+                            production environments. Experience with{" "}
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-300 to-fuchsia-300 font-semibold">
+                              international projects
+                            </span>
+                            , broadening technical, cultural and market perspective
+                            in building digital products with a business mindset.
+                          </p>
+                          <div className="pt-2">
+                            <div className="text-[11px] font-semibold text-zinc-200 tracking-wide">
+                              Education &amp; Background
+                            </div>
+                            <p className="mt-1 text-xs text-zinc-400 leading-relaxed">
+                              Degree in Systems Analysis and Development,
+                              postgraduate in Software Engineering with a DevOps
+                              focus from UNIFOR, with specializations in Full Stack
+                              Development (Digital College) and UX/UI &amp; Digital
+                              Products (EBAC). International experience through an
+                              English-language exchange in Ireland-EU (C1 level).
+                              Combines engineering, design and product strategy to
+                              build solutions.
+                            </p>
+                          </div>
+                        </>
+                      )}
                     </div>
 
                     {/* Tags redesenhadas e alinhadas */}
                     <div className="mt-8 flex flex-wrap gap-2">
                       {[
-                        { icon: "🎯", label: "Visão de produto" },
-                        { icon: "⚡", label: "Performance" },
-                        { icon: "🔧", label: "Visão de negócio" },
-                        { icon: "🚀", label: "Impacto real" },
-                        { icon: "🧑‍💼", label: "Gestão" },
-                        { icon: "📦", label: "Gerência de Produtos" },
+                        { icon: "🎯", label: { pt: "Visão de produto", en: "Product vision" } },
+                        { icon: "⚡", label: { pt: "Performance", en: "Performance" } },
+                        { icon: "🔧", label: { pt: "Visão de negócio", en: "Business mindset" } },
+                        { icon: "🚀", label: { pt: "Impacto real", en: "Real impact" } },
+                        { icon: "🧑‍💼", label: { pt: "Gestão", en: "Management" } },
+                        { icon: "📦", label: { pt: "Gerência de Produtos", en: "Product Management" } },
                       ].map((item) => (
                         <span
-                          key={item.label}
+                          key={item.label.en}
                           className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-lg bg-gradient-to-r from-violet-500/12 to-fuchsia-500/12 border border-violet-500/20 text-[10px] font-semibold text-zinc-200 hover:border-violet-500/35 transition-all shadow-[0_10px_30px_rgba(0,0,0,0.18)]"
                         >
                           <span className="text-[11px]">{item.icon}</span>
-                          {item.label}
+                          {t(item.label)}
                         </span>
                       ))}
                     </div>
@@ -1447,6 +1639,8 @@ export default function Page() {
               <ImpactCounters className="mt-6" />
             </div>
           </section>
+
+          <Testimonials />
 
           {/* CONTATO - COM ROBÔ */}
           <section
@@ -1471,37 +1665,33 @@ export default function Page() {
                         </div>
                         <div>
                           <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-violet-200">
-                            Vamos conversar?
+                            {t({ pt: "Vamos conversar?", en: "Let's talk?" })}
                           </h2>
                           <p className="text-zinc-400 text-sm">
-                            Estou aberto a novos desafios
+                            {t({ pt: "Estou aberto a novos desafios", en: "Open to new challenges" })}
                           </p>
                         </div>
                       </div>
 
                       <div className="space-y-4">
                         <p className="text-zinc-300">
-                          Se você tem um projeto em mente ou quer discutir
-                          oportunidades, ficarei feliz em bater um papo.
+                          {t({
+                            pt: "Se você tem um projeto em mente ou quer discutir oportunidades, ficarei feliz em bater um papo.",
+                            en: "If you have a project in mind or want to discuss opportunities, I'd be happy to chat.",
+                          })}
                         </p>
 
-                        <motion.a
-                          href="mailto:pontesneto2@gmail.com"
-                          whileHover={isMobile ? undefined : { scale: 1.02 }}
-                          whileTap={{ scale: 0.98 }}
-                          className="flex items-center gap-3 p-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl transition-all group/link"
-                        >
-                          <Mail className="w-5 h-5 text-violet-400 group-hover/link:text-violet-300 transition-colors" />
-                          <div className="flex-1">
-                            <div className="text-xs text-zinc-400 uppercase tracking-wide">
-                              E-mail
-                            </div>
-                            <div className="text-white font-medium">
-                              pontesneto2@gmail.com
-                            </div>
-                          </div>
-                          <ExternalLink className="w-4 h-4 text-zinc-400 group-hover/link:text-violet-400 transition-colors" />
-                        </motion.a>
+                        <ContactForm />
+
+                        <p className="text-xs text-zinc-400">
+                          {t({ pt: "Ou envie direto para", en: "Or reach out directly at" })}{" "}
+                          <a
+                            href="mailto:pontesneto2@gmail.com"
+                            className="text-violet-300 hover:text-violet-200 transition-colors"
+                          >
+                            pontesneto2@gmail.com
+                          </a>
+                        </p>
 
                         <div className="flex gap-3 pt-4">
                           <motion.a
@@ -1544,7 +1734,7 @@ export default function Page() {
                             rel="noopener noreferrer"
                             className="text-sm text-violet-300 hover:text-violet-200 transition-colors inline-flex items-center gap-2"
                           >
-                            Ver currículo completo
+                            {t({ pt: "Ver currículo completo", en: "View full résumé" })}
                             <ExternalLink className="w-3 h-3" />
                           </a>
                         </div>
@@ -1570,7 +1760,7 @@ export default function Page() {
 
         <footer className="py-10 border-t border-white/5 text-center text-[11px] text-zinc-400">
           <div>© 2026 Francisco Pontes</div>
-          <div>Todos os Direitos Reservados</div>
+          <div>{t({ pt: "Todos os Direitos Reservados", en: "All Rights Reserved" })}</div>
           <div>pontesneto2@gmail.com</div>
         </footer>
       </div>

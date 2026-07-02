@@ -320,7 +320,7 @@ export default function ImidoohCasePage() {
                   >
                     FCOPTS
                   </span>
-                  <span className="text-[10px] text-zinc-500 tracking-wide -mt-0.5">
+                  <span className="text-[10px] text-zinc-400 tracking-wide -mt-0.5">
                     Engenheiro de Software | UX Ops
                   </span>
                 </div>
@@ -404,7 +404,7 @@ export default function ImidoohCasePage() {
         <CaseCTA />
 
         {/* ── FOOTER ── */}
-        <footer className="py-10 border-t border-white/5 text-center text-[11px] text-zinc-500">
+        <footer className="py-10 border-t border-white/5 text-center text-[11px] text-zinc-400">
           <div>© 2026 Francisco Pontes</div>
           <div>Todos os Direitos Reservados</div>
           <div className="text-[10px] font-normal text-zinc-300">
