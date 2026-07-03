@@ -13,7 +13,6 @@ import ContactForm from "@/components/ContactForm";
 import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
 import {
   MonitorSmartphone,
-  Globe,
   Code,
   Database,
   Box,
@@ -28,7 +27,48 @@ import {
   Server,
   Cloud,
   Palette,
+  Folder,
+  Building2,
 } from "lucide-react";
+import {
+  SiTypescript,
+  SiJavascript,
+  SiReact,
+  SiNextdotjs,
+  SiNodedotjs,
+  SiNestjs,
+  SiExpress,
+  SiVuedotjs,
+  SiPostgresql,
+  SiPrisma,
+  SiDocker,
+  SiGithubactions,
+  SiGitlab,
+  SiPhp,
+  SiLaravel,
+  SiDotnet,
+  SiSharp,
+  SiPython,
+  SiSpringboot,
+  SiMongodb,
+  SiMysql,
+  SiKubernetes,
+  SiNginx,
+  SiPrometheus,
+  SiGrafana,
+  SiGooglecloud,
+  SiDigitalocean,
+  SiGraphql,
+  SiWordpress,
+  SiAngular,
+  SiGit,
+  SiJira,
+  SiTailwindcss,
+  SiBootstrap,
+} from "react-icons/si";
+import { FaAws } from "react-icons/fa6";
+import { TbBrandAzure } from "react-icons/tb";
+import type { IconType } from "react-icons";
 
 const FloatingIcons3D = dynamic(() => import("@/components/FloatingIcons3D"), {
   ssr: false,
@@ -109,14 +149,57 @@ function TechGlyph({ tag }: { tag: string }) {
   );
 }
 
+const projectTagIconMap: Record<string, IconType> = {
+  "React Native": SiReact,
+  TypeScript: SiTypescript,
+  NextJS: SiNextdotjs,
+  NodeJS: SiNodedotjs,
+  ExpressJS: SiExpress,
+  NestJS: SiNestjs,
+  PostgreSQL: SiPostgresql,
+  Prisma: SiPrisma,
+  Docker: SiDocker,
+  PHP: SiPhp,
+  Laravel: SiLaravel,
+  "C#": SiSharp,
+  ".NET": SiDotnet,
+  Angular: SiAngular,
+  Git: SiGit,
+  Jira: SiJira,
+  Grafana: SiGrafana,
+  TailwindCSS: SiTailwindcss,
+  MongoDB: SiMongodb,
+  JS: SiJavascript,
+  "Java Spring Boot": SiSpringboot,
+  WordPress: SiWordpress,
+  Bootstrap: SiBootstrap,
+};
+
+function ProjectTagIcon({
+  tag,
+  size = "md",
+}: {
+  tag: string;
+  size?: "sm" | "md";
+}) {
+  const Icon = projectTagIconMap[tag] ?? Code;
+  const boxClass = size === "sm" ? "h-6 w-6" : "h-8 w-8";
+  const iconClass = size === "sm" ? "h-3.5 w-3.5" : "h-5 w-5";
+  return (
+    <span
+      title={tag}
+      className={`inline-flex items-center justify-center ${boxClass} text-zinc-400 hover:text-white hover:scale-110 transition-all duration-200`}
+    >
+      <Icon className={iconClass} />
+    </span>
+  );
+}
+
 export default function Page() {
   const { lang, setLang } = useLanguage();
   const t = (v: Bilingual) => tr(lang, v);
 
   const [navOpen, setNavOpen] = useState(false);
-  const [activePortfolioTab, setActivePortfolioTab] = useState<
-    "sistemas" | "websites"
-  >("sistemas");
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -185,13 +268,16 @@ export default function Page() {
     tags: string[];
     link: string;
     caseStudy?: string;
+    discontinued?: boolean;
+    placeholder?: boolean;
+    ctaLabel?: Bilingual;
     blurb: Bilingual;
     category: Bilingual;
     thumb: string;
   }> = [
     {
-      title: "Meoocarro — App",
-      subtitle: { pt: "Em desenvolvimento", en: "In development" },
+      title: "Ucopiloto - App",
+      subtitle: { pt: "", en: "" },
       tags: [
         "React Native",
         "TypeScript",
@@ -203,7 +289,7 @@ export default function Page() {
         "Prisma",
         "Docker",
       ],
-      link: "",
+      link: "https://www.ucopiloto.com.br/",
       blurb: {
         pt: "Aplicativo para conectar motoristas e oficinas de maneira inteligente, simplificando agendamentos, orçamentos e o acompanhamento de serviços automotivos.",
         en: "App that connects drivers and repair shops intelligently, simplifying bookings, quotes and tracking of automotive services.",
@@ -212,7 +298,7 @@ export default function Page() {
       thumb: "/img-card-meoocarro.png",
     },
     {
-      title: "iMidooh — Gerenciamento de Mídia DOOH",
+      title: "iMidooh - App",
       subtitle: { pt: "", en: "" },
       tags: [
         "React Native",
@@ -227,34 +313,26 @@ export default function Page() {
       ],
       link: "",
       caseStudy: "/case/imidooh",
+      discontinued: true,
       blurb: {
-        pt: "Plataforma mobile para operar mídia DOOH em painéis de LED dos mais diversos tipos, com gestão de campanhas, monitoramento em tempo real e relatórios de performance.",
-        en: "Mobile platform to operate DOOH media across all kinds of LED panels, with campaign management, real-time monitoring and performance reports.",
+        pt: "Plataforma mobile para operar mídia Digital Out Of Home em recursos visuais dos mais diversos tipos.",
+        en: "Mobile platform to operate Digital Out Of Home media across all kinds of visual resources.",
       },
       category: { pt: "Aplicativo Mobile + Painel Admin", en: "Mobile App + Admin Panel" },
       thumb: "/logo-dooh.png",
     },
     {
-      title: "Sistema Financeiro ERP Estrela",
+      title: "Sistema Escolar do 2º Colégio da Polícia Militar",
       subtitle: { pt: "", en: "" },
-      tags: [
-        "NodeJS",
-        "ExpressJS",
-        "Prisma",
-        "PostgreSQL",
-        "Docker",
-        "TailwindCSS",
-        "NextJS",
-        "TypeScript",
-      ],
-      link: "",
-      caseStudy: "/case/erp-estrela",
+      tags: ["PHP", "Laravel", "C#", ".NET", "Angular", "PostgreSQL", "Docker", "Git", "Jira", "Grafana"],
+      link: "https://www.com3brasil.com.br/v9/app/cpmce/login/",
+      ctaLabel: { pt: "Visite", en: "Visit" },
       blurb: {
-        pt: "Sistema web para rotinas financeiras do dia a dia, com padronização de processos, relatórios e visibilidade para decisões mais rápidas e seguras.",
-        en: "Web system for day-to-day financial routines, standardizing processes, reporting and giving visibility for faster, safer decisions.",
+        pt: "Sistema de gestão escolar para o 2º Colégio da Polícia Militar, com acesso controlado por perfil para acompanhamento acadêmico e administrativo.",
+        en: "School management system for the 2nd Military Police School, with role-based access for academic and administrative tracking.",
       },
       category: { pt: "Sistema Web", en: "Web System" },
-      thumb: "/logo-estrela.png",
+      thumb: "/images/img-sist-pol.jpeg",
     },
   ];
 
@@ -321,132 +399,72 @@ export default function Page() {
     },
   ];
 
-  const websites: Array<{
-    url: string;
-    name: string;
-    desc: Bilingual;
-    discontinued?: boolean;
+  const moreProjectsGrid: Array<{
+    title: string;
+    org: string;
+    description: Bilingual;
+    tags: string[];
+    cta: { type: "private" } | { type: "link"; url: string } | { type: "soon" };
   }> = [
     {
-      url: "https://www.clicksoftwarehouse.com/",
-      name: "Click Software House",
-      desc: {
-        pt: "Site institucional com serviços, posicionamento e contato.",
-        en: "Corporate site with services, positioning and contact.",
+      title: "Sistema Diário de Obras",
+      org: "Alfa Construções e Locações",
+      description: {
+        pt: "Diário de obras digital para registrar atividades, ocorrências e o avanço físico da construção.",
+        en: "Digital construction logbook to record activities, incidents and physical progress.",
       },
+      tags: ["NodeJS", "ExpressJS", "Prisma", "PostgreSQL", "Docker", "TailwindCSS", "TypeScript"],
+      cta: { type: "private" },
     },
     {
-      url: "https://starcapital.stargrupo.com.br/",
-      name: "Star Capital",
-      desc: {
-        pt: "Institucional da Star Capital com proposta e canais de contato.",
-        en: "Star Capital corporate site with value proposition and contact channels.",
+      title: "Sistema SIGMA",
+      org: "Instituto Agropolos do Ceará",
+      description: {
+        pt: "Sistema de gestão institucional para controle de processos administrativos e indicadores internos.",
+        en: "Institutional management system for administrative processes and internal indicators.",
       },
+      tags: [".NET", "C#", "Angular", "MongoDB", "Docker", "TypeScript"],
+      cta: { type: "link", url: "http://sigapp.institutoagropolos.org.br/login" },
     },
     {
-      url: "https://www.stargrupo.com.br/",
-      name: "Star Grupo",
-      desc: {
-        pt: "Site corporativo do grupo com visão geral e empresas.",
-        en: "Group's corporate site with overview and business units.",
+      title: "Sistema Especial Fazenda Chapéu",
+      org: "SDA Ceará",
+      description: {
+        pt: "Sistema de regularização de matrícula de imóveis cedidos para a população do estado do Ceará.",
+        en: "System for regularizing land title records granted to the population of Ceará state.",
       },
+      tags: ["Scriptcase", "PHP", "JS", "Java Spring Boot"],
+      cta: { type: "link", url: "https://www.idace.ce.gov.br/" },
     },
     {
-      url: "https://starpesquisas.stargrupo.com.br/",
-      name: "Star Pesquisas",
-      desc: {
-        pt: "Landing de serviços com mensagem direta e CTA claro.",
-        en: "Services landing page with a direct message and clear CTA.",
+      title: "Sistema de Indicadores de Demandas e Ações",
+      org: "SDA Ceará",
+      description: {
+        pt: "Painel de acompanhamento de demandas e ações estratégicas da secretaria, com indicadores em tempo real.",
+        en: "Dashboard to track the department's demands and strategic actions, with real-time indicators.",
       },
+      tags: ["PHP", "Laravel", "PostgreSQL", "Docker"],
+      cta: { type: "link", url: "https://www.com3brasil.com.br/v9/app/demanda/login/" },
     },
     {
-      url: "https://starreciclagem.stargrupo.com.br/",
-      name: "Star Reciclagem",
-      desc: {
-        pt: "Institucional com serviços, áreas de atuação e contato.",
-        en: "Corporate site with services, focus areas and contact.",
+      title: "Website Instituto Anjos",
+      org: "Anjos Digitais",
+      description: {
+        pt: "Site institucional para divulgação de projetos sociais e captação de apoiadores.",
+        en: "Institutional website to promote social projects and attract supporters.",
       },
+      tags: ["WordPress", "PHP", "JS", "Bootstrap"],
+      cta: { type: "link", url: "https://anjosdigitais.org/" },
     },
     {
-      url: "https://silvaeduarteadvogados.com/",
-      name: "Silva e Duarte Advogados",
-      desc: {
-        pt: "Institucional jurídico com áreas de atuação e captação.",
-        en: "Law firm site with practice areas and lead capture.",
+      title: "Website UJVP CE",
+      org: "União dos Jovens do Vicente Pinzon",
+      description: {
+        pt: "Site institucional da organização social, com apresentação da entidade e canais de contato.",
+        en: "Institutional website for the nonprofit organization, with an overview and contact channels.",
       },
-    },
-    {
-      url: "https://2.0.movimentafilmes.com/",
-      name: "Movimenta Filmes",
-      desc: {
-        pt: "Portfólio de trabalhos com navegação rápida e objetiva.",
-        en: "Portfolio site with fast, straightforward navigation.",
-      },
-    },
-    {
-      url: "https://anjosdigitais.org",
-      name: "Anjos Digitais",
-      desc: {
-        pt: "Institucional de impacto social com campanhas e chamadas.",
-        en: "Social-impact site with campaigns and calls to action.",
-      },
-    },
-    {
-      url: "https://ujvp.org.br/",
-      name: "União dos Jovens do Vicente Pinzon - UJVP",
-      desc: {
-        pt: "Site institucional da Organização Social.",
-        en: "Institutional site for the nonprofit organization.",
-      },
-    },
-    {
-      url: "https://institutoagropolos.org.br",
-      name: "Instituto Agropolos",
-      desc: {
-        pt: "Institucional com conteúdo organizado e acesso rápido.",
-        en: "Corporate site with organized content and quick access.",
-      },
-    },
-    {
-      url: "https://fastcall.com.br/2.0",
-      name: "FastCall 2.0",
-      desc: {
-        pt: "Página do serviço com proposta clara e conversão.",
-        en: "Service page with a clear proposition and conversion focus.",
-      },
-    },
-    {
-      url: "https://com3brasil.com.br/wp",
-      name: "COM3 Brasil",
-      desc: {
-        pt: "Institucional da agência com serviços e portfólio.",
-        en: "Agency site with services and portfolio.",
-      },
-    },
-    {
-      url: "https://www.sda.ce.gov.br",
-      name: "SDA Ceará",
-      desc: {
-        pt: "Portal institucional com notícias, programas e serviços.",
-        en: "Government portal with news, programs and services.",
-      },
-    },
-    {
-      url: "https://sistemas2.sda.ce.gov.br",
-      name: "Sistemas SDA",
-      desc: {
-        pt: "Hub de acesso aos sistemas e serviços digitais.",
-        en: "Access hub for digital systems and services.",
-      },
-    },
-    {
-      url: "",
-      name: "Programa de Imigração Hey Canadá",
-      desc: {
-        pt: "Voltado para atrair e prospectar pessoas que querem imigrar para o Canadá. Projeto 100% em inglês.",
-        en: "Built to attract and qualify leads interested in immigrating to Canada. Project fully in English.",
-      },
-      discontinued: true,
+      tags: ["WordPress", "PHP"],
+      cta: { type: "link", url: "https://ujvp.org.br/" },
     },
   ];
 
@@ -549,6 +567,111 @@ export default function Page() {
   const topTechTags = techTagsSorted.slice(0, 18);
   const top5TechTags = techTagsSorted.slice(0, 5);
 
+  const skillsGroups = [
+    [
+      { name: "TypeScript", Icon: SiTypescript },
+      { name: "JavaScript", Icon: SiJavascript },
+      { name: "React", Icon: SiReact },
+      { name: "Next.js", Icon: SiNextdotjs },
+      { name: "React Native", Icon: SiReact },
+      { name: "Vue.js", Icon: SiVuedotjs },
+    ],
+    [
+      { name: "Node.js", Icon: SiNodedotjs },
+      { name: "NestJS", Icon: SiNestjs },
+      { name: "Express", Icon: SiExpress },
+      { name: "PHP", Icon: SiPhp },
+      { name: "Laravel", Icon: SiLaravel },
+      { name: ".NET", Icon: SiDotnet },
+      { name: "C#", Icon: SiSharp },
+      { name: "Python", Icon: SiPython },
+      { name: "Spring Boot", Icon: SiSpringboot },
+      { name: "GraphQL", Icon: SiGraphql },
+    ],
+    [
+      { name: "PostgreSQL", Icon: SiPostgresql },
+      { name: "Prisma", Icon: SiPrisma },
+      { name: "MongoDB", Icon: SiMongodb },
+      { name: "MySQL", Icon: SiMysql },
+      { name: "WordPress", Icon: SiWordpress },
+      { name: "Azure", Icon: TbBrandAzure },
+    ],
+    [
+      { name: "Docker", Icon: SiDocker },
+      { name: "GitHub Actions", Icon: SiGithubactions },
+      { name: "GitLab CI", Icon: SiGitlab },
+      { name: "AWS", Icon: FaAws },
+      { name: "Kubernetes", Icon: SiKubernetes },
+      { name: "Nginx", Icon: SiNginx },
+      { name: "Prometheus", Icon: SiPrometheus },
+      { name: "Grafana", Icon: SiGrafana },
+      { name: "GCP", Icon: SiGooglecloud },
+      { name: "DigitalOcean", Icon: SiDigitalocean },
+    ],
+  ];
+
+  const renderProjectCta = (project: (typeof featuredProjects)[number]) => {
+    const ctaClass =
+      "inline-flex items-center gap-2 rounded-full px-6 py-2.5 text-sm font-semibold w-fit transition-all duration-200";
+
+    if (project.discontinued) {
+      return (
+        <span
+          className={`${ctaClass} bg-white/10 text-zinc-400 cursor-not-allowed`}
+          aria-disabled="true"
+        >
+          <Lock className="h-3.5 w-3.5" />
+          {t({ pt: "Descontinuado", en: "Discontinued" })}
+        </span>
+      );
+    }
+
+    if (project.placeholder) {
+      return (
+        <span
+          className={`${ctaClass} bg-white/10 text-zinc-400 cursor-not-allowed`}
+          aria-disabled="true"
+        >
+          {t({ pt: "Em breve", en: "Coming soon" })}
+        </span>
+      );
+    }
+
+    if (project.caseStudy) {
+      return (
+        <Link
+          href={project.caseStudy}
+          className={`${ctaClass} bg-white text-violet-700 hover:bg-zinc-100 hover:scale-[1.03] hover:shadow-lg hover:shadow-black/20`}
+        >
+          {t({ pt: "Saiba mais", en: "Learn more" })}
+        </Link>
+      );
+    }
+
+    if (project.link) {
+      return (
+        <a
+          href={project.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`${ctaClass} bg-white text-violet-700 hover:bg-zinc-100 hover:scale-[1.03] hover:shadow-lg hover:shadow-black/20`}
+        >
+          {project.ctaLabel ? t(project.ctaLabel) : t({ pt: "Visite o website", en: "Visit website" })}
+        </a>
+      );
+    }
+
+    return (
+      <a
+        href="mailto:pontesneto2@gmail.com?subject=Solicita%C3%A7%C3%A3o%20de%20acesso%20ao%20projeto"
+        className={`${ctaClass} bg-white text-violet-700 hover:bg-zinc-100 hover:scale-[1.03] hover:shadow-lg hover:shadow-black/20`}
+      >
+        <Lock className="h-3.5 w-3.5" />
+        {t({ pt: "Solicitar acesso", en: "Request access" })}
+      </a>
+    );
+  };
+
   const navLinks = [
     { href: "#projects", label: { pt: "Portfólio", en: "Portfolio" } },
     { href: "#experience", label: { pt: "Experiência", en: "Experience" } },
@@ -567,24 +690,15 @@ export default function Page() {
           <div className="mx-auto max-w-7xl px-3 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between py-4 md:py-0 md:h-16">
               <div className="flex items-center gap-2 sm:gap-3">
-                {/* Logo com P */}
-                <div className="relative h-9 w-9 sm:h-10 sm:w-10 rounded-xl bg-gradient-to-br from-fuchsia-500 to-violet-500 shadow-[0_0_40px_rgba(168,85,247,0.35)] flex items-center justify-center">
-                  <span className="text-white font-black text-lg sm:text-xl">
-                    FP
-                  </span>
-                </div>
-                {/* Marca FCOPTS */}
-                <div className="flex flex-col">
-                  <span
-                    className="text-lg sm:text-xl font-black tracking-[0.15em] bg-gradient-to-r from-violet-400 via-fuchsia-400 to-amber-400 bg-clip-text text-transparent"
-                    style={{ fontFamily: 'Impact, "Arial Black", sans-serif' }}
-                  >
-                    FCOPTS
-                  </span>
-                  <span className="text-[10px] text-zinc-400 tracking-wide -mt-0.5">
-                    {t({ pt: "Engenheiro de Software | UX Ops", en: "Software Engineer | UX Ops" })}
-                  </span>
-                </div>
+                {/* Logo */}
+                <Image
+                  src="/images/FCO.png"
+                  alt="FCOPTS — Francisco Pontes"
+                  width={2500}
+                  height={544}
+                  priority
+                  className="h-9 sm:h-10 w-auto"
+                />
               </div>
               <nav className="hidden md:flex items-center gap-8 text-sm">
                 {navLinks.map((link) => (
@@ -801,7 +915,7 @@ export default function Page() {
                   href="https://www.linkedin.com/in/fcopts"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group inline-flex items-center gap-1 text-white text-sm font-medium hover:text-zinc-200 transition-colors"
+                  className="group inline-flex items-center gap-1 text-violet-300 text-sm font-medium hover:text-violet-200 transition-colors"
                 >
                   {t({ pt: "Visite-me no LinkedIn", en: "Visit me on LinkedIn" })}
                   <span className="inline-block transition-transform duration-200 group-hover:translate-x-0.5">
@@ -815,7 +929,7 @@ export default function Page() {
           {/* SOBRE - Tecnologia, Engenharia & Design */}
           <section
             id="tech-engineering-design"
-            className="relative py-24 border-t border-white/5"
+            className="relative py-24"
           >
             <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
               <div className="relative rounded-3xl bg-black/70 backdrop-blur-xl overflow-hidden">
@@ -829,13 +943,14 @@ export default function Page() {
                         {t({ pt: "Engenharia", en: "Engineering" })}
                       </span>
                       <br />
-                      {t({ pt: "& Design", en: "& Design" })}
+                      <span className="text-violet-300">&amp;</span>{" "}
+                      {t({ pt: "Design", en: "Design" })}
                     </h2>
 
                     <div className="mt-6 space-y-4 text-zinc-300 text-[15px] sm:text-base leading-relaxed">
                       <p>
                         {t({
-                          pt: "Sou Engenheiro de Software com mais de 6 anos de experiência em desenvolvimento Web/Mobile, DevOps e entusiasta de operações UX/UI. Tenho perfil multidisciplinar e atuo na construção de soluções digitais de ponta a ponta.",
+                          pt: "Atuo como Engenheiro de Software e tenho mais de 6 anos de experiência em desenvolvimento Web/Mobile, DevOps e entusiasta de operações UX/UI. Tenho perfil multidisciplinar e atuo na construção de soluções digitais de ponta a ponta.",
                           en: "I'm a Software Engineer with over 6 years of experience in Web/Mobile development, DevOps, and I'm an enthusiast of UX/UI operations. I have a multidisciplinary profile and work on building end-to-end digital solutions.",
                         })}
                       </p>
@@ -871,409 +986,252 @@ export default function Page() {
             </div>
           </section>
 
+          {/* SKILLS & TOOLS */}
+          <section id="skills-tools" className="relative py-24">
+            <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12 text-center">
+              <h2 className="text-3xl md:text-4xl font-black text-white">
+                Skills &amp; Tools
+              </h2>
+
+              <div className="mt-14 space-y-10">
+                {skillsGroups.map((group, groupIndex) => (
+                  <motion.div
+                    key={groupIndex}
+                    variants={staggerTight}
+                    initial="hidden"
+                    whileInView="show"
+                    viewport={viewportSettings}
+                    className="flex flex-wrap items-start justify-center gap-x-8 gap-y-8"
+                  >
+                    {group.map((skill) => (
+                      <motion.div
+                        key={skill.name}
+                        variants={tagItem}
+                        className="group flex flex-col items-center gap-2 w-16"
+                      >
+                        <skill.Icon
+                          title={skill.name}
+                          className="h-8 w-8 md:h-10 md:w-10 text-zinc-400 group-hover:text-white transition-colors duration-300"
+                        />
+                        <span className="text-[10px] text-zinc-400 group-hover:text-white transition-colors duration-300 text-center leading-tight">
+                          {skill.name}
+                        </span>
+                      </motion.div>
+                    ))}
+                  </motion.div>
+                ))}
+              </div>
+
+              <p className="mt-12 text-xs text-zinc-400 max-w-3xl mx-auto leading-relaxed">
+                {t({
+                  pt: "+ Docker Compose, Scriptcase, Figma, Adobe XD, Design Systems integrado, Prototipagem, Usabilidade, Acessibilidade, LGPD, Power BI, Scrum/Kanban Ágil",
+                  en: "+ Docker Compose, Scriptcase, Figma, Adobe XD, Integrated Design Systems, Prototyping, Usability, Accessibility, LGPD (Brazilian GDPR), Power BI, Agile Scrum/Kanban",
+                })}
+              </p>
+            </div>
+          </section>
+
           {/* PROJETOS EM DESTAQUE - REDESENHADO */}
           <section
             id="projects"
-            className="relative py-24 border-t border-white/5 bg-zinc-900/40 overflow-x-hidden"
+            className="relative py-24 bg-zinc-900/40 overflow-x-hidden"
           >
             <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
               <div className="text-center mb-16">
-                <h2 className="text-3xl font-bold">
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-violet-300">
-                    {t({ pt: "Projetos em Destaque", en: "Featured Projects" })}
-                  </span>
+                <h2 className="text-3xl md:text-4xl font-black text-white">
+                  {t({ pt: "Projetos em Destaque", en: "Featured Projects" })}
                 </h2>
               </div>
 
-              {/* Cards de projetos principais - Mais elegantes */}
+              {/* Cards de projetos principais - hero + grid */}
               <motion.div
                 variants={staggerList}
                 initial="hidden"
                 whileInView="show"
                 viewport={viewportSettings}
-                className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20 auto-rows-fr"
+                className="mb-20 space-y-8"
               >
-                {featuredProjects.map((project, index) => (
-                  <motion.article
-                    key={project.title}
-                    custom={index}
-                    variants={fadeUpItem}
-                    className="group relative h-full flex flex-col rounded-3xl border border-white/10 bg-black/75 backdrop-blur-xl p-8 hover:bg-black/80 hover:border-violet-500/40 transition-all duration-500 shadow-xl"
-                  >
-                    {/* Badge de categoria */}
-                    <div className="mb-4">
-                      <span className="inline-block px-2 py-0.5 rounded-md text-[10px] font-medium bg-violet-500/10 text-violet-300 border border-violet-500/20">
-                        {t(project.category)}
-                      </span>
-                    </div>
+                {(() => {
+                  const heroProject = featuredProjects[0];
+                  const heroCta = renderProjectCta(heroProject);
 
-                    {/* Miniatura do projeto */}
-                    <div className="relative mb-5 h-44 w-full overflow-hidden rounded-2xl border border-white/10 bg-zinc-900/40">
-                      {project.thumb ? (
-                        <Image
-                          src={project.thumb}
-                          alt={`${t({ pt: "Capa do projeto", en: "Project cover" })}: ${project.title}`}
-                          fill
-                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                          className="object-cover object-center opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
-                        />
-                      ) : (
-                        <div className="h-44 w-full bg-gradient-to-br from-violet-500/10 via-transparent to-fuchsia-500/10" />
-                      )}
-                    </div>
-
-                    <h3 className="text-xl font-semibold group-hover:text-violet-300 transition-colors">
-                      {project.title}
-                    </h3>
-                    {t(project.subtitle) && (
-                      <span className="inline-block text-xs text-amber-400/80 font-medium mt-1 mb-2">
-                        {t(project.subtitle)}
-                      </span>
-                    )}
-                    <p className="text-sm text-zinc-400 leading-relaxed mb-6 mt-2">
-                      {t(project.blurb)}
-                    </p>
-
-                    {/* Tags estilizadas */}
-                    <div className="flex flex-wrap gap-2 mb-7">
-                      {project.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="text-[10px] px-2 py-0.5 rounded-md bg-zinc-800/50 text-zinc-300 border border-zinc-700/50 hover:border-violet-500/30 transition-colors"
-                        >
-                          {tag}
+                  return (
+                    <motion.article
+                      custom={0}
+                      variants={fadeUpItem}
+                      className="rounded-3xl overflow-hidden border border-white/10 shadow-2xl grid md:grid-cols-2 items-stretch hover:border-white/20 hover:-translate-y-1 transition-all duration-300"
+                    >
+                      <div className="relative min-h-[260px] md:min-h-full">
+                        {heroProject.thumb ? (
+                          <Image
+                            src={heroProject.thumb}
+                            alt={`${t({ pt: "Capa do projeto", en: "Project cover" })}: ${heroProject.title}`}
+                            fill
+                            sizes="(max-width: 768px) 100vw, 50vw"
+                            className="object-cover object-center"
+                          />
+                        ) : (
+                          <div className="h-full min-h-[260px] w-full bg-gradient-to-br from-violet-500/20 via-transparent to-fuchsia-500/20" />
+                        )}
+                      </div>
+                      <div className="relative flex flex-col justify-center p-8 md:p-10 bg-gradient-to-br from-violet-900/70 via-fuchsia-900/40 to-violet-950/80">
+                        <span className="inline-block w-fit px-2 py-0.5 rounded-md text-[10px] font-medium bg-white/10 text-violet-200 border border-white/20 mb-4">
+                          {t(heroProject.category)}
                         </span>
-                      ))}
-                    </div>
-
-                    <div className="mt-auto">
-                      {project.link ? (
-                        <a
-                          href={project.link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 text-sm font-medium text-fuchsia-400 hover:text-fuchsia-300 transition-colors group-hover:gap-3"
-                        >
-                          {t({ pt: "Ver projeto", en: "View project" })}
-                          <ExternalLink className="h-4 w-4" />
-                        </a>
-                      ) : (
-                        !project.caseStudy && (
-                          <div className="flex flex-col gap-2 mt-2">
-                            <div className="inline-flex items-center gap-2 text-xs font-medium text-zinc-400">
-                              <Lock className="h-3.5 w-3.5" />
-                              {t({ pt: "Projeto Privado", en: "Private Project" })}
-                            </div>
-                            <a
-                              href="mailto:pontesneto2@gmail.com?subject=Solicita%C3%A7%C3%A3o%20de%20acesso%20ao%20projeto"
-                              className="inline-flex items-center gap-2 text-[11px] font-medium text-violet-400 hover:text-violet-300 transition-colors"
-                            >
-                              <Mail className="h-3 w-3" />
-                              {t({ pt: "Solicite acesso via email", en: "Request access via email" })}
-                            </a>
-                          </div>
-                        )
-                      )}
-                      {project.caseStudy && (
-                        <Link
-                          href={project.caseStudy}
-                          className="mt-3 inline-flex items-center gap-2 text-[12px] font-semibold text-violet-300 hover:text-violet-200 transition-colors group/case"
-                        >
-                          <span className="inline-flex items-center justify-center h-5 w-5 rounded-md bg-violet-500/15 border border-violet-500/25">
-                            <ExternalLink className="h-3 w-3" />
+                        <h3 className="text-2xl md:text-3xl font-bold text-white">
+                          {heroProject.title}
+                        </h3>
+                        {t(heroProject.subtitle) && (
+                          <span className="inline-block text-xs text-amber-300 font-medium mt-1">
+                            {t(heroProject.subtitle)}
                           </span>
-                          {t({ pt: "Ver estudo de caso", en: "View case study" })}
-                          <span className="inline-block transition-transform duration-200 group-hover/case:translate-x-0.5">→</span>
-                        </Link>
-                      )}
-                    </div>
-                  </motion.article>
-                ))}
-              </motion.div>
-
-              <div className="text-center mb-10">
-                <h2 className="text-2xl sm:text-3xl font-bold">
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-violet-300">
-                    {t({ pt: "Conheça mais projetos", en: "See more projects" })}
-                  </span>
-                </h2>
-              </div>
-
-              {/* Portfólio com Tabs — Sistemas & Websites */}
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.15 }}
-                transition={{ duration: 0.7, ease: "easeOut" }}
-                className="relative"
-              >
-                <div className="relative">
-                  {/* Tab headers + Social */}
-                  <div className="relative flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
-                    <div className="flex items-center gap-1 p-1 rounded-xl bg-zinc-900/60 border border-zinc-800/60 w-fit shadow-[0_0_0_1px_rgba(255,255,255,0.03)]">
-                      <button
-                        onClick={() => setActivePortfolioTab("sistemas")}
-                        className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
-                          activePortfolioTab === "sistemas"
-                            ? "bg-violet-500/20 text-violet-200 border border-violet-500/30 shadow-[0_12px_30px_rgba(0,0,0,0.35)]"
-                            : "text-zinc-400 hover:text-zinc-200 border border-transparent hover:bg-white/5"
-                        }`}
-                      >
-                        <Code className="h-4 w-4" />
-                        {t({ pt: "Sistemas", en: "Systems" })}
-                        <span
-                          className={`text-[9px] px-1.5 py-[1px] rounded-full ${
-                            activePortfolioTab === "sistemas"
-                              ? "bg-violet-500/20 text-violet-300"
-                              : "bg-zinc-800 text-zinc-400"
-                          }`}
-                        >
-                          {additionalProjects.length}
-                        </span>
-                      </button>
-                      <button
-                        onClick={() => setActivePortfolioTab("websites")}
-                        className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
-                          activePortfolioTab === "websites"
-                            ? "bg-fuchsia-500/20 text-fuchsia-200 border border-fuchsia-500/30 shadow-[0_12px_30px_rgba(0,0,0,0.35)]"
-                            : "text-zinc-400 hover:text-zinc-200 border border-transparent hover:bg-white/5"
-                        }`}
-                      >
-                        <Globe className="h-4 w-4" />
-                        {t({ pt: "Websites", en: "Websites" })}
-                        <span
-                          className={`text-[9px] px-1.5 py-[1px] rounded-full ${
-                            activePortfolioTab === "websites"
-                              ? "bg-fuchsia-500/20 text-fuchsia-300"
-                              : "bg-zinc-800 text-zinc-400"
-                          }`}
-                        >
-                          {websites.length}
-                        </span>
-                      </button>
-                    </div>
-
-                    <div className="flex items-center gap-2">
-                      <a
-                        aria-label="GitHub"
-                        href="https://github.com/pontesneto2"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center justify-center p-2.5 rounded-xl border border-white/10 bg-zinc-900/40 hover:bg-zinc-900/60 hover:border-violet-500/30 transition-all"
-                      >
-                        <Github className="h-4 w-4 text-zinc-300" />
-                      </a>
-                      <a
-                        aria-label="LinkedIn"
-                        href="https://www.linkedin.com/in/fcopts"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center justify-center p-2.5 rounded-xl border border-white/10 bg-zinc-900/40 hover:bg-zinc-900/60 hover:border-fuchsia-500/30 transition-all"
-                      >
-                        <Linkedin className="h-4 w-4 text-zinc-300" />
-                      </a>
-                      <a
-                        aria-label="E-mail"
-                        href="mailto:pontesneto2@gmail.com"
-                        className="inline-flex items-center justify-center p-2.5 rounded-xl border border-white/10 bg-zinc-900/40 hover:bg-zinc-900/60 hover:border-amber-500/30 transition-all"
-                      >
-                        <Mail className="h-4 w-4 text-zinc-300" />
-                      </a>
-                    </div>
-                  </div>
-
-                  {/* Tab content — Sistemas */}
-                  {activePortfolioTab === "sistemas" && (
-                    <motion.div
-                      key="sistemas"
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.45, ease: "easeOut" }}
-                    >
-                      <div className="flex items-start justify-between gap-4 mb-7 mt-2">
-                        <div className="min-w-0">
-                          <h3 className="text-lg font-semibold flex items-center gap-2">
-                            <Code className="h-5 w-5 text-violet-400" />
-                            {t({ pt: "Sistemas Web", en: "Web Systems" })}
-                          </h3>
-                          <p className="text-xs text-zinc-400 leading-relaxed mt-1">
-                            <span className="text-violet-400 font-medium">
-                              {t({
-                                pt: "Desenvolvo sistemas 100% personalizados",
-                                en: "I build 100% custom systems",
-                              })}
-                            </span>{" "}
-                            {t({
-                              pt: "para a sua necessidade: gestão financeira, fluxo de caixa, diário de obra, estoque, CRM, ERP e muito mais.",
-                              en: "for your needs: financial management, cash flow, work logs, inventory, CRM, ERP and much more.",
-                            })}
-                          </p>
+                        )}
+                        <p className="mt-4 text-sm md:text-base text-zinc-200 leading-relaxed">
+                          {t(heroProject.blurb)}
+                        </p>
+                        <div className="mt-5 flex flex-wrap gap-2">
+                          {heroProject.tags.map((tag) => (
+                            <ProjectTagIcon key={tag} tag={tag} />
+                          ))}
                         </div>
+                        <div className="mt-7">{heroCta}</div>
                       </div>
-                      <motion.ul
-                        variants={staggerList}
-                        initial="hidden"
-                        animate="show"
-                        className="divide-y divide-white/5 border-y border-white/5 lg:divide-y-0 lg:grid lg:grid-cols-2 lg:gap-x-12"
+                    </motion.article>
+                  );
+                })()}
+
+                <div className="grid md:grid-cols-2 gap-8">
+                  {featuredProjects.slice(1).map((project, index) => {
+                    const cta = renderProjectCta(project);
+
+                    return (
+                      <motion.article
+                        key={project.title}
+                        custom={index + 1}
+                        variants={fadeUpItem}
+                        className="rounded-3xl overflow-hidden border border-white/10 shadow-2xl flex flex-col hover:border-white/20 hover:-translate-y-1 transition-all duration-300"
                       >
-                        {additionalProjects.map((proj, index) => (
-                          <motion.li
-                            key={proj.name}
-                            variants={fadeUpItem}
-                            custom={index}
-                            className="group py-5 lg:border-b lg:border-white/5"
-                          >
-                            <div className="flex items-start gap-4 min-w-0">
-                              <div className="shrink-0 mt-0.5">
-                                <div className="h-11 w-11 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:border-violet-500/25 group-hover:bg-violet-500/10 transition-colors">
-                                  <Code className="h-4 w-4 text-violet-300" />
-                                </div>
-                              </div>
-
-                              <div className="min-w-0 flex-1">
-                                <div className="flex items-start justify-between gap-3">
-                                  <div className="min-w-0">
-                                    <div className="text-sm font-semibold text-zinc-100 group-hover:text-white transition-colors truncate">
-                                      {proj.name}
-                                    </div>
-                                    <div className="text-xs text-violet-300 mt-1 leading-relaxed font-medium">
-                                      {t(proj.desc)}
-                                    </div>
-                                  </div>
-                                  <div className="shrink-0 mt-0.5">
-                                    <div className="inline-flex items-center gap-1.5 text-[10px] text-zinc-400 bg-white/5 border border-white/10 rounded-xl px-2 py-1">
-                                      <Lock className="h-3 w-3" />
-                                      {t({ pt: "Privado", en: "Private" })}
-                                    </div>
-                                  </div>
-                                </div>
-
-                                <div className="mt-2 flex flex-wrap gap-1">
-                                  {proj.tech.map((tech) => (
-                                    <span
-                                      key={tech}
-                                      className="inline-flex items-center gap-1 rounded-full bg-white/[0.04] border border-white/[0.08] px-1.5 py-0.5 text-[8px] font-medium text-zinc-300"
-                                    >
-                                      <span className="scale-75 origin-left">
-                                        <TechGlyph tag={tech} />
-                                      </span>
-                                      <span className="leading-none">{tech}</span>
-                                    </span>
-                                  ))}
-                                </div>
-                              </div>
-                            </div>
-                          </motion.li>
-                        ))}
-                      </motion.ul>
-                    </motion.div>
-                  )}
-
-                  {/* Tab content — Websites */}
-                  {activePortfolioTab === "websites" && (
-                    <motion.div
-                      key="websites"
-                      initial={{ opacity: 0, x: 10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.45, ease: "easeOut" }}
-                    >
-                      <div className="flex items-start justify-between gap-4 mb-7 mt-2">
-                        <div className="min-w-0">
-                          <h3 className="text-lg font-semibold flex items-center gap-2">
-                            <Globe className="h-5 w-5 text-fuchsia-400" />
-                            {t({ pt: "Websites", en: "Websites" })}
-                          </h3>
-                          <p className="text-xs text-zinc-400 leading-relaxed mt-1">
-                            <span className="text-fuchsia-400 font-medium">
-                              {t({
-                                pt: "Websites desenhados e desenvolvidos",
-                                en: "Websites designed and built",
-                              })}
-                            </span>{" "}
-                            {t({
-                              pt: "com foco em clareza, performance e conversão — do conteúdo à experiência.",
-                              en: "with a focus on clarity, performance and conversion — from content to experience.",
-                            })}
-                          </p>
+                        <div className="relative h-56 w-full">
+                          {project.thumb ? (
+                            <Image
+                              src={project.thumb}
+                              alt={`${t({ pt: "Capa do projeto", en: "Project cover" })}: ${project.title}`}
+                              fill
+                              sizes="(max-width: 768px) 100vw, 50vw"
+                              className="object-cover object-center"
+                            />
+                          ) : (
+                            <div className="h-full w-full bg-gradient-to-br from-violet-500/20 via-transparent to-fuchsia-500/20" />
+                          )}
                         </div>
-                      </div>
-
-                      <motion.ul
-                        variants={staggerList}
-                        initial="hidden"
-                        animate="show"
-                        className="divide-y divide-white/5 border-y border-white/5 lg:divide-y-0 lg:grid lg:grid-cols-2 lg:gap-x-12"
-                      >
-                        {websites.map((site, index) => {
-                          const isDiscontinued = Boolean(site.discontinued);
-
-                          return (
-                            <motion.li
-                              key={site.url || site.name}
-                              variants={fadeUpItem}
-                              custom={index}
-                              className="py-5 lg:border-b lg:border-white/5"
-                            >
-                              <div className="flex items-start gap-4 min-w-0">
-                                <div className="shrink-0 mt-0.5">
-                                  <div className="h-11 w-11 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center">
-                                    <Globe className="h-4 w-4 text-fuchsia-300" />
-                                  </div>
-                                </div>
-
-                                <div className="min-w-0 flex-1">
-                                  <div className="flex items-start justify-between gap-3">
-                                    <div className="min-w-0">
-                                      {isDiscontinued ? (
-                                        <div className="text-sm font-semibold text-zinc-100 truncate">
-                                          {site.name}
-                                        </div>
-                                      ) : (
-                                        <a
-                                          href={site.url}
-                                          target="_blank"
-                                          rel="noopener noreferrer"
-                                          className="text-sm font-semibold text-zinc-100 truncate hover:text-fuchsia-200 transition-colors"
-                                          aria-label={`${t({ pt: "Abrir", en: "Open" })} ${site.name}`}
-                                        >
-                                          {site.name}
-                                        </a>
-                                      )}
-                                      <div className="text-xs text-zinc-400 mt-1 leading-relaxed">
-                                        {t(site.desc)}
-                                      </div>
-                                    </div>
-
-                                    <div className="shrink-0 mt-0.5">
-                                      {isDiscontinued ? (
-                                        <span className="inline-flex items-center gap-1.5 text-[10px] text-zinc-400 bg-white/5 border border-white/10 rounded-xl px-2 py-1 whitespace-nowrap">
-                                          <Lock className="h-3 w-3" />
-                                          {t({ pt: "Descontinuado", en: "Discontinued" })}
-                                        </span>
-                                      ) : (
-                                        <a
-                                          href={site.url}
-                                          target="_blank"
-                                          rel="noopener noreferrer"
-                                          className="inline-flex items-center gap-1.5 text-[10px] text-zinc-300 bg-white/5 border border-white/10 rounded-xl px-2 py-1 hover:border-fuchsia-500/25 hover:text-white transition-colors whitespace-nowrap"
-                                          aria-label={`${t({ pt: "Abrir", en: "Open" })} ${site.name}`}
-                                        >
-                                          {t({ pt: "Abrir", en: "Open" })}
-                                          <ExternalLink className="h-3 w-3" />
-                                        </a>
-                                      )}
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </motion.li>
-                          );
-                        })}
-                      </motion.ul>
-                    </motion.div>
-                  )}
+                        <div className="relative flex-1 flex flex-col p-8 bg-gradient-to-br from-violet-900/70 via-fuchsia-900/40 to-violet-950/80">
+                          <span className="inline-block w-fit px-2 py-0.5 rounded-md text-[10px] font-medium bg-white/10 text-violet-200 border border-white/20 mb-4">
+                            {t(project.category)}
+                          </span>
+                          <h3 className="text-xl font-bold text-white">
+                            {project.title}
+                          </h3>
+                          {t(project.subtitle) && (
+                            <span className="inline-block text-xs text-amber-300 font-medium mt-1">
+                              {t(project.subtitle)}
+                            </span>
+                          )}
+                          <p className="mt-4 text-sm text-zinc-200 leading-relaxed">
+                            {t(project.blurb)}
+                          </p>
+                          <div className="mt-5 flex flex-wrap gap-2">
+                            {project.tags.map((tag) => (
+                              <ProjectTagIcon key={tag} tag={tag} />
+                            ))}
+                          </div>
+                          <div className="mt-auto pt-7">{cta}</div>
+                        </div>
+                      </motion.article>
+                    );
+                  })}
                 </div>
               </motion.div>
+
+              {/* Mais projetos - grid compacto de 6 */}
+              <motion.div
+                variants={staggerTight}
+                initial="hidden"
+                whileInView="show"
+                viewport={viewportSettings}
+                className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 mb-20"
+              >
+                {Array.from({ length: 6 }).map((_, index) => {
+                  const project = moreProjectsGrid[index];
+
+                  if (!project) {
+                    return (
+                      <motion.div
+                        key={index}
+                        variants={tagItem}
+                        className="flex flex-col items-center text-center gap-2 rounded-2xl border border-white/10 bg-white/5 p-3 hover:border-white/20 hover:bg-white/[0.07] transition-all duration-300"
+                      >
+                        <div className="h-10 w-10 rounded-xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center">
+                          <Folder className="h-5 w-5 text-violet-300" />
+                        </div>
+                        <h3 className="text-sm font-semibold text-white">
+                          {t({ pt: `Projeto ${index + 1}`, en: `Project ${index + 1}` })}
+                        </h3>
+                        <span className="mt-auto inline-flex items-center justify-center rounded-full border border-white/15 px-4 py-1.5 text-xs font-medium text-zinc-400 cursor-not-allowed">
+                          {t({ pt: "Em breve", en: "Coming soon" })}
+                        </span>
+                      </motion.div>
+                    );
+                  }
+
+                  return (
+                    <motion.div
+                      key={project.title}
+                      variants={tagItem}
+                      className="flex flex-col items-center text-center gap-2 rounded-2xl border border-white/10 bg-white/5 p-3 hover:border-white/20 hover:bg-white/[0.07] transition-all duration-300"
+                    >
+                      <div className="h-10 w-10 rounded-xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center">
+                        <Folder className="h-5 w-5 text-violet-300" />
+                      </div>
+                      <h3 className="text-sm font-semibold text-white leading-tight line-clamp-2 w-full">
+                        {project.title}
+                      </h3>
+                      <p className="text-[11px] text-violet-300 font-medium w-full leading-snug">
+                        <Building2 className="inline h-3 w-3 -mt-0.5 mr-1" />
+                        {project.org}
+                      </p>
+                      {project.tags.length > 0 && (
+                        <div className="flex flex-wrap items-center justify-center gap-1">
+                          {project.tags.map((tag) => (
+                            <ProjectTagIcon key={tag} tag={tag} size="sm" />
+                          ))}
+                        </div>
+                      )}
+                      <div className="mt-auto">
+                        {project.cta.type === "private" ? (
+                          <span className="inline-flex items-center gap-1.5 rounded-full border border-white/15 px-4 py-1.5 text-xs font-medium text-zinc-400 cursor-not-allowed">
+                            <Lock className="h-3 w-3" />
+                            {t({ pt: "Privado", en: "Private" })}
+                          </span>
+                        ) : project.cta.type === "link" ? (
+                          <a
+                            href={project.cta.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1.5 rounded-full border border-white/20 px-4 py-1.5 text-xs font-medium text-zinc-200 hover:bg-white/5 hover:border-white/30 transition-all duration-200"
+                          >
+                            {t({ pt: "Visite", en: "Visit" })}
+                          </a>
+                        ) : (
+                          <span className="inline-flex items-center gap-1.5 rounded-full border border-white/15 px-4 py-1.5 text-xs font-medium text-zinc-400 cursor-not-allowed">
+                            {t({ pt: "Em breve", en: "Coming soon" })}
+                          </span>
+                        )}
+                      </div>
+                    </motion.div>
+                  );
+                })}
+              </motion.div>
+
             </div>
           </section>
 

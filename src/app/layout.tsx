@@ -8,7 +8,7 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://fcopts.com.br";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Francisco Pontes — Portfólio",
+    default: "Francisco Pontes - Engenheiro de Software",
     template: "%s — Francisco Pontes",
   },
   description: "Do esboço ao deploy: design, engenharia e impacto real.",
