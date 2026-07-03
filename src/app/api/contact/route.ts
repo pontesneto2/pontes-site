@@ -10,10 +10,11 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
   }
 
-  const { name, email, message, company } = body as {
+  const { name, email, message, phone, company } = body as {
     name?: string;
     email?: string;
     message?: string;
+    phone?: string;
     company?: string;
   };
 
@@ -31,7 +32,12 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Missing or invalid fields" }, { status: 400 });
   }
 
-  if (name.length > 200 || email.length > 200 || message.length > 5000) {
+  if (
+    name.length > 200 ||
+    email.length > 200 ||
+    message.length > 5000 ||
+    (phone && phone.length > 40)
+  ) {
     return NextResponse.json({ error: "Field too long" }, { status: 400 });
   }
 
@@ -62,6 +68,7 @@ export async function POST(request: NextRequest) {
       html: `
         <p><strong>Nome:</strong> ${escapeHtml(name.trim())}</p>
         <p><strong>E-mail:</strong> ${escapeHtml(email.trim())}</p>
+        ${phone?.trim() ? `<p><strong>Telefone:</strong> ${escapeHtml(phone.trim())}</p>` : ""}
         <p><strong>Mensagem:</strong></p>
         <p>${escapeHtml(message.trim()).replace(/\n/g, "<br />")}</p>
       `,

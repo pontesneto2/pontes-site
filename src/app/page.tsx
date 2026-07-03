@@ -5,30 +5,27 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import RobotBuddy from "@/components/RobotBuddy";
-import ImpactCounters from "@/components/ImpactCounters";
-import GithubStats from "@/components/GithubStats";
 import Testimonials from "@/components/Testimonials";
 import ContactForm from "@/components/ContactForm";
+import SkillsTools, { SKILL_NAMES } from "@/components/SkillsTools";
+import GithubStats from "@/components/GithubStats";
 import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
 import {
-  MonitorSmartphone,
   Code,
-  Database,
-  Box,
-  Braces,
   Mail,
   Github,
   Linkedin,
   Menu,
-  ExternalLink,
   Lock,
   X,
-  Server,
-  Cloud,
-  Palette,
   Folder,
   Building2,
+  Monitor,
+  Globe,
+  Briefcase,
+  FileDown,
+  Search,
+  ChevronLeft,
 } from "lucide-react";
 import {
   SiTypescript,
@@ -38,27 +35,16 @@ import {
   SiNodedotjs,
   SiNestjs,
   SiExpress,
-  SiVuedotjs,
   SiPostgresql,
   SiPrisma,
   SiDocker,
-  SiGithubactions,
-  SiGitlab,
   SiPhp,
   SiLaravel,
   SiDotnet,
   SiSharp,
-  SiPython,
   SiSpringboot,
   SiMongodb,
-  SiMysql,
-  SiKubernetes,
-  SiNginx,
-  SiPrometheus,
   SiGrafana,
-  SiGooglecloud,
-  SiDigitalocean,
-  SiGraphql,
   SiWordpress,
   SiAngular,
   SiGit,
@@ -66,8 +52,7 @@ import {
   SiTailwindcss,
   SiBootstrap,
 } from "react-icons/si";
-import { FaAws } from "react-icons/fa6";
-import { TbBrandAzure } from "react-icons/tb";
+import { FaWhatsapp } from "react-icons/fa6";
 import type { IconType } from "react-icons";
 
 const FloatingIcons3D = dynamic(() => import("@/components/FloatingIcons3D"), {
@@ -112,40 +97,76 @@ function LanguageSwitch({
   );
 }
 
-function TechGlyph({ tag }: { tag: string }) {
-  const normalized = tag.trim().toLowerCase();
-
-  const Icon = (() => {
-    if (
-      normalized.includes("postgres") ||
-      normalized.includes("mongo") ||
-      normalized.includes("prisma")
-    )
-      return Database;
-    if (normalized.includes("docker")) return Box;
-    if (
-      normalized === "js" ||
-      normalized.includes("javascript") ||
-      normalized.includes("typescript") ||
-      normalized.includes("scriptcase") ||
-      normalized.includes("wordpress")
-    )
-      return Braces;
-
-    if (normalized.includes("next") || normalized.includes("react"))
-      return MonitorSmartphone;
-    if (normalized.includes("tailwind") || normalized.includes("ux"))
-      return Palette;
-    if (normalized.includes("node") || normalized.includes("express"))
-      return Server;
-    if (normalized.includes("php") || normalized.includes(".net")) return Code;
-    return Code;
-  })();
-
+function SearchBox({
+  searchOpen,
+  setSearchOpen,
+  searchQuery,
+  setSearchQuery,
+  searchResults,
+  onSelect,
+  t,
+  align = "right",
+}: {
+  searchOpen: boolean;
+  setSearchOpen: (open: boolean) => void;
+  searchQuery: string;
+  setSearchQuery: (q: string) => void;
+  searchResults: Array<{ label: string; href: string; group: Bilingual }>;
+  onSelect: (href: string) => void;
+  t: (v: Bilingual) => string;
+  align?: "left" | "right";
+}) {
   return (
-    <span className="inline-flex items-center justify-center h-5 w-5 rounded-md bg-white/5 border border-white/10 text-zinc-300">
-      <Icon className="h-3.5 w-3.5" />
-    </span>
+    <div className="relative" data-search-box>
+      <button
+        type="button"
+        onClick={() => setSearchOpen(!searchOpen)}
+        aria-expanded={searchOpen}
+        aria-label={t({ pt: "Buscar", en: "Search" })}
+        className="inline-flex items-center justify-center p-1.5 text-zinc-300 hover:text-white transition-colors"
+      >
+        <Search className="h-[18px] w-[18px]" />
+      </button>
+      {searchOpen && (
+        <div
+          className={`absolute top-full mt-2 ${
+            align === "right" ? "right-0" : "left-0"
+          } w-64 rounded-xl border border-white/10 bg-[#141418] shadow-2xl p-2 z-50`}
+        >
+          <input
+            autoFocus
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder={t({ pt: "Buscar no site...", en: "Search the site..." })}
+            className="w-full rounded-lg bg-white/5 border border-white/10 px-3 py-2 text-sm text-zinc-200 placeholder:text-zinc-500 outline-none focus:border-violet-400/50"
+          />
+          {searchQuery.trim().length > 0 && (
+            <div className="mt-2 max-h-64 overflow-y-auto flex flex-col gap-0.5">
+              {searchResults.length > 0 ? (
+                searchResults.map((r, i) => (
+                  <button
+                    key={`${r.href}-${r.label}-${i}`}
+                    type="button"
+                    onClick={() => onSelect(r.href)}
+                    className="flex items-center justify-between gap-2 rounded-lg px-3 py-2 text-left text-sm text-zinc-200 hover:bg-white/5 transition-colors"
+                  >
+                    <span className="truncate">{r.label}</span>
+                    <span className="text-[10px] uppercase tracking-wide text-zinc-500 shrink-0">
+                      {t(r.group)}
+                    </span>
+                  </button>
+                ))
+              ) : (
+                <p className="px-3 py-2 text-xs text-zinc-500">
+                  {t({ pt: "Nada encontrado", en: "No results" })}
+                </p>
+              )}
+            </div>
+          )}
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -201,6 +222,19 @@ export default function Page() {
 
   const [navOpen, setNavOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  useEffect(() => {
+    if (!searchOpen) return;
+    const handleClickOutside = (e: MouseEvent) => {
+      if (!(e.target as HTMLElement).closest("[data-search-box]")) {
+        setSearchOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [searchOpen]);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(max-width: 767px)");
@@ -262,6 +296,32 @@ export default function Page() {
     },
   };
 
+  const staggerSequential = {
+    hidden: {},
+    show: {
+      transition: {
+        staggerChildren: isMobile ? 0.16 : 0.18,
+        delayChildren: 0.05,
+      },
+    },
+  };
+
+  const fadeInItem = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: { duration: 0.5, ease: easeOut },
+    },
+  };
+
+  const fadeInHeading = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: { duration: 0.7, ease: easeOut },
+    },
+  };
+
   const featuredProjects: Array<{
     title: string;
     subtitle: Bilingual;
@@ -290,11 +350,12 @@ export default function Page() {
         "Docker",
       ],
       link: "https://www.ucopiloto.com.br/",
+      ctaLabel: { pt: "Visite o website comercial", en: "Visit commercial website" },
       blurb: {
         pt: "Aplicativo para conectar motoristas e oficinas de maneira inteligente, simplificando agendamentos, orçamentos e o acompanhamento de serviços automotivos.",
         en: "App that connects drivers and repair shops intelligently, simplifying bookings, quotes and tracking of automotive services.",
       },
-      category: { pt: "Aplicativo Mobile + Painel Admin", en: "Mobile App + Admin Panel" },
+      category: { pt: "Aplicativo Mobile + Sistemas Web", en: "Mobile App + Web Systems" },
       thumb: "/img-card-meoocarro.png",
     },
     {
@@ -318,7 +379,7 @@ export default function Page() {
         pt: "Plataforma mobile para operar mídia Digital Out Of Home em recursos visuais dos mais diversos tipos.",
         en: "Mobile platform to operate Digital Out Of Home media across all kinds of visual resources.",
       },
-      category: { pt: "Aplicativo Mobile + Painel Admin", en: "Mobile App + Admin Panel" },
+      category: { pt: "Aplicativo Mobile + Sistemas Web", en: "Mobile App + Web Systems" },
       thumb: "/logo-dooh.png",
     },
     {
@@ -333,69 +394,6 @@ export default function Page() {
       },
       category: { pt: "Sistema Web", en: "Web System" },
       thumb: "/images/img-sist-pol.jpeg",
-    },
-  ];
-
-  const additionalProjects: Array<{
-    name: string;
-    tech: string[];
-    desc: Bilingual;
-  }> = [
-    {
-      name: "Sistema Financeiro ERP Estrela",
-      tech: [
-        "NodeJS",
-        "ExpressJS",
-        "Prisma",
-        "PostgreSQL",
-        "Docker",
-        "TailwindCSS",
-        "NextJS",
-        "TypeScript",
-      ],
-      desc: { pt: "Grupo Star", en: "Grupo Star" },
-    },
-    {
-      name: "Sistema Escolar",
-      tech: ["PHP", "JS", "PostgreSQL", "Scriptcase"],
-      desc: {
-        pt: "Colégio da Polícia Militar do Ceará",
-        en: "Ceará Military Police School",
-      },
-    },
-    {
-      name: "Sistema Diário de Obras",
-      tech: [
-        "NodeJS",
-        "ExpressJS",
-        "Prisma",
-        "PostgreSQL",
-        "Docker",
-        "TailwindCSS",
-        "TypeScript",
-      ],
-      desc: { pt: "Alfa Construções e Locações", en: "Alfa Construções e Locações" },
-    },
-    {
-      name: "Sistema Especial Fazenda Chapéu",
-      tech: ["Scriptcase", "PHP", "JS", "PostgreSQL"],
-      desc: {
-        pt: "Secretaria de Desenvolvimento Agrário do Ceará",
-        en: "Ceará State Department of Agrarian Development",
-      },
-    },
-    {
-      name: "Sistema SIGMA",
-      tech: [".NET", "C#", "Angular", "MongoDB", "Docker", "TypeScript"],
-      desc: {
-        pt: "Instituto Agropolos do Ceará",
-        en: "Instituto Agropolos do Ceará",
-      },
-    },
-    {
-      name: "Inscrições - Letramento Digital",
-      tech: ["WordPress", "PHP", "JS", "Bootstrap"],
-      desc: { pt: "Anjos Digitais", en: "Anjos Digitais" },
     },
   ];
 
@@ -433,7 +431,7 @@ export default function Page() {
         pt: "Sistema de regularização de matrícula de imóveis cedidos para a população do estado do Ceará.",
         en: "System for regularizing land title records granted to the population of Ceará state.",
       },
-      tags: ["Scriptcase", "PHP", "JS", "Java Spring Boot"],
+      tags: ["Scriptcase", "PHP", "JS", "Java Spring Boot", "PostgreSQL"],
       cta: { type: "link", url: "https://www.idace.ce.gov.br/" },
     },
     {
@@ -482,17 +480,17 @@ export default function Page() {
         pt: "Engenheiro de Software | Gerenciamento de Projetos",
         en: "Software Engineer | Project Management",
       },
-      period: "2025–presente",
+      period: "05/2025-Atual",
     },
     {
-      company: "Terceirizada - FlixBus Tickets (Europa)",
+      company: "FlixBus Tickets 🇮🇪",
       role: { pt: "Sênior Desenvolvedor Full Stack", en: "Senior Full Stack Developer" },
       period: "2024–2025",
       remote: true,
       languages: "PT/EN",
     },
     {
-      company: "Terceirizada - FedEX Services (Portugal)",
+      company: "FedEX Services 🇵🇹",
       role: { pt: "Sênior Desenvolvedor Full Stack", en: "Senior Full Stack Developer" },
       period: "2024–2025",
       remote: true,
@@ -500,7 +498,6 @@ export default function Page() {
     },
     {
       company: "Instituto Anjos Digitais",
-      startRole: { pt: "Desenvolvedor Full Stack", en: "Full Stack Developer" },
       role: {
         pt: "Sênior Desenvolvedor Full Stack | Gerenciamento de projetos de Produtos Digitais",
         en: "Senior Full Stack Developer | Digital Product Project Management",
@@ -529,10 +526,9 @@ export default function Page() {
     },
     {
       company: "Com3 Brasil",
-      startRole: { pt: "Programador Jr", en: "Jr Programmer" },
       role: {
-        pt: "Programador de Softwares | UX/UI Designer",
-        en: "Software Programmer | UX/UI Designer",
+        pt: "Analista de Sistemas Jr",
+        en: "Jr Systems Analyst",
       },
       period: "2020–2021",
     },
@@ -551,63 +547,6 @@ export default function Page() {
       },
       period: "2015–2017",
     },
-  ];
-
-  const techTagsFrequency = [...featuredProjects, ...additionalProjects]
-    .flatMap((item) => ("tags" in item ? item.tags : item.tech))
-    .reduce<Record<string, number>>((acc, tag) => {
-      acc[tag] = (acc[tag] ?? 0) + 1;
-      return acc;
-    }, {});
-
-  const techTagsSorted = Object.entries(techTagsFrequency)
-    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
-    .map(([tag, count]) => ({ tag, count }));
-
-  const topTechTags = techTagsSorted.slice(0, 18);
-  const top5TechTags = techTagsSorted.slice(0, 5);
-
-  const skillsGroups = [
-    [
-      { name: "TypeScript", Icon: SiTypescript },
-      { name: "JavaScript", Icon: SiJavascript },
-      { name: "React", Icon: SiReact },
-      { name: "Next.js", Icon: SiNextdotjs },
-      { name: "React Native", Icon: SiReact },
-      { name: "Vue.js", Icon: SiVuedotjs },
-    ],
-    [
-      { name: "Node.js", Icon: SiNodedotjs },
-      { name: "NestJS", Icon: SiNestjs },
-      { name: "Express", Icon: SiExpress },
-      { name: "PHP", Icon: SiPhp },
-      { name: "Laravel", Icon: SiLaravel },
-      { name: ".NET", Icon: SiDotnet },
-      { name: "C#", Icon: SiSharp },
-      { name: "Python", Icon: SiPython },
-      { name: "Spring Boot", Icon: SiSpringboot },
-      { name: "GraphQL", Icon: SiGraphql },
-    ],
-    [
-      { name: "PostgreSQL", Icon: SiPostgresql },
-      { name: "Prisma", Icon: SiPrisma },
-      { name: "MongoDB", Icon: SiMongodb },
-      { name: "MySQL", Icon: SiMysql },
-      { name: "WordPress", Icon: SiWordpress },
-      { name: "Azure", Icon: TbBrandAzure },
-    ],
-    [
-      { name: "Docker", Icon: SiDocker },
-      { name: "GitHub Actions", Icon: SiGithubactions },
-      { name: "GitLab CI", Icon: SiGitlab },
-      { name: "AWS", Icon: FaAws },
-      { name: "Kubernetes", Icon: SiKubernetes },
-      { name: "Nginx", Icon: SiNginx },
-      { name: "Prometheus", Icon: SiPrometheus },
-      { name: "Grafana", Icon: SiGrafana },
-      { name: "GCP", Icon: SiGooglecloud },
-      { name: "DigitalOcean", Icon: SiDigitalocean },
-    ],
   ];
 
   const renderProjectCta = (project: (typeof featuredProjects)[number]) => {
@@ -673,12 +612,50 @@ export default function Page() {
   };
 
   const navLinks = [
-    { href: "#projects", label: { pt: "Portfólio", en: "Portfolio" } },
-    { href: "#experience", label: { pt: "Experiência", en: "Experience" } },
-    { href: "#stack", label: { pt: "Stack", en: "Stack" } },
-    { href: "#about", label: { pt: "Sobre", en: "About" } },
-    { href: "#contact", label: { pt: "Contato", en: "Contact" } },
+    { href: "#intro", label: { pt: "Sobre", en: "About" } },
+    { href: "#skills-tools", label: { pt: "Skills & Tools", en: "Skills & Tools" } },
+    { href: "#projects", label: { pt: "Projetos", en: "Projects" } },
+    { href: "#experience", label: { pt: "Trajetória", en: "Journey" } },
+    { href: "#testimonials", label: { pt: "Contato", en: "Contact" } },
   ];
+
+  const searchIndex: Array<{ label: string; href: string; group: Bilingual }> = [
+    ...navLinks.map((link) => ({
+      label: t(link.label),
+      href: link.href,
+      group: { pt: "Seção", en: "Section" },
+    })),
+    ...featuredProjects.map((p) => ({
+      label: p.title,
+      href: "#projects",
+      group: { pt: "Projeto", en: "Project" },
+    })),
+    ...moreProjectsGrid.map((p) => ({
+      label: p.title,
+      href: "#projects",
+      group: { pt: "Projeto", en: "Project" },
+    })),
+    ...SKILL_NAMES.map((name) => ({
+      label: name,
+      href: "#skills-tools",
+      group: { pt: "Skill", en: "Skill" },
+    })),
+  ];
+
+  const searchResults =
+    searchQuery.trim().length > 0
+      ? searchIndex
+          .filter((entry) =>
+            entry.label.toLowerCase().includes(searchQuery.trim().toLowerCase())
+          )
+          .slice(0, 7)
+      : [];
+
+  const handleSearchSelect = (href: string) => {
+    setSearchOpen(false);
+    setSearchQuery("");
+    document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
+  };
 
   return (
     <div className="min-h-screen font-sans relative isolate">
@@ -689,7 +666,12 @@ export default function Page() {
         <header className="sticky top-0 z-50 border-b border-white/5 bg-[#141418] md:backdrop-blur md:supports-[backdrop-filter]:bg-black/30">
           <div className="mx-auto max-w-7xl px-3 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between py-4 md:py-0 md:h-16">
-              <div className="flex items-center gap-2 sm:gap-3">
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6, ease: easeOut }}
+                className="flex items-center gap-2 sm:gap-3"
+              >
                 {/* Logo */}
                 <Image
                   src="/images/FCO.png"
@@ -699,8 +681,13 @@ export default function Page() {
                   priority
                   className="h-9 sm:h-10 w-auto"
                 />
-              </div>
-              <nav className="hidden md:flex items-center gap-8 text-sm">
+              </motion.div>
+              <motion.nav
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6, ease: easeOut, delay: 0.1 }}
+                className="hidden md:flex items-center gap-8 text-sm"
+              >
                 {navLinks.map((link) => (
                   <a
                     key={link.href}
@@ -717,9 +704,34 @@ export default function Page() {
                 >
                   {t({ pt: "Baixar CV", en: "Download CV" })}
                 </a>
-              </nav>
-              <div className="flex items-center gap-2 md:hidden">
+                <SearchBox
+                  searchOpen={searchOpen}
+                  setSearchOpen={setSearchOpen}
+                  searchQuery={searchQuery}
+                  setSearchQuery={setSearchQuery}
+                  searchResults={searchResults}
+                  onSelect={handleSearchSelect}
+                  t={t}
+                  align="right"
+                />
+              </motion.nav>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6, ease: easeOut, delay: 0.1 }}
+                className="flex items-center gap-2 md:hidden"
+              >
                 <LanguageSwitch lang={lang} setLang={setLang} compact />
+                <SearchBox
+                  searchOpen={searchOpen}
+                  setSearchOpen={setSearchOpen}
+                  searchQuery={searchQuery}
+                  setSearchQuery={setSearchQuery}
+                  searchResults={searchResults}
+                  onSelect={handleSearchSelect}
+                  t={t}
+                  align="right"
+                />
                 <button
                   type="button"
                   className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-black/25 hover:bg-black/35 p-2.5 transition-colors"
@@ -734,7 +746,7 @@ export default function Page() {
                     <Menu className="h-5 w-5 text-zinc-200" />
                   )}
                 </button>
-              </div>
+              </motion.div>
             </div>
           </div>
           {navOpen && (
@@ -743,11 +755,18 @@ export default function Page() {
               className="md:hidden border-t border-white/5 bg-[#141418]"
             >
               <div className="mx-auto max-w-7xl px-3 py-4 flex flex-col gap-2">
+                <a
+                  href="https://drive.google.com/file/d/1NGGBTy9kzAPm5Os6we_jaeevsU-_zavX/view?usp=sharing"
+                  className="text-center rounded-xl px-3 py-3 bg-gradient-to-r from-violet-600 to-fuchsia-500 text-white font-medium shadow-lg shadow-fuchsia-700/20"
+                  onClick={() => setNavOpen(false)}
+                >
+                  {t({ pt: "Baixar CV", en: "Download CV" })}
+                </a>
                 {navLinks.map((i) => (
                   <a
                     key={i.href}
                     href={i.href}
-                    className="text-zinc-200 rounded-xl px-3 py-3 hover:bg-white/5 transition-colors"
+                    className="text-zinc-200 text-sm rounded-xl px-3 py-3 hover:bg-gradient-to-r hover:from-violet-600/20 hover:to-fuchsia-500/20 transition-all"
                     onClick={() => setNavOpen(false)}
                   >
                     {t(i.label)}
@@ -781,7 +800,7 @@ export default function Page() {
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
-                className="mb-6 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight md:tracking-wide"
+                className="mb-6 whitespace-nowrap text-[2.65rem] sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight md:tracking-wide"
               >
                 <span className="text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-violet-300">
                   Francisco
@@ -895,21 +914,34 @@ export default function Page() {
             className="relative py-24 border-t border-white/5"
           >
             <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center">
-              <p className="text-white text-base sm:text-lg leading-relaxed">
+              <motion.p
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={viewportSettings}
+                transition={{ duration: 0.7, ease: easeOut }}
+                className="text-white text-base sm:text-lg leading-relaxed"
+              >
                 {t({
                   pt: "Graduado em Análise e Desenvolvimento de Sistemas pela Universidade Farias Brito, em Fortaleza. Pós Graduado em Engenharia de Software com ênfase em Devops*. Especializado em Desenvolvimento Full Stack pela Digital College. Especializado em UX/UI e design de Produtos Digitais pela EBAC*.",
                   en: "Bachelor's degree in Systems Analysis and Development from Universidade Farias Brito, in Fortaleza. Postgraduate in Software Engineering with an emphasis on DevOps*. Specialized in Full Stack Development from Digital College. Specialized in UX/UI and Digital Product Design from EBAC*.",
                 })}
-              </p>
+              </motion.p>
 
-              <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+              <motion.div
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={viewportSettings}
+                transition={{ duration: 0.7, ease: easeOut, delay: 0.1 }}
+                className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4"
+              >
                 <a
                   href="https://github.com/pontesneto2"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-2 rounded-full px-6 py-2.5 border border-white/30 text-white text-sm font-medium hover:bg-white/5 hover:border-white/50 transition-all duration-300"
                 >
-                  {t({ pt: "Visite-me no GitHub", en: "Visit me on GitHub" })}
+                  {t({ pt: "Confira meu Github", en: "Check out my GitHub" })}
+                  <Github className="h-4 w-4 text-white" />
                 </a>
                 <a
                   href="https://www.linkedin.com/in/fcopts"
@@ -918,11 +950,9 @@ export default function Page() {
                   className="group inline-flex items-center gap-1 text-violet-300 text-sm font-medium hover:text-violet-200 transition-colors"
                 >
                   {t({ pt: "Visite-me no LinkedIn", en: "Visit me on LinkedIn" })}
-                  <span className="inline-block transition-transform duration-200 group-hover:translate-x-0.5">
-                    ›
-                  </span>
+                  <Linkedin className="h-4 w-4 text-violet-300 transition-transform duration-200 group-hover:translate-x-0.5" />
                 </a>
-              </div>
+              </motion.div>
             </div>
           </section>
 
@@ -932,22 +962,35 @@ export default function Page() {
             className="relative py-24"
           >
             <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
-              <div className="relative rounded-3xl bg-black/70 backdrop-blur-xl overflow-hidden">
+              <div className="relative rounded-3xl border-2 border-white/15 bg-black/70 backdrop-blur-xl overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-violet-500/5 via-transparent to-fuchsia-500/5" />
                 <div className="relative grid md:grid-cols-2 gap-6 items-stretch">
                   <div className="p-8 md:p-12 flex flex-col justify-center">
-                    <h2 className="text-4xl md:text-3xl lg:text-4xl font-black leading-tight text-white">
-                      <span className="md:whitespace-nowrap">
+                    <motion.h2
+                      variants={fadeInHeading}
+                      initial="hidden"
+                      whileInView="show"
+                      viewport={viewportSettings}
+                      className="text-[3.30rem] font-black leading-tight text-white"
+                      style={{ fontFamily: "var(--font-space-grotesk)" }}
+                    >
+                      <span className="lg:whitespace-nowrap">
                         {t({ pt: "Tecnologia,", en: "Technology," })}{" "}
-                        <br className="md:hidden" />
+                        <br className="lg:hidden" />
                         {t({ pt: "Engenharia", en: "Engineering" })}
                       </span>
                       <br />
                       <span className="text-violet-300">&amp;</span>{" "}
                       {t({ pt: "Design", en: "Design" })}
-                    </h2>
+                    </motion.h2>
 
-                    <div className="mt-6 space-y-4 text-zinc-300 text-[15px] sm:text-base leading-relaxed">
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      whileInView={{ opacity: 1 }}
+                      viewport={viewportSettings}
+                      transition={{ duration: 0.7, ease: easeOut }}
+                      className="mt-12 space-y-4 text-zinc-300 text-[15px] sm:text-[16px] leading-relaxed"
+                    >
                       <p>
                         {t({
                           pt: "Atuo como Engenheiro de Software e tenho mais de 6 anos de experiência em desenvolvimento Web/Mobile, DevOps e entusiasta de operações UX/UI. Tenho perfil multidisciplinar e atuo na construção de soluções digitais de ponta a ponta.",
@@ -956,80 +999,52 @@ export default function Page() {
                       </p>
                       <p>
                         {t({
-                          pt: "Ao longo da minha trajetória, participei de projetos em sistemas legado para o setor público, setor privado e iniciativas internacionais, passando por empresas como Star Capital, Instituto Anjos Digitais, Secretaria do Desenvolvimento Agrário do Ceará, Instituto Agropolos do Ceará, Com3 Brasil, Grupo Laredo, White Martins Gases do Ar e experiências internacionais. Essa vivência me permitiu atuar em produtos digitais de diferentes complexidades*. Uso, automatizo e me especializo cada vez mais em Inteligência Artificial mas geração old school que codificava na mão e consultando o stackoverflow* ainda vive, rs.",
-                          en: "Throughout my career, I've worked on legacy system projects for the public sector, private sector and international initiatives, passing through companies such as Star Capital, Instituto Anjos Digitais, Secretaria do Desenvolvimento Agrário do Ceará, Instituto Agropolos do Ceará, Com3 Brasil, Grupo Laredo, White Martins Gases do Ar, and international experiences. That journey let me work on digital products of different complexities*. I use, automate and keep specializing in Artificial Intelligence — but the old-school generation that used to hand-code while checking StackOverflow* is still alive, ha.",
-                        })}
+                          pt: "Ao longo da minha trajetória, participei de projetos em sistemas legado para o setor público, setor privado e iniciativas internacionais, passando por empresas como Star Capital, Instituto Anjos Digitais, Secretaria do Desenvolvimento Agrário do Ceará, Instituto Agropolos do Ceará, Com3 Brasil, Grupo Laredo, White Martins Gases do Ar e experiências internacionais. Essa vivência me permitiu atuar em produtos digitais de diferentes complexidades*.",
+                          en: "Throughout my career, I've worked on legacy system projects for the public sector, private sector and international initiatives, passing through companies such as Star Capital, Instituto Anjos Digitais, Secretaria do Desenvolvimento Agrário do Ceará, Instituto Agropolos do Ceará, Com3 Brasil, Grupo Laredo, White Martins Gases do Ar, and international experiences. That journey let me work on digital products of different complexities*.",
+                        })}{" "}
+                        <span className="italic text-violet-300">
+                          {t({
+                            pt: "Uso, automatizo e me especializo cada vez mais em Inteligência Artificial mas ainda sou da geração old school que codificava na mão consultando o stackoverflow*, rs.",
+                            en: "I use, automate and keep specializing in Artificial Intelligence — but the old-school generation that used to hand-code while checking StackOverflow* is still alive, ha.",
+                          })}
+                        </span>
                       </p>
-                    </div>
+                    </motion.div>
 
-                    <a
+                    <motion.a
+                      initial={{ opacity: 0 }}
+                      whileInView={{ opacity: 1 }}
+                      viewport={viewportSettings}
+                      transition={{ duration: 0.7, ease: easeOut, delay: 0.1 }}
                       href="https://drive.google.com/file/d/1NGGBTy9kzAPm5Os6we_jaeevsU-_zavX/view?usp=sharing"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="mt-8 self-start w-[40%] min-w-fit flex items-center justify-center rounded-full px-6 py-2.5 border border-violet-400/50 text-violet-300 text-sm font-medium hover:bg-violet-500/10 hover:border-violet-400/70 transition-all duration-300"
+                      className="group mt-8 self-start w-[40%] min-w-fit flex items-center justify-center gap-2 rounded-full px-6 py-2.5 border border-violet-400/50 text-violet-300 text-sm font-medium hover:bg-violet-500/10 hover:border-violet-400/70 transition-all duration-300"
                     >
                       {t({ pt: "Veja o currículo completo", en: "See the full résumé" })}
-                    </a>
+                      <FileDown className="h-4 w-4 transition-transform duration-300 group-hover:translate-y-0.5" />
+                    </motion.a>
                   </div>
 
-                  <div className="relative min-h-[320px] md:min-h-full">
+                  <div className="relative aspect-square md:aspect-auto md:min-h-full">
                     <Image
                       src="/images/img-site-pn.webp"
                       alt="Francisco Pontes — código e engenharia"
                       fill
                       sizes="(max-width: 768px) 100vw, 50vw"
-                      className="object-cover object-left"
+                      className="object-contain md:object-cover object-center md:object-left"
                     />
                   </div>
+                </div>
+
+                <div className="relative px-8 pt-8 pb-8 md:px-12 md:pt-0 md:pb-12">
+                  <GithubStats />
                 </div>
               </div>
             </div>
           </section>
 
-          {/* SKILLS & TOOLS */}
-          <section id="skills-tools" className="relative py-24">
-            <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12 text-center">
-              <h2 className="text-3xl md:text-4xl font-black text-white">
-                Skills &amp; Tools
-              </h2>
-
-              <div className="mt-14 space-y-10">
-                {skillsGroups.map((group, groupIndex) => (
-                  <motion.div
-                    key={groupIndex}
-                    variants={staggerTight}
-                    initial="hidden"
-                    whileInView="show"
-                    viewport={viewportSettings}
-                    className="flex flex-wrap items-start justify-center gap-x-8 gap-y-8"
-                  >
-                    {group.map((skill) => (
-                      <motion.div
-                        key={skill.name}
-                        variants={tagItem}
-                        className="group flex flex-col items-center gap-2 w-16"
-                      >
-                        <skill.Icon
-                          title={skill.name}
-                          className="h-8 w-8 md:h-10 md:w-10 text-zinc-400 group-hover:text-white transition-colors duration-300"
-                        />
-                        <span className="text-[10px] text-zinc-400 group-hover:text-white transition-colors duration-300 text-center leading-tight">
-                          {skill.name}
-                        </span>
-                      </motion.div>
-                    ))}
-                  </motion.div>
-                ))}
-              </div>
-
-              <p className="mt-12 text-xs text-zinc-400 max-w-3xl mx-auto leading-relaxed">
-                {t({
-                  pt: "+ Docker Compose, Scriptcase, Figma, Adobe XD, Design Systems integrado, Prototipagem, Usabilidade, Acessibilidade, LGPD, Power BI, Scrum/Kanban Ágil",
-                  en: "+ Docker Compose, Scriptcase, Figma, Adobe XD, Integrated Design Systems, Prototyping, Usability, Accessibility, LGPD (Brazilian GDPR), Power BI, Agile Scrum/Kanban",
-                })}
-              </p>
-            </div>
-          </section>
+          <SkillsTools />
 
           {/* PROJETOS EM DESTAQUE - REDESENHADO */}
           <section
@@ -1037,10 +1052,17 @@ export default function Page() {
             className="relative py-24 bg-zinc-900/40 overflow-x-hidden"
           >
             <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
-              <div className="text-center mb-16">
-                <h2 className="text-3xl md:text-4xl font-black text-white">
+              <div className="text-center mb-12">
+                <motion.h2
+                  variants={fadeInHeading}
+                  initial="hidden"
+                  whileInView="show"
+                  viewport={viewportSettings}
+                  className="text-[3.30rem] font-black text-white"
+                  style={{ fontFamily: "var(--font-space-grotesk)" }}
+                >
                   {t({ pt: "Projetos em Destaque", en: "Featured Projects" })}
-                </h2>
+                </motion.h2>
               </div>
 
               {/* Cards de projetos principais - hero + grid */}
@@ -1049,7 +1071,7 @@ export default function Page() {
                 initial="hidden"
                 whileInView="show"
                 viewport={viewportSettings}
-                className="mb-20 space-y-8"
+                className="mb-8 space-y-8"
               >
                 {(() => {
                   const heroProject = featuredProjects[0];
@@ -1124,7 +1146,7 @@ export default function Page() {
                             <div className="h-full w-full bg-gradient-to-br from-violet-500/20 via-transparent to-fuchsia-500/20" />
                           )}
                         </div>
-                        <div className="relative flex-1 flex flex-col p-8 bg-gradient-to-br from-violet-900/70 via-fuchsia-900/40 to-violet-950/80">
+                        <div className="relative flex-1 flex flex-col p-8 bg-[#2B1253]">
                           <span className="inline-block w-fit px-2 py-0.5 rounded-md text-[10px] font-medium bg-white/10 text-violet-200 border border-white/20 mb-4">
                             {t(project.category)}
                           </span>
@@ -1168,7 +1190,7 @@ export default function Page() {
                       <motion.div
                         key={index}
                         variants={tagItem}
-                        className="flex flex-col items-center text-center gap-2 rounded-2xl border border-white/10 bg-white/5 p-3 hover:border-white/20 hover:bg-white/[0.07] transition-all duration-300"
+                        className="flex flex-col items-center text-center gap-2 rounded-2xl border border-violet-500/20 bg-[#2B1253] p-3 hover:border-violet-400/40 hover:bg-violet-900/70 transition-all duration-300"
                       >
                         <div className="h-10 w-10 rounded-xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center">
                           <Folder className="h-5 w-5 text-violet-300" />
@@ -1183,14 +1205,16 @@ export default function Page() {
                     );
                   }
 
+                  const CardIcon = project.title.startsWith("Website") ? Globe : Monitor;
+
                   return (
                     <motion.div
                       key={project.title}
                       variants={tagItem}
-                      className="flex flex-col items-center text-center gap-2 rounded-2xl border border-white/10 bg-white/5 p-3 hover:border-white/20 hover:bg-white/[0.07] transition-all duration-300"
+                      className="flex flex-col items-center text-center gap-2 rounded-2xl border border-violet-500/20 bg-[#2B1253] p-3 hover:border-violet-400/40 hover:bg-violet-900/70 transition-all duration-300"
                     >
                       <div className="h-10 w-10 rounded-xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center">
-                        <Folder className="h-5 w-5 text-violet-300" />
+                        <CardIcon className="h-5 w-5 text-violet-300" />
                       </div>
                       <h3 className="text-sm font-semibold text-white leading-tight line-clamp-2 w-full">
                         {project.title}
@@ -1236,29 +1260,49 @@ export default function Page() {
           </section>
 
           {/* TRAJETÓRIA PROFISSIONAL - Discreto e Elegante */}
-          <section id="experience" className="relative py-24 border-t border-white/5">
+          <section id="experience" className="relative py-24">
             <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
-              <h2 className="text-3xl font-bold mb-12 text-center">
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-violet-300">
-                  {t({ pt: "Trajetória Profissional", en: "Professional Journey" })}
-                </span>
-              </h2>
+              <motion.h2
+                variants={fadeInHeading}
+                initial="hidden"
+                whileInView="show"
+                viewport={viewportSettings}
+                className="text-[3.30rem] font-black text-white mb-12 text-center"
+                style={{ fontFamily: "var(--font-space-grotesk)" }}
+              >
+                {t({ pt: "Trajetória Profissional", en: "Professional Journey" })}
+              </motion.h2>
               <motion.div
-                variants={staggerList}
+                variants={staggerSequential}
                 initial="hidden"
                 whileInView="show"
                 viewport={viewportSettings}
                 className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-12"
               >
-                {experience.map((exp) => (
+                {experience.map((exp, index) => {
+                  const isCurrent = index === 0;
+                  return (
                   <motion.div
                     key={exp.company}
-                    variants={fadeUpItem}
-                    className="relative pl-5"
+                    variants={fadeInItem}
+                    className="relative"
                   >
-                    <div className="absolute left-0 top-2 h-full w-px bg-white/10" />
-                    <div className="absolute left-[-3px] top-2 h-2 w-2 rounded-full bg-violet-400/60" />
-                    <div className="flex items-start justify-between gap-3 mb-4">
+                    <div className="flex items-center gap-2 mb-3">
+                      {isCurrent ? (
+                        <span className="relative flex h-2.5 w-2.5 shrink-0">
+                          <span className="absolute inline-flex h-full w-full rounded-full bg-violet-400 opacity-75 animate-ping" />
+                          <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-violet-400" />
+                        </span>
+                      ) : (
+                        <ChevronLeft className="h-3.5 w-3.5 text-violet-400/50 shrink-0 rotate-90 md:rotate-0" />
+                      )}
+                      <div
+                        className={`h-px flex-1 bg-gradient-to-l ${
+                          isCurrent ? "from-violet-400/70" : "from-violet-400/30"
+                        } to-transparent`}
+                      />
+                    </div>
+                    <div className="flex items-start justify-between gap-3 mb-1">
                       <h4 className="font-semibold text-sm text-white flex-1 min-w-0 break-words">
                         {exp.company}
                       </h4>
@@ -1268,7 +1312,7 @@ export default function Page() {
                         </span>
                         {exp.remote ? (
                           <span className="text-[8px] text-fuchsia-300 bg-fuchsia-500/10 px-1.5 py-[2px] rounded border border-fuchsia-500/20 whitespace-nowrap font-semibold">
-                            {t({ pt: "Trabalho remoto", en: "Remote" })}
+                            {t({ pt: "Remoto", en: "Remote" })}
                           </span>
                         ) : null}
                         {exp.languages ? (
@@ -1278,180 +1322,42 @@ export default function Page() {
                         ) : null}
                       </div>
                     </div>
+                    <p className="text-xs text-violet-300 leading-relaxed">
+                      <Briefcase className="inline h-3 w-3 -mt-0.5 mr-1" />
+                      {t(exp.role)}
+                    </p>
                     {exp.startRole ? (
-                      <div className="text-[10px] text-zinc-400 mb-2 flex items-center gap-2">
+                      <div className="text-[10px] text-zinc-400 mt-2 flex items-center gap-2">
                         <span className="truncate">
                           {t({ pt: "Cargo Inicial", en: "Starting Role" })}: {t(exp.startRole)}
                         </span>
                       </div>
                     ) : null}
-                    <p className="text-xs text-violet-300 leading-relaxed">
-                      {t(exp.role)}
-                    </p>
                   </motion.div>
-                ))}
+                  );
+                })}
               </motion.div>
             </div>
           </section>
 
-          {/* STACK - CRITÉRIOS DE ESCOLHA + NUVEM DE TECNOLOGIAS */}
-          <section
-            id="stack"
-            className="relative py-24 border-t border-white/5"
-          >
-            <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
-              <h2 className="text-3xl font-bold text-center">
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-violet-300">
-                  {t({ pt: "Stack Preferida", en: "Preferred Stack" })}
-                </span>
-              </h2>
-              <p className="text-sm text-zinc-400 text-center mt-3 max-w-3xl mx-auto leading-relaxed">
-                {t({
-                  pt: "Não fico preso a uma linguagem — tecnologia é ferramenta. Eu entendo o contexto do produto, levanto requisitos, defino escopo, desenho a arquitetura e escolho a stack mais adequada para o cenário do cliente e do projeto.",
-                  en: "I'm not tied to one language — technology is a tool. I understand the product context, gather requirements, define scope, design the architecture and choose the stack that best fits the client and the project.",
-                })}
-              </p>
-
-              <div className="mt-10">
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.2 }}
-                  transition={{ duration: 0.7, ease: "easeOut" }}
-                  className="relative rounded-3xl border border-white/10 bg-black/55 backdrop-blur-xl p-6 md:p-8 shadow-2xl overflow-hidden"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-br from-violet-500/5 via-transparent to-fuchsia-500/5" />
-
-                  <div className="relative">
-                    {/* Linguagens */}
-                    <div>
-                      <div className="flex items-start justify-between gap-4">
-                        <div>
-                          <h3 className="text-lg font-semibold text-white flex items-center gap-2">
-                            <Cloud className="h-5 w-5 text-fuchsia-300" />
-                            {t({ pt: "Ferramentas mais usadas", en: "Most-used tools" })}
-                          </h3>
-                          <p className="text-xs text-zinc-400 mt-1">
-                            {t({
-                              pt: "Baseado nos últimos trabalhos realizados.",
-                              en: "Based on recent completed work.",
-                            })}
-                          </p>
-                        </div>
-                      </div>
-
-                      <div className="mt-6">
-                        <motion.ol
-                          variants={staggerTight}
-                          initial="hidden"
-                          whileInView="show"
-                          viewport={viewportSettings}
-                          className="grid sm:grid-cols-2 lg:grid-cols-5 gap-3"
-                        >
-                          {top5TechTags.map((item, index) => (
-                            <motion.li
-                              key={item.tag}
-                              variants={tagItem}
-                              className="group relative rounded-2xl border border-white/10 bg-gradient-to-br from-white/10 via-white/5 to-transparent p-3 overflow-hidden hover:border-violet-500/20 transition-colors"
-                            >
-                              <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity bg-gradient-to-br from-violet-500/10 via-transparent to-fuchsia-500/10" />
-                              <div className="flex items-center justify-between text-[10px] text-zinc-400">
-                                <span className="font-semibold">
-                                  #{index + 1}
-                                </span>
-                                <span className="whitespace-nowrap">
-                                  {item.count}{" "}
-                                  {lang === "pt"
-                                    ? item.count === 1
-                                      ? "projeto"
-                                      : "projetos"
-                                    : item.count === 1
-                                      ? "project"
-                                      : "projects"}
-                                </span>
-                              </div>
-                              <div className="mt-1 flex items-center justify-between gap-3">
-                                <div className="flex items-center gap-2 min-w-0">
-                                  <TechGlyph tag={item.tag} />
-                                  <div className="min-w-0 text-sm font-semibold text-zinc-100 truncate">
-                                    {item.tag}
-                                  </div>
-                                </div>
-                              </div>
-                            </motion.li>
-                          ))}
-                        </motion.ol>
-
-                        <div className="mt-7">
-                          <div className="text-[11px] uppercase tracking-wide text-zinc-400 mb-3">
-                            {t({ pt: "Top 15 (recente)", en: "Top 15 (recent)" })}
-                          </div>
-                          <motion.ul
-                            variants={staggerTight}
-                            initial="hidden"
-                            whileInView="show"
-                            viewport={viewportSettings}
-                            className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-2"
-                          >
-                            {topTechTags.slice(0, 15).map((item) => (
-                              <motion.li
-                                key={item.tag}
-                                variants={tagItem}
-                                className="flex items-center gap-3 py-1"
-                              >
-                                <div className="min-w-0 flex items-center gap-2">
-                                  <TechGlyph tag={item.tag} />
-                                  <span className="min-w-0 truncate text-sm font-semibold text-zinc-200">
-                                    {item.tag}
-                                  </span>
-                                  <span className="shrink-0 text-[10px] px-2 py-0.5 rounded-full bg-white/[0.05] border border-white/[0.10] text-zinc-100 font-semibold">
-                                    {item.count}x
-                                  </span>
-                                </div>
-                              </motion.li>
-                            ))}
-                          </motion.ul>
-                        </div>
-
-                        <p className="mt-6 text-xs text-zinc-400 leading-relaxed flex items-start gap-2">
-                          <span aria-hidden className="mt-[1px]">
-                            💡
-                          </span>
-                          <span>
-                            {t({
-                              pt: "E quando o projeto pede algo diferente, eu me adapto à stack do time e do cliente. O foco é entregar valor com qualidade e manutenção saudável.",
-                              en: "And when a project calls for something different, I adapt to the team's and client's stack. The focus is delivering value with quality and healthy maintainability.",
-                            })}
-                          </span>
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              </div>
-
-              <div className="mt-8">
-                <GithubStats />
-              </div>
-            </div>
-          </section>
+          <Testimonials />
 
           {/* SOBRE MIM - Card Unificado Criativo */}
           <section
             id="about"
-            className="relative py-24 border-t border-white/5"
+            className="relative py-24"
           >
             <div className="mx-auto max-w-6xl px-6 sm:px-8 lg:px-12">
               <div className="relative rounded-3xl border border-white/10 bg-black/70 backdrop-blur-xl shadow-2xl overflow-hidden">
                 {/* Gradiente de fundo */}
                 <div className="absolute inset-0 bg-gradient-to-br from-violet-500/5 via-transparent to-fuchsia-500/5" />
 
-                <div className="relative z-10 grid md:grid-cols-5 gap-8 p-8 md:p-12">
-                  {/* Coluna da imagem - 2 colunas */}
-                  <div className="md:col-span-2 flex items-center">
-                    <div className="relative w-full">
-                      <div className="mx-auto max-w-[340px] md:max-w-[360px] aspect-square rounded-2xl overflow-hidden border border-violet-500/30 shadow-[0_0_50px_rgba(168,85,247,0.2)]">
-                        <div className="relative w-full h-full">
+                <div className="relative z-10 grid md:grid-cols-2 gap-10 p-8 md:p-12 items-center">
+                  {/* Coluna da imagem */}
+                  <div className="flex items-center justify-center">
+                    <div className="relative w-full max-w-[360px] aspect-square">
+                      <div className="relative w-full h-full rounded-full p-[16px] bg-gradient-to-br from-fuchsia-500 via-purple-600 to-violet-800 shadow-[0_0_40px_rgba(147,51,234,0.3)]">
+                        <div className="relative w-full h-full rounded-full overflow-hidden">
                           <Image
                             src="/pontes-institucional.png"
                             alt="Francisco Pontes"
@@ -1462,264 +1368,170 @@ export default function Page() {
                           />
                         </div>
                       </div>
-                      {/* Badge flutuante */}
-                      <div className="absolute -bottom-3 -right-3 bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white px-4 py-2 rounded-xl shadow-xl font-semibold text-[13px]">
-                        {t({ pt: "5+ anos de experiência", en: "5+ years of experience" })}
-                      </div>
+
+                      {/* Emojis de hobbies seguindo a curva da borda, balançando juntos ao longo da linha */}
+                      <motion.div
+                        className="absolute inset-0"
+                        animate={{ rotate: [0, 5, 0, -5, 0] }}
+                        transition={{
+                          duration: 10,
+                          repeat: Infinity,
+                          ease: "easeInOut",
+                        }}
+                      >
+                        {[
+                          { emoji: "🦍", angle: 0 },
+                          { emoji: "🏋️", angle: 17 },
+                          { emoji: "🏃", angle: 34 },
+                          { emoji: "⚽", angle: 51 },
+                          { emoji: "🏁", angle: 68 },
+                          { emoji: "🚗", angle: 85 },
+                          { emoji: "📱", angle: 102 },
+                          { emoji: "📚", angle: 119 },
+                          { emoji: "🧠", angle: 136 },
+                        ].map(({ emoji, angle }, index) => {
+                          const rad = (angle * Math.PI) / 180;
+                          const x = (50 + 52 * Math.cos(rad)).toFixed(4);
+                          const y = (50 + 52 * Math.sin(rad)).toFixed(4);
+                          return (
+                            <motion.span
+                              key={emoji}
+                              style={{
+                                left: `${x}%`,
+                                top: `${y}%`,
+                              }}
+                              className="absolute"
+                              initial={{ opacity: 0, scale: 2.4, x: "-50%", y: "-50%" }}
+                              whileInView={{ opacity: 1, scale: 1, x: "-50%", y: "-50%" }}
+                              viewport={viewportSettings}
+                              transition={{
+                                duration: 0.7,
+                                ease: easeOut,
+                                delay: index * 0.12,
+                              }}
+                            >
+                              <motion.span
+                                animate={{ rotate: [0, -5, 0, 5, 0] }}
+                                whileHover={{ scale: 1.35 }}
+                                transition={{
+                                  duration: 10,
+                                  repeat: Infinity,
+                                  ease: "easeInOut",
+                                }}
+                                className="flex items-center justify-center text-4xl drop-shadow-lg cursor-pointer"
+                              >
+                                {emoji}
+                              </motion.span>
+                            </motion.span>
+                          );
+                        })}
+                      </motion.div>
                     </div>
                   </div>
 
-                  {/* Coluna do conteúdo - 3 colunas */}
-                  <div className="md:col-span-3 flex flex-col justify-center">
-                    <h2 className="text-3xl font-bold mb-6">
-                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-violet-300">
-                        {t({ pt: "Sobre mim", en: "About me" })}
-                      </span>
-                    </h2>
-
-                    <div className="space-y-4 text-[15px] sm:text-base text-zinc-300 leading-relaxed">
-                      {lang === "pt" ? (
-                        <>
-                          <p>
-                            Engenheiro de Software com atuação em desenvolvimento{" "}
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-300 to-fuchsia-300 font-semibold">
-                              Web/Mobile, DevOps e UX/UI
-                            </span>
-                            , especializado em transformar estratégias de negócio em
-                            soluções digitais completas.
-                          </p>
-                          <p>
-                            Atuação no{" "}
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-300 to-fuchsia-300 font-semibold">
-                              setor público
-                            </span>{" "}
-                            com sistemas críticos e iniciativas de modernização
-                            orientadas à usabilidade. No{" "}
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-300 to-fuchsia-300 font-semibold">
-                              setor privado
-                            </span>
-                            , estrutura arquiteturas robustas, automatiza processos,
-                            fortalece observabilidade e garante ambientes de
-                            produção confiáveis. Possui experiência em{" "}
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-300 to-fuchsia-300 font-semibold">
-                              projetos internacionais
-                            </span>
-                            , ampliando a visão técnica, cultural e de mercado na
-                            construção de produtos digitais e visão negócio.
-                          </p>
-                          <div className="pt-2">
-                            <div className="text-[11px] font-semibold text-zinc-200 tracking-wide">
-                              Formação &amp; Background
-                            </div>
-                            <p className="mt-1 text-xs text-zinc-400 leading-relaxed">
-                              Profissional formado em Análise e Desenvolvimento de
-                              Sistemas, pós-graduado em Engenharia de Software com
-                              ênfase em DevOps pela UNIFOR, com especializações em
-                              Desenvolvimento Full Stack (Digital College) e UX/UI
-                              &amp; Produtos Digitais (EBAC). Vivência internacional
-                              com intercâmbio de língua inglesa na Irlanda-UE (nível
-                              C1). Une engenharia, design e estratégia de produto
-                              para desenvolver soluções.
-                            </p>
-                          </div>
-                        </>
-                      ) : (
-                        <>
-                          <p>
-                            Software Engineer working across{" "}
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-300 to-fuchsia-300 font-semibold">
-                              Web/Mobile development, DevOps and UX/UI
-                            </span>
-                            , specialized in turning business strategy into complete
-                            digital solutions.
-                          </p>
-                          <p>
-                            Experience in the{" "}
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-300 to-fuchsia-300 font-semibold">
-                              public sector
-                            </span>{" "}
-                            with critical systems and usability-driven modernization
-                            initiatives. In the{" "}
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-300 to-fuchsia-300 font-semibold">
-                              private sector
-                            </span>
-                            , building robust architectures, automating processes,
-                            strengthening observability and ensuring reliable
-                            production environments. Experience with{" "}
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-300 to-fuchsia-300 font-semibold">
-                              international projects
-                            </span>
-                            , broadening technical, cultural and market perspective
-                            in building digital products with a business mindset.
-                          </p>
-                          <div className="pt-2">
-                            <div className="text-[11px] font-semibold text-zinc-200 tracking-wide">
-                              Education &amp; Background
-                            </div>
-                            <p className="mt-1 text-xs text-zinc-400 leading-relaxed">
-                              Degree in Systems Analysis and Development,
-                              postgraduate in Software Engineering with a DevOps
-                              focus from UNIFOR, with specializations in Full Stack
-                              Development (Digital College) and UX/UI &amp; Digital
-                              Products (EBAC). International experience through an
-                              English-language exchange in Ireland-EU (C1 level).
-                              Combines engineering, design and product strategy to
-                              build solutions.
-                            </p>
-                          </div>
-                        </>
-                      )}
-                    </div>
-
-                    {/* Tags redesenhadas e alinhadas */}
-                    <div className="mt-8 flex flex-wrap gap-2">
-                      {[
-                        { icon: "🎯", label: { pt: "Visão de produto", en: "Product vision" } },
-                        { icon: "⚡", label: { pt: "Performance", en: "Performance" } },
-                        { icon: "🔧", label: { pt: "Visão de negócio", en: "Business mindset" } },
-                        { icon: "🚀", label: { pt: "Impacto real", en: "Real impact" } },
-                        { icon: "🧑‍💼", label: { pt: "Gestão", en: "Management" } },
-                        { icon: "📦", label: { pt: "Gerência de Produtos", en: "Product Management" } },
-                      ].map((item) => (
-                        <span
-                          key={item.label.en}
-                          className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-lg bg-gradient-to-r from-violet-500/12 to-fuchsia-500/12 border border-violet-500/20 text-[10px] font-semibold text-zinc-200 hover:border-violet-500/35 transition-all shadow-[0_10px_30px_rgba(0,0,0,0.18)]"
-                        >
-                          <span className="text-[11px]">{item.icon}</span>
-                          {t(item.label)}
-                        </span>
-                      ))}
-                    </div>
+                  {/* Coluna do formulário */}
+                  <div className="flex flex-col justify-center">
+                    <motion.h2
+                      variants={fadeInHeading}
+                      initial="hidden"
+                      whileInView="show"
+                      viewport={viewportSettings}
+                      className="text-2xl font-bold text-white"
+                    >
+                      {t({ pt: "Oi, vamos conversar?", en: "Get in touch" })}
+                    </motion.h2>
+                    <motion.p
+                      initial={{ opacity: 0 }}
+                      whileInView={{ opacity: 1 }}
+                      viewport={viewportSettings}
+                      transition={{ duration: 0.7, ease: easeOut, delay: 0.1 }}
+                      className="mt-0.5 mb-6 text-sm text-zinc-400"
+                    >
+                      {t({
+                        pt: "Se você tem um projeto em mente ou quer discutir oportunidades, ficarei feliz em bater um papo. Estou aberto a novos desafios!",
+                        en: "If you have a project in mind or want to discuss opportunities, I'd be happy to chat. I'm open to new challenges!",
+                      })}
+                    </motion.p>
+                    <ContactForm />
                   </div>
                 </div>
+
+                {/* Links sociais e currículo */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={viewportSettings}
+                  transition={{ duration: 0.7, ease: easeOut }}
+                  className="relative z-10 flex flex-wrap items-start justify-center gap-4 px-8 md:px-12 pb-8 md:pb-12"
+                >
+                  <div className="flex flex-col items-center gap-1">
+                    <a
+                      href="https://github.com/pontesneto2"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="GitHub"
+                      className="h-11 w-11 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-zinc-300 hover:text-white transition-all"
+                    >
+                      <Github className="h-5 w-5" />
+                    </a>
+                    <span className="text-[10px] font-light text-zinc-400">GitHub</span>
+                  </div>
+                  <div className="flex flex-col items-center gap-1">
+                    <a
+                      href="https://www.linkedin.com/in/fcopts"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="LinkedIn"
+                      className="h-11 w-11 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-zinc-300 hover:text-white transition-all"
+                    >
+                      <Linkedin className="h-5 w-5" />
+                    </a>
+                    <span className="text-[10px] font-light text-zinc-400">LinkedIn</span>
+                  </div>
+                  <div className="flex flex-col items-center gap-1">
+                    <a
+                      href="mailto:pontesneto2@gmail.com"
+                      aria-label="E-mail"
+                      className="h-11 w-11 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-zinc-300 hover:text-white transition-all"
+                    >
+                      <Mail className="h-5 w-5" />
+                    </a>
+                    <span className="text-[10px] font-light text-zinc-400">Email</span>
+                  </div>
+                  <div className="flex flex-col items-center gap-1">
+                    <a
+                      href="https://wa.me/5585981888896"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="WhatsApp"
+                      className="h-11 w-11 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-zinc-300 hover:text-white transition-all"
+                    >
+                      <FaWhatsapp className="h-5 w-5" />
+                    </a>
+                    <span className="text-[10px] font-light text-zinc-400">Whatsapp</span>
+                  </div>
+                  <div className="flex flex-col items-center gap-1">
+                    <a
+                      href="https://drive.google.com/file/d/1NGGBTy9kzAPm5Os6we_jaeevsU-_zavX/view?usp=sharing"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={t({ pt: "Baixar currículo", en: "Download résumé" })}
+                      className="h-11 w-11 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-zinc-300 hover:text-white transition-all"
+                    >
+                      <FileDown className="h-5 w-5" />
+                    </a>
+                    <span className="text-[10px] font-light text-zinc-400">Currículo</span>
+                  </div>
+                </motion.div>
               </div>
-
-              <ImpactCounters className="mt-6" />
-            </div>
-          </section>
-
-          <Testimonials />
-
-          {/* CONTATO - COM ROBÔ */}
-          <section
-            id="contact"
-            className="relative py-24 border-t border-white/5"
-          >
-            <div className="mx-auto max-w-6xl px-6 sm:px-8 lg:px-12">
-              <motion.div
-                initial={{ opacity: 0, y: 22 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, ease: "easeOut" }}
-                viewport={{ once: true, amount: 0.2 }}
-                className="relative mx-auto max-w-5xl"
-              >
-                <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-black/70 backdrop-blur-xl shadow-2xl">
-                  <div className="absolute inset-0 bg-gradient-to-br from-violet-500/6 via-transparent to-fuchsia-500/6" />
-                  <div className="relative grid md:grid-cols-12">
-                    <div className="md:col-span-7 p-7 sm:p-8">
-                      <div className="flex items-center gap-3 mb-6">
-                        <div className="w-11 h-11 bg-gradient-to-br from-violet-500/90 to-fuchsia-500/90 rounded-xl flex items-center justify-center">
-                          <Mail className="w-5 h-5 text-white" />
-                        </div>
-                        <div>
-                          <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-violet-200">
-                            {t({ pt: "Vamos conversar?", en: "Let's talk?" })}
-                          </h2>
-                          <p className="text-zinc-400 text-sm">
-                            {t({ pt: "Estou aberto a novos desafios", en: "Open to new challenges" })}
-                          </p>
-                        </div>
-                      </div>
-
-                      <div className="space-y-4">
-                        <p className="text-zinc-300">
-                          {t({
-                            pt: "Se você tem um projeto em mente ou quer discutir oportunidades, ficarei feliz em bater um papo.",
-                            en: "If you have a project in mind or want to discuss opportunities, I'd be happy to chat.",
-                          })}
-                        </p>
-
-                        <ContactForm />
-
-                        <p className="text-xs text-zinc-400">
-                          {t({ pt: "Ou envie direto para", en: "Or reach out directly at" })}{" "}
-                          <a
-                            href="mailto:pontesneto2@gmail.com"
-                            className="text-violet-300 hover:text-violet-200 transition-colors"
-                          >
-                            pontesneto2@gmail.com
-                          </a>
-                        </p>
-
-                        <div className="flex gap-3 pt-4">
-                          <motion.a
-                            href="https://github.com/pontesneto2"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            whileHover={
-                              isMobile ? undefined : { scale: 1.06, rotate: 2 }
-                            }
-                            whileTap={{ scale: 0.94 }}
-                            className="flex-1 flex items-center justify-center gap-2 p-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl transition-all"
-                          >
-                            <Github className="w-5 h-5 text-zinc-400" />
-                            <span className="text-sm text-zinc-300">
-                              GitHub
-                            </span>
-                          </motion.a>
-
-                          <motion.a
-                            href="https://www.linkedin.com/in/fcopts"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            whileHover={
-                              isMobile ? undefined : { scale: 1.06, rotate: -2 }
-                            }
-                            whileTap={{ scale: 0.94 }}
-                            className="flex-1 flex items-center justify-center gap-2 p-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl transition-all"
-                          >
-                            <Linkedin className="w-5 h-5 text-zinc-400" />
-                            <span className="text-sm text-zinc-300">
-                              LinkedIn
-                            </span>
-                          </motion.a>
-                        </div>
-
-                        <div className="pt-4">
-                          <a
-                            href="https://drive.google.com/file/d/1NGGBTy9kzAPm5Os6we_jaeevsU-_zavX/view?usp=sharing"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-sm text-violet-300 hover:text-violet-200 transition-colors inline-flex items-center gap-2"
-                          >
-                            {t({ pt: "Ver currículo completo", en: "View full résumé" })}
-                            <ExternalLink className="w-3 h-3" />
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="md:col-span-5 border-t md:border-t-0 md:border-l border-white/10 p-7 sm:p-8 flex items-center justify-center relative">
-                      <div className="absolute inset-0 bg-gradient-to-b from-violet-500/6 via-transparent to-fuchsia-500/6" />
-                      <div className="relative">
-                        <RobotBuddy
-                          size={220}
-                          showBackdrop={false}
-                          showParticles={false}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
             </div>
           </section>
         </main>
 
         <footer className="py-10 border-t border-white/5 text-center text-[11px] text-zinc-400">
-          <div>© 2026 Francisco Pontes</div>
-          <div>{t({ pt: "Todos os Direitos Reservados", en: "All Rights Reserved" })}</div>
-          <div>pontesneto2@gmail.com</div>
+          <div>
+            {t({ pt: "Feito à mão", en: "Handmade" })} | © 2026 Francisco Pontes
+          </div>
         </footer>
       </div>
     </div>

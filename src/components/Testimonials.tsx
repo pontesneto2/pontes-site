@@ -9,15 +9,20 @@ export default function Testimonials() {
   const { lang } = useLanguage();
 
   return (
-    <section id="testimonials" className="relative py-24 border-t border-white/5">
+    <section id="testimonials" className="relative py-24">
       <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
-        <div className="text-center mb-4">
-          <h2 className="text-3xl font-bold">
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-violet-300">
-              {tr(lang, { pt: "Recomendações", en: "Recommendations" })}
-            </span>
-          </h2>
-          <p className="text-sm text-zinc-400 mt-3 max-w-2xl mx-auto leading-relaxed">
+        <div className="text-center mb-12">
+          <motion.h2
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+            className="text-[3.30rem] font-black text-white"
+            style={{ fontFamily: "var(--font-space-grotesk)" }}
+          >
+            {tr(lang, { pt: "Recomendações", en: "Recommendations" })}
+          </motion.h2>
+          <p className="text-sm text-zinc-400 mt-2 max-w-2xl mx-auto leading-relaxed">
             {tr(lang, {
               pt: "O que colegas e parceiros de trabalho dizem, direto do LinkedIn.",
               en: "What colleagues and work partners say, straight from LinkedIn.",
@@ -25,7 +30,7 @@ export default function Testimonials() {
           </p>
         </div>
 
-        <div className="mt-12 grid md:grid-cols-2 gap-6">
+        <div className="grid md:grid-cols-2 gap-6">
           {testimonials.map((item, index) => (
             <motion.div
               key={item.name}
@@ -36,7 +41,7 @@ export default function Testimonials() {
               className="relative rounded-3xl border border-white/10 bg-black/55 backdrop-blur-xl p-6 md:p-8 shadow-2xl overflow-hidden"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-violet-500/5 via-transparent to-fuchsia-500/5" />
-              <Quote className="absolute top-6 right-6 h-8 w-8 text-violet-500/15" />
+              <Quote className="absolute top-6 right-6 h-8 w-8 text-fuchsia-400" />
 
               <div className="relative">
                 <p className="text-sm text-zinc-300 leading-relaxed">
@@ -61,7 +66,7 @@ export default function Testimonials() {
                     <p className="text-[11px] text-zinc-400 mt-0.5 leading-snug">
                       {item.role}
                     </p>
-                    <p className="text-[10px] text-zinc-400 mt-0.5">
+                    <p className="text-[9px] italic text-zinc-400 mt-0.5">
                       {tr(lang, item.context)}
                     </p>
                   </div>
