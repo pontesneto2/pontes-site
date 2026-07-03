@@ -2,16 +2,18 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
 import { LanguageProvider } from "@/lib/language-context";
+import { spaceGrotesk, jetbrainsMono } from "@/lib/fonts";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://fcopts.com.br";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Francisco Pontes - Engenheiro de Software",
+    default: "Francisco Pontes — Engenheiro de Software Full Stack",
     template: "%s — Francisco Pontes",
   },
-  description: "Do esboço ao deploy: design, engenharia e impacto real.",
+  description:
+    "Portfólio de Francisco Pontes, Engenheiro de Software Full Stack em Fortaleza. Experiência em React, Next.js, Node.js, TypeScript e DevOps — do esboço ao deploy.",
   applicationName: "Portfólio — Francisco Pontes",
   authors: [{ name: "Francisco Pontes" }],
   creator: "Francisco Pontes",
@@ -21,10 +23,14 @@ export const metadata: Metadata = {
     "Portfólio",
     "Engenheiro de Software",
     "Desenvolvedor Full Stack",
+    "Software Engineer",
+    "Full Stack Developer",
+    "Fortaleza",
     "Next.js",
     "React",
+    "Node.js",
     "TypeScript",
-    "UX",
+    "UX/UI",
     "DevOps",
   ],
   alternates: {
@@ -34,23 +40,25 @@ export const metadata: Metadata = {
     type: "website",
     url: "/",
     siteName: "Francisco Pontes — Portfólio",
-    title: "Francisco Pontes — Portfólio",
-    description: "Do esboço ao deploy: design, engenharia e impacto real.",
+    title: "Francisco Pontes — Engenheiro de Software Full Stack",
+    description:
+      "Portfólio de Francisco Pontes, Engenheiro de Software Full Stack em Fortaleza. Experiência em React, Next.js, Node.js, TypeScript e DevOps — do esboço ao deploy.",
     images: [
       {
-        url: "/pontes.jpg",
+        url: "/images/img-link-site-fcopts.png",
         width: 1200,
-        height: 630,
-        alt: "Francisco Pontes — Portfólio",
+        height: 675,
+        alt: "Francisco Pontes — Engenheiro de Software Full Stack",
       },
     ],
     locale: "pt_BR",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Francisco Pontes — Portfólio",
-    description: "Do esboço ao deploy: design, engenharia e impacto real.",
-    images: ["/pontes.jpg"],
+    title: "Francisco Pontes — Engenheiro de Software Full Stack",
+    description:
+      "Portfólio de Francisco Pontes, Engenheiro de Software Full Stack em Fortaleza. Experiência em React, Next.js, Node.js, TypeScript e DevOps — do esboço ao deploy.",
+    images: ["/images/img-link-site-fcopts.png"],
   },
   robots: {
     index: true,
@@ -78,7 +86,7 @@ const personJsonLd = {
   image: `${siteUrl}/pontes.jpg`,
   jobTitle: "Engenheiro de Software",
   description:
-    "Engenheiro de Software especializado em desenvolvimento Web/Mobile, DevOps e UX/UI.",
+    "Engenheiro de Software Full Stack em Fortaleza, especializado em React, Next.js, Node.js, TypeScript, DevOps e UX/UI.",
   email: "mailto:pontesneto2@gmail.com",
   sameAs: [
     "https://github.com/pontesneto2",
@@ -101,14 +109,14 @@ const personJsonLd = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="pt-BR">
+    <html lang="pt-BR" className="overflow-x-hidden">
       <head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
         />
       </head>
-      <body suppressHydrationWarning className="min-h-screen overflow-x-hidden text-zinc-200 bg-[radial-gradient(1200px_700px_at_50%_-10%,rgba(124,58,237,0.34),transparent_62%),radial-gradient(1100px_600px_at_100%_10%,rgba(168,85,247,0.24),transparent_62%),radial-gradient(900px_500px_at_0%_25%,rgba(217,70,239,0.12),transparent_60%),linear-gradient(180deg,#151519,#141418)]">
+      <body suppressHydrationWarning className={`min-h-screen overflow-x-hidden text-zinc-200 bg-[linear-gradient(180deg,#151519,#141418)] ${spaceGrotesk.variable} ${jetbrainsMono.variable}`}>
         <LanguageProvider>{children}</LanguageProvider>
         <Analytics />
       </body>
