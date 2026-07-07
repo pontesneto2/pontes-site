@@ -402,7 +402,7 @@ export default function ErpEstrelaCasePage() {
           <div>© 2026 Francisco Pontes</div>
           <div>{t({ pt: "Todos os Direitos Reservados", en: "All Rights Reserved" })}</div>
           <div className="text-[10px] font-normal text-zinc-300">
-            pontesneto2@gmail.com
+            contato@fcopts.com.br
           </div>
         </footer>
       </div>

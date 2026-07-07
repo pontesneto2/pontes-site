@@ -87,7 +87,7 @@ const personJsonLd = {
   jobTitle: "Engenheiro de Software",
   description:
     "Engenheiro de Software Full Stack em Fortaleza, especializado em React, Next.js, Node.js, TypeScript, DevOps e UX/UI.",
-  email: "mailto:pontesneto2@gmail.com",
+  email: "mailto:contato@fcopts.com.br",
   sameAs: [
     "https://github.com/pontesneto2",
     "https://www.linkedin.com/in/fcopts",

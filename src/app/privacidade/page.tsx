@@ -70,8 +70,8 @@ const sections: Array<{ title: Bilingual; paragraphs: Bilingual[] }> = [
     title: { pt: "Quais são os seus direitos sobre os seus dados", en: "What are your rights over your data" },
     paragraphs: [
       {
-        pt: "De acordo com a LGPD, você pode solicitar a qualquer momento a confirmação de que tratamos seus dados, o acesso a eles, a correção de dados incompletos ou desatualizados, a eliminação dos dados que nos forneceu, ou informações sobre com quem eventualmente os compartilhamos. Para exercer qualquer um desses direitos, entre em contato pelo e-mail pontesneto2@gmail.com.",
-        en: "Under LGPD, you may at any time request confirmation that we process your data, access to it, correction of incomplete or outdated data, deletion of the data you provided us, or information about anyone we may have shared it with. To exercise any of these rights, please contact pontesneto2@gmail.com.",
+        pt: "De acordo com a LGPD, você pode solicitar a qualquer momento a confirmação de que tratamos seus dados, o acesso a eles, a correção de dados incompletos ou desatualizados, a eliminação dos dados que nos forneceu, ou informações sobre com quem eventualmente os compartilhamos. Para exercer qualquer um desses direitos, entre em contato pelo e-mail contato@fcopts.com.br.",
+        en: "Under LGPD, you may at any time request confirmation that we process your data, access to it, correction of incomplete or outdated data, deletion of the data you provided us, or information about anyone we may have shared it with. To exercise any of these rights, please contact contato@fcopts.com.br.",
       },
     ],
   },

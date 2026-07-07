@@ -741,7 +741,7 @@ export default function Page() {
 
     return (
       <a
-        href="mailto:pontesneto2@gmail.com?subject=Solicita%C3%A7%C3%A3o%20de%20acesso%20ao%20projeto"
+        href="mailto:contato@fcopts.com.br?subject=Solicita%C3%A7%C3%A3o%20de%20acesso%20ao%20projeto"
         className={`${ctaClass} ${solidClass}`}
       >
         <Lock className="h-3.5 w-3.5" />
@@ -1033,7 +1033,7 @@ export default function Page() {
                 </a>
                 <a
                   aria-label="E-mail"
-                  href="mailto:pontesneto2@gmail.com"
+                  href="mailto:contato@fcopts.com.br"
                   className="group text-zinc-300 hover:text-amber-300 transition-colors"
                 >
                   <Mail className="h-6 w-6" />
@@ -1881,7 +1881,7 @@ export default function Page() {
                     <Linkedin className="h-5 w-5" />
                   </a>
                   <a
-                    href="mailto:pontesneto2@gmail.com"
+                    href="mailto:contato@fcopts.com.br"
                     aria-label="E-mail"
                     className="h-11 w-11 rounded-full bg-white/5 hover:bg-fuchsia-500/10 border border-white/5 hover:border-fuchsia-400/40 flex items-center justify-center text-zinc-300 hover:text-fuchsia-300 transition-all"
                   >

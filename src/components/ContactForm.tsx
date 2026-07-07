@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useRef, useState, type FormEvent } from "react";
 import { motion } from "framer-motion";
 import { Loader2, Mail, CheckCircle2, AlertCircle, ChevronDown } from "lucide-react";
 import { useLanguage, tr } from "@/lib/language-context";
@@ -40,6 +40,7 @@ export default function ContactForm() {
   const [status, setStatus] = useState<Status>("idle");
   const [countryCode, setCountryCode] = useState("+55");
   const [phone, setPhone] = useState("");
+  const formLoadedAt = useRef(Date.now());
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -60,6 +61,7 @@ export default function ContactForm() {
           phone: rawPhone ? `${countryCode} ${rawPhone}` : "",
           company: data.get("company"),
           lang,
+          formLoadedAt: formLoadedAt.current,
         }),
       });
 

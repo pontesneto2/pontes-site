@@ -41,7 +41,7 @@ export default function CaseCTA({ description }: CaseCTAProps) {
           )}
           <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3">
             <a
-              href="mailto:pontesneto2@gmail.com?subject=Contato%20via%20Portfolio"
+              href="mailto:contato@fcopts.com.br?subject=Contato%20via%20Portfolio"
               className="group inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-gradient-to-r from-violet-600 to-fuchsia-500 text-white text-sm font-semibold shadow-lg shadow-violet-500/20 hover:shadow-violet-500/35 hover:scale-[1.03] transition-all duration-300"
             >
               <Mail className="h-4 w-4" />
