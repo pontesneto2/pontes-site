@@ -30,6 +30,9 @@ import {
   Clock,
   Smartphone,
   Users,
+  Gauge,
+  TrendingDown,
+  Rocket,
   type LucideIcon,
 } from "lucide-react";
 import {
@@ -361,6 +364,8 @@ export default function Page() {
     },
   };
 
+  const FEATURED_PROJECT_BG = "bg-gradient-to-br from-violet-950/40 via-black/60 to-black/90";
+
   const featuredProjects: Array<{
     title: string;
     subtitle: Bilingual;
@@ -374,6 +379,7 @@ export default function Page() {
     category: Bilingual;
     thumb: string;
     highlights?: Array<{ icon: LucideIcon; value: Bilingual }>;
+    impact?: Array<{ icon: LucideIcon; value: Bilingual; label: Bilingual }>;
     bgClass: string;
     scrimClass?: string;
   }> = [
@@ -399,12 +405,17 @@ export default function Page() {
       },
       category: { pt: "Aplicativo Mobile + Sistemas Web", en: "Mobile App + Web Systems" },
       thumb: "/img-card-meoocarro.png",
-      bgClass: "bg-gradient-to-br from-[#241f06] via-[#54480e] to-[#171402]",
+      bgClass: FEATURED_PROJECT_BG,
       highlights: [
         { icon: Clock, value: { pt: "5 meses de produção", en: "5 months in production" } },
         { icon: Briefcase, value: { pt: "DevOps solo", en: "Solo DevOps" } },
         { icon: Smartphone, value: { pt: "iOS + Android + Web + Admin", en: "iOS + Android + Web + Admin" } },
         { icon: Building2, value: { pt: "Idealizadora: Click SF", en: "Idealized by: Click SF" } },
+      ],
+      impact: [
+        { icon: Users, value: { pt: "200+", en: "200+" }, label: { pt: "Usuários ativos", en: "Active users" } },
+        { icon: Gauge, value: { pt: "99,9%", en: "99.9%" }, label: { pt: "Uptime", en: "Uptime" } },
+        { icon: TrendingDown, value: { pt: "-35%", en: "-35%" }, label: { pt: "Tempo de agendamento", en: "Scheduling time" } },
       ],
     },
     {
@@ -430,8 +441,7 @@ export default function Page() {
       },
       category: { pt: "Aplicativo Mobile + Sistemas Web", en: "Mobile App + Web Systems" },
       thumb: "/logo-dooh.png",
-      bgClass: "bg-gradient-to-br from-[#5c2e11] via-[#8a4a1c] to-[#1c0e05]",
-      scrimClass: "bg-black/55",
+      bgClass: FEATURED_PROJECT_BG,
       highlights: [
         { icon: Clock, value: { pt: "6 meses", en: "6 months" } },
         { icon: Smartphone, value: { pt: "iOS + Android + Web + Admin", en: "iOS + Android + Web + Admin" } },
@@ -450,11 +460,17 @@ export default function Page() {
       },
       category: { pt: "Sistema Web", en: "Web System" },
       thumb: "/images/img-sist-pol.jpeg",
-      bgClass: "bg-gradient-to-br from-[#0d3550] via-[#145a7c] to-[#082536]",
+      bgClass: FEATURED_PROJECT_BG,
       highlights: [
         { icon: Clock, value: { pt: "1,2 anos de produção", en: "1.2 years in production" } },
-        { icon: Users, value: { pt: "4 Desenvolvedores", en: "4 Developers" } },
+        { icon: Users, value: { pt: "Equipe: 4 → 3 devs", en: "Team: 4 → 3 devs" } },
         { icon: Smartphone, value: { pt: "PWA + Sistemas Web", en: "PWA + Web Systems" } },
+      ],
+      impact: [
+        { icon: Users, value: { pt: "2.350+", en: "2,350+" }, label: { pt: "Usuários ativos", en: "Active users" } },
+        { icon: Gauge, value: { pt: "99,9%", en: "99.9%" }, label: { pt: "Uptime", en: "Uptime" } },
+        { icon: TrendingDown, value: { pt: "-40%", en: "-40%" }, label: { pt: "Manutenção semanal", en: "Weekly maintenance" } },
+        { icon: Rocket, value: { pt: "-2 meses", en: "-2 months" }, label: { pt: "MVP antes do prazo", en: "MVP ahead of schedule" } },
       ],
     },
   ];
@@ -1070,6 +1086,19 @@ export default function Page() {
                 })}
               </motion.p>
 
+              <motion.p
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={viewportSettings}
+                transition={{ duration: 0.7, ease: easeOut, delay: 0.05 }}
+                className="mt-3 text-zinc-300 text-sm sm:text-base leading-relaxed"
+              >
+                {t({
+                  pt: "Hoje, meu foco é liderar tecnicamente produtos digitais de ponta a ponta — da arquitetura ao deploy — combinando desenvolvimento Full Stack, DevOps e uma visão de produto orientada a resultado.",
+                  en: "Today, my focus is leading digital products end-to-end from a technical standpoint — from architecture to deploy — combining Full Stack development, DevOps and a results-driven product mindset.",
+                })}
+              </motion.p>
+
               <motion.div
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
@@ -1278,6 +1307,28 @@ export default function Page() {
                               })}
                             </div>
                           )}
+                          {heroProject.impact && (
+                            <div
+                              className={`mt-5 pt-5 border-t border-white/10 grid gap-4 ${
+                                heroProject.impact.length === 3 ? "grid-cols-3" : "grid-cols-2 sm:grid-cols-4"
+                              }`}
+                            >
+                              {heroProject.impact.map((stat, i) => {
+                                const Icon = stat.icon;
+                                return (
+                                  <div key={i} className="flex flex-col gap-1">
+                                    <div className="flex items-center gap-1.5 text-base font-semibold text-white">
+                                      <Icon className="h-3.5 w-3.5 text-violet-300" />
+                                      {t(stat.value)}
+                                    </div>
+                                    <span className="text-[11px] text-zinc-400 leading-tight">
+                                      {t(stat.label)}
+                                    </span>
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          )}
                           <div className="mt-5 flex flex-wrap gap-2">
                             {heroProject.tags.map((tag) => (
                               <ProjectTagIcon key={tag} tag={tag} />
@@ -1346,6 +1397,28 @@ export default function Page() {
                                     >
                                       <Icon className="h-3.5 w-3.5 text-violet-300" />
                                       <span>{t(h.value)}</span>
+                                    </div>
+                                  );
+                                })}
+                              </div>
+                            )}
+                            {project.impact && (
+                              <div
+                                className={`mt-5 pt-5 border-t border-white/10 grid gap-4 ${
+                                  project.impact.length === 3 ? "grid-cols-3" : "grid-cols-2 sm:grid-cols-4"
+                                }`}
+                              >
+                                {project.impact.map((stat, i) => {
+                                  const Icon = stat.icon;
+                                  return (
+                                    <div key={i} className="flex flex-col gap-1">
+                                      <div className="flex items-center gap-1.5 text-base font-semibold text-white">
+                                        <Icon className="h-3.5 w-3.5 text-violet-300" />
+                                        {t(stat.value)}
+                                      </div>
+                                      <span className="text-[11px] text-zinc-400 leading-tight">
+                                        {t(stat.label)}
+                                      </span>
                                     </div>
                                   );
                                 })}
