@@ -11,6 +11,7 @@ import {
   Palette,
   Server,
 } from "lucide-react";
+import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
 
 /* ── animation variants ── */
 const fadeUp = {
@@ -61,28 +62,28 @@ function TechGlyph({ tag }: { tag: string }) {
 /* ── sub‑components ── */
 
 interface SummaryItem {
-  label: string;
-  value: string;
+  label: Bilingual;
+  value: Bilingual;
 }
 
 interface SectionProps {
-  title: string;
+  title: Bilingual;
   children: ReactNode;
 }
 
 interface BulletSectionProps {
-  title: string;
-  intro?: string;
-  items: string[];
+  title: Bilingual;
+  intro?: Bilingual;
+  items: Bilingual[];
 }
 
 interface KpiCard {
-  text: string;
+  text: Bilingual;
 }
 
 interface CaseContentProps {
   summary: SummaryItem[];
-  intro: string;
+  intro: Bilingual;
   sections: SectionProps[];
   challenges: BulletSectionProps;
   kpis: KpiCard[];
@@ -92,6 +93,7 @@ interface CaseContentProps {
 
 /* ── section wrapper ── */
 function Section({ title, children }: SectionProps) {
+  const { lang } = useLanguage();
   return (
     <motion.section
       variants={fadeUp}
@@ -100,7 +102,7 @@ function Section({ title, children }: SectionProps) {
       viewport={{ once: true, amount: 0.2 }}
       className="mb-16"
     >
-      <h3 className="text-xl sm:text-2xl font-bold text-white mb-1">{title}</h3>
+      <h3 className="text-xl sm:text-2xl font-bold text-white mb-1">{tr(lang, title)}</h3>
       <div className="w-12 h-[2px] rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500 mb-6" />
       <div className="text-[15px] sm:text-base text-zinc-400 leading-[1.85] space-y-4">
         {children}
@@ -118,6 +120,8 @@ export default function CaseContent({
   kpisVariant = "bullets",
   stack,
 }: CaseContentProps) {
+  const { lang } = useLanguage();
+
   return (
     <div className="mx-auto max-w-4xl px-6 sm:px-8 py-12 md:py-16">
       {/* ── Resumo Executivo ── */}
@@ -130,14 +134,14 @@ export default function CaseContent({
       >
         {summary.map((item) => (
           <div
-            key={item.label}
+            key={item.label.pt}
             className="rounded-2xl bg-white/[0.03] border border-white/[0.06] px-5 py-4"
           >
             <span className="block text-[10px] uppercase tracking-[0.18em] text-zinc-400 mb-1">
-              {item.label}
+              {tr(lang, item.label)}
             </span>
             <span className="text-sm font-semibold text-zinc-200">
-              {item.value}
+              {tr(lang, item.value)}
             </span>
           </div>
         ))}
@@ -151,12 +155,12 @@ export default function CaseContent({
         viewport={{ once: true, amount: 0.3 }}
         className="mb-14 text-base sm:text-lg text-zinc-400 leading-relaxed border-l-2 border-violet-500/40 pl-5 italic"
       >
-        {intro}
+        {tr(lang, intro)}
       </motion.p>
 
       {/* ── Seções narrativas ── */}
       {sections.map((sec) => (
-        <Section key={sec.title} title={sec.title}>
+        <Section key={sec.title.pt} title={sec.title}>
           {sec.children}
         </Section>
       ))}
@@ -170,18 +174,18 @@ export default function CaseContent({
         className="mb-16"
       >
         <h3 className="text-xl sm:text-2xl font-bold text-white mb-1">
-          {challenges.title}
+          {tr(lang, challenges.title)}
         </h3>
         <div className="w-12 h-[2px] rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500 mb-6" />
         {challenges.intro && (
           <p className="text-[15px] sm:text-base text-zinc-400 leading-[1.85] mb-5">
-            {challenges.intro}
+            {tr(lang, challenges.intro)}
           </p>
         )}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           {challenges.items.map((item, idx) => (
             <div
-              key={item}
+              key={item.pt}
               className="group rounded-2xl bg-white/[0.025] border border-white/[0.06] p-5 hover:border-violet-500/30 hover:bg-violet-500/[0.04] transition-all duration-300"
             >
               <div className="flex items-center gap-3 mb-3">
@@ -189,11 +193,11 @@ export default function CaseContent({
                   {idx + 1}
                 </span>
                 <span className="text-[11px] uppercase tracking-[0.22em] text-zinc-400">
-                  Desafio
+                  {tr(lang, { pt: "Desafio", en: "Challenge" })}
                 </span>
               </div>
               <p className="text-sm text-zinc-300 leading-relaxed group-hover:text-zinc-200 transition-colors">
-                {item}
+                {tr(lang, item)}
               </p>
             </div>
           ))}
@@ -209,18 +213,18 @@ export default function CaseContent({
         className="mb-16"
       >
         <h3 className="text-xl sm:text-2xl font-bold text-white mb-1">
-          Indicadores Técnicos Estruturais
+          {tr(lang, { pt: "Indicadores Técnicos Estruturais", en: "Structural Technical Indicators" })}
         </h3>
         <div className="w-12 h-[2px] rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500 mb-6" />
         {kpisVariant === "grid" ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
             {kpis.map((kpi) => (
               <div
-                key={kpi.text}
+                key={kpi.text.pt}
                 className="group rounded-2xl bg-white/[0.025] border border-white/[0.06] p-5 hover:border-violet-500/30 hover:bg-violet-500/[0.04] transition-all duration-300"
               >
                 <p className="text-sm text-zinc-300 leading-relaxed group-hover:text-zinc-200 transition-colors">
-                  {kpi.text}
+                  {tr(lang, kpi.text)}
                 </p>
               </div>
             ))}
@@ -228,10 +232,10 @@ export default function CaseContent({
         ) : (
           <ul className="space-y-3">
             {kpis.map((kpi) => (
-              <li key={kpi.text} className="flex items-start gap-3">
+              <li key={kpi.text.pt} className="flex items-start gap-3">
                 <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-violet-500" />
                 <span className="text-[15px] sm:text-base text-zinc-300 leading-relaxed">
-                  {kpi.text}
+                  {tr(lang, kpi.text)}
                 </span>
               </li>
             ))}
@@ -248,7 +252,7 @@ export default function CaseContent({
         className="mb-10"
       >
         <h3 className="text-xl sm:text-2xl font-bold text-white mb-1">
-          Stack Utilizada
+          {tr(lang, { pt: "Stack Utilizada", en: "Tech Stack" })}
         </h3>
         <div className="w-12 h-[2px] rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500 mb-6" />
         <div className="flex flex-wrap gap-2">

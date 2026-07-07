@@ -1,9 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
 
 interface CaseLearningsProps {
-  items: string[];
+  items: Bilingual[];
 }
 
 const container = {
@@ -22,6 +23,8 @@ const chip = {
 };
 
 export default function CaseLearnings({ items }: CaseLearningsProps) {
+  const { lang } = useLanguage();
+
   return (
     <motion.section
       initial="hidden"
@@ -30,18 +33,18 @@ export default function CaseLearnings({ items }: CaseLearningsProps) {
       className="mx-auto max-w-3xl px-6 pb-16"
     >
       <h3 className="text-xl sm:text-2xl font-bold text-white mb-1">
-        O que este projeto me ensinou
+        {tr(lang, { pt: "O que este projeto me ensinou", en: "What this project taught me" })}
       </h3>
       <div className="w-12 h-[2px] rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500 mb-8" />
 
       <motion.div variants={container} className="flex flex-wrap gap-2.5">
         {items.map((item) => (
           <motion.span
-            key={item}
+            key={item.pt}
             variants={chip}
             className="text-[13px] px-4 py-2 rounded-xl bg-violet-500/[0.08] text-violet-200 border border-violet-500/20 font-medium hover:bg-violet-500/[0.15] hover:scale-[1.04] hover:border-violet-400/40 transition-all duration-200 cursor-default"
           >
-            {item}
+            {tr(lang, item)}
           </motion.span>
         ))}
       </motion.div>
