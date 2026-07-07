@@ -1836,7 +1836,7 @@ export default function Page() {
                       className="text-2xl font-bold text-white"
                       style={{ fontFamily: "var(--font-space-grotesk)" }}
                     >
-                      {t({ pt: "Oi, vamos conversar?", en: "Get in touch" })}
+                      {t({ pt: "Ei, esse formulário funciona. Me manda mensagem!", en: "Hey, this form actually works. Send me a message!" })}
                     </motion.h2>
                     <motion.p
                       initial={{ opacity: 0 }}

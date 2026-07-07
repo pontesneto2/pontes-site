@@ -1,90 +1,82 @@
-# Pontes — Portfolio
+# fcopts.com.br
 
-Site/portfólio pessoal do Francisco Pontes, construído com Next.js (App Router) e foco em performance, layout responsivo e animações suaves. Reúne seções de serviços, portfólio (sistemas e websites), stack, sobre e contato.
+Portfólio construído em Next.js (App Router), sem CMS e sem libs de i18n/UI de terceiros — as decisões de arquitetura abaixo priorizam performance percebida, SEO técnico e um formulário de contato que funciona de verdade (nada de `mailto:`).
+
+🔗 [fcopts.com.br](https://fcopts.com.br)
+
+## Decisões técnicas
+
+**i18n sem biblioteca.** PT/EN implementado com um `LanguageProvider` próprio (`src/lib/language-context.tsx`): detecta o idioma do navegador no primeiro acesso, persiste a escolha em `localStorage` e expõe um helper `tr(lang, { pt, en })` tipado. Evita o overhead de `next-intl`/`i18next` para um caso de uso que não precisa de rotas por idioma nem de arquivos de tradução externos.
+
+**Canonicalização de domínio.** Redirect 308 em `next.config.ts` de `pontes-portfolio.vercel.app` para `fcopts.com.br`, para não competir com o próprio domínio da Vercel por SEO/backlinks.
+
+**SEO técnico completo.** `metadata` tipado no layout raiz (OpenGraph + Twitter cards), `sitemap.ts` e `robots.ts` gerados via Route Handlers do App Router (`MetadataRoute`), com `metadataBase` configurável por env var — sem depender de arquivos estáticos `.xml`/`.txt`.
+
+**Formulário de contato com backend real.** Route Handler em `src/app/api/contact/route.ts` que valida payload, aplica honeypot anti-spam (campo oculto — bots preenchem, humanos não), envia via Resend e dispara um segundo e-mail de auto-resposta pro remetente. Sem `RESEND_API_KEY`/`CONTACT_TO_EMAIL` configuradas, a rota falha com 503 de forma explícita em vez de falhar silenciosamente.
+
+**Estatísticas do GitHub ao vivo.** `GithubStats.tsx` consome a API pública do GitHub no client (conta, estrelas somadas dos repositórios, contribuições do ano) — sem backend próprio nem cache, aceitando o trade-off de depender do rate limit não-autenticado da API.
+
+**Fontes e imagens otimizadas.** `next/font/google` para self-host de fontes (Space Grotesk, JetBrains Mono) sem layout shift; `next/image` com `remotePatterns` restritos a origens específicas (thum.io para screenshots ao vivo de projetos, jsDelivr/devicon para ícones de stack).
+
+**Animações orientadas a viewport.** Framer Motion com `whileInView` em vez de animar tudo no mount — cada seção só anima quando entra na tela, reduzindo trabalho de layout/paint no carregamento inicial.
 
 ## Stack
 
-- **Next.js 15** (App Router)
-- **React 18**
-- **TypeScript**
-- **Tailwind CSS**
-- **Framer Motion** (animações)
-- **Lucide React** (ícones)
+| Camada | Escolha | Por quê |
+|---|---|---|
+| Framework | Next.js 15 (App Router, Turbopack) | SSR/SSG híbrido, Route Handlers para API e metadata, build rápido |
+| Linguagem | TypeScript | tipagem no `Bilingual`, nos payloads da API e nos dados de case study |
+| Estilo | Tailwind CSS | consistência de design tokens sem CSS-in-JS |
+| Animação | Framer Motion | `whileInView`/`viewport` para animações performáticas |
+| E-mail | Resend | API simples, sem SMTP próprio |
+| Deploy/Analytics | Vercel + `@vercel/analytics` | integração nativa com Next.js |
 
-## O que tem aqui
+## Estrutura
 
-- **Landing page completa** (hero, navegação, seções e CTAs)
-- **Portfólio** com abas (ex.: “sistemas” e “websites”) e lista de projetos
-- **Animações e micro-interações** com Framer Motion
-- **Background decorativo** com ícones flutuantes (componente 3D/float)
-- **SEO básico** via `metadata` do Next (title/description)
-
-## Pré-requisitos
-
-- **Node.js**: 20.x
-- **npm**: 10.x
-
-(Conforme `engines` do `package.json`.)
+```
+src/
+├── app/
+│   ├── layout.tsx        # metadata, fontes, LanguageProvider
+│   ├── page.tsx          # hero, seções, carrossel de projetos
+│   ├── case/<slug>/      # case studies (imidooh, erp-estrela)
+│   ├── privacidade/      # política de privacidade (LGPD)
+│   ├── api/contact/      # Route Handler: validação + Resend
+│   ├── sitemap.ts        # MetadataRoute.Sitemap
+│   └── robots.ts         # MetadataRoute.Robots
+├── components/
+│   ├── ContactForm.tsx
+│   ├── FloatingIcons3D.tsx
+│   ├── GithubStats.tsx   # fetch client-side na API pública do GitHub
+│   ├── SkillsTools.tsx
+│   ├── Testimonials.tsx
+│   └── case/             # blocos reutilizados nas páginas de case study
+├── data/testimonials.json
+└── lib/
+    ├── language-context.tsx  # provider de i18n + helper tr()
+    ├── constants.ts
+    └── fonts.ts
+```
 
 ## Rodando localmente
 
-Instalar dependências:
-
 ```bash
 npm install
+npm run dev        # http://localhost:3000
 ```
 
-Ambiente de desenvolvimento:
+Variáveis de ambiente (`.env.local`):
 
 ```bash
-npm run dev
+RESEND_API_KEY=         # sem isso, a rota /api/contact responde 503
+CONTACT_TO_EMAIL=
+NEXT_PUBLIC_SITE_URL=   # opcional, default https://fcopts.com.br
 ```
 
-Acesse: http://localhost:3000
-
-Build e produção:
-
 ```bash
-npm run build
-npm run start
-```
-
-Lint:
-
-```bash
+npm run build && npm run start   # produção
 npm run lint
 ```
 
-## Estrutura (resumo)
-
-- `src/app/layout.tsx` — layout raiz e `metadata`
-- `src/app/page.tsx` — página principal (conteúdo do portfólio, listas, seções)
-- `src/components/FloatingIcons3D.tsx` — ícones flutuantes/animações de fundo
-- `src/app/globals.css` — estilos globais + Tailwind
-- `public/` — imagens e assets (thumbs/logos usados nos cards)
-
-## Personalização rápida
-
-- **Textos, listas e links do portfólio**: edite os arrays e seções em `src/app/page.tsx`
-- **Título/descrição do site (SEO)**: ajuste o `metadata` em `src/app/layout.tsx`
-- **Efeito de fundo (ícones flutuantes)**: ajuste em `src/components/FloatingIcons3D.tsx`
-- **Imagens**: adicione/atualize em `public/` e referencie na página
-
-## Imagens remotas
-
-O Next está configurado para permitir imagens remotas de `image.thum.io` (ver `next.config.ts`).
-Se você usar outra origem externa, adicione um novo `remotePatterns`.
-
 ## Deploy
 
-Funciona bem na **Vercel** (Next.js).
-
-Passos comuns:
-
-- Conectar o repositório na Vercel
-- Build command: `npm run build`
-- Runtime: Node 20
-
-## Contato
-
-- Atualize os links de contato (GitHub/LinkedIn/e-mail) diretamente na página principal em `src/app/page.tsx`.
+Vercel, preset Next.js (`vercel.json`), runtime Node 20. Variáveis de ambiente configuradas no painel do projeto.

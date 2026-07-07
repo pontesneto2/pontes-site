@@ -59,6 +59,7 @@ export default function ContactForm() {
           message: data.get("message"),
           phone: rawPhone ? `${countryCode} ${rawPhone}` : "",
           company: data.get("company"),
+          lang,
         }),
       });
 

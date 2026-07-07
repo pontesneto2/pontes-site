@@ -10,13 +10,15 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
   }
 
-  const { name, email, message, phone, company } = body as {
+  const { name, email, message, phone, company, lang } = body as {
     name?: string;
     email?: string;
     message?: string;
     phone?: string;
     company?: string;
+    lang?: string;
   };
+  const isEnglish = lang === "en";
 
   // Honeypot field: bots fill hidden fields, humans never see them.
   if (company) {
@@ -61,7 +63,7 @@ export async function POST(request: NextRequest) {
 
   try {
     const { error } = await resend.emails.send({
-      from: "Portfólio Francisco Pontes <onboarding@resend.dev>",
+      from: "Portfólio Francisco Pontes <contato@fcopts.com.br>",
       to: toEmail,
       replyTo: email.trim(),
       subject: `Novo contato pelo site: ${name.trim()}`,
@@ -77,6 +79,39 @@ export async function POST(request: NextRequest) {
     if (error) {
       console.error("Resend error:", error);
       return NextResponse.json({ error: "Failed to send email" }, { status: 502 });
+    }
+
+    try {
+      await resend.emails.send({
+        from: "Francisco Pontes <contato@fcopts.com.br>",
+        to: email.trim(),
+        subject: isEnglish
+          ? "I received your message — Francisco Pontes"
+          : "Recebi sua mensagem — Francisco Pontes",
+        html: isEnglish
+          ? `
+            <p>Hi ${escapeHtml(name.trim())},</p>
+            <p>I received your message through the contact form on my portfolio. Thanks for reaching out!</p>
+            <p><strong>This is an automated email and isn't monitored — please don't reply to it.</strong></p>
+            <p>I'll review your message and get back to you as soon as possible, directly at the email you provided or by phone/WhatsApp if you prefer:</p>
+            <p>Email: pontesneto2@gmail.com<br />WhatsApp: +55 85 98188-8896</p>
+            <p>Your message:</p>
+            <p><em>${escapeHtml(message.trim()).replace(/\n/g, "<br />")}</em></p>
+            <p>Thanks again,<br />Francisco Pontes</p>
+          `
+          : `
+            <p>Olá ${escapeHtml(name.trim())},</p>
+            <p>Recebi sua mensagem através do formulário de contato no meu portfólio. Obrigado por entrar em contato!</p>
+            <p><strong>Este é um e-mail automático e não é monitorado — por favor, não responda a ele.</strong></p>
+            <p>Vou analisar sua mensagem e retornar o contato o quanto antes, diretamente pelo e-mail que você informou ou por telefone/WhatsApp, se preferir:</p>
+            <p>E-mail: pontesneto2@gmail.com<br />WhatsApp: +55 85 98188-8896</p>
+            <p>Sua mensagem:</p>
+            <p><em>${escapeHtml(message.trim()).replace(/\n/g, "<br />")}</em></p>
+            <p>Obrigado novamente,<br />Francisco Pontes</p>
+          `,
+      });
+    } catch (autoReplyError) {
+      console.error("Resend auto-reply error:", autoReplyError);
     }
 
     return NextResponse.json({ ok: true });
