@@ -3,13 +3,14 @@
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import Testimonials from "@/components/Testimonials";
 import ContactForm from "@/components/ContactForm";
 import SkillsTools, { SKILL_NAMES } from "@/components/SkillsTools";
 import GithubStats from "@/components/GithubStats";
 import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
+import { CV_URL } from "@/lib/constants";
 import {
   Code,
   Mail,
@@ -26,6 +27,10 @@ import {
   FileDown,
   Search,
   ChevronLeft,
+  Clock,
+  Smartphone,
+  Users,
+  type LucideIcon,
 } from "lucide-react";
 import {
   SiTypescript,
@@ -49,8 +54,13 @@ import {
   SiAngular,
   SiGit,
   SiJira,
+  SiGithub,
   SiTailwindcss,
   SiBootstrap,
+  SiPrometheus,
+  SiSymfony,
+  SiFigma,
+  SiVercel,
 } from "react-icons/si";
 import { FaWhatsapp } from "react-icons/fa6";
 import type { IconType } from "react-icons";
@@ -187,6 +197,7 @@ const projectTagIconMap: Record<string, IconType> = {
   Angular: SiAngular,
   Git: SiGit,
   Jira: SiJira,
+  GitHub: SiGithub,
   Grafana: SiGrafana,
   TailwindCSS: SiTailwindcss,
   MongoDB: SiMongodb,
@@ -194,6 +205,9 @@ const projectTagIconMap: Record<string, IconType> = {
   "Java Spring Boot": SiSpringboot,
   WordPress: SiWordpress,
   Bootstrap: SiBootstrap,
+  Prometheus: SiPrometheus,
+  Symfony: SiSymfony,
+  Figma: SiFigma,
 };
 
 function ProjectTagIcon({
@@ -224,6 +238,50 @@ export default function Page() {
   const [isMobile, setIsMobile] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [headerBlurred, setHeaderBlurred] = useState(false);
+  const moreProjectsScrollRef = useRef<HTMLDivElement>(null);
+  const [moreProjectsScrollProgress, setMoreProjectsScrollProgress] = useState(0);
+  const [moreProjectsThumbWidth, setMoreProjectsThumbWidth] = useState(33);
+  const [moreProjectsCurrentIndex, setMoreProjectsCurrentIndex] = useState(0);
+
+  const updateMoreProjectsScrollProgress = () => {
+    const el = moreProjectsScrollRef.current;
+    if (!el) return;
+    const maxScroll = el.scrollWidth - el.clientWidth;
+    setMoreProjectsScrollProgress(maxScroll > 0 ? el.scrollLeft / maxScroll : 0);
+    setMoreProjectsThumbWidth(Math.min(100, (el.clientWidth / el.scrollWidth) * 100));
+
+    const firstCard = el.children[0] as HTMLElement | undefined;
+    if (firstCard) {
+      const gap = 16;
+      const cardStep = firstCard.offsetWidth + gap;
+      const index = Math.round(el.scrollLeft / cardStep);
+      setMoreProjectsCurrentIndex(Math.max(0, Math.min(moreProjectsSlotCount - 1, index)));
+    }
+  };
+
+  useEffect(() => {
+    updateMoreProjectsScrollProgress();
+    window.addEventListener("resize", updateMoreProjectsScrollProgress);
+    return () => window.removeEventListener("resize", updateMoreProjectsScrollProgress);
+  }, []);
+
+  useEffect(() => {
+    let lastY = window.scrollY;
+    const handleScroll = () => {
+      const currentY = window.scrollY;
+      if (currentY <= 10) {
+        setHeaderBlurred(false);
+      } else if (currentY > lastY) {
+        setHeaderBlurred(true);
+      } else if (currentY < lastY) {
+        setHeaderBlurred(false);
+      }
+      lastY = currentY;
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   useEffect(() => {
     if (!searchOpen) return;
@@ -264,16 +322,6 @@ export default function Page() {
     },
   };
 
-  const staggerTight = {
-    hidden: {},
-    show: {
-      transition: {
-        staggerChildren: isMobile ? 0.07 : 0.06,
-        delayChildren: isMobile ? 0.06 : 0.05,
-      },
-    },
-  };
-
   const fadeUpItem = {
     hidden: { opacity: 0, y: 18 },
     show: (i: number = 0) => ({
@@ -285,15 +333,6 @@ export default function Page() {
         delay: i * (isMobile ? 0.08 : 0.06),
       },
     }),
-  };
-
-  const tagItem = {
-    hidden: { opacity: 0, y: 10 },
-    show: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.45, ease: easeOut },
-    },
   };
 
   const staggerSequential = {
@@ -334,6 +373,9 @@ export default function Page() {
     blurb: Bilingual;
     category: Bilingual;
     thumb: string;
+    highlights?: Array<{ icon: LucideIcon; value: Bilingual }>;
+    bgClass: string;
+    scrimClass?: string;
   }> = [
     {
       title: "Ucopiloto - App",
@@ -352,11 +394,18 @@ export default function Page() {
       link: "https://www.ucopiloto.com.br/",
       ctaLabel: { pt: "Visite o website comercial", en: "Visit commercial website" },
       blurb: {
-        pt: "Aplicativo para conectar motoristas e oficinas de maneira inteligente, simplificando agendamentos, orçamentos e o acompanhamento de serviços automotivos.",
-        en: "App that connects drivers and repair shops intelligently, simplifying bookings, quotes and tracking of automotive services.",
+        pt: "Aplicativo para conectar motoristas e oficinas de maneira inteligente, simplificando agendamentos, orçamentos e o acompanhamento de serviços automotivos. Idealizadora: Click Software House.",
+        en: "App that connects drivers and repair shops intelligently, simplifying bookings, quotes and tracking of automotive services. Idealized by: Click Software House.",
       },
       category: { pt: "Aplicativo Mobile + Sistemas Web", en: "Mobile App + Web Systems" },
       thumb: "/img-card-meoocarro.png",
+      bgClass: "bg-gradient-to-br from-[#241f06] via-[#54480e] to-[#171402]",
+      highlights: [
+        { icon: Clock, value: { pt: "5 meses de produção", en: "5 months in production" } },
+        { icon: Briefcase, value: { pt: "DevOps solo", en: "Solo DevOps" } },
+        { icon: Smartphone, value: { pt: "iOS + Android + Web + Admin", en: "iOS + Android + Web + Admin" } },
+        { icon: Building2, value: { pt: "Idealizadora: Click SF", en: "Idealized by: Click SF" } },
+      ],
     },
     {
       title: "iMidooh - App",
@@ -381,6 +430,13 @@ export default function Page() {
       },
       category: { pt: "Aplicativo Mobile + Sistemas Web", en: "Mobile App + Web Systems" },
       thumb: "/logo-dooh.png",
+      bgClass: "bg-gradient-to-br from-[#5c2e11] via-[#8a4a1c] to-[#1c0e05]",
+      scrimClass: "bg-black/55",
+      highlights: [
+        { icon: Clock, value: { pt: "6 meses", en: "6 months" } },
+        { icon: Smartphone, value: { pt: "iOS + Android + Web + Admin", en: "iOS + Android + Web + Admin" } },
+        { icon: Building2, value: { pt: "Idealizadora: Click SF", en: "Idealized by: Click SF" } },
+      ],
     },
     {
       title: "Sistema Escolar do 2º Colégio da Polícia Militar",
@@ -394,6 +450,12 @@ export default function Page() {
       },
       category: { pt: "Sistema Web", en: "Web System" },
       thumb: "/images/img-sist-pol.jpeg",
+      bgClass: "bg-gradient-to-br from-[#0d3550] via-[#145a7c] to-[#082536]",
+      highlights: [
+        { icon: Clock, value: { pt: "1,2 anos de produção", en: "1.2 years in production" } },
+        { icon: Users, value: { pt: "4 Desenvolvedores", en: "4 Developers" } },
+        { icon: Smartphone, value: { pt: "PWA + Sistemas Web", en: "PWA + Web Systems" } },
+      ],
     },
   ];
 
@@ -405,14 +467,14 @@ export default function Page() {
     cta: { type: "private" } | { type: "link"; url: string } | { type: "soon" };
   }> = [
     {
-      title: "Sistema Diário de Obras",
-      org: "Alfa Construções e Locações",
+      title: "Website Instituto Agropolos",
+      org: "Instituto Agropolos do Ceará",
       description: {
-        pt: "Diário de obras digital para registrar atividades, ocorrências e o avanço físico da construção.",
-        en: "Digital construction logbook to record activities, incidents and physical progress.",
+        pt: "Site institucional do instituto, com apresentação de projetos e informações institucionais.",
+        en: "Institutional website for the institute, presenting projects and institutional information.",
       },
-      tags: ["NodeJS", "ExpressJS", "Prisma", "PostgreSQL", "Docker", "TailwindCSS", "TypeScript"],
-      cta: { type: "private" },
+      tags: ["WordPress", "PHP", "Symfony", "Figma"],
+      cta: { type: "link", url: "https://institutoagropolos.org.br/" },
     },
     {
       title: "Sistema SIGMA",
@@ -421,7 +483,7 @@ export default function Page() {
         pt: "Sistema de gestão institucional para controle de processos administrativos e indicadores internos.",
         en: "Institutional management system for administrative processes and internal indicators.",
       },
-      tags: [".NET", "C#", "Angular", "MongoDB", "Docker", "TypeScript"],
+      tags: [".NET", "C#", "Angular", "MongoDB", "Docker", "Git", "TypeScript"],
       cta: { type: "link", url: "http://sigapp.institutoagropolos.org.br/login" },
     },
     {
@@ -431,7 +493,7 @@ export default function Page() {
         pt: "Sistema de regularização de matrícula de imóveis cedidos para a população do estado do Ceará.",
         en: "System for regularizing land title records granted to the population of Ceará state.",
       },
-      tags: ["Scriptcase", "PHP", "JS", "Java Spring Boot", "PostgreSQL"],
+      tags: ["Scriptcase", "PHP", "JS", "Java Spring Boot", "PostgreSQL", "Docker", "Git"],
       cta: { type: "link", url: "https://www.idace.ce.gov.br/" },
     },
     {
@@ -441,7 +503,7 @@ export default function Page() {
         pt: "Painel de acompanhamento de demandas e ações estratégicas da secretaria, com indicadores em tempo real.",
         en: "Dashboard to track the department's demands and strategic actions, with real-time indicators.",
       },
-      tags: ["PHP", "Laravel", "PostgreSQL", "Docker"],
+      tags: ["PHP", "Laravel", "PostgreSQL", "Docker", "Git"],
       cta: { type: "link", url: "https://www.com3brasil.com.br/v9/app/demanda/login/" },
     },
     {
@@ -451,7 +513,7 @@ export default function Page() {
         pt: "Site institucional para divulgação de projetos sociais e captação de apoiadores.",
         en: "Institutional website to promote social projects and attract supporters.",
       },
-      tags: ["WordPress", "PHP", "JS", "Bootstrap"],
+      tags: ["WordPress", "PHP", "JS", "Bootstrap", "Docker", "Git"],
       cta: { type: "link", url: "https://anjosdigitais.org/" },
     },
     {
@@ -461,10 +523,72 @@ export default function Page() {
         pt: "Site institucional da organização social, com apresentação da entidade e canais de contato.",
         en: "Institutional website for the nonprofit organization, with an overview and contact channels.",
       },
-      tags: ["WordPress", "PHP"],
+      tags: ["WordPress", "PHP", "Docker", "Git"],
       cta: { type: "link", url: "https://ujvp.org.br/" },
     },
+    {
+      title: "Integra - Projeto São José IV",
+      org: "Governo do Estado do Ceará",
+      description: {
+        pt: "Sistema de gestão do Projeto São José IV, com monitoramento de indicadores via Grafana e Prometheus.",
+        en: "Management system for the São José IV Project, with indicator monitoring via Grafana and Prometheus.",
+      },
+      tags: ["Git", "Docker", ".NET", "C#", "Angular", "Prometheus", "Grafana"],
+      cta: { type: "link", url: "https://integrapsj.sda.ce.gov.br/login" },
+    },
+    {
+      title: "FEDAF - Fundo Est. de Desenv. Agric.",
+      org: "Governo do Estado do Ceará",
+      description: {
+        pt: "Sistema de gestão do Fundo Estadual de Desenvolvimento da Agricultura Familiar.",
+        en: "Management system for the State Fund for Family Agriculture Development.",
+      },
+      tags: ["Git", "Docker", "PHP", "Laravel", "Angular", "Scriptcase"],
+      cta: { type: "link", url: "https://sistemas2.sda.ce.gov.br/scriptcase/app/fedaf/login/" },
+    },
+    {
+      title: "SECAF - Sis. Estadual de cad. da Agric. Famil.",
+      org: "Governo do Estado do Ceará",
+      description: {
+        pt: "Sistema estadual de cadastro de produtores da agricultura familiar.",
+        en: "State-level registry system for family farming producers.",
+      },
+      tags: ["Git", "Docker", ".NET", "C#", "PHP"],
+      cta: { type: "link", url: "https://sistemas2.sda.ce.gov.br/scriptcase/app/secaf/login/" },
+    },
+    {
+      title: "Website SDA Ceará",
+      org: "Governo do Estado do Ceará",
+      description: {
+        pt: "Site institucional da Secretaria do Desenvolvimento Agrário do Ceará, no qual atuei apenas com manutenção.",
+        en: "Institutional website for the Ceará State Agrarian Development Department, on which I worked on maintenance only.",
+      },
+      tags: ["WordPress", "PHP"],
+      cta: { type: "link", url: "https://www.sda.ce.gov.br/" },
+    },
+    {
+      title: "Website Silva & Duarte Advogados",
+      org: "Silva & Duarte Advocacia",
+      description: {
+        pt: "Site institucional do escritório de advocacia, com apresentação das áreas de atuação e canais de contato.",
+        en: "Institutional website for the law firm, presenting its practice areas and contact channels.",
+      },
+      tags: ["GitHub", "Git", "TypeScript", "JS", "TailwindCSS"],
+      cta: { type: "link", url: "https://www.silvaeduarteadvogados.com/" },
+    },
+    {
+      title: "Sistema Diário de Obras",
+      org: "Alfa Construções e Locações",
+      description: {
+        pt: "Diário de obras digital para registrar atividades, ocorrências e o avanço físico da construção.",
+        en: "Digital construction logbook to record activities, incidents and physical progress.",
+      },
+      tags: ["NodeJS", "ExpressJS", "Prisma", "PostgreSQL", "Docker", "Git", "TailwindCSS", "TypeScript"],
+      cta: { type: "private" },
+    },
   ];
+
+  const moreProjectsSlotCount = 12;
 
   const experience: Array<{
     company: string;
@@ -475,12 +599,12 @@ export default function Page() {
     languages?: string;
   }> = [
     {
-      company: "Grupo Star Financeira",
+      company: "Star Capital",
       role: {
-        pt: "Engenheiro de Software | Gerenciamento de Projetos",
+        pt: "Engenheiro de Software | Gerenciamento de Projeto",
         en: "Software Engineer | Project Management",
       },
-      period: "05/2025-Atual",
+      period: "06/2025-07/2026",
     },
     {
       company: "FlixBus Tickets 🇮🇪",
@@ -552,6 +676,8 @@ export default function Page() {
   const renderProjectCta = (project: (typeof featuredProjects)[number]) => {
     const ctaClass =
       "inline-flex items-center gap-2 rounded-full px-6 py-2.5 text-sm font-semibold w-fit transition-all duration-200";
+    const solidClass =
+      "bg-white text-violet-700 hover:bg-zinc-100 hover:scale-[1.03] hover:shadow-lg hover:shadow-black/20";
 
     if (project.discontinued) {
       return (
@@ -578,10 +704,7 @@ export default function Page() {
 
     if (project.caseStudy) {
       return (
-        <Link
-          href={project.caseStudy}
-          className={`${ctaClass} bg-white text-violet-700 hover:bg-zinc-100 hover:scale-[1.03] hover:shadow-lg hover:shadow-black/20`}
-        >
+        <Link href={project.caseStudy} className={`${ctaClass} ${solidClass}`}>
           {t({ pt: "Saiba mais", en: "Learn more" })}
         </Link>
       );
@@ -593,7 +716,7 @@ export default function Page() {
           href={project.link}
           target="_blank"
           rel="noopener noreferrer"
-          className={`${ctaClass} bg-white text-violet-700 hover:bg-zinc-100 hover:scale-[1.03] hover:shadow-lg hover:shadow-black/20`}
+          className={`${ctaClass} ${solidClass}`}
         >
           {project.ctaLabel ? t(project.ctaLabel) : t({ pt: "Visite o website", en: "Visit website" })}
         </a>
@@ -603,7 +726,7 @@ export default function Page() {
     return (
       <a
         href="mailto:pontesneto2@gmail.com?subject=Solicita%C3%A7%C3%A3o%20de%20acesso%20ao%20projeto"
-        className={`${ctaClass} bg-white text-violet-700 hover:bg-zinc-100 hover:scale-[1.03] hover:shadow-lg hover:shadow-black/20`}
+        className={`${ctaClass} ${solidClass}`}
       >
         <Lock className="h-3.5 w-3.5" />
         {t({ pt: "Solicitar acesso", en: "Request access" })}
@@ -616,7 +739,7 @@ export default function Page() {
     { href: "#skills-tools", label: { pt: "Skills & Tools", en: "Skills & Tools" } },
     { href: "#projects", label: { pt: "Projetos", en: "Projects" } },
     { href: "#experience", label: { pt: "Trajetória", en: "Journey" } },
-    { href: "#testimonials", label: { pt: "Contato", en: "Contact" } },
+    { href: "#about", label: { pt: "Contato", en: "Contact" } },
   ];
 
   const searchIndex: Array<{ label: string; href: string; group: Bilingual }> = [
@@ -659,11 +782,23 @@ export default function Page() {
 
   return (
     <div className="min-h-screen font-sans relative isolate">
+      <a
+        href="#content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:rounded-lg focus:bg-violet-600 focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white"
+      >
+        {t({ pt: "Pular para o conteúdo", en: "Skip to content" })}
+      </a>
       <FloatingIcons3D />
 
       <div className="relative z-10">
         {/* NAV */}
-        <header className="sticky top-0 z-50 border-b border-white/5 bg-[#141418] md:backdrop-blur md:supports-[backdrop-filter]:bg-black/30">
+        <header
+          className={`sticky top-0 z-50 border-b transition-all duration-300 ${
+            headerBlurred
+              ? "border-white/10 bg-white/10 backdrop-blur-xl shadow-lg shadow-black/30"
+              : "border-white/5 bg-black/80"
+          }`}
+        >
           <div className="mx-auto max-w-7xl px-3 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between py-4 md:py-0 md:h-16">
               <motion.div
@@ -688,32 +823,38 @@ export default function Page() {
                 transition={{ duration: 0.6, ease: easeOut, delay: 0.1 }}
                 className="hidden md:flex items-center gap-8 text-sm"
               >
-                {navLinks.map((link) => (
+                <div className="flex items-center gap-8">
+                  {navLinks.map((link) => (
+                    <a
+                      key={link.href}
+                      href={link.href}
+                      className="hover:text-white/90 text-zinc-300"
+                    >
+                      {t(link.label)}
+                    </a>
+                  ))}
+                </div>
+                <div className="flex items-center gap-3">
+                  <LanguageSwitch lang={lang} setLang={setLang} />
                   <a
-                    key={link.href}
-                    href={link.href}
-                    className="hover:text-white/90 text-zinc-300"
+                    href={CV_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-3 py-1.5 rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-500 text-white shadow-lg shadow-fuchsia-700/20"
                   >
-                    {t(link.label)}
+                    {t({ pt: "Baixar CV", en: "Download CV" })}
                   </a>
-                ))}
-                <LanguageSwitch lang={lang} setLang={setLang} />
-                <a
-                  href="https://drive.google.com/file/d/1NGGBTy9kzAPm5Os6we_jaeevsU-_zavX/view?usp=sharing"
-                  className="px-3 py-1.5 rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-500 text-white shadow-lg shadow-fuchsia-700/20"
-                >
-                  {t({ pt: "Baixar CV", en: "Download CV" })}
-                </a>
-                <SearchBox
-                  searchOpen={searchOpen}
-                  setSearchOpen={setSearchOpen}
-                  searchQuery={searchQuery}
-                  setSearchQuery={setSearchQuery}
-                  searchResults={searchResults}
-                  onSelect={handleSearchSelect}
-                  t={t}
-                  align="right"
-                />
+                  <SearchBox
+                    searchOpen={searchOpen}
+                    setSearchOpen={setSearchOpen}
+                    searchQuery={searchQuery}
+                    setSearchQuery={setSearchQuery}
+                    searchResults={searchResults}
+                    onSelect={handleSearchSelect}
+                    t={t}
+                    align="right"
+                  />
+                </div>
               </motion.nav>
               <motion.div
                 initial={{ opacity: 0 }}
@@ -756,7 +897,9 @@ export default function Page() {
             >
               <div className="mx-auto max-w-7xl px-3 py-4 flex flex-col gap-2">
                 <a
-                  href="https://drive.google.com/file/d/1NGGBTy9kzAPm5Os6we_jaeevsU-_zavX/view?usp=sharing"
+                  href={CV_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="text-center rounded-xl px-3 py-3 bg-gradient-to-r from-violet-600 to-fuchsia-500 text-white font-medium shadow-lg shadow-fuchsia-700/20"
                   onClick={() => setNavOpen(false)}
                 >
@@ -800,7 +943,7 @@ export default function Page() {
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
-                className="mb-6 whitespace-nowrap text-[2.65rem] sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight md:tracking-wide"
+                className="mb-6 whitespace-normal sm:whitespace-nowrap text-[2.1rem] sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight md:tracking-wide"
               >
                 <span className="text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-violet-300">
                   Francisco
@@ -911,7 +1054,7 @@ export default function Page() {
           {/* SOBRE - placeholder provisório */}
           <section
             id="intro"
-            className="relative py-24 border-t border-white/5"
+            className="relative py-14 border-t border-white/5"
           >
             <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center">
               <motion.p
@@ -959,7 +1102,7 @@ export default function Page() {
           {/* SOBRE - Tecnologia, Engenharia & Design */}
           <section
             id="tech-engineering-design"
-            className="relative py-24"
+            className="relative py-14"
           >
             <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
               <div className="relative rounded-3xl border-2 border-white/15 bg-black/70 backdrop-blur-xl overflow-hidden">
@@ -971,7 +1114,7 @@ export default function Page() {
                       initial="hidden"
                       whileInView="show"
                       viewport={viewportSettings}
-                      className="text-[3.30rem] font-black leading-tight text-white"
+                      className="text-[2.1rem] sm:text-[2.6rem] md:text-[3.30rem] font-black leading-tight text-white"
                       style={{ fontFamily: "var(--font-space-grotesk)" }}
                     >
                       <span className="lg:whitespace-nowrap">
@@ -1016,7 +1159,7 @@ export default function Page() {
                       whileInView={{ opacity: 1 }}
                       viewport={viewportSettings}
                       transition={{ duration: 0.7, ease: easeOut, delay: 0.1 }}
-                      href="https://drive.google.com/file/d/1NGGBTy9kzAPm5Os6we_jaeevsU-_zavX/view?usp=sharing"
+                      href={CV_URL}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="group mt-8 self-start w-[40%] min-w-fit flex items-center justify-center gap-2 rounded-full px-6 py-2.5 border border-violet-400/50 text-violet-300 text-sm font-medium hover:bg-violet-500/10 hover:border-violet-400/70 transition-all duration-300"
@@ -1049,7 +1192,7 @@ export default function Page() {
           {/* PROJETOS EM DESTAQUE - REDESENHADO */}
           <section
             id="projects"
-            className="relative py-24 bg-zinc-900/40 overflow-x-hidden"
+            className="relative py-14 bg-zinc-900/40 overflow-x-hidden"
           >
             <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
               <div className="text-center mb-12">
@@ -1058,11 +1201,17 @@ export default function Page() {
                   initial="hidden"
                   whileInView="show"
                   viewport={viewportSettings}
-                  className="text-[3.30rem] font-black text-white"
+                  className="text-[2.1rem] sm:text-[2.6rem] md:text-[3.30rem] font-black text-white"
                   style={{ fontFamily: "var(--font-space-grotesk)" }}
                 >
                   {t({ pt: "Projetos em Destaque", en: "Featured Projects" })}
                 </motion.h2>
+                <p className="mt-2 text-[10px] font-light uppercase tracking-[0.2em] text-zinc-500">
+                  {t({
+                    pt: "Portfolio de Francisco Pontes — Engenheiro de Software Full Stack",
+                    en: "Francisco Pontes' Portfolio — Full Stack Software Engineer",
+                  })}
+                </p>
               </div>
 
               {/* Cards de projetos principais - hero + grid */}
@@ -1096,27 +1245,46 @@ export default function Page() {
                           <div className="h-full min-h-[260px] w-full bg-gradient-to-br from-violet-500/20 via-transparent to-fuchsia-500/20" />
                         )}
                       </div>
-                      <div className="relative flex flex-col justify-center p-8 md:p-10 bg-gradient-to-br from-violet-900/70 via-fuchsia-900/40 to-violet-950/80">
-                        <span className="inline-block w-fit px-2 py-0.5 rounded-md text-[10px] font-medium bg-white/10 text-violet-200 border border-white/20 mb-4">
-                          {t(heroProject.category)}
-                        </span>
-                        <h3 className="text-2xl md:text-3xl font-bold text-white">
-                          {heroProject.title}
-                        </h3>
-                        {t(heroProject.subtitle) && (
-                          <span className="inline-block text-xs text-amber-300 font-medium mt-1">
-                            {t(heroProject.subtitle)}
+                      <div className={`relative flex flex-col justify-center p-8 md:p-10 overflow-hidden ${heroProject.bgClass}`}>
+                        <div className="absolute inset-0 bg-black/35 pointer-events-none" />
+                        <div className="relative">
+                          <span className="inline-block w-fit px-2 py-0.5 rounded-md text-[10px] font-medium bg-white/10 text-violet-200 border border-white/20 mb-4">
+                            {t(heroProject.category)}
                           </span>
-                        )}
-                        <p className="mt-4 text-sm md:text-base text-zinc-200 leading-relaxed">
-                          {t(heroProject.blurb)}
-                        </p>
-                        <div className="mt-5 flex flex-wrap gap-2">
-                          {heroProject.tags.map((tag) => (
-                            <ProjectTagIcon key={tag} tag={tag} />
-                          ))}
+                          <h3 className="text-2xl md:text-3xl font-bold text-white">
+                            {heroProject.title}
+                          </h3>
+                          {t(heroProject.subtitle) && (
+                            <span className="inline-block text-xs text-amber-300 font-medium mt-1">
+                              {t(heroProject.subtitle)}
+                            </span>
+                          )}
+                          <p className="mt-4 text-sm md:text-base text-zinc-200 leading-relaxed">
+                            {t(heroProject.blurb)}
+                          </p>
+                          {heroProject.highlights && (
+                            <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2">
+                              {heroProject.highlights.map((h, i) => {
+                                const Icon = h.icon;
+                                return (
+                                  <div
+                                    key={i}
+                                    className="flex items-center gap-1.5 text-xs text-zinc-200"
+                                  >
+                                    <Icon className="h-3.5 w-3.5 text-violet-300" />
+                                    <span>{t(h.value)}</span>
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          )}
+                          <div className="mt-5 flex flex-wrap gap-2">
+                            {heroProject.tags.map((tag) => (
+                              <ProjectTagIcon key={tag} tag={tag} />
+                            ))}
+                          </div>
+                          <div className="mt-7">{heroCta}</div>
                         </div>
-                        <div className="mt-7">{heroCta}</div>
                       </div>
                     </motion.article>
                   );
@@ -1146,27 +1314,50 @@ export default function Page() {
                             <div className="h-full w-full bg-gradient-to-br from-violet-500/20 via-transparent to-fuchsia-500/20" />
                           )}
                         </div>
-                        <div className="relative flex-1 flex flex-col p-8 bg-[#2B1253]">
-                          <span className="inline-block w-fit px-2 py-0.5 rounded-md text-[10px] font-medium bg-white/10 text-violet-200 border border-white/20 mb-4">
-                            {t(project.category)}
-                          </span>
-                          <h3 className="text-xl font-bold text-white">
-                            {project.title}
-                          </h3>
-                          {t(project.subtitle) && (
-                            <span className="inline-block text-xs text-amber-300 font-medium mt-1">
-                              {t(project.subtitle)}
+                        <div className={`relative flex-1 flex flex-col p-8 overflow-hidden ${project.bgClass}`}>
+                          <div
+                            className={`absolute inset-0 pointer-events-none ${
+                              project.scrimClass ?? "bg-gradient-to-t from-black/20 via-transparent to-white/5"
+                            }`}
+                          />
+                          <div className="relative flex-1 flex flex-col">
+                            <span className="inline-block w-fit px-2 py-0.5 rounded-md text-[10px] font-medium bg-white/10 text-violet-200 border border-white/20 mb-4">
+                              {t(project.category)}
                             </span>
-                          )}
-                          <p className="mt-4 text-sm text-zinc-200 leading-relaxed">
-                            {t(project.blurb)}
-                          </p>
-                          <div className="mt-5 flex flex-wrap gap-2">
-                            {project.tags.map((tag) => (
-                              <ProjectTagIcon key={tag} tag={tag} />
-                            ))}
+                            <h3 className="text-xl font-bold text-white">
+                              {project.title}
+                            </h3>
+                            {t(project.subtitle) && (
+                              <span className="inline-block text-xs text-amber-300 font-medium mt-1">
+                                {t(project.subtitle)}
+                              </span>
+                            )}
+                            <p className="mt-4 text-sm text-zinc-200 leading-relaxed">
+                              {t(project.blurb)}
+                            </p>
+                            {project.highlights && (
+                              <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2">
+                                {project.highlights.map((h, i) => {
+                                  const Icon = h.icon;
+                                  return (
+                                    <div
+                                      key={i}
+                                      className="flex items-center gap-1.5 text-xs text-zinc-200"
+                                    >
+                                      <Icon className="h-3.5 w-3.5 text-violet-300" />
+                                      <span>{t(h.value)}</span>
+                                    </div>
+                                  );
+                                })}
+                              </div>
+                            )}
+                            <div className="mt-5 flex flex-wrap gap-2">
+                              {project.tags.map((tag) => (
+                                <ProjectTagIcon key={tag} tag={tag} />
+                              ))}
+                            </div>
+                            <div className="mt-auto pt-7">{cta}</div>
                           </div>
-                          <div className="mt-auto pt-7">{cta}</div>
                         </div>
                       </motion.article>
                     );
@@ -1174,100 +1365,145 @@ export default function Page() {
                 </div>
               </motion.div>
 
-              {/* Mais projetos - grid compacto de 6 */}
+              {/* Mais projetos - carrossel com scroll nativo */}
               <motion.div
-                variants={staggerTight}
-                initial="hidden"
-                whileInView="show"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={viewportSettings}
-                className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 mb-20"
+                transition={{ duration: 0.7, ease: easeOut }}
+                className="mb-3"
               >
-                {Array.from({ length: 6 }).map((_, index) => {
-                  const project = moreProjectsGrid[index];
+                <h3
+                  className="text-xl font-bold text-white flex items-center gap-2"
+                  style={{ fontFamily: "var(--font-space-grotesk)" }}
+                >
+                  {t({ pt: "Outros projetos", en: "Other projects" })}
+                  <span className="text-xl font-bold bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent tabular-nums">
+                    {moreProjectsCurrentIndex + 1}/{moreProjectsSlotCount}
+                  </span>
+                </h3>
+              </motion.div>
 
-                  if (!project) {
-                    return (
-                      <motion.div
-                        key={index}
-                        variants={tagItem}
-                        className="flex flex-col items-center text-center gap-2 rounded-2xl border border-violet-500/20 bg-[#2B1253] p-3 hover:border-violet-400/40 hover:bg-violet-900/70 transition-all duration-300"
-                      >
-                        <div className="h-10 w-10 rounded-xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center">
-                          <Folder className="h-5 w-5 text-violet-300" />
-                        </div>
-                        <h3 className="text-sm font-semibold text-white">
-                          {t({ pt: `Projeto ${index + 1}`, en: `Project ${index + 1}` })}
-                        </h3>
-                        <span className="mt-auto inline-flex items-center justify-center rounded-full border border-white/15 px-4 py-1.5 text-xs font-medium text-zinc-400 cursor-not-allowed">
-                          {t({ pt: "Em breve", en: "Coming soon" })}
-                        </span>
-                      </motion.div>
-                    );
-                  }
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={viewportSettings}
+                transition={{ duration: 0.7, ease: easeOut }}
+                className="relative mb-20"
+              >
+                <div
+                  ref={moreProjectsScrollRef}
+                  onScroll={updateMoreProjectsScrollProgress}
+                  className="flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth pt-1 pb-4 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+                >
+                  {Array.from({ length: moreProjectsSlotCount }).map((_, index) => {
+                      const project = moreProjectsGrid[index];
 
-                  const CardIcon = project.title.startsWith("Website") ? Globe : Monitor;
-
-                  return (
-                    <motion.div
-                      key={project.title}
-                      variants={tagItem}
-                      className="flex flex-col items-center text-center gap-2 rounded-2xl border border-violet-500/20 bg-[#2B1253] p-3 hover:border-violet-400/40 hover:bg-violet-900/70 transition-all duration-300"
-                    >
-                      <div className="h-10 w-10 rounded-xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center">
-                        <CardIcon className="h-5 w-5 text-violet-300" />
-                      </div>
-                      <h3 className="text-sm font-semibold text-white leading-tight line-clamp-2 w-full">
-                        {project.title}
-                      </h3>
-                      <p className="text-[11px] text-violet-300 font-medium w-full leading-snug">
-                        <Building2 className="inline h-3 w-3 -mt-0.5 mr-1" />
-                        {project.org}
-                      </p>
-                      {project.tags.length > 0 && (
-                        <div className="flex flex-wrap items-center justify-center gap-1">
-                          {project.tags.map((tag) => (
-                            <ProjectTagIcon key={tag} tag={tag} size="sm" />
-                          ))}
-                        </div>
-                      )}
-                      <div className="mt-auto">
-                        {project.cta.type === "private" ? (
-                          <span className="inline-flex items-center gap-1.5 rounded-full border border-white/15 px-4 py-1.5 text-xs font-medium text-zinc-400 cursor-not-allowed">
-                            <Lock className="h-3 w-3" />
-                            {t({ pt: "Privado", en: "Private" })}
-                          </span>
-                        ) : project.cta.type === "link" ? (
-                          <a
-                            href={project.cta.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1.5 rounded-full border border-white/20 px-4 py-1.5 text-xs font-medium text-zinc-200 hover:bg-white/5 hover:border-white/30 transition-all duration-200"
+                      if (!project) {
+                        return (
+                          <div
+                            key={index}
+                            className="snap-start shrink-0 w-full sm:w-[calc(50%-0.5rem)] lg:w-[calc((100%-2rem)/3)]"
                           >
-                            {t({ pt: "Visite", en: "Visit" })}
-                          </a>
-                        ) : (
-                          <span className="inline-flex items-center gap-1.5 rounded-full border border-white/15 px-4 py-1.5 text-xs font-medium text-zinc-400 cursor-not-allowed">
-                            {t({ pt: "Em breve", en: "Coming soon" })}
-                          </span>
-                        )}
-                      </div>
-                    </motion.div>
-                  );
-                })}
+                            <div className="relative flex h-full flex-col items-center text-center gap-3 overflow-hidden rounded-2xl border border-white/30 bg-white/[0.18] backdrop-blur-2xl backdrop-saturate-150 p-5 shadow-lg shadow-black/20">
+                              <div className="absolute inset-0 bg-gradient-to-br from-white/25 via-white/5 to-transparent pointer-events-none" />
+                              <div className="relative h-11 w-11 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center">
+                                <Folder className="h-5 w-5 text-white" />
+                              </div>
+                              <h3 className="relative text-sm font-semibold text-white">
+                                {t({ pt: `Projeto ${index + 1}`, en: `Project ${index + 1}` })}
+                              </h3>
+                              <span className="relative mt-auto inline-flex items-center justify-center rounded-full border border-white/15 px-4 py-1.5 text-xs font-medium text-zinc-300 cursor-not-allowed">
+                                {t({ pt: "Em breve", en: "Coming soon" })}
+                              </span>
+                            </div>
+                          </div>
+                        );
+                      }
+
+                      const CardIcon = project.title.startsWith("Website") ? Globe : Monitor;
+
+                      return (
+                        <div
+                          key={project.title}
+                          className="snap-start shrink-0 w-full sm:w-[calc(50%-0.5rem)] lg:w-[calc((100%-2rem)/3)]"
+                        >
+                          <div className="group relative flex h-full flex-col gap-3 overflow-hidden rounded-2xl border border-white/30 bg-white/[0.18] backdrop-blur-2xl backdrop-saturate-150 p-5 shadow-lg shadow-black/20 hover:border-white/40 hover:bg-white/[0.24] hover:shadow-xl transition-all duration-300">
+                            <div className="absolute inset-0 bg-gradient-to-br from-white/25 via-white/5 to-transparent pointer-events-none" />
+                            <div className="relative flex items-center gap-3">
+                              <div className="h-11 w-11 shrink-0 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center">
+                                <CardIcon className="h-5 w-5 text-white" />
+                              </div>
+                              <div className="min-w-0 text-left">
+                                <h3 className="text-sm font-semibold text-white leading-tight line-clamp-2">
+                                  {project.title}
+                                </h3>
+                                <p className="text-[11px] text-zinc-200 font-medium leading-snug flex items-center gap-1 mt-0.5">
+                                  <Building2 className="h-3 w-3 shrink-0" />
+                                  <span className="truncate">{project.org}</span>
+                                </p>
+                              </div>
+                            </div>
+                            <p className="relative text-xs text-zinc-300 leading-relaxed line-clamp-2 text-left">
+                              {t(project.description)}
+                            </p>
+                            {project.tags.length > 0 && (
+                              <div className="relative flex flex-wrap items-center gap-1 max-h-[52px] overflow-hidden">
+                                {project.tags.map((tag) => (
+                                  <ProjectTagIcon key={tag} tag={tag} size="sm" />
+                                ))}
+                              </div>
+                            )}
+                            <div className="relative mt-auto pt-1">
+                              {project.cta.type === "private" ? (
+                                <span className="inline-flex items-center gap-1.5 rounded-full border border-white/15 px-4 py-1.5 text-xs font-medium text-zinc-400 cursor-not-allowed">
+                                  <Lock className="h-3 w-3" />
+                                  {t({ pt: "Privado", en: "Private" })}
+                                </span>
+                              ) : project.cta.type === "link" ? (
+                                <a
+                                  href={project.cta.url}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="inline-flex items-center gap-1.5 rounded-full bg-white px-4 py-1.5 text-xs font-medium text-violet-700 hover:bg-zinc-100 transition-all duration-200"
+                                >
+                                  {t({ pt: "Visite", en: "Visit" })}
+                                </a>
+                              ) : (
+                                <span className="inline-flex items-center gap-1.5 rounded-full border border-white/15 px-4 py-1.5 text-xs font-medium text-zinc-400 cursor-not-allowed">
+                                  {t({ pt: "Em breve", en: "Coming soon" })}
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                </div>
+
+                <div className="mt-4 mx-auto h-1.5 w-full max-w-xs rounded-full bg-white/10 overflow-hidden">
+                  <div
+                    className="h-full rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500 transition-[margin-left] duration-150"
+                    style={{
+                      width: `${moreProjectsThumbWidth}%`,
+                      marginLeft: `${moreProjectsScrollProgress * (100 - moreProjectsThumbWidth)}%`,
+                    }}
+                  />
+                </div>
               </motion.div>
 
             </div>
           </section>
 
           {/* TRAJETÓRIA PROFISSIONAL - Discreto e Elegante */}
-          <section id="experience" className="relative py-24">
+          <section id="experience" className="relative py-14">
             <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
               <motion.h2
                 variants={fadeInHeading}
                 initial="hidden"
                 whileInView="show"
                 viewport={viewportSettings}
-                className="text-[3.30rem] font-black text-white mb-12 text-center"
+                className="text-[2.1rem] sm:text-[2.6rem] md:text-[3.30rem] font-black text-white mb-12 text-center"
                 style={{ fontFamily: "var(--font-space-grotesk)" }}
               >
                 {t({ pt: "Trajetória Profissional", en: "Professional Journey" })}
@@ -1342,16 +1578,93 @@ export default function Page() {
 
           <Testimonials />
 
+          {/* LINKEDIN - Compartilhando o dia a dia */}
+          <section className="relative py-10">
+            <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={viewportSettings}
+                transition={{ duration: 0.7, ease: easeOut }}
+                className="relative rounded-3xl border border-white/10 bg-gradient-to-br from-black/60 via-[#0d1b2a]/70 to-black/60 backdrop-blur-xl shadow-2xl overflow-hidden p-8 md:p-12"
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-[#0A66C2]/5 via-transparent to-violet-500/5 pointer-events-none" />
+
+                <div className="relative grid md:grid-cols-[1.05fr_1.35fr] gap-10 items-center">
+                  <div>
+                    <span className="inline-flex items-center justify-center h-9 w-9 rounded-lg bg-[#0A66C2]">
+                      <Linkedin className="h-5 w-5 text-white" />
+                    </span>
+                    <h3
+                      className="mt-3 text-2xl md:text-3xl font-bold text-white"
+                      style={{ fontFamily: "var(--font-space-grotesk)" }}
+                    >
+                      {t({ pt: "Meu dia a dia no LinkedIn", en: "My day-to-day on LinkedIn" })}
+                    </h3>
+                    <p className="mt-3 text-sm text-zinc-400 leading-relaxed">
+                      {t({
+                        pt: "Compartilho bastidores, aprendizados e bastante conteúdo sobre Engenharia de Software, Desenvolvimento, Arquitetura e muito mais... Vamos nos conectar!",
+                        en: "I share behind-the-scenes moments, learnings and lots of content about Software Engineering, Development, Architecture and much more... Let's connect!",
+                      })}
+                    </p>
+                    <a
+                      href="https://www.linkedin.com/in/fcopts"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-5 inline-flex items-center gap-2 rounded-full px-6 py-2.5 text-sm font-semibold w-fit bg-white text-[#0A66C2] hover:bg-zinc-100 hover:scale-[1.03] transition-all duration-200"
+                    >
+                      <Linkedin className="h-4 w-4" />
+                      {t({ pt: "Me siga no LinkedIn", en: "Follow me on LinkedIn" })}
+                    </a>
+                  </div>
+
+                  <a
+                    href="https://www.linkedin.com/posts/fcopts_softwareengineering-devops-mobiledevelopment-activity-7465484728440078336-7OyY"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group relative rounded-2xl border border-white/10 bg-white/[0.04] hover:bg-white/[0.07] hover:border-white/20 p-5 transition-all duration-300"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="relative h-11 w-11 rounded-full overflow-hidden border border-white/10 shrink-0">
+                        <Image
+                          src="/pontes-institucional.png"
+                          alt="Francisco Pontes"
+                          fill
+                          sizes="44px"
+                          className="object-cover"
+                        />
+                      </div>
+                      <div className="min-w-0">
+                        <p className="text-sm font-semibold text-white truncate">Francisco Pontes</p>
+                        <p className="text-[11px] text-zinc-400 truncate">
+                          {t({ pt: "Sr Software Engineer | Mobile Dev · 1 m", en: "Sr Software Engineer | Mobile Dev · 1 mo" })}
+                        </p>
+                      </div>
+                      <Linkedin className="h-5 w-5 text-[#4a9eea] ml-auto shrink-0" />
+                    </div>
+                    <p className="mt-4 text-sm text-zinc-300 leading-relaxed line-clamp-3">
+                      {t({
+                        pt: "Tem uma parte da engenharia de software que quase nunca aparece no print final: os testes que falharam, os debugs de madrugada, as decisões de arquitetura discutidas e refeitas várias vezes antes de chegar no resultado que todo mundo vê pronto...",
+                        en: "There's a part of software engineering that almost never shows up in the final screenshot: the failed tests, the late-night debugging, the architecture decisions discussed and reworked many times before reaching the result everyone sees finished...",
+                      })}
+                    </p>
+                    <span className="mt-4 inline-flex items-center gap-1 text-xs font-semibold text-[#4a9eea] group-hover:text-[#6bb3f0] transition-colors">
+                      {t({ pt: "Ver publicação completa", en: "View full post" })}
+                      <span className="transition-transform duration-200 group-hover:translate-x-0.5">→</span>
+                    </span>
+                  </a>
+                </div>
+              </motion.div>
+            </div>
+          </section>
+
           {/* SOBRE MIM - Card Unificado Criativo */}
           <section
             id="about"
-            className="relative py-24"
+            className="relative py-14"
           >
             <div className="mx-auto max-w-6xl px-6 sm:px-8 lg:px-12">
-              <div className="relative rounded-3xl border border-white/10 bg-black/70 backdrop-blur-xl shadow-2xl overflow-hidden">
-                {/* Gradiente de fundo */}
-                <div className="absolute inset-0 bg-gradient-to-br from-violet-500/5 via-transparent to-fuchsia-500/5" />
-
+              <div className="relative">
                 <div className="relative z-10 grid md:grid-cols-2 gap-10 p-8 md:p-12 items-center">
                   {/* Coluna da imagem */}
                   <div className="flex items-center justify-center">
@@ -1381,14 +1694,25 @@ export default function Page() {
                       >
                         {[
                           { emoji: "🦍", angle: 0 },
-                          { emoji: "🏋️", angle: 17 },
-                          { emoji: "🏃", angle: 34 },
-                          { emoji: "⚽", angle: 51 },
-                          { emoji: "🏁", angle: 68 },
-                          { emoji: "🚗", angle: 85 },
-                          { emoji: "📱", angle: 102 },
-                          { emoji: "📚", angle: 119 },
-                          { emoji: "🧠", angle: 136 },
+                          { emoji: "🏋️", angle: 18 },
+                          { emoji: "🏃", angle: 36 },
+                          { emoji: "⚽", angle: 54 },
+                          { emoji: "🏁", angle: 72 },
+                          { emoji: "🚗", angle: 90 },
+                          { emoji: "📱", angle: 108 },
+                          { emoji: "📚", angle: 126 },
+                          { emoji: "🧠", angle: 144 },
+                          { emoji: "🚀", angle: 162 },
+                          { emoji: "🤖", angle: 180 },
+                          { emoji: "👾", angle: 198 },
+                          { emoji: "💪🏼", angle: 216 },
+                          { emoji: "👨🏻‍💻", angle: 234 },
+                          { emoji: "🔥", angle: 252 },
+                          { emoji: "🥋", angle: 270 },
+                          { emoji: "🏋🏻", angle: 288 },
+                          { emoji: "📈", angle: 306 },
+                          { emoji: "📸", angle: 324 },
+                          { emoji: "🏇🏻", angle: 342 },
                         ].map(({ emoji, angle }, index) => {
                           const rad = (angle * Math.PI) / 180;
                           const x = (50 + 52 * Math.cos(rad)).toFixed(4);
@@ -1437,6 +1761,7 @@ export default function Page() {
                       whileInView="show"
                       viewport={viewportSettings}
                       className="text-2xl font-bold text-white"
+                      style={{ fontFamily: "var(--font-space-grotesk)" }}
                     >
                       {t({ pt: "Oi, vamos conversar?", en: "Get in touch" })}
                     </motion.h2>
@@ -1462,75 +1787,85 @@ export default function Page() {
                   whileInView={{ opacity: 1 }}
                   viewport={viewportSettings}
                   transition={{ duration: 0.7, ease: easeOut }}
-                  className="relative z-10 flex flex-wrap items-start justify-center gap-4 px-8 md:px-12 pb-8 md:pb-12"
+                  className="relative z-10 flex flex-wrap items-center justify-center gap-4 px-8 md:px-12 pb-8 md:pb-12"
                 >
-                  <div className="flex flex-col items-center gap-1">
-                    <a
-                      href="https://github.com/pontesneto2"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label="GitHub"
-                      className="h-11 w-11 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-zinc-300 hover:text-white transition-all"
-                    >
-                      <Github className="h-5 w-5" />
-                    </a>
-                    <span className="text-[10px] font-light text-zinc-400">GitHub</span>
-                  </div>
-                  <div className="flex flex-col items-center gap-1">
-                    <a
-                      href="https://www.linkedin.com/in/fcopts"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label="LinkedIn"
-                      className="h-11 w-11 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-zinc-300 hover:text-white transition-all"
-                    >
-                      <Linkedin className="h-5 w-5" />
-                    </a>
-                    <span className="text-[10px] font-light text-zinc-400">LinkedIn</span>
-                  </div>
-                  <div className="flex flex-col items-center gap-1">
-                    <a
-                      href="mailto:pontesneto2@gmail.com"
-                      aria-label="E-mail"
-                      className="h-11 w-11 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-zinc-300 hover:text-white transition-all"
-                    >
-                      <Mail className="h-5 w-5" />
-                    </a>
-                    <span className="text-[10px] font-light text-zinc-400">Email</span>
-                  </div>
-                  <div className="flex flex-col items-center gap-1">
-                    <a
-                      href="https://wa.me/5585981888896"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label="WhatsApp"
-                      className="h-11 w-11 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-zinc-300 hover:text-white transition-all"
-                    >
-                      <FaWhatsapp className="h-5 w-5" />
-                    </a>
-                    <span className="text-[10px] font-light text-zinc-400">Whatsapp</span>
-                  </div>
-                  <div className="flex flex-col items-center gap-1">
-                    <a
-                      href="https://drive.google.com/file/d/1NGGBTy9kzAPm5Os6we_jaeevsU-_zavX/view?usp=sharing"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={t({ pt: "Baixar currículo", en: "Download résumé" })}
-                      className="h-11 w-11 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-zinc-300 hover:text-white transition-all"
-                    >
-                      <FileDown className="h-5 w-5" />
-                    </a>
-                    <span className="text-[10px] font-light text-zinc-400">Currículo</span>
-                  </div>
+                  <a
+                    href="https://github.com/pontesneto2"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="GitHub"
+                    className="h-11 w-11 rounded-full bg-white/5 hover:bg-fuchsia-500/10 border border-white/5 hover:border-fuchsia-400/40 flex items-center justify-center text-zinc-300 hover:text-fuchsia-300 transition-all"
+                  >
+                    <Github className="h-5 w-5" />
+                  </a>
+                  <a
+                    href="https://www.linkedin.com/in/fcopts"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="LinkedIn"
+                    className="h-11 w-11 rounded-full bg-white/5 hover:bg-fuchsia-500/10 border border-white/5 hover:border-fuchsia-400/40 flex items-center justify-center text-zinc-300 hover:text-fuchsia-300 transition-all"
+                  >
+                    <Linkedin className="h-5 w-5" />
+                  </a>
+                  <a
+                    href="mailto:pontesneto2@gmail.com"
+                    aria-label="E-mail"
+                    className="h-11 w-11 rounded-full bg-white/5 hover:bg-fuchsia-500/10 border border-white/5 hover:border-fuchsia-400/40 flex items-center justify-center text-zinc-300 hover:text-fuchsia-300 transition-all"
+                  >
+                    <Mail className="h-5 w-5" />
+                  </a>
+                  <a
+                    href="https://wa.me/5585981888896"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="WhatsApp"
+                    className="h-11 w-11 rounded-full bg-white/5 hover:bg-fuchsia-500/10 border border-white/5 hover:border-fuchsia-400/40 flex items-center justify-center text-zinc-300 hover:text-fuchsia-300 transition-all"
+                  >
+                    <FaWhatsapp className="h-5 w-5" />
+                  </a>
+                  <a
+                    href={CV_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={t({ pt: "Baixar currículo", en: "Download résumé" })}
+                    className="h-11 w-11 rounded-full bg-white/5 hover:bg-fuchsia-500/10 border border-white/5 hover:border-fuchsia-400/40 flex items-center justify-center text-zinc-300 hover:text-fuchsia-300 transition-all"
+                  >
+                    <FileDown className="h-5 w-5" />
+                  </a>
                 </motion.div>
               </div>
             </div>
           </section>
+
         </main>
 
         <footer className="py-10 border-t border-white/5 text-center text-[11px] text-zinc-400">
           <div>
             {t({ pt: "Feito à mão", en: "Handmade" })} | © 2026 Francisco Pontes
+          </div>
+          <div className="mt-3 flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5">
+            <a
+              href="https://creativecommons.org/licenses/by-nc/4.0/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-zinc-200 transition-colors"
+            >
+              Creative Commons BY-NC 4.0
+            </a>
+            <span className="text-zinc-700">·</span>
+            <Link href="/privacidade" className="hover:text-zinc-200 transition-colors">
+              {t({ pt: "Privacidade", en: "Privacy" })}
+            </Link>
+            <span className="text-zinc-700">·</span>
+            <a
+              href="https://vercel.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 text-zinc-600 hover:text-zinc-300 transition-colors"
+            >
+              <SiVercel className="h-2.5 w-2.5" />
+              {t({ pt: "Hospedado na Vercel", en: "Hosted on Vercel" })}
+            </a>
           </div>
         </footer>
       </div>
