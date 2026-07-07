@@ -1,15 +1,95 @@
 "use client";
 
+import { useRef, useState } from "react";
+import Image from "next/image";
 import { Linkedin, Quote } from "lucide-react";
 import { motion } from "framer-motion";
-import { useLanguage, tr } from "@/lib/language-context";
+import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
 import testimonials from "@/data/testimonials.json";
+
+type Testimonial = {
+  name: string;
+  role: string;
+  photo?: string;
+  text: Bilingual;
+};
+
+function TestimonialCard({ item }: { item: Testimonial }) {
+  const { lang } = useLanguage();
+  const [expanded, setExpanded] = useState(false);
+  const text = tr(lang, item.text);
+  const isLong = text.length > 130;
+
+  return (
+    <div className="relative flex h-full flex-col rounded-3xl border border-white/10 bg-black/55 backdrop-blur-xl p-6 md:p-8 shadow-2xl overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-br from-violet-500/5 via-transparent to-fuchsia-500/5 pointer-events-none" />
+      <Quote className="absolute top-6 right-6 h-8 w-8 text-fuchsia-400" />
+
+      <div className="relative flex flex-1 flex-col">
+        <p
+          className={`text-sm text-zinc-300 leading-relaxed ${
+            expanded ? "" : "line-clamp-3"
+          }`}
+        >
+          &ldquo;{text}&rdquo;
+        </p>
+        <button
+          type="button"
+          onClick={() => setExpanded((v) => !v)}
+          className={`mt-2 w-fit text-xs font-semibold text-violet-300 hover:text-violet-200 transition-colors ${
+            isLong ? "" : "invisible"
+          }`}
+        >
+          {expanded
+            ? tr(lang, { pt: "Mostrar menos", en: "Show less" })
+            : tr(lang, { pt: "Mostrar mais", en: "Show more" })}
+        </button>
+
+        <div className="mt-auto pt-6 flex items-start gap-3">
+          <div className="relative h-10 w-10 rounded-full bg-gradient-to-br from-violet-500/30 to-fuchsia-500/30 border border-white/10 flex items-center justify-center text-sm font-bold text-white shrink-0 overflow-hidden">
+            {item.photo ? (
+              <Image src={item.photo} alt={item.name} fill sizes="40px" className="object-cover" />
+            ) : (
+              item.name
+                .split(" ")
+                .slice(0, 2)
+                .map((n) => n[0])
+                .join("")
+            )}
+          </div>
+          <div className="min-w-0">
+            <div className="flex items-center gap-1.5">
+              <span className="text-sm font-semibold text-zinc-100 truncate">
+                {item.name}
+              </span>
+              <Linkedin className="h-3.5 w-3.5 text-violet-400 shrink-0" />
+            </div>
+            <p className="text-[11px] text-zinc-400 mt-0.5 leading-snug">
+              {item.role}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function Testimonials() {
   const { lang } = useLanguage();
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [thumbWidth, setThumbWidth] = useState(50);
+
+  const updateScrollProgress = () => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const maxScroll = el.scrollWidth - el.clientWidth;
+    setScrollProgress(maxScroll > 0 ? el.scrollLeft / maxScroll : 0);
+    setThumbWidth(Math.min(100, (el.clientWidth / el.scrollWidth) * 100));
+  };
 
   return (
-    <section id="testimonials" className="relative py-24">
+    <section id="testimonials" className="relative py-14">
       <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
         <div className="text-center mb-12">
           <motion.h2
@@ -17,7 +97,7 @@ export default function Testimonials() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.7, ease: "easeOut" }}
-            className="text-[3.30rem] font-black text-white"
+            className="text-[2.1rem] sm:text-[2.6rem] md:text-[3.30rem] font-black text-white"
             style={{ fontFamily: "var(--font-space-grotesk)" }}
           >
             {tr(lang, { pt: "Recomendações", en: "Recommendations" })}
@@ -30,51 +110,49 @@ export default function Testimonials() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6">
-          {testimonials.map((item, index) => (
-            <motion.div
-              key={item.name}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.6, ease: "easeOut", delay: index * 0.08 }}
-              className="relative rounded-3xl border border-white/10 bg-black/55 backdrop-blur-xl p-6 md:p-8 shadow-2xl overflow-hidden"
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-violet-500/5 via-transparent to-fuchsia-500/5" />
-              <Quote className="absolute top-6 right-6 h-8 w-8 text-fuchsia-400" />
-
-              <div className="relative">
-                <p className="text-sm text-zinc-300 leading-relaxed">
-                  &ldquo;{tr(lang, item.text)}&rdquo;
-                </p>
-
-                <div className="mt-6 flex items-start gap-3">
-                  <div className="h-10 w-10 rounded-full bg-gradient-to-br from-violet-500/30 to-fuchsia-500/30 border border-white/10 flex items-center justify-center text-sm font-bold text-white shrink-0">
-                    {item.name
-                      .split(" ")
-                      .slice(0, 2)
-                      .map((n) => n[0])
-                      .join("")}
-                  </div>
-                  <div className="min-w-0">
-                    <div className="flex items-center gap-1.5">
-                      <span className="text-sm font-semibold text-zinc-100 truncate">
-                        {item.name}
-                      </span>
-                      <Linkedin className="h-3.5 w-3.5 text-violet-400 shrink-0" />
-                    </div>
-                    <p className="text-[11px] text-zinc-400 mt-0.5 leading-snug">
-                      {item.role}
-                    </p>
-                    <p className="text-[9px] italic text-zinc-400 mt-0.5">
-                      {tr(lang, item.context)}
-                    </p>
-                  </div>
-                </div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
+        >
+          <div
+            ref={scrollRef}
+            onScroll={updateScrollProgress}
+            className="flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth pt-1 pb-4 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+          >
+            {(testimonials as Testimonial[]).map((item) => (
+              <div
+                key={item.name}
+                className="snap-start shrink-0 w-full sm:w-[calc(50%-0.75rem)]"
+              >
+                <TestimonialCard item={item} />
               </div>
-            </motion.div>
-          ))}
-        </div>
+            ))}
+          </div>
+
+          <div className="mt-4 mx-auto h-1.5 w-full max-w-xs rounded-full bg-white/10 overflow-hidden">
+            <div
+              className="h-full rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500 transition-[margin-left] duration-150"
+              style={{
+                width: `${thumbWidth}%`,
+                marginLeft: `${scrollProgress * (100 - thumbWidth)}%`,
+              }}
+            />
+          </div>
+
+          <div className="mt-4 text-center">
+            <a
+              href="https://www.linkedin.com/in/fcopts/details/recommendations/?detailScreenTabIndex=0"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 text-xs text-zinc-500 hover:text-zinc-300 transition-colors"
+            >
+              <Linkedin className="h-3 w-3" />
+              {tr(lang, { pt: "Veja no LinkedIn", en: "See on LinkedIn" })}
+            </a>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

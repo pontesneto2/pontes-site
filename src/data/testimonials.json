@@ -2,10 +2,7 @@
   {
     "name": "Osiris de Castro",
     "role": "Data Engineer | Modern Data Platforms | ETL, ELT, Python, SQL, Spark, Airflow, AWS, BigQuery, Microsoft Fabric",
-    "context": {
-      "pt": "Osiris e Francisco estudaram juntos",
-      "en": "Osiris and Francisco studied together"
-    },
+    "photo": "/images/osiris-linkedin.png",
     "text": {
       "pt": "Tive a oportunidade de acompanhar de perto o trabalho do Pontes e posso dizer com tranquilidade que ele é um profissional acima da média. Recomendo o Pontes para projetos e times que precisam de alguém técnico, estratégico, comprometido e com visão de ponta a ponta sobre produto e tecnologia.",
       "en": "I had the opportunity to closely follow Pontes's work and I can confidently say he is an above-average professional. I recommend Pontes for projects and teams that need someone technical, strategic, committed, and with an end-to-end vision of product and technology."
@@ -14,13 +11,28 @@
   {
     "name": "Luan Rodrigues",
     "role": "Software Developer | PHP, Node, Angular, ReactJS, SQL, Docker",
-    "context": {
-      "pt": "Luan e Francisco estudaram juntos",
-      "en": "Luan and Francisco studied together"
-    },
+    "photo": "/images/luan-linkedin.jpeg",
     "text": {
       "pt": "O Pontes é um excelente profissional! Extremamente dedicado, atento e resolutivo.",
       "en": "Pontes is an excellent professional! Extremely dedicated, attentive, and resourceful."
+    }
+  },
+  {
+    "name": "Everton Araújo",
+    "role": "Desenvolvedor Full Stack | .NET | React | SQL | C# | ASP.NET | JavaScript | TypeScript | RESTful APIs | Git | Engenharia de Software",
+    "photo": "/images/everton-linkedin.jpeg",
+    "text": {
+      "pt": "É um profissional acima da média, com excelente capacidade técnica, comprometimento e visão de produto.",
+      "en": "He's an above-average professional, with excellent technical skill, commitment and product vision."
+    }
+  },
+  {
+    "name": "Emannuel Morais",
+    "role": "Full Stack Developer | Java & Spring Boot | Node.js & React.js | Angular & TypeScript | SQL & NoSQL (Postgres, MongoDB)",
+    "photo": "/images/emannuel-linkedin.jpeg",
+    "text": {
+      "pt": "Estudei e compartilhei a rotina de projetos com o Pontes na Farias Brito durante o curso de Análise e Desenvolvimento de Sistemas, e posso dizer que ele foi um parceiro incrível. Ele é aquele tipo de profissional completo, que se destaca tanto desenhando uma interface impecável no Figma quanto colocando a mão no código com PHP e React Native. Lembro perfeitamente de como ele me ajudou em vários projetos da faculdade e me deu uma visão de mercado fantástica que eu não tinha na época. O Pontes tem uma capacidade analítica fora de série e sabe conduzir um projeto como ninguém, mas o grande diferencial é que ele é um cara muito gente boa de...",
+      "en": "I studied and shared the project routine with Pontes at Farias Brito during the Systems Analysis and Development course, and I can say he was an incredible partner. He's the kind of complete professional who stands out both designing a flawless interface in Figma and coding hands-on with PHP and React Native. I clearly remember how he helped me in several college projects and gave me a fantastic market perspective I didn't have at the time. Pontes has an outstanding analytical ability and knows how to lead a project like no one else, but the real differential is that he's a really great guy on..."
     }
   }
 ]
