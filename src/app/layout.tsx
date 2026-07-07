@@ -109,14 +109,14 @@ const personJsonLd = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="pt-BR" className="overflow-x-hidden">
+    <html lang="pt-BR" className="overflow-x-clip">
       <head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
         />
       </head>
-      <body suppressHydrationWarning className={`min-h-screen overflow-x-hidden text-zinc-200 bg-[linear-gradient(180deg,#151519,#141418)] ${spaceGrotesk.variable} ${jetbrainsMono.variable}`}>
+      <body suppressHydrationWarning className={`min-h-screen overflow-x-clip text-zinc-200 bg-[linear-gradient(180deg,#151519,#141418)] ${spaceGrotesk.variable} ${jetbrainsMono.variable}`}>
         <LanguageProvider>{children}</LanguageProvider>
         <Analytics />
       </body>
