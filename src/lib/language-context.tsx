@@ -33,6 +33,10 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     if (!browserLang.startsWith("pt")) setLangState("en");
   }, []);
 
+  useEffect(() => {
+    document.documentElement.lang = lang === "pt" ? "pt-BR" : "en";
+  }, [lang]);
+
   const value = useMemo<LanguageContextValue>(
     () => ({
       lang,

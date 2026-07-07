@@ -33,7 +33,7 @@ export default function FloatingIcons3D() {
 
   return (
     <div
-      className="pointer-events-none fixed inset-0 -z-10 overflow-hidden opacity-45 sm:opacity-60 transition-opacity duration-300"
+      className="pointer-events-none fixed inset-0 -z-10 hidden overflow-hidden opacity-60 transition-opacity duration-300 md:block"
       style={{ opacity: fadeOpacity }}
     >
       {/* CPU Icon - Top Left - MENOR */}

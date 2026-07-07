@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { spaceGrotesk, jetbrainsMono } from "@/lib/fonts";
 
 type SkillItem = {
@@ -23,12 +24,12 @@ const CATEGORIES: SkillCategory[] = [
     number: "01",
     name: "Frontend",
     items: [
-      { name: "TypeScript", slug: "typescript/typescript-original", years: 5, principal: true },
+      { name: "TypeScript", slug: "typescript/typescript-original", years: 6, principal: true },
       { name: "JavaScript", slug: "javascript/javascript-original", years: 6 },
-      { name: "React", slug: "react/react-original", years: 5, principal: true },
-      { name: "Next.js", slug: "nextjs/nextjs-original", years: 4, mono: true },
-      { name: "React Native", slug: "react/react-original", years: 3 },
-      { name: "Vue.js", slug: "vuejs/vuejs-original", years: 3 },
+      { name: "React", slug: "react/react-original", years: 6, principal: true },
+      { name: "Next.js", slug: "nextjs/nextjs-original", years: 5, mono: true },
+      { name: "React Native", slug: "react/react-original", years: 5 },
+      { name: "Vue.js", slug: "vuejs/vuejs-original", years: 5 },
     ],
   },
   {
@@ -36,43 +37,43 @@ const CATEGORIES: SkillCategory[] = [
     name: "Backend",
     items: [
       { name: "Node.js", slug: "nodejs/nodejs-original", years: 5, principal: true },
-      { name: "C#", slug: "csharp/csharp-original", years: 5, principal: true },
-      { name: ".NET", slug: "dot-net/dot-net-original", years: 5 },
-      { name: "NestJS", slug: "nestjs/nestjs-original", years: 4 },
-      { name: "Express", slug: "express/express-original", years: 4, mono: true },
-      { name: "PHP", slug: "php/php-original", years: 4 },
-      { name: "Laravel", slug: "laravel/laravel-original", years: 3 },
-      { name: "Python", slug: "python/python-original", years: 4 },
-      { name: "Spring Boot", slug: "spring/spring-original", years: 2 },
-      { name: "GraphQL", slug: "graphql/graphql-plain", years: 3 },
-      { name: "WordPress", slug: "wordpress/wordpress-plain", years: 4, mono: true },
+      { name: "C#", slug: "csharp/csharp-original", years: 1, principal: true },
+      { name: ".NET", slug: "dot-net/dot-net-original", years: 1 },
+      { name: "NestJS", slug: "nestjs/nestjs-original", years: 5 },
+      { name: "Express", slug: "express/express-original", years: 5, mono: true },
+      { name: "PHP", slug: "php/php-original", years: 6 },
+      { name: "Laravel", slug: "laravel/laravel-original", years: 6 },
+      { name: "Python", slug: "python/python-original", years: 2 },
+      { name: "Spring Boot", slug: "spring/spring-original", years: 1 },
+      { name: "GraphQL", slug: "graphql/graphql-plain", years: 5 },
+      { name: "WordPress", slug: "wordpress/wordpress-plain", years: 7, mono: true },
     ],
   },
   {
     number: "03",
     name: "Bancos de Dados",
     items: [
-      { name: "PostgreSQL", slug: "postgresql/postgresql-original", years: 5, principal: true },
-      { name: "MySQL", slug: "mysql/mysql-original", years: 5 },
-      { name: "MongoDB", slug: "mongodb/mongodb-original", years: 4 },
-      { name: "Prisma", slug: "prisma/prisma-original", years: 3, mono: true },
+      { name: "PostgreSQL", slug: "postgresql/postgresql-original", years: 6, principal: true },
+      { name: "MySQL", slug: "mysql/mysql-original", years: 1 },
+      { name: "MongoDB", slug: "mongodb/mongodb-original", years: 1 },
+      { name: "Prisma", slug: "prisma/prisma-original", years: 4, mono: true },
     ],
   },
   {
     number: "04",
     name: "Cloud, DevOps & Observabilidade",
     items: [
-      { name: "Docker", slug: "docker/docker-original", years: 5 },
+      { name: "Docker", slug: "docker/docker-original", years: 3 },
       { name: "Kubernetes", slug: "kubernetes/kubernetes-plain", years: 3 },
-      { name: "AWS", slug: "amazonwebservices/amazonwebservices-original-wordmark", years: 4, mono: true },
-      { name: "Azure", slug: "azure/azure-original", years: 3 },
+      { name: "AWS", slug: "amazonwebservices/amazonwebservices-original-wordmark", years: 1, mono: true },
+      { name: "Azure", slug: "azure/azure-original", years: 1 },
       { name: "GCP", slug: "googlecloud/googlecloud-original", years: 3 },
       { name: "DigitalOcean", slug: "digitalocean/digitalocean-original", years: 3 },
-      { name: "GitHub Actions", slug: "githubactions/githubactions-original", years: 4 },
-      { name: "GitLab CI", slug: "gitlab/gitlab-original", years: 4 },
-      { name: "Nginx", slug: "nginx/nginx-original", years: 4 },
-      { name: "Prometheus", slug: "prometheus/prometheus-original", years: 3 },
-      { name: "Grafana", slug: "grafana/grafana-original", years: 3, principal: true },
+      { name: "GitHub Actions", slug: "githubactions/githubactions-original", years: 5 },
+      { name: "GitLab CI", slug: "gitlab/gitlab-original", years: 5 },
+      { name: "Nginx", slug: "nginx/nginx-original", years: 5 },
+      { name: "Prometheus", slug: "prometheus/prometheus-original", years: 2 },
+      { name: "Grafana", slug: "grafana/grafana-original", years: 2, principal: true },
     ],
   },
 ];
@@ -91,18 +92,20 @@ const PRACTICES = [
   "LGPD",
   "Power BI",
   "Scrum/Kanban Ágil",
+  "Trello",
+  "Jira",
 ];
 
 function SkillIcon({ item }: { item: SkillItem }) {
   return (
     <div className="group relative flex flex-col items-center focus-within:z-20">
       <div className="relative">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
+        <Image
           src={`https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${item.slug}.svg`}
           alt={item.name}
           width={40}
           height={40}
+          unoptimized
           tabIndex={0}
           className={`h-8 w-8 object-contain outline-none transition-transform duration-200 group-hover:-translate-y-[3px] group-hover:scale-[1.22] group-focus-within:-translate-y-[3px] group-focus-within:scale-[1.22] ${
             item.mono ? "invert" : ""
@@ -142,7 +145,7 @@ export default function SkillsTools() {
   return (
     <section
       id="skills-tools"
-      className={`relative py-24 overflow-x-hidden ${spaceGrotesk.variable} ${jetbrainsMono.variable}`}
+      className={`relative py-14 overflow-x-hidden ${spaceGrotesk.variable} ${jetbrainsMono.variable}`}
       style={{ ["--ac" as string]: "#a855f7" } as React.CSSProperties}
     >
       <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
@@ -152,7 +155,7 @@ export default function SkillsTools() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.7, ease: "easeOut" }}
-            className="text-[3.30rem] font-black text-white"
+            className="text-[2.1rem] sm:text-[2.6rem] md:text-[3.30rem] font-black text-white"
             style={{ fontFamily: "var(--font-space-grotesk)" }}
           >
             Skills &amp; Tools

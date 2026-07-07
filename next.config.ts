@@ -12,6 +12,11 @@ const nextConfig: NextConfig = {
         hostname: "image.thum.io",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "cdn.jsdelivr.net",
+        pathname: "/gh/devicons/devicon/**",
+      },
     ],
   },
   async redirects() {

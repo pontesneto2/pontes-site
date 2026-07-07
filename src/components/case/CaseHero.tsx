@@ -10,11 +10,12 @@ import {
   Palette,
   Server,
 } from "lucide-react";
+import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
 
 interface CaseHeroProps {
-  title: string;
-  subtitle: string;
-  description: string;
+  title: Bilingual;
+  subtitle: Bilingual;
+  description: Bilingual;
   tags: string[];
 }
 
@@ -64,6 +65,8 @@ export default function CaseHero({
   description,
   tags,
 }: CaseHeroProps) {
+  const { lang } = useLanguage();
+
   return (
     <section className="relative overflow-hidden pt-28 pb-12 md:pt-32 md:pb-16">
       {/* Gradiente de fundo */}
@@ -77,7 +80,7 @@ export default function CaseHero({
           transition={{ duration: 0.6 }}
           className="inline-block mb-5 text-xs font-semibold uppercase tracking-[0.25em] text-violet-400"
         >
-          Estudo de Caso
+          {tr(lang, { pt: "Estudo de Caso", en: "Case Study" })}
         </motion.span>
 
         <motion.h1
@@ -87,7 +90,7 @@ export default function CaseHero({
           className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight leading-[1.1]"
         >
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-200 via-fuchsia-200 to-violet-200">
-            {title}
+            {tr(lang, title)}
           </span>
         </motion.h1>
 
@@ -97,7 +100,7 @@ export default function CaseHero({
           transition={{ duration: 0.7, delay: 0.2 }}
           className="mt-3 text-lg sm:text-xl text-zinc-200 font-medium"
         >
-          {subtitle}
+          {tr(lang, subtitle)}
         </motion.p>
 
         <motion.p
@@ -106,7 +109,7 @@ export default function CaseHero({
           transition={{ duration: 0.7, delay: 0.35 }}
           className="mt-5 text-sm sm:text-base text-zinc-400 max-w-3xl mx-auto leading-relaxed"
         >
-          {description}
+          {tr(lang, description)}
         </motion.p>
 
         {/* Stack tags */}

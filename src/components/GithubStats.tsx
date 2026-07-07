@@ -8,7 +8,6 @@ import { useLanguage, tr } from "@/lib/language-context";
 const GITHUB_USER = "pontesneto2";
 
 type GithubUser = {
-  public_repos: number;
   created_at: string;
 };
 
@@ -18,10 +17,9 @@ type GithubRepo = {
 };
 
 type Stats = {
-  publicRepos: number;
+  joinYear: number;
   totalStars: number;
-  yearsActive: number;
-  totalContributions: number;
+  contributionsThisYear: number;
 };
 
 async function fetchGithubData(): Promise<Stats | null> {
@@ -43,29 +41,25 @@ async function fetchGithubData(): Promise<Stats | null> {
   const ownRepos = repos.filter((r) => !r.fork);
   const totalStars = ownRepos.reduce((sum, r) => sum + r.stargazers_count, 0);
 
-  const yearsActive =
-    new Date().getFullYear() - new Date(user.created_at).getFullYear();
+  const joinYear = new Date(user.created_at).getFullYear();
+  const currentYear = new Date().getFullYear();
 
-  let totalContributions = 0;
+  let contributionsThisYear = 0;
   if (contribRes.ok) {
     const contribData = (await contribRes.json()) as {
       total?: Record<string, number>;
     };
-    totalContributions = Object.values(contribData.total ?? {}).reduce(
-      (a, b) => a + b,
-      0
-    );
+    contributionsThisYear = contribData.total?.[currentYear] ?? 0;
   }
 
   return {
-    publicRepos: user.public_repos,
+    joinYear,
     totalStars,
-    yearsActive,
-    totalContributions,
+    contributionsThisYear,
   };
 }
 
-function AnimatedNumber({ value }: { value: number }) {
+function AnimatedNumber({ value, plain }: { value: number; plain?: boolean }) {
   const ref = useRef<HTMLSpanElement>(null);
   const isInView = useInView(ref, { once: true, amount: 0.5 });
   const [display, setDisplay] = useState(0);
@@ -80,7 +74,7 @@ function AnimatedNumber({ value }: { value: number }) {
     return () => controls.stop();
   }, [isInView, value]);
 
-  return <span ref={ref}>{display.toLocaleString("pt-BR")}</span>;
+  return <span ref={ref}>{plain ? display : display.toLocaleString("pt-BR")}</span>;
 }
 
 export default function GithubStats() {
@@ -106,14 +100,43 @@ export default function GithubStats() {
     };
   }, []);
 
-  if (error) return null;
+  if (error) {
+    return (
+      <div className="relative rounded-3xl border border-white/10 bg-black/55 backdrop-blur-xl p-6 md:p-8 shadow-2xl overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-violet-500/5 via-transparent to-fuchsia-500/5" />
+        <div className="relative flex items-center justify-between gap-4">
+          <div>
+            <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+              <Github className="h-5 w-5 text-violet-300" />
+              {t("GitHub ao vivo", "GitHub live")}
+            </h3>
+            <p className="text-xs text-zinc-400 mt-1">
+              {t(
+                "Estatísticas indisponíveis no momento — confira o perfil diretamente.",
+                "Stats unavailable right now — check the profile directly."
+              )}
+            </p>
+          </div>
+          <a
+            href={`https://github.com/${GITHUB_USER}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-xs font-medium text-violet-300 hover:text-violet-200 transition-colors whitespace-nowrap"
+          >
+            @{GITHUB_USER}
+          </a>
+        </div>
+      </div>
+    );
+  }
+
+  const currentYear = new Date().getFullYear();
 
   const stats = data
     ? [
-        { icon: Activity, label: t("Contribuições totais", "Total contributions"), value: data.totalContributions },
-        { icon: Calendar, label: t("Anos no GitHub", "Years on GitHub"), value: data.yearsActive },
-        { icon: Github, label: t("Repositórios públicos", "Public repos"), value: data.publicRepos },
-        { icon: Star, label: t("Stars recebidas", "Stars earned"), value: data.totalStars },
+        { icon: Activity, label: t(`Contribuições ${currentYear}`, `Contributions ${currentYear}`), value: data.contributionsThisYear, plain: false },
+        { icon: Star, label: t("Stars recebidas", "Stars earned"), value: data.totalStars, plain: false },
+        { icon: Calendar, label: t("GitHub desde", "GitHub since"), value: data.joinYear, plain: true },
       ]
     : [];
 
@@ -150,11 +173,11 @@ export default function GithubStats() {
           </a>
         </div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-          {(data ? stats : Array.from({ length: 4 })).map((stat, index) => (
+        <div className="grid grid-cols-3 gap-3">
+          {(data ? stats : Array.from({ length: 3 })).map((stat, index) => (
             <div
               key={stat ? (stat as { label: string }).label : index}
-              className="rounded-2xl border border-white/10 bg-gradient-to-br from-white/10 via-white/5 to-transparent p-4 min-h-[92px]"
+              className="p-4 min-h-[92px]"
             >
               {stat ? (
                 <>
@@ -163,7 +186,10 @@ export default function GithubStats() {
                     return <Icon className="h-4 w-4 text-violet-400 mb-2" />;
                   })()}
                   <div className="text-2xl font-semibold text-zinc-100 tabular-nums">
-                    <AnimatedNumber value={(stat as { value: number }).value} />
+                    <AnimatedNumber
+                      value={(stat as { value: number }).value}
+                      plain={(stat as { plain: boolean }).plain}
+                    />
                   </div>
                   <div className="text-[11px] text-zinc-400 mt-0.5">
                     {(stat as { label: string }).label}
