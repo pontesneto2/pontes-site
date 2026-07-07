@@ -94,7 +94,7 @@ const personJsonLd = {
   ],
   worksFor: {
     "@type": "Organization",
-    name: "Grupo Star Financeira",
+    name: "Star Capital",
   },
   knowsAbout: [
     "React",
