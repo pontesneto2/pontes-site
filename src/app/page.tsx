@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
+import Hero from "@/components/Hero";
 import Testimonials from "@/components/Testimonials";
 import ContactForm from "@/components/ContactForm";
 import SkillsTools, { SKILL_NAMES } from "@/components/SkillsTools";
@@ -63,7 +64,6 @@ import {
   SiPrometheus,
   SiSymfony,
   SiFigma,
-  SiVercel,
 } from "react-icons/si";
 import { FaWhatsapp } from "react-icons/fa6";
 import type { IconType } from "react-icons";
@@ -465,6 +465,7 @@ export default function Page() {
         { icon: Clock, value: { pt: "1,2 anos de produção", en: "1.2 years in production" } },
         { icon: Users, value: { pt: "Equipe: 4 → 3 devs", en: "Team: 4 → 3 devs" } },
         { icon: Smartphone, value: { pt: "PWA + Sistemas Web", en: "PWA + Web Systems" } },
+        { icon: Building2, value: { pt: "Idealizadora: Com3 Brasil", en: "Idealized by: Com3 Brasil" } },
       ],
       impact: [
         { icon: Users, value: { pt: "2.350+", en: "2,350+" }, label: { pt: "Usuários ativos", en: "Active users" } },
@@ -937,135 +938,7 @@ export default function Page() {
         </header>
 
         <main id="content">
-          {/* HERO - BANNER TRIUNFAL */}
-          <section className="relative h-[100vh] flex items-center justify-center overflow-hidden">
-            {/* Gradiente de fundo animado */}
-            <div className="absolute inset-0 bg-gradient-to-b from-violet-950/35 via-black/40 to-black/85" />
-            <div className="absolute inset-0 bg-black/25" />
-
-            <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
-              {/* Saudação */}
-              <motion.p
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.9, delay: 0.2, ease: "easeOut" }}
-                className="text-base sm:text-lg md:text-xl font-light text-zinc-300 mb-2"
-              >
-                {t({ pt: "Olá, meu nome é", en: "Hi, my name is" })}
-              </motion.p>
-
-              {/* Nome - DESTAQUE MÁXIMO */}
-              <motion.h1
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
-                className="mb-6 whitespace-normal sm:whitespace-nowrap text-[2.1rem] sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight md:tracking-wide"
-              >
-                <span className="text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-violet-300">
-                  Francisco
-                </span>{" "}
-                <span className="text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-violet-400">
-                  Pontes
-                </span>
-              </motion.h1>
-
-              {/* Tagline */}
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1, delay: 0.6, ease: "easeOut" }}
-                className="text-lg sm:text-xl md:text-2xl font-light text-zinc-300 max-w-4xl mx-auto mb-4"
-              >
-                {lang === "pt" ? (
-                  <>
-                    Sou{" "}
-                    <span className="text-violet-300 font-semibold">
-                      engenheiro de software
-                    </span>{" "}
-                    em Fortaleza, Brasil.
-                    <br />
-                    Uso código e engenharia para dar vida a{" "}
-                    <span className="text-violet-300 font-semibold">
-                      novas ideias.
-                    </span>
-                  </>
-                ) : (
-                  <>
-                    I&apos;m a{" "}
-                    <span className="text-violet-300 font-semibold">
-                      software engineer
-                    </span>{" "}
-                    based in Fortaleza, Brazil.
-                    <br />
-                    I use code and engineering to bring{" "}
-                    <span className="text-violet-300 font-semibold">
-                      new ideas
-                    </span>{" "}
-                    to life.
-                  </>
-                )}
-              </motion.p>
-
-              {/* Social Links */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 1, delay: 0.95 }}
-                className="mt-10 flex items-center justify-center gap-5"
-              >
-                <a
-                  aria-label="GitHub"
-                  href="https://github.com/pontesneto2"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group text-zinc-300 hover:text-violet-300 transition-colors"
-                >
-                  <Github className="h-6 w-6" />
-                </a>
-                <a
-                  aria-label="LinkedIn"
-                  href="https://www.linkedin.com/in/fcopts"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group text-zinc-300 hover:text-fuchsia-300 transition-colors"
-                >
-                  <Linkedin className="h-6 w-6" />
-                </a>
-                <a
-                  aria-label="E-mail"
-                  href="mailto:contato@fcopts.com.br"
-                  className="group text-zinc-300 hover:text-amber-300 transition-colors"
-                >
-                  <Mail className="h-6 w-6" />
-                </a>
-              </motion.div>
-            </div>
-            {/* Scroll Indicator - CENTRALIZADO (relativo à seção inteira) */}
-            <motion.a
-              href="#intro"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1, y: [0, 10, 0] }}
-              transition={{
-                opacity: { delay: 1.5, duration: 1 },
-                y: { duration: 2, repeat: Infinity, ease: "easeInOut" },
-              }}
-              className="absolute bottom-8 left-0 right-0 mx-auto w-fit flex flex-col items-center justify-center gap-2 text-zinc-400 hover:text-zinc-300 transition-colors"
-              aria-label={t({ pt: "Role para explorar", en: "Scroll to explore" })}
-            >
-              <span className="text-sm">
-                {t({ pt: "Role para explorar", en: "Scroll to explore" })}
-              </span>
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <path
-                  d="M12 5v14M19 12l-7 7-7-7"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </motion.a>
-          </section>
+          <Hero />
 
           {/* SOBRE - placeholder provisório */}
           <section
@@ -1083,19 +956,6 @@ export default function Page() {
                 {t({
                   pt: "Graduado em Análise e Desenvolvimento de Sistemas pela Universidade Farias Brito, em Fortaleza. Pós Graduado em Engenharia de Software com ênfase em Devops*. Especializado em Desenvolvimento Full Stack pela Digital College. Especializado em UX/UI e design de Produtos Digitais pela EBAC*.",
                   en: "Bachelor's degree in Systems Analysis and Development from Universidade Farias Brito, in Fortaleza. Postgraduate in Software Engineering with an emphasis on DevOps*. Specialized in Full Stack Development from Digital College. Specialized in UX/UI and Digital Product Design from EBAC*.",
-                })}
-              </motion.p>
-
-              <motion.p
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={viewportSettings}
-                transition={{ duration: 0.7, ease: easeOut, delay: 0.05 }}
-                className="mt-3 text-zinc-300 text-sm sm:text-base leading-relaxed"
-              >
-                {t({
-                  pt: "Hoje, meu foco é liderar tecnicamente produtos digitais de ponta a ponta — da arquitetura ao deploy — combinando desenvolvimento Full Stack, DevOps e uma visão de produto orientada a resultado.",
-                  en: "Today, my focus is leading digital products end-to-end from a technical standpoint — from architecture to deploy — combining Full Stack development, DevOps and a results-driven product mindset.",
                 })}
               </motion.p>
 
@@ -1191,7 +1051,7 @@ export default function Page() {
                       href={CV_URL}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group mt-8 self-start w-[40%] min-w-fit flex items-center justify-center gap-2 rounded-full px-6 py-2.5 border border-violet-400/50 text-violet-300 text-sm font-medium hover:bg-violet-500/10 hover:border-violet-400/70 transition-all duration-300"
+                      className="group mt-8 self-start w-[40%] min-w-fit flex items-center justify-center gap-2 rounded-full px-6 py-2.5 bg-white text-violet-700 text-sm font-medium hover:bg-zinc-100 hover:scale-[1.03] hover:shadow-lg hover:shadow-black/20 transition-all duration-300"
                     >
                       {t({ pt: "Veja o currículo completo", en: "See the full résumé" })}
                       <FileDown className="h-4 w-4 transition-transform duration-300 group-hover:translate-y-0.5" />
@@ -1221,7 +1081,7 @@ export default function Page() {
           {/* PROJETOS EM DESTAQUE - REDESENHADO */}
           <section
             id="projects"
-            className="relative py-14 bg-zinc-900/40 overflow-x-hidden"
+            className="relative py-14 overflow-x-hidden"
           >
             <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
               <div className="text-center mb-12">
@@ -1836,7 +1696,21 @@ export default function Page() {
                       className="text-2xl font-bold text-white"
                       style={{ fontFamily: "var(--font-space-grotesk)" }}
                     >
-                      {t({ pt: "Ei, esse formulário funciona. Me manda mensagem!", en: "Hey, this form actually works. Send me a message!" })}
+                      {lang === "pt" ? (
+                        <>
+                          Ei, esse formulário funciona de verdade viu?{" "}
+                          <span className="bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent">
+                            Vamos conversar!
+                          </span>
+                        </>
+                      ) : (
+                        <>
+                          Hey, this form actually works.{" "}
+                          <span className="bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent">
+                            Let&apos;s talk!
+                          </span>
+                        </>
+                      )}
                     </motion.h2>
                     <motion.p
                       initial={{ opacity: 0 }}
@@ -1912,7 +1786,10 @@ export default function Page() {
 
         </main>
 
-        <footer className="py-10 border-t border-white/5 text-center text-[11px] text-zinc-400">
+        <footer
+          className="py-10 border-t border-white/5 text-center text-[11px] text-zinc-400"
+          style={{ backgroundColor: "#141418" }}
+        >
           <div>
             {t({ pt: "Feito à mão", en: "Handmade" })} | © 2026 Francisco Pontes
           </div>
@@ -1921,12 +1798,12 @@ export default function Page() {
               href="https://creativecommons.org/licenses/by-nc/4.0/"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-zinc-200 transition-colors"
+              className="text-zinc-600 hover:text-zinc-300 transition-colors"
             >
               Creative Commons BY-NC 4.0
             </a>
             <span className="text-zinc-700">·</span>
-            <Link href="/privacidade" className="hover:text-zinc-200 transition-colors">
+            <Link href="/privacidade" className="text-zinc-600 hover:text-zinc-300 transition-colors">
               {t({ pt: "Privacidade", en: "Privacy" })}
             </Link>
             <span className="text-zinc-700">·</span>
@@ -1934,9 +1811,8 @@ export default function Page() {
               href="https://vercel.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 text-zinc-600 hover:text-zinc-300 transition-colors"
+              className="text-zinc-600 hover:text-zinc-300 transition-colors"
             >
-              <SiVercel className="h-2.5 w-2.5" />
               {t({ pt: "Hospedado na Vercel", en: "Hosted on Vercel" })}
             </a>
           </div>

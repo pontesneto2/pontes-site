@@ -2,6 +2,30 @@ import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const NAME_REGEX = /^[\p{L}][\p{L}\s'’-]{1,}$/u;
+const MIN_MESSAGE_LENGTH = 20;
+
+const escapeHtml = (value: string) =>
+  value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+
+const toHtmlLines = (value: string) => escapeHtml(value).replace(/\n/g, "<br />");
+
+function emailWrapper(innerHtml: string, footerText?: string) {
+  return `
+    <div style="background-color:#f4f2f8;padding:32px 16px;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">
+      <div style="max-width:560px;margin:0 auto;background-color:#ffffff;border-radius:16px;overflow:hidden;border:1px solid #ece9f5;">
+        <div style="height:6px;background-color:#a855f7;background-image:linear-gradient(90deg,#8b5cf6,#d946ef);"></div>
+        <div style="padding:32px 28px;">
+          ${innerHtml}
+        </div>
+      </div>
+      ${footerText ? `<p style="max-width:560px;margin:16px auto 0;text-align:center;font-size:12px;color:#a1a1aa;">${footerText}</p>` : ""}
+    </div>
+  `;
+}
 
 export async function POST(request: NextRequest) {
   const body = await request.json().catch(() => null);
@@ -36,9 +60,21 @@ export async function POST(request: NextRequest) {
     !name?.trim() ||
     !email?.trim() ||
     !message?.trim() ||
-    !EMAIL_REGEX.test(email.trim())
+    !EMAIL_REGEX.test(email.trim()) ||
+    !NAME_REGEX.test(name.trim())
   ) {
     return NextResponse.json({ error: "Missing or invalid fields" }, { status: 400 });
+  }
+
+  if (message.trim().length < MIN_MESSAGE_LENGTH) {
+    return NextResponse.json({ error: "Message too short" }, { status: 400 });
+  }
+
+  if (phone?.trim()) {
+    const phoneDigits = phone.replace(/\D/g, "");
+    if (phoneDigits.length < 8 || phoneDigits.length > 15) {
+      return NextResponse.json({ error: "Invalid phone" }, { status: 400 });
+    }
   }
 
   if (
@@ -62,25 +98,34 @@ export async function POST(request: NextRequest) {
 
   const resend = new Resend(apiKey);
 
-  const escapeHtml = (value: string) =>
-    value
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;");
-
   try {
+    const internalHtml = emailWrapper(`
+      <p style="margin:0 0 18px;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#a855f7;font-weight:700;">Novo contato pelo site</p>
+      <table style="width:100%;border-collapse:collapse;font-size:14px;color:#3f3f46;">
+        <tr>
+          <td style="padding:6px 0;color:#8b8594;width:90px;vertical-align:top;">Nome</td>
+          <td style="padding:6px 0;">${escapeHtml(name.trim())}</td>
+        </tr>
+        <tr>
+          <td style="padding:6px 0;color:#8b8594;vertical-align:top;">E-mail</td>
+          <td style="padding:6px 0;">${escapeHtml(email.trim())}</td>
+        </tr>
+        ${
+          phone?.trim()
+            ? `<tr><td style="padding:6px 0;color:#8b8594;vertical-align:top;">Telefone</td><td style="padding:6px 0;">${escapeHtml(phone.trim())}</td></tr>`
+            : ""
+        }
+      </table>
+      <p style="margin:22px 0 6px;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#8b8594;font-weight:700;">Mensagem</p>
+      <p style="margin:0;font-size:14px;line-height:1.6;color:#18181b;">${toHtmlLines(message.trim())}</p>
+    `);
+
     const { error } = await resend.emails.send({
       from: "Portfólio Francisco Pontes <contato@fcopts.com.br>",
       to: toEmail,
       replyTo: email.trim(),
       subject: `Novo contato pelo site: ${name.trim()}`,
-      html: `
-        <p><strong>Nome:</strong> ${escapeHtml(name.trim())}</p>
-        <p><strong>E-mail:</strong> ${escapeHtml(email.trim())}</p>
-        ${phone?.trim() ? `<p><strong>Telefone:</strong> ${escapeHtml(phone.trim())}</p>` : ""}
-        <p><strong>Mensagem:</strong></p>
-        <p>${escapeHtml(message.trim()).replace(/\n/g, "<br />")}</p>
-      `,
+      html: internalHtml,
     });
 
     if (error) {
@@ -89,33 +134,47 @@ export async function POST(request: NextRequest) {
     }
 
     try {
+      const autoReplyHtml = isEnglish
+        ? emailWrapper(
+            `
+              <p style="margin:0 0 4px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#a855f7;font-weight:700;">Francisco Pontes</p>
+              <h1 style="margin:0 0 18px;font-size:21px;line-height:1.3;color:#18181b;">Hi, ${escapeHtml(name.trim())}!</h1>
+              <p style="margin:0 0 14px;font-size:15px;line-height:1.65;color:#3f3f46;">I received your message through the contact form on my portfolio — thanks so much for reaching out!</p>
+              <p style="margin:0 0 22px;font-size:15px;line-height:1.65;color:#3f3f46;">I'll read it carefully and get back to you as soon as possible, directly at the email you used here or by phone/WhatsApp if you prefer. If you'd like to add anything, feel free to just reply to this email.</p>
+              <div style="background-color:#faf9fc;border:1px solid #ece9f5;border-radius:12px;padding:16px 18px;margin:0 0 24px;">
+                <p style="margin:0 0 8px;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#8b8594;font-weight:700;">Your message</p>
+                <p style="margin:0;font-size:14px;line-height:1.6;color:#3f3f46;">${toHtmlLines(message.trim())}</p>
+              </div>
+              <p style="margin:0 0 4px;font-size:14px;color:#3f3f46;">Other ways to reach me:</p>
+              <p style="margin:0 0 24px;font-size:14px;color:#3f3f46;">Email: <a href="mailto:contato@fcopts.com.br" style="color:#a855f7;text-decoration:none;">contato@fcopts.com.br</a><br />WhatsApp: <a href="https://wa.me/5585981888896" style="color:#a855f7;text-decoration:none;">+55 85 98188-8896</a></p>
+              <p style="margin:0;font-size:14px;color:#3f3f46;">Talk soon,<br /><strong>Francisco Pontes</strong></p>
+            `,
+            "You're receiving this email because you sent a message on fcopts.com.br"
+          )
+        : emailWrapper(
+            `
+              <p style="margin:0 0 4px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#a855f7;font-weight:700;">Francisco Pontes</p>
+              <h1 style="margin:0 0 18px;font-size:21px;line-height:1.3;color:#18181b;">Olá, ${escapeHtml(name.trim())}!</h1>
+              <p style="margin:0 0 14px;font-size:15px;line-height:1.65;color:#3f3f46;">Recebi sua mensagem pelo formulário de contato do meu portfólio — muito obrigado por escrever!</p>
+              <p style="margin:0 0 22px;font-size:15px;line-height:1.65;color:#3f3f46;">Vou ler com calma e te responder o quanto antes, direto no e-mail que você usou aqui ou por telefone/WhatsApp, se preferir. Se quiser complementar algo, pode responder este e-mail mesmo, sem problema.</p>
+              <div style="background-color:#faf9fc;border:1px solid #ece9f5;border-radius:12px;padding:16px 18px;margin:0 0 24px;">
+                <p style="margin:0 0 8px;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#8b8594;font-weight:700;">Sua mensagem</p>
+                <p style="margin:0;font-size:14px;line-height:1.6;color:#3f3f46;">${toHtmlLines(message.trim())}</p>
+              </div>
+              <p style="margin:0 0 4px;font-size:14px;color:#3f3f46;">Outras formas de falar comigo:</p>
+              <p style="margin:0 0 24px;font-size:14px;color:#3f3f46;">E-mail: <a href="mailto:contato@fcopts.com.br" style="color:#a855f7;text-decoration:none;">contato@fcopts.com.br</a><br />WhatsApp: <a href="https://wa.me/5585981888896" style="color:#a855f7;text-decoration:none;">+55 85 98188-8896</a></p>
+              <p style="margin:0;font-size:14px;color:#3f3f46;">Até já,<br /><strong>Francisco Pontes</strong></p>
+            `,
+            "Você recebeu este e-mail porque enviou uma mensagem em fcopts.com.br"
+          );
+
       await resend.emails.send({
         from: "Francisco Pontes <contato@fcopts.com.br>",
         to: email.trim(),
         subject: isEnglish
           ? "I received your message — Francisco Pontes"
           : "Recebi sua mensagem — Francisco Pontes",
-        html: isEnglish
-          ? `
-            <p>Hi ${escapeHtml(name.trim())},</p>
-            <p>I received your message through the contact form on my portfolio. Thanks for reaching out!</p>
-            <p><strong>This is an automated email and isn't monitored — please don't reply to it.</strong></p>
-            <p>I'll review your message and get back to you as soon as possible, directly at the email you provided or by phone/WhatsApp if you prefer:</p>
-            <p>Email: contato@fcopts.com.br<br />WhatsApp: +55 85 98188-8896</p>
-            <p>Your message:</p>
-            <p><em>${escapeHtml(message.trim()).replace(/\n/g, "<br />")}</em></p>
-            <p>Thanks again,<br />Francisco Pontes</p>
-          `
-          : `
-            <p>Olá ${escapeHtml(name.trim())},</p>
-            <p>Recebi sua mensagem através do formulário de contato no meu portfólio. Obrigado por entrar em contato!</p>
-            <p><strong>Este é um e-mail automático e não é monitorado — por favor, não responda a ele.</strong></p>
-            <p>Vou analisar sua mensagem e retornar o contato o quanto antes, diretamente pelo e-mail que você informou ou por telefone/WhatsApp, se preferir:</p>
-            <p>E-mail: contato@fcopts.com.br<br />WhatsApp: +55 85 98188-8896</p>
-            <p>Sua mensagem:</p>
-            <p><em>${escapeHtml(message.trim()).replace(/\n/g, "<br />")}</em></p>
-            <p>Obrigado novamente,<br />Francisco Pontes</p>
-          `,
+        html: autoReplyHtml,
       });
     } catch (autoReplyError) {
       console.error("Resend auto-reply error:", autoReplyError);

@@ -74,7 +74,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#141418",
+  themeColor: "#0a0a0d",
 };
 
 const personJsonLd = {
@@ -116,7 +116,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
         />
       </head>
-      <body suppressHydrationWarning className={`min-h-screen overflow-x-clip text-zinc-200 bg-[linear-gradient(180deg,#151519,#141418)] ${spaceGrotesk.variable} ${jetbrainsMono.variable}`}>
+      <body suppressHydrationWarning className={`min-h-screen overflow-x-clip text-zinc-200 bg-[#0a0a0d] ${spaceGrotesk.variable} ${jetbrainsMono.variable}`}>
         <LanguageProvider>{children}</LanguageProvider>
         <Analytics />
       </body>

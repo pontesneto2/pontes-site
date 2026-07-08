@@ -28,7 +28,7 @@ function TestimonialCard({ item }: { item: Testimonial }) {
       <div className="relative flex flex-1 flex-col">
         <p
           className={`text-sm text-zinc-300 leading-relaxed ${
-            expanded ? "" : "line-clamp-3"
+            expanded ? "" : "line-clamp-2"
           }`}
         >
           &ldquo;{text}&rdquo;
@@ -62,7 +62,7 @@ function TestimonialCard({ item }: { item: Testimonial }) {
               <span className="text-sm font-semibold text-zinc-100 truncate">
                 {item.name}
               </span>
-              <Linkedin className="h-3.5 w-3.5 text-violet-400 shrink-0" />
+              <Linkedin className="h-3.5 w-3.5 text-[#0A66C2] shrink-0" />
             </div>
             <p className="text-[11px] text-zinc-400 mt-0.5 leading-snug">
               {item.role}
@@ -74,11 +74,18 @@ function TestimonialCard({ item }: { item: Testimonial }) {
   );
 }
 
+const LOOP_TRIGGER_PX = 60;
+const LOOP_LOCK_MS = 600;
+
 export default function Testimonials() {
   const { lang } = useLanguage();
   const scrollRef = useRef<HTMLDivElement>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [thumbWidth, setThumbWidth] = useState(50);
+  const wheelAccumRef = useRef(0);
+  const wheelResetTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const touchStartXRef = useRef<number | null>(null);
+  const isLoopingRef = useRef(false);
 
   const updateScrollProgress = () => {
     const el = scrollRef.current;
@@ -86,6 +93,55 @@ export default function Testimonials() {
     const maxScroll = el.scrollWidth - el.clientWidth;
     setScrollProgress(maxScroll > 0 ? el.scrollLeft / maxScroll : 0);
     setThumbWidth(Math.min(100, (el.clientWidth / el.scrollWidth) * 100));
+  };
+
+  const isAtEnd = () => {
+    const el = scrollRef.current;
+    if (!el) return false;
+    const maxScroll = el.scrollWidth - el.clientWidth;
+    return maxScroll > 0 && el.scrollLeft >= maxScroll - 2;
+  };
+
+  const loopToStart = () => {
+    const el = scrollRef.current;
+    if (!el || isLoopingRef.current) return;
+    isLoopingRef.current = true;
+    const prevOverflow = el.style.overflowX;
+    el.style.overflowX = "hidden";
+    el.scrollTo({ left: 0, behavior: "smooth" });
+    window.setTimeout(() => {
+      el.style.overflowX = prevOverflow;
+      isLoopingRef.current = false;
+    }, LOOP_LOCK_MS);
+  };
+
+  const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
+    if (Math.abs(e.deltaX) <= Math.abs(e.deltaY) || e.deltaX <= 0 || !isAtEnd()) {
+      wheelAccumRef.current = 0;
+      return;
+    }
+    wheelAccumRef.current += e.deltaX;
+    if (wheelResetTimerRef.current) clearTimeout(wheelResetTimerRef.current);
+    wheelResetTimerRef.current = setTimeout(() => {
+      wheelAccumRef.current = 0;
+    }, 400);
+    if (wheelAccumRef.current > LOOP_TRIGGER_PX) {
+      wheelAccumRef.current = 0;
+      loopToStart();
+    }
+  };
+
+  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    touchStartXRef.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (touchStartXRef.current === null) return;
+    const delta = touchStartXRef.current - e.changedTouches[0].clientX;
+    touchStartXRef.current = null;
+    if (delta > 40 && isAtEnd()) {
+      loopToStart();
+    }
   };
 
   return (
@@ -102,12 +158,6 @@ export default function Testimonials() {
           >
             {tr(lang, { pt: "Recomendações", en: "Recommendations" })}
           </motion.h2>
-          <p className="text-sm text-zinc-400 mt-2 max-w-2xl mx-auto leading-relaxed">
-            {tr(lang, {
-              pt: "O que colegas e parceiros de trabalho dizem, direto do LinkedIn.",
-              en: "What colleagues and work partners say, straight from LinkedIn.",
-            })}
-          </p>
         </div>
 
         <motion.div
@@ -119,6 +169,9 @@ export default function Testimonials() {
           <div
             ref={scrollRef}
             onScroll={updateScrollProgress}
+            onWheel={handleWheel}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
             className="flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth pt-1 pb-4 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
           >
             {(testimonials as Testimonial[]).map((item) => (

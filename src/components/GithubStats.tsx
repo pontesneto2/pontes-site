@@ -7,15 +7,6 @@ import { useLanguage, tr } from "@/lib/language-context";
 
 const GITHUB_USER = "pontesneto2";
 
-type GithubUser = {
-  created_at: string;
-};
-
-type GithubRepo = {
-  stargazers_count: number;
-  fork: boolean;
-};
-
 type Stats = {
   joinYear: number;
   totalStars: number;
@@ -23,40 +14,9 @@ type Stats = {
 };
 
 async function fetchGithubData(): Promise<Stats | null> {
-  const headers = { Accept: "application/vnd.github+json" };
-
-  const [userRes, reposRes, contribRes] = await Promise.all([
-    fetch(`https://api.github.com/users/${GITHUB_USER}`, { headers }),
-    fetch(
-      `https://api.github.com/users/${GITHUB_USER}/repos?per_page=100&sort=updated`,
-      { headers }
-    ),
-    fetch(`https://github-contributions-api.jogruber.de/v4/${GITHUB_USER}?y=all`),
-  ]);
-
-  if (!userRes.ok || !reposRes.ok) return null;
-
-  const user = (await userRes.json()) as GithubUser;
-  const repos = (await reposRes.json()) as GithubRepo[];
-  const ownRepos = repos.filter((r) => !r.fork);
-  const totalStars = ownRepos.reduce((sum, r) => sum + r.stargazers_count, 0);
-
-  const joinYear = new Date(user.created_at).getFullYear();
-  const currentYear = new Date().getFullYear();
-
-  let contributionsThisYear = 0;
-  if (contribRes.ok) {
-    const contribData = (await contribRes.json()) as {
-      total?: Record<string, number>;
-    };
-    contributionsThisYear = contribData.total?.[currentYear] ?? 0;
-  }
-
-  return {
-    joinYear,
-    totalStars,
-    contributionsThisYear,
-  };
+  const res = await fetch("/api/github-stats");
+  if (!res.ok) return null;
+  return (await res.json()) as Stats;
 }
 
 function AnimatedNumber({ value, plain }: { value: number; plain?: boolean }) {

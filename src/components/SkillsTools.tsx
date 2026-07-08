@@ -1,15 +1,13 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { spaceGrotesk, jetbrainsMono } from "@/lib/fonts";
 
 type SkillItem = {
   name: string;
-  slug: string;
-  years: number;
-  principal?: boolean;
-  mono?: boolean;
+  slug?: string; // Simple Icons slug — omitted renders a text-only chip
 };
 
 type SkillCategory = {
@@ -18,125 +16,137 @@ type SkillCategory = {
   items: SkillItem[];
 };
 
-// Anos são estimativas — ajuste para os valores reais quando quiser.
 const CATEGORIES: SkillCategory[] = [
   {
     number: "01",
     name: "Frontend",
     items: [
-      { name: "TypeScript", slug: "typescript/typescript-original", years: 6, principal: true },
-      { name: "JavaScript", slug: "javascript/javascript-original", years: 6 },
-      { name: "React", slug: "react/react-original", years: 6, principal: true },
-      { name: "Next.js", slug: "nextjs/nextjs-original", years: 5, mono: true },
-      { name: "React Native", slug: "react/react-original", years: 5 },
-      { name: "Vue.js", slug: "vuejs/vuejs-original", years: 5 },
+      { name: "TypeScript", slug: "typescript" },
+      { name: "JavaScript", slug: "javascript" },
+      { name: "React", slug: "react" },
+      { name: "Next.js", slug: "nextdotjs" },
+      { name: "React Native", slug: "react" },
+      { name: "Vue.js", slug: "vuedotjs" },
     ],
   },
   {
     number: "02",
     name: "Backend",
     items: [
-      { name: "Node.js", slug: "nodejs/nodejs-original", years: 5, principal: true },
-      { name: "C#", slug: "csharp/csharp-original", years: 1, principal: true },
-      { name: ".NET", slug: "dot-net/dot-net-original", years: 1 },
-      { name: "NestJS", slug: "nestjs/nestjs-original", years: 5 },
-      { name: "Express", slug: "express/express-original", years: 5, mono: true },
-      { name: "PHP", slug: "php/php-original", years: 6 },
-      { name: "Laravel", slug: "laravel/laravel-original", years: 6 },
-      { name: "Python", slug: "python/python-original", years: 2 },
-      { name: "Spring Boot", slug: "spring/spring-original", years: 1 },
-      { name: "GraphQL", slug: "graphql/graphql-plain", years: 5 },
-      { name: "WordPress", slug: "wordpress/wordpress-plain", years: 7, mono: true },
+      { name: "Node.js", slug: "nodedotjs" },
+      { name: "C#", slug: "dotnet" },
+      { name: ".NET", slug: "dotnet" },
+      { name: "NestJS", slug: "nestjs" },
+      { name: "Express", slug: "express" },
+      { name: "PHP", slug: "php" },
+      { name: "Laravel", slug: "laravel" },
+      { name: "Python", slug: "python" },
+      { name: "Spring", slug: "spring" },
+      { name: "GraphQL", slug: "graphql" },
+      { name: "WordPress", slug: "wordpress" },
     ],
   },
   {
     number: "03",
     name: "Bancos de Dados",
     items: [
-      { name: "PostgreSQL", slug: "postgresql/postgresql-original", years: 6, principal: true },
-      { name: "MySQL", slug: "mysql/mysql-original", years: 1 },
-      { name: "MongoDB", slug: "mongodb/mongodb-original", years: 1 },
-      { name: "Prisma", slug: "prisma/prisma-original", years: 4, mono: true },
+      { name: "PostgreSQL", slug: "postgresql" },
+      { name: "MySQL", slug: "mysql" },
+      { name: "MongoDB", slug: "mongodb" },
+      { name: "Prisma", slug: "prisma" },
     ],
   },
   {
     number: "04",
     name: "Cloud, DevOps & Observabilidade",
     items: [
-      { name: "Docker", slug: "docker/docker-original", years: 3 },
-      { name: "Kubernetes", slug: "kubernetes/kubernetes-plain", years: 3 },
-      { name: "AWS", slug: "amazonwebservices/amazonwebservices-original-wordmark", years: 1, mono: true },
-      { name: "Azure", slug: "azure/azure-original", years: 1 },
-      { name: "GCP", slug: "googlecloud/googlecloud-original", years: 3 },
-      { name: "DigitalOcean", slug: "digitalocean/digitalocean-original", years: 3 },
-      { name: "GitHub Actions", slug: "githubactions/githubactions-original", years: 5 },
-      { name: "GitLab CI", slug: "gitlab/gitlab-original", years: 5 },
-      { name: "Nginx", slug: "nginx/nginx-original", years: 5 },
-      { name: "Prometheus", slug: "prometheus/prometheus-original", years: 2 },
-      { name: "Grafana", slug: "grafana/grafana-original", years: 2, principal: true },
+      { name: "Docker", slug: "docker" },
+      { name: "Kubernetes", slug: "kubernetes" },
+      // amazonwebservices/microsoftazure slugs were removed from Simple Icons for brand reasons — text-only chips
+      { name: "AWS" },
+      { name: "Azure" },
+      { name: "Google Cloud", slug: "googlecloud" },
+      { name: "DigitalOcean", slug: "digitalocean" },
+      { name: "GitLab CI/CD", slug: "gitlab" },
+      { name: "Nginx", slug: "nginx" },
+      { name: "Prometheus", slug: "prometheus" },
+      { name: "Grafana", slug: "grafana" },
     ],
   },
 ];
 
 export const SKILL_NAMES = CATEGORIES.flatMap((cat) => cat.items.map((item) => item.name));
 
-const PRACTICES = [
-  "Docker Compose",
-  "Scriptcase",
-  "Figma",
-  "Adobe XD",
-  "Design Systems",
-  "Prototipagem",
-  "Usabilidade",
-  "Acessibilidade",
-  "LGPD",
-  "Power BI",
-  "Scrum/Kanban Ágil",
-  "Trello",
-  "Jira",
-];
+const PRACTICES: SkillCategory = {
+  number: "05",
+  name: "Práticas & metodologias",
+  items: [
+    { name: "Docker Compose" },
+    { name: "Scriptcase" },
+    { name: "Figma" },
+    { name: "Adobe XD" },
+    { name: "Design Systems" },
+    { name: "Prototipagem" },
+    { name: "Usabilidade" },
+    { name: "Acessibilidade" },
+    { name: "LGPD" },
+    { name: "Power BI" },
+    { name: "Scrum/Kanban Ágil" },
+    { name: "Trello" },
+    { name: "Jira" },
+  ],
+};
 
-function SkillIcon({ item }: { item: SkillItem }) {
+const ALL_CATEGORIES = [...CATEGORIES, PRACTICES];
+
+function SkillChip({ item, compact }: { item: SkillItem; compact?: boolean }) {
+  const [active, setActive] = useState(false);
+
   return (
-    <div className="group relative flex flex-col items-center focus-within:z-20">
-      <div className="relative">
+    <div
+      role="img"
+      aria-label={item.name}
+      tabIndex={0}
+      onMouseEnter={() => setActive(true)}
+      onMouseLeave={() => setActive(false)}
+      onFocus={() => setActive(true)}
+      onBlur={() => setActive(false)}
+      className="inline-flex items-center gap-[9px] rounded-[9px] border outline-none transition-all duration-[220ms] ease-out"
+      style={{
+        padding: compact ? "6px 11px" : item.slug ? "9px 13px" : "9px 14px",
+        borderColor: active
+          ? "rgba(168,85,247,0.45)"
+          : compact
+            ? "rgba(255,255,255,0.06)"
+            : "rgba(255,255,255,0.08)",
+        background: active ? "rgba(168,85,247,0.08)" : "rgba(255,255,255,0.018)",
+        color: active ? "#fafafa" : compact ? "#75758a" : "#9ca3af",
+        transform: active ? "translateY(-2px)" : "translateY(0)",
+        boxShadow: active ? "0 8px 20px -10px rgba(168,85,247,0.45)" : "none",
+      }}
+    >
+      {item.slug && (
         <Image
-          src={`https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${item.slug}.svg`}
-          alt={item.name}
-          width={40}
-          height={40}
+          src={`https://cdn.simpleicons.org/${item.slug}`}
+          alt=""
+          width={20}
+          height={20}
           unoptimized
-          tabIndex={0}
-          className={`h-8 w-8 object-contain outline-none transition-transform duration-200 group-hover:-translate-y-[3px] group-hover:scale-[1.22] group-focus-within:-translate-y-[3px] group-focus-within:scale-[1.22] ${
-            item.mono ? "invert" : ""
-          }`}
+          className="h-5 w-5 shrink-0 object-contain"
+          style={{ filter: "brightness(0) invert(0.68)" }}
         />
-        {item.principal && (
-          <span
-            aria-hidden
-            className="absolute -top-1 -right-1 h-[7px] w-[7px] rounded-full"
-            style={{
-              backgroundColor: "var(--ac)",
-              boxShadow: "0 0 6px 1px var(--ac)",
-            }}
-          />
-        )}
-      </div>
-
-      <div
-        role="tooltip"
-        className="pointer-events-none absolute top-[52px] left-1/2 z-20 -translate-x-1/2 whitespace-nowrap rounded-[9px] border px-3 py-1.5 text-[11px] opacity-0 shadow-[0_10px_30px_rgba(0,0,0,0.4)] transition-opacity duration-150 group-hover:opacity-100 group-focus-within:opacity-100"
-        style={{ backgroundColor: "#141418", borderColor: "rgba(255,255,255,.11)" }}
+      )}
+      <span
+        className="whitespace-nowrap font-[family-name:var(--font-jetbrains-mono)]"
+        style={{
+          fontWeight: 500,
+          fontSize: compact ? "12px" : "13.5px",
+          letterSpacing: "-0.01em",
+          color: "inherit",
+        }}
       >
-        <span style={{ color: "var(--ac)" }}>{item.name}</span>
-        <span style={{ color: "#63636c" }}> · </span>
-        <span
-          className="font-[family-name:var(--font-jetbrains-mono)]"
-          style={{ color: "var(--ac)" }}
-        >
-          {item.years} {item.years === 1 ? "ano" : "anos"}
-        </span>
-      </div>
+        {item.name}
+      </span>
     </div>
   );
 }
@@ -145,83 +155,53 @@ export default function SkillsTools() {
   return (
     <section
       id="skills-tools"
-      className={`relative py-14 overflow-x-hidden ${spaceGrotesk.variable} ${jetbrainsMono.variable}`}
-      style={{ ["--ac" as string]: "#a855f7" } as React.CSSProperties}
+      className={`relative overflow-x-hidden ${spaceGrotesk.variable} ${jetbrainsMono.variable}`}
     >
-      <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
-        <div className="mb-12 text-center">
+      <div className="mx-auto max-w-[1180px] px-10 py-16 md:py-24">
+        <div className="mb-16 text-center">
           <motion.h2
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.7, ease: "easeOut" }}
-            className="text-[2.1rem] sm:text-[2.6rem] md:text-[3.30rem] font-black text-white"
-            style={{ fontFamily: "var(--font-space-grotesk)" }}
+            className="text-[34px] sm:text-[40px] md:text-[52px] font-bold font-[family-name:var(--font-space-grotesk)]"
+            style={{ letterSpacing: "-0.02em", color: "#fafafa" }}
           >
             Skills &amp; Tools
           </motion.h2>
         </div>
 
-        {CATEGORIES.map((cat, catIndex) => (
+        {ALL_CATEGORIES.map((cat) => (
           <div
             key={cat.number}
-            className={`grid grid-cols-1 items-center gap-9 py-4 md:grid-cols-[230px_1fr] ${
-              catIndex === 0 ? "" : "border-t"
-            }`}
-            style={{ borderColor: "rgba(255,255,255,.08)" }}
+            className="flex flex-col gap-4 py-[30px] md:flex-row md:items-start md:gap-12"
+            style={{ borderTop: "1px solid rgba(255,255,255,0.07)" }}
           >
-            <div>
+            <div className="md:w-[210px] md:flex-none">
               <div
-                className="font-[family-name:var(--font-jetbrains-mono)] text-sm"
-                style={{ color: "var(--ac)" }}
+                className="font-[family-name:var(--font-jetbrains-mono)]"
+                style={{ fontWeight: 700, fontSize: "13px", color: "#a855f7" }}
               >
                 {cat.number}
               </div>
               <div
-                className="mt-1 text-base font-normal"
-                style={{ color: "#a1a1aa", fontFamily: "var(--font-space-grotesk)" }}
+                className="mt-1.5 font-[family-name:var(--font-space-grotesk)]"
+                style={{ fontWeight: 600, fontSize: "19px", color: "#fafafa" }}
               >
                 {cat.name}
               </div>
             </div>
-            <div className="flex flex-wrap gap-x-[30px] gap-y-[26px]">
+            <div className="flex flex-1 flex-wrap gap-[10px]">
               {cat.items.map((item, index) => (
-                <SkillIcon key={`${item.name}-${index}`} item={item} />
+                <SkillChip
+                  key={`${item.name}-${index}`}
+                  item={item}
+                  compact={cat.number === "05"}
+                />
               ))}
             </div>
           </div>
         ))}
-
-        <div
-          className="grid grid-cols-1 items-center gap-9 border-t py-4 md:grid-cols-[230px_1fr]"
-          style={{ borderColor: "rgba(255,255,255,.08)" }}
-        >
-          <div>
-            <div
-              className="font-[family-name:var(--font-jetbrains-mono)] text-sm"
-              style={{ color: "var(--ac)" }}
-            >
-              05
-            </div>
-            <div
-              className="mt-1 text-base font-normal"
-              style={{ color: "#a1a1aa", fontFamily: "var(--font-space-grotesk)" }}
-            >
-              Práticas &amp; metodologias
-            </div>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            {PRACTICES.map((p) => (
-              <span
-                key={p}
-                className="flex items-center justify-center text-center rounded-full border font-[family-name:var(--font-jetbrains-mono)] text-[11px] px-3 py-1.5"
-                style={{ borderColor: "rgba(255,255,255,.14)", color: "#c7c7cf" }}
-              >
-                {p}
-              </span>
-            ))}
-          </div>
-        </div>
       </div>
     </section>
   );
