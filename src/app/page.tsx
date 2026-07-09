@@ -1108,7 +1108,6 @@ export default function Page() {
                   ref={featuredScrollRef}
                   onScroll={updateFeaturedScrollProgress}
                   className="flex gap-8 overflow-x-auto overflow-y-hidden overscroll-x-contain snap-x snap-mandatory scroll-smooth pt-1 pb-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
-                  style={{ touchAction: "pan-x" }}
                 >
                   {featuredProjects.slice(1).map((project, index) => {
                     const cta = renderProjectCta(project);
