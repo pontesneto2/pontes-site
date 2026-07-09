@@ -242,6 +242,11 @@ export default function Page() {
   const [moreProjectsThumbWidth, setMoreProjectsThumbWidth] = useState(33);
   const [moreProjectsCurrentIndex, setMoreProjectsCurrentIndex] = useState(0);
 
+  const featuredScrollRef = useRef<HTMLDivElement>(null);
+  const [featuredScrollProgress, setFeaturedScrollProgress] = useState(0);
+  const [featuredThumbWidth, setFeaturedThumbWidth] = useState(50);
+  const [featuredCurrentIndex, setFeaturedCurrentIndex] = useState(0);
+
   const updateMoreProjectsScrollProgress = () => {
     const el = moreProjectsScrollRef.current;
     if (!el) return;
@@ -258,10 +263,32 @@ export default function Page() {
     }
   };
 
+  const updateFeaturedScrollProgress = () => {
+    const el = featuredScrollRef.current;
+    if (!el) return;
+    const maxScroll = el.scrollWidth - el.clientWidth;
+    setFeaturedScrollProgress(maxScroll > 0 ? el.scrollLeft / maxScroll : 0);
+    setFeaturedThumbWidth(Math.min(100, (el.clientWidth / el.scrollWidth) * 100));
+
+    const firstCard = el.children[0] as HTMLElement | undefined;
+    if (firstCard) {
+      const gap = 32;
+      const cardStep = firstCard.offsetWidth + gap;
+      const index = Math.round(el.scrollLeft / cardStep);
+      setFeaturedCurrentIndex(Math.max(0, Math.min(featuredProjects.length - 2, index)));
+    }
+  };
+
   useEffect(() => {
     updateMoreProjectsScrollProgress();
     window.addEventListener("resize", updateMoreProjectsScrollProgress);
     return () => window.removeEventListener("resize", updateMoreProjectsScrollProgress);
+  }, []);
+
+  useEffect(() => {
+    updateFeaturedScrollProgress();
+    window.addEventListener("resize", updateFeaturedScrollProgress);
+    return () => window.removeEventListener("resize", updateFeaturedScrollProgress);
   }, []);
 
   useEffect(() => {
@@ -1195,7 +1222,11 @@ export default function Page() {
                   );
                 })()}
 
-                <div className="grid md:grid-cols-2 gap-8">
+                <div
+                  ref={featuredScrollRef}
+                  onScroll={updateFeaturedScrollProgress}
+                  className="flex gap-8 overflow-x-auto snap-x snap-mandatory scroll-smooth pt-1 pb-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+                >
                   {featuredProjects.slice(1).map((project, index) => {
                     const cta = renderProjectCta(project);
 
@@ -1204,7 +1235,7 @@ export default function Page() {
                         key={project.title}
                         custom={index + 1}
                         variants={fadeUpItem}
-                        className="rounded-3xl overflow-hidden border border-white/10 shadow-2xl flex flex-col hover:border-white/20 hover:-translate-y-1 transition-all duration-300"
+                        className="snap-start shrink-0 w-[88%] sm:w-[calc(50%-1rem)] rounded-3xl overflow-hidden border border-white/10 shadow-2xl flex flex-col hover:border-white/20 hover:-translate-y-1 transition-all duration-300"
                       >
                         <div className="relative h-56 w-full">
                           {project.thumb ? (
@@ -1290,6 +1321,19 @@ export default function Page() {
                     );
                   })}
                 </div>
+
+                <div className="mt-4 mx-auto h-1.5 w-full max-w-xs rounded-full bg-white/10 overflow-hidden">
+                  <div
+                    className="h-full rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500 transition-[margin-left] duration-150"
+                    style={{
+                      width: `${featuredThumbWidth}%`,
+                      marginLeft: `${featuredScrollProgress * (100 - featuredThumbWidth)}%`,
+                    }}
+                  />
+                </div>
+                <p className="mt-1.5 text-center text-[11px] text-zinc-500 tabular-nums">
+                  {featuredCurrentIndex + 1}/{featuredProjects.length - 1}
+                </p>
               </motion.div>
 
               {/* Mais projetos - carrossel com scroll nativo */}
