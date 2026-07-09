@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Mail, ArrowLeft } from "lucide-react";
+import { Mail, ArrowLeft, Github, Linkedin } from "lucide-react";
 import Link from "next/link";
 import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
 
@@ -40,13 +40,13 @@ export default function CaseCTA({ description }: CaseCTAProps) {
             </p>
           )}
           <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3">
-            <a
-              href="mailto:contato@fcopts.com.br?subject=Contato%20via%20Portfolio"
+            <Link
+              href="/#about"
               className="group inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-gradient-to-r from-violet-600 to-fuchsia-500 text-white text-sm font-semibold shadow-lg shadow-violet-500/20 hover:shadow-violet-500/35 hover:scale-[1.03] transition-all duration-300"
             >
               <Mail className="h-4 w-4" />
-              {tr(lang, { pt: "Falar comigo", en: "Get in touch" })}
-            </a>
+              {tr(lang, { pt: "Me envie uma mensagem", en: "Send me a message" })}
+            </Link>
             <Link
               href="/#projects"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl border border-white/10 bg-white/[0.03] text-zinc-300 text-sm font-medium hover:bg-white/[0.06] hover:border-white/20 transition-all duration-300"
@@ -54,6 +54,27 @@ export default function CaseCTA({ description }: CaseCTAProps) {
               <ArrowLeft className="h-4 w-4" />
               {tr(lang, { pt: "Ver outros projetos", en: "See other projects" })}
             </Link>
+          </div>
+
+          <div className="mt-6 flex items-center justify-center gap-4">
+            <a
+              href="https://github.com/pontesneto2"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub"
+              className="text-zinc-400 hover:text-white transition-colors"
+            >
+              <Github className="h-5 w-5" />
+            </a>
+            <a
+              href="https://www.linkedin.com/in/fcopts"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+              className="text-zinc-400 hover:text-white transition-colors"
+            >
+              <Linkedin className="h-5 w-5" />
+            </a>
           </div>
         </div>
       </div>
