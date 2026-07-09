@@ -1,6 +1,5 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
@@ -67,10 +66,6 @@ import {
 } from "react-icons/si";
 import { FaWhatsapp } from "react-icons/fa6";
 import type { IconType } from "react-icons";
-
-const FloatingIcons3D = dynamic(() => import("@/components/FloatingIcons3D"), {
-  ssr: false,
-});
 
 function LanguageSwitch({
   lang,
@@ -805,7 +800,6 @@ export default function Page() {
       >
         {t({ pt: "Pular para o conteúdo", en: "Skip to content" })}
       </a>
-      <FloatingIcons3D />
 
       <div className="relative z-10">
         {/* NAV */}

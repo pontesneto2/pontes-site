@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { Code2, Monitor, Terminal, Cpu } from "lucide-react";
+import { Code2, Monitor, Terminal, Cpu, Braces, Database, GitBranch, Layers } from "lucide-react";
 import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
 
 const easeOut = [0.16, 1, 0.3, 1] as const;
@@ -13,6 +13,10 @@ const floatingIcons = [
   { Icon: Terminal, top: "76%", left: "9%", duration: 6.5, delay: 0.6 },
   { Icon: Monitor, top: "8%", left: "60%", duration: 6, delay: 0.3 },
   { Icon: Cpu, top: "86%", left: "62%", duration: 5, delay: 0.9 },
+  { Icon: Braces, top: "34%", left: "3%", duration: 5.8, delay: 1.2 },
+  { Icon: Database, top: "50%", left: "58%", duration: 6.2, delay: 0.4 },
+  { Icon: GitBranch, top: "18%", left: "38%", duration: 5.2, delay: 0.8 },
+  { Icon: Layers, top: "64%", left: "32%", duration: 6.8, delay: 1.5 },
 ];
 
 function FloatingTechIcons() {
@@ -43,7 +47,9 @@ function FloatingTechIcons() {
       className="pointer-events-none absolute inset-0 z-[5] hidden lg:block"
       style={{ opacity: fadeOpacity, transition: "opacity 0.2s linear" }}
     >
-      {floatingIcons.map(({ Icon, top, left, duration, delay }, i) => (
+      {floatingIcons.map(({ Icon, top, left, duration, delay }, i) => {
+        const dir = i % 2 === 0 ? 1 : -1;
+        return (
         <motion.div
           key={i}
           className="absolute flex h-12 w-12 items-center justify-center rounded-2xl"
@@ -55,12 +61,18 @@ function FloatingTechIcons() {
             backdropFilter: "blur(4px)",
             boxShadow: "0 0 20px rgba(168,85,247,.06)",
           }}
-          animate={{ y: [0, -12, 0] }}
+          animate={{
+            y: [0, -22, 0, 16, 0],
+            x: [0, 10 * dir, 0, -8 * dir, 0],
+            rotate: [0, 8 * dir, 0, -6 * dir, 0],
+            scale: [1, 1.08, 1, 0.96, 1],
+          }}
           transition={{ duration, delay, repeat: Infinity, ease: "easeInOut" }}
         >
           <Icon className="h-5 w-5" style={{ color: "rgba(210,200,240,.28)" }} />
         </motion.div>
-      ))}
+        );
+      })}
     </div>
   );
 }
@@ -157,19 +169,19 @@ export default function Hero() {
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.26, ease: easeOut }}
-            className="mt-3 font-black whitespace-normal"
+            className="mt-3 whitespace-normal lowercase"
             style={{
-              fontFamily: "var(--font-space-grotesk)",
-              fontSize: "clamp(3rem, 7vw + 1.5rem, 7.5rem)",
-              lineHeight: 0.95,
-              letterSpacing: "-0.02em",
-              background: "linear-gradient(176deg, #fff 0%, #efe6ff 44%, #c4a6f7 100%)",
-              WebkitBackgroundClip: "text",
-              backgroundClip: "text",
-              color: "transparent",
+              fontFamily: "var(--font-jetbrains-mono)",
+              fontWeight: 800,
+              fontSize: "clamp(2.6rem, 6vw + 1.2rem, 6.5rem)",
+              lineHeight: 0.88,
+              letterSpacing: "-0.045em",
+              color: "#ffffff",
             }}
           >
-            Francisco Pontes
+            francisco
+            <br />
+            pontes_
           </motion.h1>
 
           <motion.p
