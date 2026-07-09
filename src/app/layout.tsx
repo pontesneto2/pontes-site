@@ -77,6 +77,18 @@ export const viewport: Viewport = {
   themeColor: "#0a0a0d",
 };
 
+const websiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "Francisco Pontes — Portfólio",
+  url: siteUrl,
+  inLanguage: "pt-BR",
+  publisher: {
+    "@type": "Person",
+    name: "Francisco Pontes",
+  },
+};
+
 const personJsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
@@ -114,6 +126,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
       </head>
       <body suppressHydrationWarning className={`min-h-screen overflow-x-clip text-zinc-200 bg-[#0a0a0d] ${spaceGrotesk.variable} ${jetbrainsMono.variable}`}>
