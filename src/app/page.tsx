@@ -8,7 +8,8 @@ import Hero from "@/components/Hero";
 import Testimonials from "@/components/Testimonials";
 import ContactForm from "@/components/ContactForm";
 import SkillsTools, { SKILL_NAMES } from "@/components/SkillsTools";
-import GithubStats from "@/components/GithubStats";
+import SiteHeader, { type SearchEntry } from "@/components/SiteHeader";
+import SiteFooter from "@/components/SiteFooter";
 import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
 import { CV_URL } from "@/lib/constants";
 import {
@@ -16,13 +17,11 @@ import {
   Mail,
   Github,
   Linkedin,
-  Menu,
   Lock,
-  X,
   Building2,
   Briefcase,
+  MapPin,
   FileDown,
-  Search,
   ChevronLeft,
   Clock,
   Smartphone,
@@ -30,6 +29,7 @@ import {
   Gauge,
   TrendingDown,
   Rocket,
+  FileText,
   type LucideIcon,
 } from "lucide-react";
 import {
@@ -63,117 +63,6 @@ import {
 } from "react-icons/si";
 import { FaWhatsapp } from "react-icons/fa6";
 import type { IconType } from "react-icons";
-
-function LanguageSwitch({
-  lang,
-  setLang,
-  compact = false,
-}: {
-  lang: "pt" | "en";
-  setLang: (lang: "pt" | "en") => void;
-  compact?: boolean;
-}) {
-  const base = compact
-    ? "px-2 py-1 text-[11px]"
-    : "px-2.5 py-1 text-xs";
-
-  return (
-    <div
-      role="group"
-      aria-label="Language"
-      className="inline-flex items-center rounded-lg border border-white/10 bg-white/5 p-0.5"
-    >
-      {(["pt", "en"] as const).map((option) => (
-        <button
-          key={option}
-          type="button"
-          onClick={() => setLang(option)}
-          aria-pressed={lang === option}
-          className={`${base} rounded-md font-bold uppercase tracking-wide transition-colors ${
-            lang === option
-              ? "bg-gradient-to-r from-violet-600 to-fuchsia-500 text-white shadow-[0_0_16px_rgba(168,85,247,0.35)]"
-              : "text-zinc-400 hover:text-zinc-200"
-          }`}
-        >
-          {option}
-        </button>
-      ))}
-    </div>
-  );
-}
-
-function SearchBox({
-  searchOpen,
-  setSearchOpen,
-  searchQuery,
-  setSearchQuery,
-  searchResults,
-  onSelect,
-  t,
-  align = "right",
-}: {
-  searchOpen: boolean;
-  setSearchOpen: (open: boolean) => void;
-  searchQuery: string;
-  setSearchQuery: (q: string) => void;
-  searchResults: Array<{ label: string; href: string; group: Bilingual }>;
-  onSelect: (href: string) => void;
-  t: (v: Bilingual) => string;
-  align?: "left" | "right";
-}) {
-  return (
-    <div className="relative" data-search-box>
-      <button
-        type="button"
-        onClick={() => setSearchOpen(!searchOpen)}
-        aria-expanded={searchOpen}
-        aria-label={t({ pt: "Buscar", en: "Search" })}
-        className="inline-flex items-center justify-center p-1.5 text-zinc-300 hover:text-white transition-colors"
-      >
-        <Search className="h-[18px] w-[18px]" />
-      </button>
-      {searchOpen && (
-        <div
-          className={`absolute top-full mt-2 ${
-            align === "right" ? "right-0" : "left-0"
-          } w-64 rounded-xl border border-white/10 bg-[#141418] shadow-2xl p-2 z-50`}
-        >
-          <input
-            autoFocus
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder={t({ pt: "Buscar no site...", en: "Search the site..." })}
-            className="w-full rounded-lg bg-white/5 border border-white/10 px-3 py-2 text-sm text-zinc-200 placeholder:text-zinc-500 outline-none focus:border-violet-400/50"
-          />
-          {searchQuery.trim().length > 0 && (
-            <div className="mt-2 max-h-64 overflow-y-auto flex flex-col gap-0.5">
-              {searchResults.length > 0 ? (
-                searchResults.map((r, i) => (
-                  <button
-                    key={`${r.href}-${r.label}-${i}`}
-                    type="button"
-                    onClick={() => onSelect(r.href)}
-                    className="flex items-center justify-between gap-2 rounded-lg px-3 py-2 text-left text-sm text-zinc-200 hover:bg-white/5 transition-colors"
-                  >
-                    <span className="truncate">{r.label}</span>
-                    <span className="text-[10px] uppercase tracking-wide text-zinc-500 shrink-0">
-                      {t(r.group)}
-                    </span>
-                  </button>
-                ))
-              ) : (
-                <p className="px-3 py-2 text-xs text-zinc-500">
-                  {t({ pt: "Nada encontrado", en: "No results" })}
-                </p>
-              )}
-            </div>
-          )}
-        </div>
-      )}
-    </div>
-  );
-}
 
 const projectTagIconMap: Record<string, IconType> = {
   "React Native": SiReact,
@@ -226,14 +115,10 @@ function ProjectTagIcon({
 }
 
 export default function Page() {
-  const { lang, setLang } = useLanguage();
+  const { lang } = useLanguage();
   const t = (v: Bilingual) => tr(lang, v);
 
-  const [navOpen, setNavOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [searchOpen, setSearchOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [headerBlurred, setHeaderBlurred] = useState(false);
 
   const featuredScrollRef = useRef<HTMLDivElement>(null);
   const [featuredScrollProgress, setFeaturedScrollProgress] = useState(0);
@@ -261,34 +146,6 @@ export default function Page() {
     window.addEventListener("resize", updateFeaturedScrollProgress);
     return () => window.removeEventListener("resize", updateFeaturedScrollProgress);
   }, []);
-
-  useEffect(() => {
-    let lastY = window.scrollY;
-    const handleScroll = () => {
-      const currentY = window.scrollY;
-      if (currentY <= 10) {
-        setHeaderBlurred(false);
-      } else if (currentY > lastY) {
-        setHeaderBlurred(true);
-      } else if (currentY < lastY) {
-        setHeaderBlurred(false);
-      }
-      lastY = currentY;
-    };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  useEffect(() => {
-    if (!searchOpen) return;
-    const handleClickOutside = (e: MouseEvent) => {
-      if (!(e.target as HTMLElement).closest("[data-search-box]")) {
-        setSearchOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [searchOpen]);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(max-width: 767px)");
@@ -357,7 +214,7 @@ export default function Page() {
     },
   };
 
-  const FEATURED_PROJECT_BG = "bg-gradient-to-br from-violet-950/40 via-black/60 to-black/90";
+  const FEATURED_PROJECT_BG = "bg-gradient-to-br from-violet-600/60 via-purple-800/55 to-purple-950/65";
 
   const featuredProjects: Array<{
     title: string;
@@ -392,7 +249,8 @@ export default function Page() {
         "Docker",
       ],
       link: "https://www.ucopiloto.com.br/",
-      ctaLabel: { pt: "Visite o website comercial", en: "Visit commercial website" },
+      caseStudy: "/case/ucopiloto",
+      ctaLabel: { pt: "Visitar website", en: "Visit website" },
       blurb: {
         pt: "Aplicativo para conectar motoristas e oficinas de maneira inteligente, simplificando agendamentos, orçamentos e o acompanhamento de serviços automotivos. Idealizadora: Click Software House.",
         en: "App that connects drivers and repair shops intelligently, simplifying bookings, quotes and tracking of automotive services. Idealized by: Click Software House.",
@@ -410,6 +268,56 @@ export default function Page() {
         { icon: Users, value: { pt: "200+", en: "200+" }, label: { pt: "Usuários ativos", en: "Active users" } },
         { icon: Gauge, value: { pt: "99,9%", en: "99.9%" }, label: { pt: "Uptime", en: "Uptime" } },
         { icon: TrendingDown, value: { pt: "-35%", en: "-35%" }, label: { pt: "Tempo de agendamento", en: "Scheduling time" } },
+      ],
+    },
+    {
+      title: "Sistema Escolar do 2º Colégio da Polícia Militar FOR CE",
+      subtitle: { pt: "", en: "" },
+      tags: ["PHP", "Laravel", "C#", ".NET", "Angular", "PostgreSQL", "Docker", "Git", "Jira", "Grafana"],
+      link: "https://www.com3brasil.com.br/v9/app/cpmce/login/",
+      ctaLabel: { pt: "Visite", en: "Visit" },
+      blurb: {
+        pt: "Sistema de gestão escolar para o 2º Colégio da Polícia Militar, com acesso controlado por perfil para acompanhamento acadêmico e administrativo.",
+        en: "School management system for the 2nd Military Police School, with role-based access for academic and administrative tracking.",
+      },
+      category: { pt: "Sistema Web", en: "Web System" },
+      thumb: "/images/img-sist-pol.jpeg",
+      bgClass: FEATURED_PROJECT_BG,
+      highlights: [
+        { icon: Clock, value: { pt: "1,2 anos de produção", en: "1.2 years in production" } },
+        { icon: Users, value: { pt: "Equipe: 4 → 3 devs", en: "Team: 4 → 3 devs" } },
+        { icon: Smartphone, value: { pt: "PWA + Sistemas Web", en: "PWA + Web Systems" } },
+        { icon: Building2, value: { pt: "Idealizadora: Com3 Brasil", en: "Idealized by: Com3 Brasil" } },
+      ],
+      impact: [
+        { icon: Users, value: { pt: "2.350+", en: "2,350+" }, label: { pt: "Usuários ativos", en: "Active users" } },
+        { icon: Gauge, value: { pt: "99,9%", en: "99.9%" }, label: { pt: "Uptime", en: "Uptime" } },
+        { icon: TrendingDown, value: { pt: "-40%", en: "-40%" }, label: { pt: "Manutenção semanal", en: "Weekly maintenance" } },
+        { icon: Rocket, value: { pt: "-2 meses", en: "-2 months" }, label: { pt: "MVP antes do prazo", en: "MVP ahead of schedule" } },
+      ],
+    },
+    {
+      title: "Sistema FEDAF - Fundo Estadual de Desenvolvimento da Agricultura",
+      subtitle: { pt: "", en: "" },
+      tags: ["Git", "Docker", "PHP", "Laravel", "Angular", "Scriptcase"],
+      link: "https://sistemas2.sda.ce.gov.br/scriptcase/app/fedaf/login/",
+      ctaLabel: { pt: "Visite", en: "Visit" },
+      blurb: {
+        pt: "Sistema de gestão do Fundo Estadual de Desenvolvimento da Agricultura Familiar.",
+        en: "Management system for the State Fund for Family Agriculture Development.",
+      },
+      category: { pt: "Sistema Web", en: "Web System" },
+      thumb: "/images/capa-fedaf.png",
+      bgClass: FEATURED_PROJECT_BG,
+      highlights: [
+        { icon: Clock, value: { pt: "13 meses de produção", en: "13 months in production" } },
+        { icon: Briefcase, value: { pt: "Desenvolvedor Full Stack", en: "Full Stack Developer" } },
+        { icon: Building2, value: { pt: "Idealizador: Governo do Ceará", en: "Idealized by: Government of Ceará" } },
+      ],
+      impact: [
+        { icon: Users, value: { pt: "15.000+", en: "15,000+" }, label: { pt: "Produtores cadastrados", en: "Registered producers" } },
+        { icon: Gauge, value: { pt: "99,6%", en: "99.6%" }, label: { pt: "Uptime", en: "Uptime" } },
+        { icon: Rocket, value: { pt: "-35%", en: "-35%" }, label: { pt: "Tempo de análise de processos", en: "Process review time" } },
       ],
     },
     {
@@ -443,57 +351,30 @@ export default function Page() {
       ],
     },
     {
-      title: "Sistema Escolar do 2º Colégio da Polícia Militar",
+      title: "Sistema SECAF - Sistema Estadual de Cadastro de Agricultores Familiares",
       subtitle: { pt: "", en: "" },
-      tags: ["PHP", "Laravel", "C#", ".NET", "Angular", "PostgreSQL", "Docker", "Git", "Jira", "Grafana"],
-      link: "https://www.com3brasil.com.br/v9/app/cpmce/login/",
+      tags: ["Git", "Docker", ".NET", "C#", "PHP"],
+      link: "https://sistemas2.sda.ce.gov.br/scriptcase/app/secaf/login/",
       ctaLabel: { pt: "Visite", en: "Visit" },
       blurb: {
-        pt: "Sistema de gestão escolar para o 2º Colégio da Polícia Militar, com acesso controlado por perfil para acompanhamento acadêmico e administrativo.",
-        en: "School management system for the 2nd Military Police School, with role-based access for academic and administrative tracking.",
+        pt: "Sistema estadual de cadastro de produtores da agricultura familiar.",
+        en: "State-level registry system for family farming producers.",
       },
       category: { pt: "Sistema Web", en: "Web System" },
-      thumb: "/images/img-sist-pol.jpeg",
+      thumb: "/images/capa-secaf.png",
       bgClass: FEATURED_PROJECT_BG,
       highlights: [
-        { icon: Clock, value: { pt: "1,2 anos de produção", en: "1.2 years in production" } },
-        { icon: Users, value: { pt: "Equipe: 4 → 3 devs", en: "Team: 4 → 3 devs" } },
-        { icon: Smartphone, value: { pt: "PWA + Sistemas Web", en: "PWA + Web Systems" } },
-        { icon: Building2, value: { pt: "Idealizadora: Com3 Brasil", en: "Idealized by: Com3 Brasil" } },
+        { icon: Clock, value: { pt: "14 meses de produção", en: "14 months in production" } },
+        { icon: Briefcase, value: { pt: "Desenvolvedor Full Stack", en: "Full Stack Developer" } },
+        { icon: Building2, value: { pt: "Idealizador: Governo do Ceará", en: "Idealized by: Government of Ceará" } },
       ],
       impact: [
-        { icon: Users, value: { pt: "2.350+", en: "2,350+" }, label: { pt: "Usuários ativos", en: "Active users" } },
-        { icon: Gauge, value: { pt: "99,9%", en: "99.9%" }, label: { pt: "Uptime", en: "Uptime" } },
-        { icon: TrendingDown, value: { pt: "-40%", en: "-40%" }, label: { pt: "Manutenção semanal", en: "Weekly maintenance" } },
-        { icon: Rocket, value: { pt: "-2 meses", en: "-2 months" }, label: { pt: "MVP antes do prazo", en: "MVP ahead of schedule" } },
+        { icon: Users, value: { pt: "20.000+", en: "20,000+" }, label: { pt: "Produtores cadastrados", en: "Registered producers" } },
+        { icon: Gauge, value: { pt: "99,6%", en: "99.6%" }, label: { pt: "Uptime", en: "Uptime" } },
       ],
     },
     {
-      title: "Website Instituto Agropolos",
-      subtitle: { pt: "", en: "" },
-      tags: ["WordPress", "PHP", "Symfony", "Figma"],
-      link: "https://institutoagropolos.org.br/",
-      ctaLabel: { pt: "Visite", en: "Visit" },
-      blurb: {
-        pt: "Site institucional do instituto, com apresentação de projetos e informações institucionais.",
-        en: "Institutional website for the institute, presenting projects and institutional information.",
-      },
-      category: { pt: "Site Institucional", en: "Institutional Website" },
-      thumb: "",
-      bgClass: FEATURED_PROJECT_BG,
-      highlights: [
-        { icon: Clock, value: { pt: "3 meses de desenvolvimento", en: "3 months of development" } },
-        { icon: Briefcase, value: { pt: "Frontend + CMS solo", en: "Solo frontend + CMS" } },
-        { icon: Building2, value: { pt: "Idealizador: Instituto Agropolos", en: "Idealized by: Instituto Agropolos" } },
-      ],
-      impact: [
-        { icon: Gauge, value: { pt: "99,8%", en: "99.8%" }, label: { pt: "Uptime", en: "Uptime" } },
-        { icon: Users, value: { pt: "1.200+", en: "1,200+" }, label: { pt: "Visitas mensais", en: "Monthly visits" } },
-        { icon: Rocket, value: { pt: "-50%", en: "-50%" }, label: { pt: "Tempo de publicação de conteúdo", en: "Content publishing time" } },
-      ],
-    },
-    {
-      title: "Sistema SIGMA",
+      title: "Sistema Integrado de Gestão - SIG (Instituto Agropolos)",
       subtitle: { pt: "", en: "" },
       tags: [".NET", "C#", "Angular", "MongoDB", "Docker", "Git", "TypeScript"],
       link: "http://sigapp.institutoagropolos.org.br/login",
@@ -503,21 +384,21 @@ export default function Page() {
         en: "Institutional management system for administrative processes and internal indicators.",
       },
       category: { pt: "Sistema Web", en: "Web System" },
-      thumb: "",
+      thumb: "/images/capa-sigma.png",
       bgClass: FEATURED_PROJECT_BG,
       highlights: [
-        { icon: Clock, value: { pt: "8 meses de produção", en: "8 months in production" } },
-        { icon: Users, value: { pt: "Equipe: 2 devs", en: "Team: 2 devs" } },
+        { icon: Clock, value: { pt: "12 meses de produção", en: "12 months in production" } },
+        { icon: Users, value: { pt: "Equipe: 4 devs", en: "Team: 4 devs" } },
         { icon: Building2, value: { pt: "Idealizador: Instituto Agropolos", en: "Idealized by: Instituto Agropolos" } },
       ],
       impact: [
-        { icon: Users, value: { pt: "150+", en: "150+" }, label: { pt: "Usuários ativos", en: "Active users" } },
+        { icon: Users, value: { pt: "10.000+", en: "10,000+" }, label: { pt: "Usuários ativos", en: "Active users" } },
         { icon: Gauge, value: { pt: "99,7%", en: "99.7%" }, label: { pt: "Uptime", en: "Uptime" } },
         { icon: TrendingDown, value: { pt: "-30%", en: "-30%" }, label: { pt: "Tempo de processos administrativos", en: "Administrative process time" } },
       ],
     },
     {
-      title: "Sistema Especial Fazenda Chapéu",
+      title: "Sistema Especial Fazenda Chapéu - IDACE",
       subtitle: { pt: "", en: "" },
       tags: ["Scriptcase", "PHP", "JS", "Java Spring Boot", "PostgreSQL", "Docker", "Git"],
       link: "https://www.idace.ce.gov.br/",
@@ -527,21 +408,21 @@ export default function Page() {
         en: "System for regularizing land title records granted to the population of Ceará state.",
       },
       category: { pt: "Sistema Web", en: "Web System" },
-      thumb: "",
+      thumb: "/images/capa-idace.png",
       bgClass: FEATURED_PROJECT_BG,
       highlights: [
-        { icon: Clock, value: { pt: "10 meses de produção", en: "10 months in production" } },
+        { icon: Clock, value: { pt: "14 meses de produção", en: "14 months in production" } },
         { icon: Briefcase, value: { pt: "Desenvolvedor Full Stack", en: "Full Stack Developer" } },
         { icon: Building2, value: { pt: "Idealizador: SDA Ceará", en: "Idealized by: SDA Ceará" } },
       ],
       impact: [
-        { icon: Users, value: { pt: "600+", en: "600+" }, label: { pt: "Imóveis regularizados", en: "Regularized properties" } },
+        { icon: Users, value: { pt: "5.000+", en: "5,000+" }, label: { pt: "Imóveis regularizados", en: "Regularized properties" } },
         { icon: Gauge, value: { pt: "99,6%", en: "99.6%" }, label: { pt: "Uptime", en: "Uptime" } },
         { icon: TrendingDown, value: { pt: "-45%", en: "-45%" }, label: { pt: "Tempo de regularização", en: "Regularization time" } },
       ],
     },
     {
-      title: "Sistema de Indicadores de Demandas e Ações",
+      title: "Sistema de Indicadores de Demandas e Ações - SDA CE",
       subtitle: { pt: "", en: "" },
       tags: ["PHP", "Laravel", "PostgreSQL", "Docker", "Git"],
       link: "https://www.com3brasil.com.br/v9/app/demanda/login/",
@@ -551,7 +432,7 @@ export default function Page() {
         en: "Dashboard to track the department's demands and strategic actions, with real-time indicators.",
       },
       category: { pt: "Sistema Web", en: "Web System" },
-      thumb: "",
+      thumb: "/images/capa-indicadores.png",
       bgClass: FEATURED_PROJECT_BG,
       highlights: [
         { icon: Clock, value: { pt: "6 meses de produção", en: "6 months in production" } },
@@ -559,13 +440,61 @@ export default function Page() {
         { icon: Building2, value: { pt: "Idealizador: SDA Ceará", en: "Idealized by: SDA Ceará" } },
       ],
       impact: [
-        { icon: Users, value: { pt: "40+", en: "40+" }, label: { pt: "Demandas monitoradas/mês", en: "Demands tracked/month" } },
+        { icon: Users, value: { pt: "100+", en: "100+" }, label: { pt: "Demandas monitoradas/mês", en: "Demands tracked/month" } },
         { icon: Gauge, value: { pt: "99,5%", en: "99.5%" }, label: { pt: "Uptime", en: "Uptime" } },
         { icon: Rocket, value: { pt: "-25%", en: "-25%" }, label: { pt: "Tempo de resposta a demandas", en: "Demand response time" } },
       ],
     },
     {
-      title: "Website Instituto Anjos",
+      title: "Sistema Integra - Projeto São José IV",
+      subtitle: { pt: "", en: "" },
+      tags: ["Git", "Docker", ".NET", "C#", "Angular", "Prometheus", "Grafana"],
+      link: "https://integrapsj.sda.ce.gov.br/login",
+      ctaLabel: { pt: "Visite", en: "Visit" },
+      blurb: {
+        pt: "Sistema de gestão do Projeto São José IV, com monitoramento de indicadores via Grafana e Prometheus.",
+        en: "Management system for the São José IV Project, with indicator monitoring via Grafana and Prometheus.",
+      },
+      category: { pt: "Sistema Web", en: "Web System" },
+      thumb: "/images/capa-psjiv.png",
+      bgClass: FEATURED_PROJECT_BG,
+      highlights: [
+        { icon: Clock, value: { pt: "1 ano de produção", en: "1 year in production" } },
+        { icon: Briefcase, value: { pt: "Desenvolvedor Full Stack", en: "Full Stack Developer" } },
+        { icon: Building2, value: { pt: "Idealizador: Governo do Ceará", en: "Idealized by: Government of Ceará" } },
+      ],
+      impact: [
+        { icon: Users, value: { pt: "9.000+", en: "9,000+" }, label: { pt: "Usuários ativos", en: "Active users" } },
+        { icon: Gauge, value: { pt: "99,7%", en: "99.7%" }, label: { pt: "Uptime", en: "Uptime" } },
+        { icon: TrendingDown, value: { pt: "-30%", en: "-30%" }, label: { pt: "Tempo de coleta de indicadores", en: "Indicator collection time" } },
+      ],
+    },
+    {
+      title: "Sistema Diário de Obras - ALPHA",
+      subtitle: { pt: "", en: "" },
+      tags: ["NodeJS", "ExpressJS", "Prisma", "PostgreSQL", "Docker", "Git", "TailwindCSS", "TypeScript"],
+      link: "",
+      private: true,
+      blurb: {
+        pt: "Diário de obras digital para registrar atividades, ocorrências e o avanço físico da construção.",
+        en: "Digital construction logbook to record activities, incidents and physical progress.",
+      },
+      category: { pt: "Sistema Web", en: "Web System" },
+      thumb: "/images/capa-diario.png",
+      bgClass: FEATURED_PROJECT_BG,
+      highlights: [
+        { icon: Clock, value: { pt: "4 meses de produção", en: "4 months in production" } },
+        { icon: Briefcase, value: { pt: "Full Stack solo", en: "Solo Full Stack" } },
+        { icon: Building2, value: { pt: "Idealizador: Alfa Construções", en: "Idealized by: Alfa Construções" } },
+      ],
+      impact: [
+        { icon: Users, value: { pt: "12+", en: "12+" }, label: { pt: "Obras monitoradas", en: "Monitored construction sites" } },
+        { icon: Gauge, value: { pt: "99,4%", en: "99.4%" }, label: { pt: "Uptime", en: "Uptime" } },
+        { icon: TrendingDown, value: { pt: "-20%", en: "-20%" }, label: { pt: "Tempo de registro diário", en: "Daily log time" } },
+      ],
+    },
+    {
+      title: "Website Instituto Anjos Digitais",
       subtitle: { pt: "", en: "" },
       tags: ["WordPress", "PHP", "JS", "Bootstrap", "Docker", "Git"],
       link: "https://anjosdigitais.org/",
@@ -589,6 +518,30 @@ export default function Page() {
       ],
     },
     {
+      title: "Website Instituto Agropolos do Ceará",
+      subtitle: { pt: "", en: "" },
+      tags: ["WordPress", "PHP", "Symfony", "Figma"],
+      link: "https://institutoagropolos.org.br/",
+      ctaLabel: { pt: "Visite", en: "Visit" },
+      blurb: {
+        pt: "Site institucional do instituto, com apresentação de projetos e informações institucionais.",
+        en: "Institutional website for the institute, presenting projects and institutional information.",
+      },
+      category: { pt: "Site Institucional", en: "Institutional Website" },
+      thumb: "/images/capa-agropolos.png",
+      bgClass: FEATURED_PROJECT_BG,
+      highlights: [
+        { icon: Clock, value: { pt: "2 meses de desenvolvimento", en: "2 months of development" } },
+        { icon: Briefcase, value: { pt: "Frontend + CMS solo", en: "Solo frontend + CMS" } },
+        { icon: Building2, value: { pt: "Idealizador: Instituto Agropolos", en: "Idealized by: Instituto Agropolos" } },
+      ],
+      impact: [
+        { icon: Gauge, value: { pt: "99,8%", en: "99.8%" }, label: { pt: "Uptime", en: "Uptime" } },
+        { icon: Users, value: { pt: "3.000+", en: "3,000+" }, label: { pt: "Visitas mensais", en: "Monthly visits" } },
+        { icon: Rocket, value: { pt: "Projeto dinâmico", en: "Dynamic project" }, label: { pt: "Substitui site estático", en: "Replaces static site" } },
+      ],
+    },
+    {
       title: "Website UJVP CE",
       subtitle: { pt: "", en: "" },
       tags: ["WordPress", "PHP", "Docker", "Git"],
@@ -599,7 +552,7 @@ export default function Page() {
         en: "Institutional website for the nonprofit organization, with an overview and contact channels.",
       },
       category: { pt: "Site Institucional", en: "Institutional Website" },
-      thumb: "",
+      thumb: "/images/capa-ujvp.png",
       bgClass: FEATURED_PROJECT_BG,
       highlights: [
         { icon: Clock, value: { pt: "1 mês de desenvolvimento", en: "1 month of development" } },
@@ -612,78 +565,7 @@ export default function Page() {
       ],
     },
     {
-      title: "Integra - Projeto São José IV",
-      subtitle: { pt: "", en: "" },
-      tags: ["Git", "Docker", ".NET", "C#", "Angular", "Prometheus", "Grafana"],
-      link: "https://integrapsj.sda.ce.gov.br/login",
-      ctaLabel: { pt: "Visite", en: "Visit" },
-      blurb: {
-        pt: "Sistema de gestão do Projeto São José IV, com monitoramento de indicadores via Grafana e Prometheus.",
-        en: "Management system for the São José IV Project, with indicator monitoring via Grafana and Prometheus.",
-      },
-      category: { pt: "Sistema Web", en: "Web System" },
-      thumb: "",
-      bgClass: FEATURED_PROJECT_BG,
-      highlights: [
-        { icon: Clock, value: { pt: "1 ano de produção", en: "1 year in production" } },
-        { icon: Briefcase, value: { pt: "Desenvolvedor Full Stack", en: "Full Stack Developer" } },
-        { icon: Building2, value: { pt: "Idealizador: Governo do Ceará", en: "Idealized by: Government of Ceará" } },
-      ],
-      impact: [
-        { icon: Users, value: { pt: "80+", en: "80+" }, label: { pt: "Usuários ativos", en: "Active users" } },
-        { icon: Gauge, value: { pt: "99,7%", en: "99.7%" }, label: { pt: "Uptime", en: "Uptime" } },
-        { icon: TrendingDown, value: { pt: "-30%", en: "-30%" }, label: { pt: "Tempo de coleta de indicadores", en: "Indicator collection time" } },
-      ],
-    },
-    {
-      title: "FEDAF - Fundo Est. de Desenv. Agric.",
-      subtitle: { pt: "", en: "" },
-      tags: ["Git", "Docker", "PHP", "Laravel", "Angular", "Scriptcase"],
-      link: "https://sistemas2.sda.ce.gov.br/scriptcase/app/fedaf/login/",
-      ctaLabel: { pt: "Visite", en: "Visit" },
-      blurb: {
-        pt: "Sistema de gestão do Fundo Estadual de Desenvolvimento da Agricultura Familiar.",
-        en: "Management system for the State Fund for Family Agriculture Development.",
-      },
-      category: { pt: "Sistema Web", en: "Web System" },
-      thumb: "",
-      bgClass: FEATURED_PROJECT_BG,
-      highlights: [
-        { icon: Clock, value: { pt: "9 meses de produção", en: "9 months in production" } },
-        { icon: Briefcase, value: { pt: "Desenvolvedor Full Stack", en: "Full Stack Developer" } },
-        { icon: Building2, value: { pt: "Idealizador: Governo do Ceará", en: "Idealized by: Government of Ceará" } },
-      ],
-      impact: [
-        { icon: Users, value: { pt: "500+", en: "500+" }, label: { pt: "Produtores cadastrados", en: "Registered producers" } },
-        { icon: Gauge, value: { pt: "99,6%", en: "99.6%" }, label: { pt: "Uptime", en: "Uptime" } },
-        { icon: Rocket, value: { pt: "-35%", en: "-35%" }, label: { pt: "Tempo de análise de processos", en: "Process review time" } },
-      ],
-    },
-    {
-      title: "SECAF - Sis. Estadual de cad. da Agric. Famil.",
-      subtitle: { pt: "", en: "" },
-      tags: ["Git", "Docker", ".NET", "C#", "PHP"],
-      link: "https://sistemas2.sda.ce.gov.br/scriptcase/app/secaf/login/",
-      ctaLabel: { pt: "Visite", en: "Visit" },
-      blurb: {
-        pt: "Sistema estadual de cadastro de produtores da agricultura familiar.",
-        en: "State-level registry system for family farming producers.",
-      },
-      category: { pt: "Sistema Web", en: "Web System" },
-      thumb: "",
-      bgClass: FEATURED_PROJECT_BG,
-      highlights: [
-        { icon: Clock, value: { pt: "7 meses de produção", en: "7 months in production" } },
-        { icon: Briefcase, value: { pt: "Desenvolvedor Full Stack", en: "Full Stack Developer" } },
-        { icon: Building2, value: { pt: "Idealizador: Governo do Ceará", en: "Idealized by: Government of Ceará" } },
-      ],
-      impact: [
-        { icon: Users, value: { pt: "1.100+", en: "1,100+" }, label: { pt: "Produtores cadastrados", en: "Registered producers" } },
-        { icon: Gauge, value: { pt: "99,6%", en: "99.6%" }, label: { pt: "Uptime", en: "Uptime" } },
-      ],
-    },
-    {
-      title: "Website SDA Ceará",
+      title: "Website SDA CE",
       subtitle: { pt: "", en: "" },
       tags: ["WordPress", "PHP"],
       link: "https://www.sda.ce.gov.br/",
@@ -693,7 +575,7 @@ export default function Page() {
         en: "Institutional website for the Ceará State Agrarian Development Department, on which I worked on maintenance only.",
       },
       category: { pt: "Site Institucional", en: "Institutional Website" },
-      thumb: "",
+      thumb: "/images/capa-sda.jpeg",
       bgClass: FEATURED_PROJECT_BG,
       highlights: [
         { icon: Clock, value: { pt: "Manutenção contínua", en: "Ongoing maintenance" } },
@@ -702,7 +584,7 @@ export default function Page() {
       ],
       impact: [
         { icon: Gauge, value: { pt: "99,5%", en: "99.5%" }, label: { pt: "Uptime", en: "Uptime" } },
-        { icon: Users, value: { pt: "2.000+", en: "2,000+" }, label: { pt: "Visitas mensais", en: "Monthly visits" } },
+        { icon: Users, value: { pt: "10.000+", en: "10,000+" }, label: { pt: "Visitas mensais", en: "Monthly visits" } },
       ],
     },
     {
@@ -716,7 +598,7 @@ export default function Page() {
         en: "Institutional website for the law firm, presenting its practice areas and contact channels.",
       },
       category: { pt: "Site Institucional", en: "Institutional Website" },
-      thumb: "",
+      thumb: "/images/capa-silva-duarte.png",
       bgClass: FEATURED_PROJECT_BG,
       highlights: [
         { icon: Clock, value: { pt: "1 mês de desenvolvimento", en: "1 month of development" } },
@@ -725,31 +607,7 @@ export default function Page() {
       ],
       impact: [
         { icon: Gauge, value: { pt: "99,9%", en: "99.9%" }, label: { pt: "Uptime", en: "Uptime" } },
-        { icon: Users, value: { pt: "250+", en: "250+" }, label: { pt: "Visitas mensais", en: "Monthly visits" } },
-      ],
-    },
-    {
-      title: "Sistema Diário de Obras",
-      subtitle: { pt: "", en: "" },
-      tags: ["NodeJS", "ExpressJS", "Prisma", "PostgreSQL", "Docker", "Git", "TailwindCSS", "TypeScript"],
-      link: "",
-      private: true,
-      blurb: {
-        pt: "Diário de obras digital para registrar atividades, ocorrências e o avanço físico da construção.",
-        en: "Digital construction logbook to record activities, incidents and physical progress.",
-      },
-      category: { pt: "Sistema Web", en: "Web System" },
-      thumb: "",
-      bgClass: FEATURED_PROJECT_BG,
-      highlights: [
-        { icon: Clock, value: { pt: "4 meses de produção", en: "4 months in production" } },
-        { icon: Briefcase, value: { pt: "Full Stack solo", en: "Solo Full Stack" } },
-        { icon: Building2, value: { pt: "Idealizador: Alfa Construções", en: "Idealized by: Alfa Construções" } },
-      ],
-      impact: [
-        { icon: Users, value: { pt: "12+", en: "12+" }, label: { pt: "Obras monitoradas", en: "Monitored construction sites" } },
-        { icon: Gauge, value: { pt: "99,4%", en: "99.4%" }, label: { pt: "Uptime", en: "Uptime" } },
-        { icon: TrendingDown, value: { pt: "-20%", en: "-20%" }, label: { pt: "Tempo de registro diário", en: "Daily log time" } },
+        { icon: Users, value: { pt: "100+", en: "100+" }, label: { pt: "Visitas mensais", en: "Monthly visits" } },
       ],
     },
   ];
@@ -761,6 +619,7 @@ export default function Page() {
     period: string;
     remote?: boolean;
     languages?: string;
+    location: string;
   }> = [
     {
       company: "Star Capital",
@@ -769,20 +628,23 @@ export default function Page() {
         en: "Software Engineer | Project Management",
       },
       period: "06/2025-07/2026",
+      location: "Fortaleza - CE",
     },
     {
-      company: "FlixBus Tickets 🇮🇪",
+      company: "FlixBus Tickets",
       role: { pt: "Sênior Desenvolvedor Full Stack", en: "Senior Full Stack Developer" },
       period: "2024–2025",
       remote: true,
       languages: "PT/EN",
+      location: "Dublin - Irlanda, UK",
     },
     {
-      company: "FedEX Services 🇵🇹",
+      company: "FedEX Services",
       role: { pt: "Sênior Desenvolvedor Full Stack", en: "Senior Full Stack Developer" },
       period: "2024–2025",
       remote: true,
       languages: "PT/EN",
+      location: "Dublin - Irlanda, UK",
     },
     {
       company: "Instituto Anjos Digitais",
@@ -792,6 +654,7 @@ export default function Page() {
       },
       period: "2023–2024",
       remote: true,
+      location: "Fortaleza - CE",
     },
     {
       company: "Secretaria do Desenvolvimento Agrário (CE)",
@@ -801,6 +664,7 @@ export default function Page() {
         en: "Mid-level Systems Analyst | Product Designer",
       },
       period: "2021–2023",
+      location: "Fortaleza - CE",
     },
     {
       company: "Instituto Agropolos do Ceará",
@@ -811,6 +675,7 @@ export default function Page() {
       },
       period: "2021–2023",
       remote: true,
+      location: "Fortaleza - CE",
     },
     {
       company: "Com3 Brasil",
@@ -819,12 +684,14 @@ export default function Page() {
         en: "Jr Systems Analyst",
       },
       period: "2020–2021",
+      location: "Fortaleza - CE",
     },
     {
       company: "Grupo Laredo Atacadista",
       startRole: { pt: "Auxiliar de gerência", en: "Assistant Manager" },
       role: { pt: "Gerente Operacional de Mercado", en: "Store Operations Manager" },
       period: "2017–2020",
+      location: "Fortaleza - CE",
     },
     {
       company: "White Martins Gases Industriais e Medicinais",
@@ -834,6 +701,7 @@ export default function Page() {
         en: "Unit Manager — URC Fortaleza",
       },
       period: "2015–2017",
+      location: "Fortaleza - CE",
     },
   ];
 
@@ -878,6 +746,28 @@ export default function Page() {
       );
     }
 
+    const outlineClass =
+      "border border-white/35 text-white hover:bg-white hover:text-violet-700 hover:border-white hover:scale-[1.03]";
+
+    if (project.link && project.caseStudy) {
+      return (
+        <div className="flex flex-wrap items-center gap-3">
+          <a
+            href={project.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`${ctaClass} ${solidClass}`}
+          >
+            {project.ctaLabel ? t(project.ctaLabel) : t({ pt: "Visite o website", en: "Visit website" })}
+          </a>
+          <Link href={project.caseStudy} className={`${ctaClass} ${outlineClass}`}>
+            {t({ pt: "Ver estudo de caso", en: "View case study" })}
+            <FileText className="h-3.5 w-3.5" />
+          </Link>
+        </div>
+      );
+    }
+
     if (project.caseStudy) {
       return (
         <Link href={project.caseStudy} className={`${ctaClass} ${solidClass}`}>
@@ -911,14 +801,15 @@ export default function Page() {
   };
 
   const navLinks = [
-    { href: "#intro", label: { pt: "Sobre", en: "About" } },
-    { href: "#skills-tools", label: { pt: "Skills & Tools", en: "Skills & Tools" } },
-    { href: "#projects", label: { pt: "Projetos", en: "Projects" } },
-    { href: "#experience", label: { pt: "Trajetória", en: "Journey" } },
-    { href: "#about", label: { pt: "Contato", en: "Contact" } },
+    { href: "/", label: { pt: "Início", en: "Home" } },
+    { href: "/#intro", label: { pt: "Sobre", en: "About" } },
+    { href: "/#skills-tools", label: { pt: "Skills & Tools", en: "Skills & Tools" } },
+    { href: "/#projects", label: { pt: "Projetos", en: "Projects" } },
+    { href: "/#experience", label: { pt: "Trajetória", en: "Journey" } },
+    { href: "/#about", label: { pt: "Contato", en: "Contact" } },
   ];
 
-  const searchIndex: Array<{ label: string; href: string; group: Bilingual }> = [
+  const searchIndex: SearchEntry[] = [
     ...navLinks.map((link) => ({
       label: t(link.label),
       href: link.href,
@@ -926,30 +817,15 @@ export default function Page() {
     })),
     ...featuredProjects.map((p) => ({
       label: p.title,
-      href: "#projects",
+      href: "/#projects",
       group: { pt: "Projeto", en: "Project" },
     })),
     ...SKILL_NAMES.map((name) => ({
       label: name,
-      href: "#skills-tools",
+      href: "/#skills-tools",
       group: { pt: "Skill", en: "Skill" },
     })),
   ];
-
-  const searchResults =
-    searchQuery.trim().length > 0
-      ? searchIndex
-          .filter((entry) =>
-            entry.label.toLowerCase().includes(searchQuery.trim().toLowerCase())
-          )
-          .slice(0, 7)
-      : [];
-
-  const handleSearchSelect = (href: string) => {
-    setSearchOpen(false);
-    setSearchQuery("");
-    document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
-  };
 
   return (
     <div className="min-h-screen font-sans relative isolate">
@@ -962,133 +838,7 @@ export default function Page() {
 
       <div className="relative z-10">
         {/* NAV */}
-        <header
-          className={`sticky top-0 z-50 border-b transition-all duration-300 ${
-            headerBlurred
-              ? "border-white/10 bg-white/10 backdrop-blur-xl shadow-lg shadow-black/30"
-              : "border-white/5 bg-black/80"
-          }`}
-        >
-          <div className="mx-auto max-w-7xl px-3 sm:px-6 lg:px-8">
-            <div className="flex items-center justify-between py-4 md:py-0 md:h-16">
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.6, ease: easeOut }}
-                className="flex items-center gap-2 sm:gap-3"
-              >
-                {/* Logo */}
-                <Image
-                  src="/images/FCO.png"
-                  alt="FCOPTS — Francisco Pontes"
-                  width={2500}
-                  height={544}
-                  priority
-                  className="h-9 sm:h-10 w-auto"
-                />
-              </motion.div>
-              <motion.nav
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.6, ease: easeOut, delay: 0.1 }}
-                className="hidden md:flex items-center gap-8 text-sm"
-              >
-                <div className="flex items-center gap-8">
-                  {navLinks.map((link) => (
-                    <a
-                      key={link.href}
-                      href={link.href}
-                      className="hover:text-white/90 text-zinc-300"
-                    >
-                      {t(link.label)}
-                    </a>
-                  ))}
-                </div>
-                <div className="flex items-center gap-3">
-                  <LanguageSwitch lang={lang} setLang={setLang} />
-                  <a
-                    href={CV_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-3 py-1.5 rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-500 text-white shadow-lg shadow-fuchsia-700/20"
-                  >
-                    {t({ pt: "Baixar CV", en: "Download CV" })}
-                  </a>
-                  <SearchBox
-                    searchOpen={searchOpen}
-                    setSearchOpen={setSearchOpen}
-                    searchQuery={searchQuery}
-                    setSearchQuery={setSearchQuery}
-                    searchResults={searchResults}
-                    onSelect={handleSearchSelect}
-                    t={t}
-                    align="right"
-                  />
-                </div>
-              </motion.nav>
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.6, ease: easeOut, delay: 0.1 }}
-                className="flex items-center gap-2 md:hidden"
-              >
-                <LanguageSwitch lang={lang} setLang={setLang} compact />
-                <SearchBox
-                  searchOpen={searchOpen}
-                  setSearchOpen={setSearchOpen}
-                  searchQuery={searchQuery}
-                  setSearchQuery={setSearchQuery}
-                  searchResults={searchResults}
-                  onSelect={handleSearchSelect}
-                  t={t}
-                  align="right"
-                />
-                <button
-                  type="button"
-                  className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-black/25 hover:bg-black/35 p-2.5 transition-colors"
-                  onClick={() => setNavOpen(!navOpen)}
-                  aria-expanded={navOpen}
-                  aria-controls="mobile-nav"
-                >
-                  <span className="sr-only">{t({ pt: "Abrir menu", en: "Open menu" })}</span>
-                  {navOpen ? (
-                    <X className="h-5 w-5 text-zinc-200" />
-                  ) : (
-                    <Menu className="h-5 w-5 text-zinc-200" />
-                  )}
-                </button>
-              </motion.div>
-            </div>
-          </div>
-          {navOpen && (
-            <div
-              id="mobile-nav"
-              className="md:hidden border-t border-white/5 bg-[#141418]"
-            >
-              <div className="mx-auto max-w-7xl px-3 py-4 flex flex-col gap-2">
-                <a
-                  href={CV_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-center rounded-xl px-3 py-3 bg-gradient-to-r from-violet-600 to-fuchsia-500 text-white font-medium shadow-lg shadow-fuchsia-700/20"
-                  onClick={() => setNavOpen(false)}
-                >
-                  {t({ pt: "Baixar CV", en: "Download CV" })}
-                </a>
-                {navLinks.map((i) => (
-                  <a
-                    key={i.href}
-                    href={i.href}
-                    className="text-zinc-200 text-sm rounded-xl px-3 py-3 hover:bg-gradient-to-r hover:from-violet-600/20 hover:to-fuchsia-500/20 transition-all"
-                    onClick={() => setNavOpen(false)}
-                  >
-                    {t(i.label)}
-                  </a>
-                ))}
-              </div>
-            </div>
-          )}
-        </header>
+        <SiteHeader navLinks={navLinks} searchIndex={searchIndex} />
 
         <main id="content">
           <Hero />
@@ -1174,23 +924,23 @@ export default function Page() {
                       whileInView={{ opacity: 1 }}
                       viewport={viewportSettings}
                       transition={{ duration: 0.7, ease: easeOut }}
-                      className="mt-12 space-y-4 text-zinc-300 text-[15px] sm:text-[16px] leading-relaxed"
+                      className="mt-12 space-y-4 text-zinc-300 text-[17px] sm:text-[16px] leading-relaxed"
                     >
                       <p>
                         {t({
-                          pt: "Atuo como Engenheiro de Software e tenho mais de 6 anos de experiência em desenvolvimento Web/Mobile, DevOps e entusiasta de operações UX/UI. Tenho perfil multidisciplinar e atuo na construção de soluções digitais de ponta a ponta.",
-                          en: "I'm a Software Engineer with over 6 years of experience in Web/Mobile development, DevOps, and I'm an enthusiast of UX/UI operations. I have a multidisciplinary profile and work on building end-to-end digital solutions.",
+                          pt: "Atuo como Engenheiro de Software e tenho mais de 6 anos de experiência em desenvolvimento Web/Mobile, DevOps e sou entusiasta de operações UX/UI. Tenho perfil multidisciplinar e atuo na construção de soluções digitais de ponta a ponta.",
+                          en: "I work as a Software Engineer with over 6 years of experience in Web/Mobile development, DevOps, and I'm an enthusiast of UX/UI operations. I have a multidisciplinary profile and work on building end-to-end digital solutions.",
                         })}
                       </p>
                       <p>
                         {t({
-                          pt: "Ao longo da minha trajetória, participei de projetos em sistemas legado para o setor público, setor privado e iniciativas internacionais, passando por empresas como Star Capital, Instituto Anjos Digitais, Secretaria do Desenvolvimento Agrário do Ceará, Instituto Agropolos do Ceará, Com3 Brasil, Grupo Laredo, White Martins Gases do Ar e experiências internacionais. Essa vivência me permitiu atuar em produtos digitais de diferentes complexidades*.",
-                          en: "Throughout my career, I've worked on legacy system projects for the public sector, private sector and international initiatives, passing through companies such as Star Capital, Instituto Anjos Digitais, Secretaria do Desenvolvimento Agrário do Ceará, Instituto Agropolos do Ceará, Com3 Brasil, Grupo Laredo, White Martins Gases do Ar, and international experiences. That journey let me work on digital products of different complexities*.",
+                          pt: "Ao longo da minha trajetória, participei de projetos em sistemas legado para o setor público, construções de soluções digitais do zero no setor privado e experiência internacional. Toda essa trajetória me permitiu atuar em distintos produtos digitais de diferentes complexidades.",
+                          en: "Throughout my career, I've worked on legacy system projects in the public sector, built digital solutions from scratch in the private sector, and gained international experience. That journey let me work on distinct digital products of different complexities.",
                         })}{" "}
                         <span className="italic text-violet-300">
                           {t({
-                            pt: "Uso, automatizo e me especializo cada vez mais em Inteligência Artificial mas ainda sou da geração old school que codificava na mão consultando o stackoverflow*, rs.",
-                            en: "I use, automate and keep specializing in Artificial Intelligence — but the old-school generation that used to hand-code while checking StackOverflow* is still alive, ha.",
+                            pt: "Uso, automatizo e me especializo cada vez mais em Inteligência Artificial mas ainda sou da geração old school que codificava na mão consultando o stackoverflow*, rs. Seja bem vindo ao meu portfólio.",
+                            en: "I use, automate and keep specializing in Artificial Intelligence — but the old-school generation that used to hand-code while checking StackOverflow* is still alive, ha. Welcome to my portfolio.",
                           })}
                         </span>
                       </p>
@@ -1221,10 +971,6 @@ export default function Page() {
                     />
                   </div>
                 </div>
-
-                <div className="relative px-8 pt-8 pb-8 md:px-12 md:pt-0 md:pb-12">
-                  <GithubStats />
-                </div>
               </div>
             </div>
           </section>
@@ -1250,8 +996,8 @@ export default function Page() {
                 </motion.h2>
                 <p className="mt-2 text-[10px] font-light uppercase tracking-[0.2em] text-zinc-500">
                   {t({
-                    pt: "Portfolio de Francisco Pontes — Engenheiro de Software Full Stack",
-                    en: "Francisco Pontes' Portfolio — Full Stack Software Engineer",
+                    pt: "Portfólio — projetos públicos, visíveis a qualquer pessoa na web",
+                    en: "Portfolio — public projects, visible to anyone on the web",
                   })}
                 </p>
               </div>
@@ -1272,22 +1018,26 @@ export default function Page() {
                     <motion.article
                       custom={0}
                       variants={fadeUpItem}
-                      className="rounded-3xl overflow-hidden border border-white/10 shadow-2xl grid md:grid-cols-2 items-stretch hover:border-white/20 hover:-translate-y-1 transition-all duration-300"
+                      className="group rounded-3xl overflow-hidden border border-white/10 shadow-2xl grid md:grid-cols-2 items-stretch hover:border-white/20 hover:-translate-y-1 transition-all duration-300"
                     >
-                      <div className="relative min-h-[260px] md:min-h-full">
+                      <div className="relative min-h-[260px] md:min-h-full bg-[#1a1425]">
                         {heroProject.thumb ? (
-                          <Image
-                            src={heroProject.thumb}
-                            alt={`${t({ pt: "Capa do projeto", en: "Project cover" })}: ${heroProject.title}`}
-                            fill
-                            sizes="(max-width: 768px) 100vw, 50vw"
-                            className="object-cover object-center"
-                          />
+                          <>
+                            <Image
+                              src={heroProject.thumb}
+                              alt={`${t({ pt: "Capa do projeto", en: "Project cover" })}: ${heroProject.title}`}
+                              fill
+                              sizes="(max-width: 768px) 100vw, 50vw"
+                              loading="eager"
+                              className="object-cover object-center"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-br from-violet-950/25 via-black/15 to-black/20 opacity-100 group-hover:opacity-0 transition-opacity duration-300 pointer-events-none" />
+                          </>
                         ) : (
-                          <div className="h-full min-h-[260px] w-full bg-gradient-to-br from-violet-500/20 via-transparent to-fuchsia-500/20" />
+                          <div className="h-full min-h-[260px] w-full bg-gradient-to-br from-violet-600/35 via-fuchsia-500/20 to-violet-900/40" />
                         )}
                       </div>
-                      <div className={`relative flex flex-col justify-center p-8 md:p-10 overflow-hidden ${heroProject.bgClass}`}>
+                      <div className={`relative flex flex-col justify-center p-5 sm:p-6 md:p-10 overflow-hidden ${heroProject.bgClass}`}>
                         <div className="absolute inset-0 bg-black/35 pointer-events-none" />
                         <div className="relative">
                           <span className="inline-block w-fit px-2 py-0.5 rounded-md text-[10px] font-medium bg-white/10 text-violet-200 border border-white/20 mb-4">
@@ -1357,7 +1107,8 @@ export default function Page() {
                 <div
                   ref={featuredScrollRef}
                   onScroll={updateFeaturedScrollProgress}
-                  className="flex gap-8 overflow-x-auto snap-x snap-mandatory scroll-smooth pt-1 pb-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+                  className="flex gap-8 overflow-x-auto overflow-y-hidden overscroll-x-contain snap-x snap-mandatory scroll-smooth pt-1 pb-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+                  style={{ touchAction: "pan-x" }}
                 >
                   {featuredProjects.slice(1).map((project, index) => {
                     const cta = renderProjectCta(project);
@@ -1367,29 +1118,33 @@ export default function Page() {
                         key={project.title}
                         custom={index + 1}
                         variants={fadeUpItem}
-                        className="snap-start shrink-0 w-[88%] sm:w-[calc(50%-1rem)] rounded-3xl overflow-hidden border border-white/10 shadow-2xl flex flex-col hover:border-white/20 hover:-translate-y-1 transition-all duration-300"
+                        className="group snap-start shrink-0 w-[88%] sm:w-[calc(50%-1rem)] rounded-3xl overflow-hidden border border-white/10 shadow-2xl flex flex-col hover:border-white/20 hover:-translate-y-1 transition-all duration-300"
                       >
-                        <div className="relative h-56 w-full">
+                        <div className="relative h-40 w-full bg-[#1a1425]">
                           {project.thumb ? (
-                            <Image
-                              src={project.thumb}
-                              alt={`${t({ pt: "Capa do projeto", en: "Project cover" })}: ${project.title}`}
-                              fill
-                              sizes="(max-width: 768px) 100vw, 50vw"
-                              className="object-cover object-center"
-                            />
+                            <>
+                              <Image
+                                src={project.thumb}
+                                alt={`${t({ pt: "Capa do projeto", en: "Project cover" })}: ${project.title}`}
+                                fill
+                                sizes="(max-width: 768px) 100vw, 50vw"
+                                loading="eager"
+                                className="object-cover object-center"
+                              />
+                              <div className="absolute inset-0 bg-gradient-to-br from-violet-950/25 via-black/15 to-black/20 opacity-100 group-hover:opacity-0 transition-opacity duration-300 pointer-events-none" />
+                            </>
                           ) : (
-                            <div className="h-full w-full bg-gradient-to-br from-violet-500/20 via-transparent to-fuchsia-500/20" />
+                            <div className="h-full w-full bg-gradient-to-br from-violet-600/35 via-fuchsia-500/20 to-violet-900/40" />
                           )}
                         </div>
-                        <div className={`relative flex-1 flex flex-col p-8 overflow-hidden ${project.bgClass}`}>
+                        <div className={`relative flex-1 flex flex-col p-4 sm:p-5 md:p-6 overflow-hidden ${project.bgClass}`}>
                           <div
                             className={`absolute inset-0 pointer-events-none ${
                               project.scrimClass ?? "bg-gradient-to-t from-black/20 via-transparent to-white/5"
                             }`}
                           />
                           <div className="relative flex-1 flex flex-col">
-                            <span className="inline-block w-fit px-2 py-0.5 rounded-md text-[10px] font-medium bg-white/10 text-violet-200 border border-white/20 mb-4">
+                            <span className="inline-block w-fit px-2 py-0.5 rounded-md text-[10px] font-medium bg-white/10 text-violet-200 border border-white/20 mb-2.5">
                               {t(project.category)}
                             </span>
                             <h3 className="text-xl font-bold text-white">
@@ -1400,11 +1155,11 @@ export default function Page() {
                                 {t(project.subtitle)}
                               </span>
                             )}
-                            <p className="mt-4 text-sm text-zinc-200 leading-relaxed">
+                            <p className="mt-2.5 text-sm text-zinc-200 leading-relaxed">
                               {t(project.blurb)}
                             </p>
                             {project.highlights && (
-                              <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2">
+                              <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2">
                                 {project.highlights.map((h, i) => {
                                   const Icon = h.icon;
                                   return (
@@ -1421,7 +1176,7 @@ export default function Page() {
                             )}
                             {project.impact && (
                               <div
-                                className={`mt-5 pt-5 border-t border-white/10 grid gap-4 ${
+                                className={`mt-3 pt-3 border-t border-white/10 grid gap-4 ${
                                   project.impact.length === 3 ? "grid-cols-3" : "grid-cols-2 sm:grid-cols-4"
                                 }`}
                               >
@@ -1441,12 +1196,12 @@ export default function Page() {
                                 })}
                               </div>
                             )}
-                            <div className="mt-5 flex flex-wrap gap-2">
+                            <div className="mt-3 flex flex-wrap gap-2">
                               {project.tags.map((tag) => (
                                 <ProjectTagIcon key={tag} tag={tag} />
                               ))}
                             </div>
-                            <div className="mt-auto pt-7">{cta}</div>
+                            <div className="mt-auto pt-4 flex justify-center sm:justify-start">{cta}</div>
                           </div>
                         </div>
                       </motion.article>
@@ -1454,18 +1209,26 @@ export default function Page() {
                   })}
                 </div>
 
-                <div className="mt-4 mx-auto h-1.5 w-full max-w-xs rounded-full bg-white/10 overflow-hidden">
-                  <div
-                    className="h-full rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500 transition-[margin-left] duration-150"
-                    style={{
-                      width: `${featuredThumbWidth}%`,
-                      marginLeft: `${featuredScrollProgress * (100 - featuredThumbWidth)}%`,
-                    }}
-                  />
+                <div className="mt-3">
+                  <div className="mx-auto h-1.5 w-full max-w-xs rounded-full bg-white/10 overflow-hidden">
+                    <div
+                      className="h-full rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500 transition-[margin-left] duration-150"
+                      style={{
+                        width: `${featuredThumbWidth}%`,
+                        marginLeft: `${featuredScrollProgress * (100 - featuredThumbWidth)}%`,
+                      }}
+                    />
+                  </div>
+                  <p
+                    className="mt-4 text-center text-lg font-semibold leading-none tabular-nums"
+                    style={{ fontFamily: "var(--font-space-grotesk)", color: "#e879f9" }}
+                  >
+                    {featuredCurrentIndex + 1}/{featuredProjects.length - 1}
+                  </p>
+                  <p className="mt-2.5 text-center text-[11.5px] leading-none text-zinc-500">
+                    {featuredProjects[featuredCurrentIndex + 1]?.title}
+                  </p>
                 </div>
-                <p className="mt-1.5 text-center text-[11px] text-zinc-500 tabular-nums">
-                  {featuredCurrentIndex + 1}/{featuredProjects.length - 1}
-                </p>
               </motion.div>
 
             </div>
@@ -1537,6 +1300,10 @@ export default function Page() {
                     <p className="text-xs text-violet-300 leading-relaxed">
                       <Briefcase className="inline h-3 w-3 -mt-0.5 mr-1" />
                       {t(exp.role)}
+                    </p>
+                    <p className="text-xs text-violet-300 leading-relaxed mt-1">
+                      <MapPin className="inline h-3 w-3 -mt-0.5 mr-1" />
+                      {exp.location}
                     </p>
                     {exp.startRole ? (
                       <div className="text-[10px] text-zinc-400 mt-2 flex items-center gap-2">
@@ -1829,37 +1596,7 @@ export default function Page() {
 
         </main>
 
-        <footer
-          className="py-10 border-t border-white/5 text-center text-[11px] text-zinc-400"
-          style={{ backgroundColor: "#141418" }}
-        >
-          <div>
-            {t({ pt: "Feito à mão", en: "Handmade" })} | © 2026 Francisco Pontes
-          </div>
-          <div className="mt-3 flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5">
-            <a
-              href="https://creativecommons.org/licenses/by-nc/4.0/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-zinc-600 hover:text-zinc-300 transition-colors"
-            >
-              Creative Commons BY-NC 4.0
-            </a>
-            <span className="text-zinc-700">·</span>
-            <Link href="/privacidade" className="text-zinc-600 hover:text-zinc-300 transition-colors">
-              {t({ pt: "Privacidade", en: "Privacy" })}
-            </Link>
-            <span className="text-zinc-700">·</span>
-            <a
-              href="https://vercel.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-zinc-600 hover:text-zinc-300 transition-colors"
-            >
-              {t({ pt: "Hospedado na Vercel", en: "Hosted on Vercel" })}
-            </a>
-          </div>
-        </footer>
+        <SiteFooter />
       </div>
     </div>
   );
