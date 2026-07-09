@@ -3,10 +3,79 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { Code2, Monitor, Terminal, Cpu, Braces, Database, GitBranch, Layers } from "lucide-react";
+import { Code2, Monitor, Terminal, Cpu, Braces, Database, GitBranch } from "lucide-react";
 import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
 
 const easeOut = [0.16, 1, 0.3, 1] as const;
+
+const TYPED_NAME = "francisco\npontes";
+
+function TypedName({ onDone }: { onDone: () => void }) {
+  const [count, setCount] = useState(0);
+  const done = count >= TYPED_NAME.length;
+
+  useEffect(() => {
+    if (done) {
+      onDone();
+      return;
+    }
+    const timer = setTimeout(() => setCount((c) => c + 1), 65);
+    return () => clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [count, done]);
+
+  const [line1, line2 = ""] = TYPED_NAME.slice(0, count).split("\n");
+
+  return (
+    <>
+      {line1}
+      <br />
+      {line2}
+      <span className={done ? "typewriter-cursor" : ""} style={{ color: "#e879f9" }}>
+        _
+      </span>
+    </>
+  );
+}
+
+type TypedSegment = { text: string; bold?: boolean; color?: string };
+
+function TypedParagraph({ segments, start }: { segments: TypedSegment[]; start: boolean }) {
+  const full = segments.map((s) => s.text).join("");
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    if (!start || count >= full.length) return;
+    const timer = setTimeout(() => setCount((c) => c + 1), 14);
+    return () => clearTimeout(timer);
+  }, [start, count, full.length]);
+
+  let remaining = count;
+  const nodes: React.ReactNode[] = [];
+
+  segments.forEach((seg, i) => {
+    if (remaining <= 0) return;
+    if (seg.text === "\n") {
+      nodes.push(<br key={i} />);
+      remaining -= 1;
+      return;
+    }
+    const take = Math.min(remaining, seg.text.length);
+    const chunk = seg.text.slice(0, take);
+    nodes.push(
+      seg.bold ? (
+        <b key={i} className="font-semibold" style={{ color: seg.color ?? "#ffffff" }}>
+          {chunk}
+        </b>
+      ) : (
+        <span key={i}>{chunk}</span>
+      )
+    );
+    remaining -= take;
+  });
+
+  return <>{nodes}</>;
+}
 
 const floatingIcons = [
   { Icon: Code2, top: "10%", left: "5%", duration: 5.5, delay: 0 },
@@ -16,7 +85,6 @@ const floatingIcons = [
   { Icon: Braces, top: "34%", left: "3%", duration: 5.8, delay: 1.2 },
   { Icon: Database, top: "50%", left: "58%", duration: 6.2, delay: 0.4 },
   { Icon: GitBranch, top: "18%", left: "38%", duration: 5.2, delay: 0.8 },
-  { Icon: Layers, top: "64%", left: "32%", duration: 6.8, delay: 1.5 },
 ];
 
 function FloatingTechIcons() {
@@ -56,10 +124,10 @@ function FloatingTechIcons() {
           style={{
             top,
             left,
-            background: "rgba(168,85,247,.04)",
-            border: "1px solid rgba(168,85,247,.1)",
+            background: "rgba(168,85,247,.03)",
+            border: "1px solid rgba(168,85,247,.07)",
             backdropFilter: "blur(4px)",
-            boxShadow: "0 0 20px rgba(168,85,247,.06)",
+            boxShadow: "0 0 20px rgba(168,85,247,.04)",
           }}
           animate={{
             y: [0, -22, 0, 16, 0],
@@ -80,6 +148,28 @@ function FloatingTechIcons() {
 export default function Hero() {
   const { lang } = useLanguage();
   const t = (v: Bilingual) => tr(lang, v);
+  const [nameDone, setNameDone] = useState(false);
+
+  const descriptionSegments: TypedSegment[] =
+    lang === "pt"
+      ? [
+          { text: "Engenheiro de software em " },
+          { text: "Fortaleza, Brasil", bold: true },
+          { text: "." },
+          { text: "\n" },
+          { text: "Uso código e engenharia para dar vida a " },
+          { text: "novas ideias", bold: true, color: "#c4a6f7" },
+          { text: "." },
+        ]
+      : [
+          { text: "Software engineer based in " },
+          { text: "Fortaleza, Brazil", bold: true },
+          { text: "." },
+          { text: "\n" },
+          { text: "I use code and engineering to bring " },
+          { text: "new ideas", bold: true, color: "#c4a6f7" },
+          { text: " to life." },
+        ];
 
   return (
     <section
@@ -115,7 +205,7 @@ export default function Hero() {
         style={{
           width: "min(55vw, 820px)",
           background:
-            "radial-gradient(58% 60% at 62% 44%, rgba(150,90,195,.4), rgba(120,65,175,.24) 45%, rgba(80,42,140,.1) 66%, transparent 78%)",
+            "radial-gradient(58% 60% at 62% 44%, rgba(75,40,105,.6), rgba(55,28,85,.42) 45%, rgba(35,16,60,.2) 66%, transparent 78%)",
         }}
       />
       <div
@@ -136,12 +226,13 @@ export default function Hero() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1, ease: easeOut }}
-            className="inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-medium"
+            className="inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs"
             style={{
               border: "1px solid rgba(158,232,200,.3)",
               background: "rgba(158,232,200,.06)",
               color: "#9fe8c8",
               fontFamily: "var(--font-jetbrains-mono)",
+              fontWeight: 400,
             }}
           >
             <span className="relative flex h-[7px] w-[7px] shrink-0">
@@ -160,6 +251,7 @@ export default function Hero() {
               fontFamily: "var(--font-jetbrains-mono)",
               letterSpacing: "0.04em",
               color: "#a78bfa",
+              fontWeight: 300,
             }}
           >
             {t({ pt: "Olá, meu nome é", en: "Hi, my name is" })}
@@ -179,9 +271,7 @@ export default function Hero() {
               color: "#ffffff",
             }}
           >
-            francisco
-            <br />
-            pontes_
+            <TypedName onDone={() => setNameDone(true)} />
           </motion.h1>
 
           <motion.p
@@ -191,27 +281,7 @@ export default function Hero() {
             className="mt-6 max-w-[490px] mx-auto lg:mx-0 text-lg leading-relaxed"
             style={{ color: "#a9a6b4", fontFamily: "var(--font-space-grotesk)" }}
           >
-            {lang === "pt" ? (
-              <>
-                Engenheiro de software em <b className="text-white font-semibold">Fortaleza, Brasil</b>.
-                <br />
-                Uso código e engenharia para dar vida a{" "}
-                <b style={{ color: "#c4a6f7" }} className="font-semibold">
-                  novas ideias
-                </b>
-                .
-              </>
-            ) : (
-              <>
-                Software engineer based in <b className="text-white font-semibold">Fortaleza, Brazil</b>.
-                <br />
-                I use code and engineering to bring{" "}
-                <b style={{ color: "#c4a6f7" }} className="font-semibold">
-                  new ideas
-                </b>{" "}
-                to life.
-              </>
-            )}
+            <TypedParagraph segments={descriptionSegments} start={nameDone} />
           </motion.p>
         </div>
       </div>
