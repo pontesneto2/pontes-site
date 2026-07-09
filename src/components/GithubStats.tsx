@@ -62,7 +62,7 @@ export default function GithubStats() {
 
   if (error) {
     return (
-      <div className="relative rounded-3xl border border-white/10 bg-black/55 backdrop-blur-xl p-6 md:p-8 shadow-2xl overflow-hidden">
+      <div className="relative rounded-3xl border border-white/10 bg-black/55 backdrop-blur-xl p-4 sm:p-6 md:p-8 shadow-2xl overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-violet-500/5 via-transparent to-fuchsia-500/5" />
         <div className="relative flex items-center justify-between gap-4">
           <div>
@@ -106,7 +106,7 @@ export default function GithubStats() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.7, ease: "easeOut" }}
-      className="relative rounded-3xl border border-white/10 bg-black/55 backdrop-blur-xl p-6 md:p-8 shadow-2xl overflow-hidden"
+      className="relative rounded-3xl border border-white/10 bg-black/55 backdrop-blur-xl p-4 sm:p-6 md:p-8 shadow-2xl overflow-hidden"
     >
       <div className="absolute inset-0 bg-gradient-to-br from-violet-500/5 via-transparent to-fuchsia-500/5" />
       <div className="relative">
@@ -137,7 +137,7 @@ export default function GithubStats() {
           {(data ? stats : Array.from({ length: 3 })).map((stat, index) => (
             <div
               key={stat ? (stat as { label: string }).label : index}
-              className="p-4 min-h-[92px]"
+              className="p-2 sm:p-4 min-h-[92px]"
             >
               {stat ? (
                 <>
