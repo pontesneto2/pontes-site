@@ -1,13 +1,11 @@
 "use client";
 
-import { useState } from "react";
-import Link from "next/link";
-import { Menu, X } from "lucide-react";
 import CaseHero from "@/components/case/CaseHero";
 import CaseContent from "@/components/case/CaseContent";
 import CaseLearnings from "@/components/case/CaseLearnings";
 import CaseCTA from "@/components/case/CaseCTA";
-import { CV_URL } from "@/lib/constants";
+import SiteHeader from "@/components/SiteHeader";
+import SiteFooter from "@/components/SiteFooter";
 import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
 
 /* ═══════════════════════════════════════════
@@ -276,98 +274,14 @@ function useSectionsData(lang: "pt" | "en") {
   ];
 }
 
-const navLinks = [
-  { href: "/#skills-tools", label: { pt: "Serviços", en: "Services" } },
-  { href: "/#projects", label: { pt: "Portfólio", en: "Portfolio" } },
-  { href: "/#skills-tools", label: { pt: "Stack", en: "Stack" } },
-  { href: "/#intro", label: { pt: "Sobre", en: "About" } },
-  { href: "/#about", label: { pt: "Contato", en: "Contact" } },
-];
-
 export default function ErpEstrelaCasePage() {
-  const [navOpen, setNavOpen] = useState(false);
   const { lang } = useLanguage();
-  const t = (v: Bilingual) => tr(lang, v);
   const sectionsData = useSectionsData(lang);
 
   return (
     <div className="min-h-screen font-sans relative isolate">
       <div className="relative z-10">
-        {/* ── NAV ── */}
-        <header className="sticky top-0 z-50 border-b border-white/5 bg-[#141418] md:backdrop-blur md:supports-[backdrop-filter]:bg-black/30">
-          <div className="mx-auto max-w-7xl px-3 sm:px-6 lg:px-8">
-            <div className="flex items-center justify-between py-4 md:py-0 md:h-16">
-              <Link href="/" className="flex items-center gap-2 sm:gap-3">
-                <div className="relative h-9 w-9 sm:h-10 sm:w-10 rounded-xl bg-gradient-to-br from-fuchsia-500 to-violet-500 shadow-[0_0_40px_rgba(168,85,247,0.35)] flex items-center justify-center">
-                  <span className="text-white font-black text-lg sm:text-xl">FP</span>
-                </div>
-                <div className="flex flex-col">
-                  <span
-                    className="text-lg sm:text-xl font-black tracking-[0.15em] bg-gradient-to-r from-violet-400 via-fuchsia-400 to-amber-400 bg-clip-text text-transparent"
-                    style={{ fontFamily: 'Impact, "Arial Black", sans-serif' }}
-                  >
-                    FCOPTS
-                  </span>
-                  <span className="text-[10px] text-zinc-400 tracking-wide -mt-0.5">
-                    {t({ pt: "Engenheiro de Software | UX Ops", en: "Software Engineer | UX Ops" })}
-                  </span>
-                </div>
-              </Link>
-
-              <nav className="hidden md:flex items-center gap-8 text-sm">
-                {navLinks.map((link) => (
-                  <Link
-                    key={`${link.href}-${link.label.pt}`}
-                    href={link.href}
-                    className="hover:text-white/90 text-zinc-300"
-                  >
-                    {t(link.label)}
-                  </Link>
-                ))}
-                <a
-                  href={CV_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-3 py-1.5 rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-500 text-white shadow-lg shadow-fuchsia-700/20"
-                >
-                  {t({ pt: "Baixar CV", en: "Download CV" })}
-                </a>
-              </nav>
-
-              <button
-                type="button"
-                className="md:hidden inline-flex items-center justify-center rounded-xl border border-white/10 bg-black/25 hover:bg-black/35 p-2.5 transition-colors"
-                onClick={() => setNavOpen(!navOpen)}
-                aria-expanded={navOpen}
-                aria-controls="mobile-nav-case"
-              >
-                <span className="sr-only">{t({ pt: "Abrir menu", en: "Open menu" })}</span>
-                {navOpen ? (
-                  <X className="h-5 w-5 text-zinc-200" />
-                ) : (
-                  <Menu className="h-5 w-5 text-zinc-200" />
-                )}
-              </button>
-            </div>
-          </div>
-
-          {navOpen && (
-            <div id="mobile-nav-case" className="md:hidden border-t border-white/5 bg-[#141418]">
-              <div className="mx-auto max-w-7xl px-3 py-4 flex flex-col gap-2">
-                {navLinks.map((link) => (
-                  <Link
-                    key={`${link.href}-${link.label.pt}-mobile`}
-                    href={link.href}
-                    className="text-zinc-200 rounded-xl px-3 py-3 hover:bg-white/5 transition-colors"
-                    onClick={() => setNavOpen(false)}
-                  >
-                    {t(link.label)}
-                  </Link>
-                ))}
-              </div>
-            </div>
-          )}
-        </header>
+        <SiteHeader />
 
         {/* ── HERO ── */}
         <CaseHero {...heroData} />
@@ -397,14 +311,7 @@ export default function ErpEstrelaCasePage() {
           }}
         />
 
-        {/* ── FOOTER ── */}
-        <footer className="py-10 border-t border-white/5 text-center text-[11px] text-zinc-400">
-          <div>© 2026 Francisco Pontes</div>
-          <div>{t({ pt: "Todos os Direitos Reservados", en: "All Rights Reserved" })}</div>
-          <div className="text-[10px] font-normal text-zinc-300">
-            contato@fcopts.com.br
-          </div>
-        </footer>
+        <SiteFooter />
       </div>
     </div>
   );

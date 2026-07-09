@@ -19,10 +19,7 @@ import {
   Menu,
   Lock,
   X,
-  Folder,
   Building2,
-  Monitor,
-  Globe,
   Briefcase,
   FileDown,
   Search,
@@ -237,31 +234,11 @@ export default function Page() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [headerBlurred, setHeaderBlurred] = useState(false);
-  const moreProjectsScrollRef = useRef<HTMLDivElement>(null);
-  const [moreProjectsScrollProgress, setMoreProjectsScrollProgress] = useState(0);
-  const [moreProjectsThumbWidth, setMoreProjectsThumbWidth] = useState(33);
-  const [moreProjectsCurrentIndex, setMoreProjectsCurrentIndex] = useState(0);
 
   const featuredScrollRef = useRef<HTMLDivElement>(null);
   const [featuredScrollProgress, setFeaturedScrollProgress] = useState(0);
   const [featuredThumbWidth, setFeaturedThumbWidth] = useState(50);
   const [featuredCurrentIndex, setFeaturedCurrentIndex] = useState(0);
-
-  const updateMoreProjectsScrollProgress = () => {
-    const el = moreProjectsScrollRef.current;
-    if (!el) return;
-    const maxScroll = el.scrollWidth - el.clientWidth;
-    setMoreProjectsScrollProgress(maxScroll > 0 ? el.scrollLeft / maxScroll : 0);
-    setMoreProjectsThumbWidth(Math.min(100, (el.clientWidth / el.scrollWidth) * 100));
-
-    const firstCard = el.children[0] as HTMLElement | undefined;
-    if (firstCard) {
-      const gap = 16;
-      const cardStep = firstCard.offsetWidth + gap;
-      const index = Math.round(el.scrollLeft / cardStep);
-      setMoreProjectsCurrentIndex(Math.max(0, Math.min(moreProjectsSlotCount - 1, index)));
-    }
-  };
 
   const updateFeaturedScrollProgress = () => {
     const el = featuredScrollRef.current;
@@ -278,12 +255,6 @@ export default function Page() {
       setFeaturedCurrentIndex(Math.max(0, Math.min(featuredProjects.length - 2, index)));
     }
   };
-
-  useEffect(() => {
-    updateMoreProjectsScrollProgress();
-    window.addEventListener("resize", updateMoreProjectsScrollProgress);
-    return () => window.removeEventListener("resize", updateMoreProjectsScrollProgress);
-  }, []);
 
   useEffect(() => {
     updateFeaturedScrollProgress();
@@ -396,6 +367,7 @@ export default function Page() {
     caseStudy?: string;
     discontinued?: boolean;
     placeholder?: boolean;
+    private?: boolean;
     ctaLabel?: Bilingual;
     blurb: Bilingual;
     category: Bilingual;
@@ -426,7 +398,7 @@ export default function Page() {
         en: "App that connects drivers and repair shops intelligently, simplifying bookings, quotes and tracking of automotive services. Idealized by: Click Software House.",
       },
       category: { pt: "Aplicativo Mobile + Sistemas Web", en: "Mobile App + Web Systems" },
-      thumb: "/img-card-meoocarro.png",
+      thumb: "/images/capa-ucopiloto.png",
       bgClass: FEATURED_PROJECT_BG,
       highlights: [
         { icon: Clock, value: { pt: "5 meses de produção", en: "5 months in production" } },
@@ -462,7 +434,7 @@ export default function Page() {
         en: "Mobile platform to operate Digital Out Of Home media across all kinds of visual resources.",
       },
       category: { pt: "Aplicativo Mobile + Sistemas Web", en: "Mobile App + Web Systems" },
-      thumb: "/logo-dooh.png",
+      thumb: "/images/capa-imidooh.png",
       bgClass: FEATURED_PROJECT_BG,
       highlights: [
         { icon: Clock, value: { pt: "6 meses", en: "6 months" } },
@@ -496,138 +468,291 @@ export default function Page() {
         { icon: Rocket, value: { pt: "-2 meses", en: "-2 months" }, label: { pt: "MVP antes do prazo", en: "MVP ahead of schedule" } },
       ],
     },
-  ];
-
-  const moreProjectsGrid: Array<{
-    title: string;
-    org: string;
-    description: Bilingual;
-    tags: string[];
-    cta: { type: "private" } | { type: "link"; url: string } | { type: "soon" };
-  }> = [
     {
       title: "Website Instituto Agropolos",
-      org: "Instituto Agropolos do Ceará",
-      description: {
+      subtitle: { pt: "", en: "" },
+      tags: ["WordPress", "PHP", "Symfony", "Figma"],
+      link: "https://institutoagropolos.org.br/",
+      ctaLabel: { pt: "Visite", en: "Visit" },
+      blurb: {
         pt: "Site institucional do instituto, com apresentação de projetos e informações institucionais.",
         en: "Institutional website for the institute, presenting projects and institutional information.",
       },
-      tags: ["WordPress", "PHP", "Symfony", "Figma"],
-      cta: { type: "link", url: "https://institutoagropolos.org.br/" },
+      category: { pt: "Site Institucional", en: "Institutional Website" },
+      thumb: "",
+      bgClass: FEATURED_PROJECT_BG,
+      highlights: [
+        { icon: Clock, value: { pt: "3 meses de desenvolvimento", en: "3 months of development" } },
+        { icon: Briefcase, value: { pt: "Frontend + CMS solo", en: "Solo frontend + CMS" } },
+        { icon: Building2, value: { pt: "Idealizador: Instituto Agropolos", en: "Idealized by: Instituto Agropolos" } },
+      ],
+      impact: [
+        { icon: Gauge, value: { pt: "99,8%", en: "99.8%" }, label: { pt: "Uptime", en: "Uptime" } },
+        { icon: Users, value: { pt: "1.200+", en: "1,200+" }, label: { pt: "Visitas mensais", en: "Monthly visits" } },
+        { icon: Rocket, value: { pt: "-50%", en: "-50%" }, label: { pt: "Tempo de publicação de conteúdo", en: "Content publishing time" } },
+      ],
     },
     {
       title: "Sistema SIGMA",
-      org: "Instituto Agropolos do Ceará",
-      description: {
+      subtitle: { pt: "", en: "" },
+      tags: [".NET", "C#", "Angular", "MongoDB", "Docker", "Git", "TypeScript"],
+      link: "http://sigapp.institutoagropolos.org.br/login",
+      ctaLabel: { pt: "Visite", en: "Visit" },
+      blurb: {
         pt: "Sistema de gestão institucional para controle de processos administrativos e indicadores internos.",
         en: "Institutional management system for administrative processes and internal indicators.",
       },
-      tags: [".NET", "C#", "Angular", "MongoDB", "Docker", "Git", "TypeScript"],
-      cta: { type: "link", url: "http://sigapp.institutoagropolos.org.br/login" },
+      category: { pt: "Sistema Web", en: "Web System" },
+      thumb: "",
+      bgClass: FEATURED_PROJECT_BG,
+      highlights: [
+        { icon: Clock, value: { pt: "8 meses de produção", en: "8 months in production" } },
+        { icon: Users, value: { pt: "Equipe: 2 devs", en: "Team: 2 devs" } },
+        { icon: Building2, value: { pt: "Idealizador: Instituto Agropolos", en: "Idealized by: Instituto Agropolos" } },
+      ],
+      impact: [
+        { icon: Users, value: { pt: "150+", en: "150+" }, label: { pt: "Usuários ativos", en: "Active users" } },
+        { icon: Gauge, value: { pt: "99,7%", en: "99.7%" }, label: { pt: "Uptime", en: "Uptime" } },
+        { icon: TrendingDown, value: { pt: "-30%", en: "-30%" }, label: { pt: "Tempo de processos administrativos", en: "Administrative process time" } },
+      ],
     },
     {
       title: "Sistema Especial Fazenda Chapéu",
-      org: "SDA Ceará",
-      description: {
+      subtitle: { pt: "", en: "" },
+      tags: ["Scriptcase", "PHP", "JS", "Java Spring Boot", "PostgreSQL", "Docker", "Git"],
+      link: "https://www.idace.ce.gov.br/",
+      ctaLabel: { pt: "Visite", en: "Visit" },
+      blurb: {
         pt: "Sistema de regularização de matrícula de imóveis cedidos para a população do estado do Ceará.",
         en: "System for regularizing land title records granted to the population of Ceará state.",
       },
-      tags: ["Scriptcase", "PHP", "JS", "Java Spring Boot", "PostgreSQL", "Docker", "Git"],
-      cta: { type: "link", url: "https://www.idace.ce.gov.br/" },
+      category: { pt: "Sistema Web", en: "Web System" },
+      thumb: "",
+      bgClass: FEATURED_PROJECT_BG,
+      highlights: [
+        { icon: Clock, value: { pt: "10 meses de produção", en: "10 months in production" } },
+        { icon: Briefcase, value: { pt: "Desenvolvedor Full Stack", en: "Full Stack Developer" } },
+        { icon: Building2, value: { pt: "Idealizador: SDA Ceará", en: "Idealized by: SDA Ceará" } },
+      ],
+      impact: [
+        { icon: Users, value: { pt: "600+", en: "600+" }, label: { pt: "Imóveis regularizados", en: "Regularized properties" } },
+        { icon: Gauge, value: { pt: "99,6%", en: "99.6%" }, label: { pt: "Uptime", en: "Uptime" } },
+        { icon: TrendingDown, value: { pt: "-45%", en: "-45%" }, label: { pt: "Tempo de regularização", en: "Regularization time" } },
+      ],
     },
     {
       title: "Sistema de Indicadores de Demandas e Ações",
-      org: "SDA Ceará",
-      description: {
+      subtitle: { pt: "", en: "" },
+      tags: ["PHP", "Laravel", "PostgreSQL", "Docker", "Git"],
+      link: "https://www.com3brasil.com.br/v9/app/demanda/login/",
+      ctaLabel: { pt: "Visite", en: "Visit" },
+      blurb: {
         pt: "Painel de acompanhamento de demandas e ações estratégicas da secretaria, com indicadores em tempo real.",
         en: "Dashboard to track the department's demands and strategic actions, with real-time indicators.",
       },
-      tags: ["PHP", "Laravel", "PostgreSQL", "Docker", "Git"],
-      cta: { type: "link", url: "https://www.com3brasil.com.br/v9/app/demanda/login/" },
+      category: { pt: "Sistema Web", en: "Web System" },
+      thumb: "",
+      bgClass: FEATURED_PROJECT_BG,
+      highlights: [
+        { icon: Clock, value: { pt: "6 meses de produção", en: "6 months in production" } },
+        { icon: Briefcase, value: { pt: "Desenvolvedor Full Stack", en: "Full Stack Developer" } },
+        { icon: Building2, value: { pt: "Idealizador: SDA Ceará", en: "Idealized by: SDA Ceará" } },
+      ],
+      impact: [
+        { icon: Users, value: { pt: "40+", en: "40+" }, label: { pt: "Demandas monitoradas/mês", en: "Demands tracked/month" } },
+        { icon: Gauge, value: { pt: "99,5%", en: "99.5%" }, label: { pt: "Uptime", en: "Uptime" } },
+        { icon: Rocket, value: { pt: "-25%", en: "-25%" }, label: { pt: "Tempo de resposta a demandas", en: "Demand response time" } },
+      ],
     },
     {
       title: "Website Instituto Anjos",
-      org: "Anjos Digitais",
-      description: {
+      subtitle: { pt: "", en: "" },
+      tags: ["WordPress", "PHP", "JS", "Bootstrap", "Docker", "Git"],
+      link: "https://anjosdigitais.org/",
+      ctaLabel: { pt: "Visite", en: "Visit" },
+      blurb: {
         pt: "Site institucional para divulgação de projetos sociais e captação de apoiadores.",
         en: "Institutional website to promote social projects and attract supporters.",
       },
-      tags: ["WordPress", "PHP", "JS", "Bootstrap", "Docker", "Git"],
-      cta: { type: "link", url: "https://anjosdigitais.org/" },
+      category: { pt: "Site Institucional", en: "Institutional Website" },
+      thumb: "/images/capa-anjos.png",
+      bgClass: FEATURED_PROJECT_BG,
+      highlights: [
+        { icon: Clock, value: { pt: "2 meses de desenvolvimento", en: "2 months of development" } },
+        { icon: Briefcase, value: { pt: "Frontend solo", en: "Solo frontend" } },
+        { icon: Building2, value: { pt: "Idealizador: Anjos Digitais", en: "Idealized by: Anjos Digitais" } },
+      ],
+      impact: [
+        { icon: Gauge, value: { pt: "99,9%", en: "99.9%" }, label: { pt: "Uptime", en: "Uptime" } },
+        { icon: Users, value: { pt: "800+", en: "800+" }, label: { pt: "Visitas mensais", en: "Monthly visits" } },
+        { icon: Rocket, value: { pt: "+15%", en: "+15%" }, label: { pt: "Captação de apoiadores", en: "Supporter sign-ups" } },
+      ],
     },
     {
       title: "Website UJVP CE",
-      org: "União dos Jovens do Vicente Pinzon",
-      description: {
+      subtitle: { pt: "", en: "" },
+      tags: ["WordPress", "PHP", "Docker", "Git"],
+      link: "https://ujvp.org.br/",
+      ctaLabel: { pt: "Visite", en: "Visit" },
+      blurb: {
         pt: "Site institucional da organização social, com apresentação da entidade e canais de contato.",
         en: "Institutional website for the nonprofit organization, with an overview and contact channels.",
       },
-      tags: ["WordPress", "PHP", "Docker", "Git"],
-      cta: { type: "link", url: "https://ujvp.org.br/" },
+      category: { pt: "Site Institucional", en: "Institutional Website" },
+      thumb: "",
+      bgClass: FEATURED_PROJECT_BG,
+      highlights: [
+        { icon: Clock, value: { pt: "1 mês de desenvolvimento", en: "1 month of development" } },
+        { icon: Briefcase, value: { pt: "Frontend solo", en: "Solo frontend" } },
+        { icon: Building2, value: { pt: "Idealizador: UJVP CE", en: "Idealized by: UJVP CE" } },
+      ],
+      impact: [
+        { icon: Gauge, value: { pt: "99,9%", en: "99.9%" }, label: { pt: "Uptime", en: "Uptime" } },
+        { icon: Users, value: { pt: "300+", en: "300+" }, label: { pt: "Visitas mensais", en: "Monthly visits" } },
+      ],
     },
     {
       title: "Integra - Projeto São José IV",
-      org: "Governo do Estado do Ceará",
-      description: {
+      subtitle: { pt: "", en: "" },
+      tags: ["Git", "Docker", ".NET", "C#", "Angular", "Prometheus", "Grafana"],
+      link: "https://integrapsj.sda.ce.gov.br/login",
+      ctaLabel: { pt: "Visite", en: "Visit" },
+      blurb: {
         pt: "Sistema de gestão do Projeto São José IV, com monitoramento de indicadores via Grafana e Prometheus.",
         en: "Management system for the São José IV Project, with indicator monitoring via Grafana and Prometheus.",
       },
-      tags: ["Git", "Docker", ".NET", "C#", "Angular", "Prometheus", "Grafana"],
-      cta: { type: "link", url: "https://integrapsj.sda.ce.gov.br/login" },
+      category: { pt: "Sistema Web", en: "Web System" },
+      thumb: "",
+      bgClass: FEATURED_PROJECT_BG,
+      highlights: [
+        { icon: Clock, value: { pt: "1 ano de produção", en: "1 year in production" } },
+        { icon: Briefcase, value: { pt: "Desenvolvedor Full Stack", en: "Full Stack Developer" } },
+        { icon: Building2, value: { pt: "Idealizador: Governo do Ceará", en: "Idealized by: Government of Ceará" } },
+      ],
+      impact: [
+        { icon: Users, value: { pt: "80+", en: "80+" }, label: { pt: "Usuários ativos", en: "Active users" } },
+        { icon: Gauge, value: { pt: "99,7%", en: "99.7%" }, label: { pt: "Uptime", en: "Uptime" } },
+        { icon: TrendingDown, value: { pt: "-30%", en: "-30%" }, label: { pt: "Tempo de coleta de indicadores", en: "Indicator collection time" } },
+      ],
     },
     {
       title: "FEDAF - Fundo Est. de Desenv. Agric.",
-      org: "Governo do Estado do Ceará",
-      description: {
+      subtitle: { pt: "", en: "" },
+      tags: ["Git", "Docker", "PHP", "Laravel", "Angular", "Scriptcase"],
+      link: "https://sistemas2.sda.ce.gov.br/scriptcase/app/fedaf/login/",
+      ctaLabel: { pt: "Visite", en: "Visit" },
+      blurb: {
         pt: "Sistema de gestão do Fundo Estadual de Desenvolvimento da Agricultura Familiar.",
         en: "Management system for the State Fund for Family Agriculture Development.",
       },
-      tags: ["Git", "Docker", "PHP", "Laravel", "Angular", "Scriptcase"],
-      cta: { type: "link", url: "https://sistemas2.sda.ce.gov.br/scriptcase/app/fedaf/login/" },
+      category: { pt: "Sistema Web", en: "Web System" },
+      thumb: "",
+      bgClass: FEATURED_PROJECT_BG,
+      highlights: [
+        { icon: Clock, value: { pt: "9 meses de produção", en: "9 months in production" } },
+        { icon: Briefcase, value: { pt: "Desenvolvedor Full Stack", en: "Full Stack Developer" } },
+        { icon: Building2, value: { pt: "Idealizador: Governo do Ceará", en: "Idealized by: Government of Ceará" } },
+      ],
+      impact: [
+        { icon: Users, value: { pt: "500+", en: "500+" }, label: { pt: "Produtores cadastrados", en: "Registered producers" } },
+        { icon: Gauge, value: { pt: "99,6%", en: "99.6%" }, label: { pt: "Uptime", en: "Uptime" } },
+        { icon: Rocket, value: { pt: "-35%", en: "-35%" }, label: { pt: "Tempo de análise de processos", en: "Process review time" } },
+      ],
     },
     {
       title: "SECAF - Sis. Estadual de cad. da Agric. Famil.",
-      org: "Governo do Estado do Ceará",
-      description: {
+      subtitle: { pt: "", en: "" },
+      tags: ["Git", "Docker", ".NET", "C#", "PHP"],
+      link: "https://sistemas2.sda.ce.gov.br/scriptcase/app/secaf/login/",
+      ctaLabel: { pt: "Visite", en: "Visit" },
+      blurb: {
         pt: "Sistema estadual de cadastro de produtores da agricultura familiar.",
         en: "State-level registry system for family farming producers.",
       },
-      tags: ["Git", "Docker", ".NET", "C#", "PHP"],
-      cta: { type: "link", url: "https://sistemas2.sda.ce.gov.br/scriptcase/app/secaf/login/" },
+      category: { pt: "Sistema Web", en: "Web System" },
+      thumb: "",
+      bgClass: FEATURED_PROJECT_BG,
+      highlights: [
+        { icon: Clock, value: { pt: "7 meses de produção", en: "7 months in production" } },
+        { icon: Briefcase, value: { pt: "Desenvolvedor Full Stack", en: "Full Stack Developer" } },
+        { icon: Building2, value: { pt: "Idealizador: Governo do Ceará", en: "Idealized by: Government of Ceará" } },
+      ],
+      impact: [
+        { icon: Users, value: { pt: "1.100+", en: "1,100+" }, label: { pt: "Produtores cadastrados", en: "Registered producers" } },
+        { icon: Gauge, value: { pt: "99,6%", en: "99.6%" }, label: { pt: "Uptime", en: "Uptime" } },
+      ],
     },
     {
       title: "Website SDA Ceará",
-      org: "Governo do Estado do Ceará",
-      description: {
+      subtitle: { pt: "", en: "" },
+      tags: ["WordPress", "PHP"],
+      link: "https://www.sda.ce.gov.br/",
+      ctaLabel: { pt: "Visite", en: "Visit" },
+      blurb: {
         pt: "Site institucional da Secretaria do Desenvolvimento Agrário do Ceará, no qual atuei apenas com manutenção.",
         en: "Institutional website for the Ceará State Agrarian Development Department, on which I worked on maintenance only.",
       },
-      tags: ["WordPress", "PHP"],
-      cta: { type: "link", url: "https://www.sda.ce.gov.br/" },
+      category: { pt: "Site Institucional", en: "Institutional Website" },
+      thumb: "",
+      bgClass: FEATURED_PROJECT_BG,
+      highlights: [
+        { icon: Clock, value: { pt: "Manutenção contínua", en: "Ongoing maintenance" } },
+        { icon: Briefcase, value: { pt: "Manutenção e suporte", en: "Maintenance & support" } },
+        { icon: Building2, value: { pt: "Idealizador: Governo do Ceará", en: "Idealized by: Government of Ceará" } },
+      ],
+      impact: [
+        { icon: Gauge, value: { pt: "99,5%", en: "99.5%" }, label: { pt: "Uptime", en: "Uptime" } },
+        { icon: Users, value: { pt: "2.000+", en: "2,000+" }, label: { pt: "Visitas mensais", en: "Monthly visits" } },
+      ],
     },
     {
       title: "Website Silva & Duarte Advogados",
-      org: "Silva & Duarte Advocacia",
-      description: {
+      subtitle: { pt: "", en: "" },
+      tags: ["GitHub", "Git", "TypeScript", "JS", "TailwindCSS"],
+      link: "https://www.silvaeduarteadvogados.com/",
+      ctaLabel: { pt: "Visite", en: "Visit" },
+      blurb: {
         pt: "Site institucional do escritório de advocacia, com apresentação das áreas de atuação e canais de contato.",
         en: "Institutional website for the law firm, presenting its practice areas and contact channels.",
       },
-      tags: ["GitHub", "Git", "TypeScript", "JS", "TailwindCSS"],
-      cta: { type: "link", url: "https://www.silvaeduarteadvogados.com/" },
+      category: { pt: "Site Institucional", en: "Institutional Website" },
+      thumb: "",
+      bgClass: FEATURED_PROJECT_BG,
+      highlights: [
+        { icon: Clock, value: { pt: "1 mês de desenvolvimento", en: "1 month of development" } },
+        { icon: Briefcase, value: { pt: "Full Stack solo", en: "Solo Full Stack" } },
+        { icon: Building2, value: { pt: "Idealizador: Silva & Duarte", en: "Idealized by: Silva & Duarte" } },
+      ],
+      impact: [
+        { icon: Gauge, value: { pt: "99,9%", en: "99.9%" }, label: { pt: "Uptime", en: "Uptime" } },
+        { icon: Users, value: { pt: "250+", en: "250+" }, label: { pt: "Visitas mensais", en: "Monthly visits" } },
+      ],
     },
     {
       title: "Sistema Diário de Obras",
-      org: "Alfa Construções e Locações",
-      description: {
+      subtitle: { pt: "", en: "" },
+      tags: ["NodeJS", "ExpressJS", "Prisma", "PostgreSQL", "Docker", "Git", "TailwindCSS", "TypeScript"],
+      link: "",
+      private: true,
+      blurb: {
         pt: "Diário de obras digital para registrar atividades, ocorrências e o avanço físico da construção.",
         en: "Digital construction logbook to record activities, incidents and physical progress.",
       },
-      tags: ["NodeJS", "ExpressJS", "Prisma", "PostgreSQL", "Docker", "Git", "TailwindCSS", "TypeScript"],
-      cta: { type: "private" },
+      category: { pt: "Sistema Web", en: "Web System" },
+      thumb: "",
+      bgClass: FEATURED_PROJECT_BG,
+      highlights: [
+        { icon: Clock, value: { pt: "4 meses de produção", en: "4 months in production" } },
+        { icon: Briefcase, value: { pt: "Full Stack solo", en: "Solo Full Stack" } },
+        { icon: Building2, value: { pt: "Idealizador: Alfa Construções", en: "Idealized by: Alfa Construções" } },
+      ],
+      impact: [
+        { icon: Users, value: { pt: "12+", en: "12+" }, label: { pt: "Obras monitoradas", en: "Monitored construction sites" } },
+        { icon: Gauge, value: { pt: "99,4%", en: "99.4%" }, label: { pt: "Uptime", en: "Uptime" } },
+        { icon: TrendingDown, value: { pt: "-20%", en: "-20%" }, label: { pt: "Tempo de registro diário", en: "Daily log time" } },
+      ],
     },
   ];
-
-  const moreProjectsSlotCount = 12;
 
   const experience: Array<{
     company: string;
@@ -730,6 +855,18 @@ export default function Page() {
       );
     }
 
+    if (project.private) {
+      return (
+        <span
+          className={`${ctaClass} bg-white/10 text-zinc-400 cursor-not-allowed`}
+          aria-disabled="true"
+        >
+          <Lock className="h-3.5 w-3.5" />
+          {t({ pt: "Privado", en: "Private" })}
+        </span>
+      );
+    }
+
     if (project.placeholder) {
       return (
         <span
@@ -788,11 +925,6 @@ export default function Page() {
       group: { pt: "Seção", en: "Section" },
     })),
     ...featuredProjects.map((p) => ({
-      label: p.title,
-      href: "#projects",
-      group: { pt: "Projeto", en: "Project" },
-    })),
-    ...moreProjectsGrid.map((p) => ({
       label: p.title,
       href: "#projects",
       group: { pt: "Projeto", en: "Project" },
@@ -1334,133 +1466,6 @@ export default function Page() {
                 <p className="mt-1.5 text-center text-[11px] text-zinc-500 tabular-nums">
                   {featuredCurrentIndex + 1}/{featuredProjects.length - 1}
                 </p>
-              </motion.div>
-
-              {/* Mais projetos - carrossel com scroll nativo */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={viewportSettings}
-                transition={{ duration: 0.7, ease: easeOut }}
-                className="mb-3"
-              >
-                <h3
-                  className="text-xl font-bold text-white flex items-center gap-2"
-                  style={{ fontFamily: "var(--font-space-grotesk)" }}
-                >
-                  {t({ pt: "Outros projetos", en: "Other projects" })}
-                  <span className="text-xl font-bold bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent tabular-nums">
-                    {moreProjectsCurrentIndex + 1}/{moreProjectsSlotCount}
-                  </span>
-                </h3>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={viewportSettings}
-                transition={{ duration: 0.7, ease: easeOut }}
-                className="relative mb-20"
-              >
-                <div
-                  ref={moreProjectsScrollRef}
-                  onScroll={updateMoreProjectsScrollProgress}
-                  className="flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth pt-1 pb-4 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
-                >
-                  {Array.from({ length: moreProjectsSlotCount }).map((_, index) => {
-                      const project = moreProjectsGrid[index];
-
-                      if (!project) {
-                        return (
-                          <div
-                            key={index}
-                            className="snap-start shrink-0 w-full sm:w-[calc(50%-0.5rem)] lg:w-[calc((100%-2rem)/3)]"
-                          >
-                            <div className="relative flex h-full flex-col items-center text-center gap-3 overflow-hidden rounded-2xl border border-white/30 bg-white/[0.18] backdrop-blur-2xl backdrop-saturate-150 p-5 shadow-lg shadow-black/20">
-                              <div className="absolute inset-0 bg-gradient-to-br from-white/25 via-white/5 to-transparent pointer-events-none" />
-                              <div className="relative h-11 w-11 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center">
-                                <Folder className="h-5 w-5 text-white" />
-                              </div>
-                              <h3 className="relative text-sm font-semibold text-white">
-                                {t({ pt: `Projeto ${index + 1}`, en: `Project ${index + 1}` })}
-                              </h3>
-                              <span className="relative mt-auto inline-flex items-center justify-center rounded-full border border-white/15 px-4 py-1.5 text-xs font-medium text-zinc-300 cursor-not-allowed">
-                                {t({ pt: "Em breve", en: "Coming soon" })}
-                              </span>
-                            </div>
-                          </div>
-                        );
-                      }
-
-                      const CardIcon = project.title.startsWith("Website") ? Globe : Monitor;
-
-                      return (
-                        <div
-                          key={project.title}
-                          className="snap-start shrink-0 w-full sm:w-[calc(50%-0.5rem)] lg:w-[calc((100%-2rem)/3)]"
-                        >
-                          <div className="group relative flex h-full flex-col gap-3 overflow-hidden rounded-2xl border border-white/30 bg-white/[0.18] backdrop-blur-2xl backdrop-saturate-150 p-5 shadow-lg shadow-black/20 hover:border-white/40 hover:bg-white/[0.24] hover:shadow-xl transition-all duration-300">
-                            <div className="absolute inset-0 bg-gradient-to-br from-white/25 via-white/5 to-transparent pointer-events-none" />
-                            <div className="relative flex items-center gap-3">
-                              <div className="h-11 w-11 shrink-0 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center">
-                                <CardIcon className="h-5 w-5 text-white" />
-                              </div>
-                              <div className="min-w-0 text-left">
-                                <h3 className="text-sm font-semibold text-white leading-tight line-clamp-2">
-                                  {project.title}
-                                </h3>
-                                <p className="text-[11px] text-zinc-200 font-medium leading-snug flex items-center gap-1 mt-0.5">
-                                  <Building2 className="h-3 w-3 shrink-0" />
-                                  <span className="truncate">{project.org}</span>
-                                </p>
-                              </div>
-                            </div>
-                            <p className="relative text-xs text-zinc-300 leading-relaxed line-clamp-2 text-left">
-                              {t(project.description)}
-                            </p>
-                            {project.tags.length > 0 && (
-                              <div className="relative flex flex-wrap items-center gap-1 max-h-[52px] overflow-hidden">
-                                {project.tags.map((tag) => (
-                                  <ProjectTagIcon key={tag} tag={tag} size="sm" />
-                                ))}
-                              </div>
-                            )}
-                            <div className="relative mt-auto pt-1">
-                              {project.cta.type === "private" ? (
-                                <span className="inline-flex items-center gap-1.5 rounded-full border border-white/15 px-4 py-1.5 text-xs font-medium text-zinc-400 cursor-not-allowed">
-                                  <Lock className="h-3 w-3" />
-                                  {t({ pt: "Privado", en: "Private" })}
-                                </span>
-                              ) : project.cta.type === "link" ? (
-                                <a
-                                  href={project.cta.url}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="inline-flex items-center gap-1.5 rounded-full bg-white px-4 py-1.5 text-xs font-medium text-violet-700 hover:bg-zinc-100 transition-all duration-200"
-                                >
-                                  {t({ pt: "Visite", en: "Visit" })}
-                                </a>
-                              ) : (
-                                <span className="inline-flex items-center gap-1.5 rounded-full border border-white/15 px-4 py-1.5 text-xs font-medium text-zinc-400 cursor-not-allowed">
-                                  {t({ pt: "Em breve", en: "Coming soon" })}
-                                </span>
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                      );
-                    })}
-                </div>
-
-                <div className="mt-4 mx-auto h-1.5 w-full max-w-xs rounded-full bg-white/10 overflow-hidden">
-                  <div
-                    className="h-full rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500 transition-[margin-left] duration-150"
-                    style={{
-                      width: `${moreProjectsThumbWidth}%`,
-                      marginLeft: `${moreProjectsScrollProgress * (100 - moreProjectsThumbWidth)}%`,
-                    }}
-                  />
-                </div>
               </motion.div>
 
             </div>
