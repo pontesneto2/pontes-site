@@ -2,15 +2,9 @@
 
 import { motion } from "framer-motion";
 import { ReactNode } from "react";
-import {
-  Box,
-  Braces,
-  Code,
-  Database,
-  MonitorSmartphone,
-  Palette,
-  Server,
-} from "lucide-react";
+import { Code } from "lucide-react";
+import { SKILL_ICON_PATHS, SKILL_ICON_VIEWBOX } from "@/components/skills/icons.generated";
+import { getTechIconSlug } from "@/lib/tech-icon-slug";
 import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
 
 /* ── animation variants ── */
@@ -20,41 +14,23 @@ const fadeUp = {
 };
 
 function TechGlyph({ tag }: { tag: string }) {
-  const normalized = tag.trim().toLowerCase();
-
-  const Icon = (() => {
-    if (
-      normalized.includes("postgres") ||
-      normalized.includes("postgre") ||
-      normalized.includes("mongo") ||
-      normalized.includes("prisma")
-    )
-      return Database;
-
-    if (normalized.includes("docker")) return Box;
-
-    if (
-      normalized === "js" ||
-      normalized.includes("javascript") ||
-      normalized.includes("typescript")
-    )
-      return Braces;
-
-    if (normalized.includes("next") || normalized.includes("react"))
-      return MonitorSmartphone;
-
-    if (normalized.includes("tailwind") || normalized.includes("ux"))
-      return Palette;
-
-    if (normalized.includes("node") || normalized.includes("express") || normalized.includes("nest"))
-      return Server;
-
-    return Code;
-  })();
+  const slug = getTechIconSlug(tag);
+  const path = slug ? SKILL_ICON_PATHS[slug] : undefined;
 
   return (
     <span className="inline-flex items-center justify-center h-5 w-5 rounded-md bg-white/[0.06] border border-white/[0.10] text-zinc-100">
-      <Icon className="h-3.5 w-3.5" />
+      {path ? (
+        <svg
+          viewBox={SKILL_ICON_VIEWBOX}
+          aria-hidden="true"
+          focusable="false"
+          className="h-3.5 w-3.5"
+          style={{ color: "currentColor" }}
+          dangerouslySetInnerHTML={{ __html: path }}
+        />
+      ) : (
+        <Code className="h-3.5 w-3.5" aria-hidden="true" />
+      )}
     </span>
   );
 }
