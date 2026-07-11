@@ -34,7 +34,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
   }
 
-  const { name, email, message, phone, company, lang, formLoadedAt } = body as {
+  const { name, email, message, phone, company, lang, formLoadedAt, origem } = body as {
     name?: string;
     email?: string;
     message?: string;
@@ -42,6 +42,7 @@ export async function POST(request: NextRequest) {
     company?: string;
     lang?: string;
     formLoadedAt?: number;
+    origem?: string;
   };
   const isEnglish = lang === "en";
 
@@ -113,6 +114,11 @@ export async function POST(request: NextRequest) {
         ${
           phone?.trim()
             ? `<tr><td style="padding:6px 0;color:#8b8594;vertical-align:top;">Telefone</td><td style="padding:6px 0;">${escapeHtml(phone.trim())}</td></tr>`
+            : ""
+        }
+        ${
+          origem?.trim()
+            ? `<tr><td style="padding:6px 0;color:#8b8594;vertical-align:top;">Origem</td><td style="padding:6px 0;">${escapeHtml(origem.trim())}</td></tr>`
             : ""
         }
       </table>
