@@ -54,7 +54,10 @@ function formatPhone(value: string, countryCode: string) {
   return digits.replace(/(\d{3})(?=\d)/g, "$1 ").trim();
 }
 
-export default function ContactForm() {
+export default function ContactForm({
+  origem,
+  onSuccess,
+}: { origem?: string; onSuccess?: () => void } = {}) {
   const { lang } = useLanguage();
   const [status, setStatus] = useState<Status>("idle");
   const [name, setName] = useState("");
@@ -96,12 +99,14 @@ export default function ContactForm() {
           company: data.get("company"),
           lang,
           formLoadedAt: formLoadedAt.current,
+          ...(origem ? { origem } : {}),
         }),
       });
 
       if (!res.ok) throw new Error("failed");
 
       setStatus("success");
+      onSuccess?.();
       form.reset();
       setName("");
       setEmail("");

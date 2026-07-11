@@ -28,15 +28,23 @@ function goTo(href: string) {
   }
 }
 
+const DEFAULT_CTA = {
+  label: { pt: "Baixar CV", en: "Download CV" } as Bilingual,
+  href: CV_URL,
+};
+
 export default function SiteHeader({
   navLinks = DEFAULT_NAV_LINKS,
   searchIndex = [],
+  cta = DEFAULT_CTA,
 }: {
   navLinks?: Array<{ href: string; label: Bilingual }>;
   searchIndex?: SearchEntry[];
+  cta?: { label: Bilingual; href: string };
 }) {
   const { lang, setLang } = useLanguage();
   const t = (v: Bilingual) => tr(lang, v);
+  const ctaIsExternal = cta.href.startsWith("http");
 
   const [navOpen, setNavOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -110,12 +118,11 @@ export default function SiteHeader({
             <div className="flex items-center gap-3">
               <LanguageSwitch lang={lang} setLang={setLang} />
               <a
-                href={CV_URL}
-                target="_blank"
-                rel="noopener noreferrer"
+                href={cta.href}
+                {...(ctaIsExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                 className="px-3 py-1.5 rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-500 text-white shadow-lg shadow-fuchsia-700/20"
               >
-                {t({ pt: "Baixar CV", en: "Download CV" })}
+                {t(cta.label)}
               </a>
               <SearchBox
                 searchOpen={searchOpen}
@@ -160,13 +167,12 @@ export default function SiteHeader({
         <div id="mobile-nav" className="md:hidden border-t border-white/5 bg-[#141418]">
           <div className="mx-auto max-w-7xl px-3 py-4 flex flex-col gap-2">
             <a
-              href={CV_URL}
-              target="_blank"
-              rel="noopener noreferrer"
+              href={cta.href}
+              {...(ctaIsExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
               className="text-center rounded-xl px-3 py-3 bg-gradient-to-r from-violet-600 to-fuchsia-500 text-white font-medium shadow-lg shadow-fuchsia-700/20"
               onClick={() => setNavOpen(false)}
             >
-              {t({ pt: "Baixar CV", en: "Download CV" })}
+              {t(cta.label)}
             </a>
             {navLinks.map((link) => (
               <Link

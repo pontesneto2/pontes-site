@@ -41,8 +41,8 @@ const summaryData: Array<{ label: Bilingual; value: Bilingual }> = [
   { label: { pt: "Tipo de projeto", en: "Project type" }, value: { pt: "Plataforma SaaS", en: "SaaS Platform" } },
   { label: { pt: "Papel exercido", en: "Role" }, value: { pt: "Full-Stack / Arquitetura", en: "Full-Stack / Architecture" } },
   { label: { pt: "Modelo", en: "Model" }, value: { pt: "B2B2C · White-label ready", en: "B2B2C · White-label ready" } },
-  { label: { pt: "Status", en: "Status" }, value: { pt: "Em desenvolvimento", en: "In development" } },
-  { label: { pt: "Ano", en: "Year" }, value: { pt: "2024–2025", en: "2024–2025" } },
+  { label: { pt: "Status", en: "Status" }, value: { pt: "Descontinuado", en: "Discontinued" } },
+  { label: { pt: "Ano", en: "Year" }, value: { pt: "2025–2026", en: "2025–2026" } },
   { label: { pt: "Plataformas", en: "Platforms" }, value: { pt: "Web + Mobile", en: "Web + Mobile" } },
 ];
 

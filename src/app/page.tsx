@@ -710,28 +710,46 @@ export default function Page() {
       "inline-flex items-center gap-2 rounded-full px-6 py-2.5 text-sm font-semibold w-fit transition-all duration-200";
     const solidClass =
       "bg-white text-violet-700 hover:bg-zinc-100 hover:scale-[1.03] hover:shadow-lg hover:shadow-black/20";
+    const outlineClass =
+      "border border-white/35 text-white hover:bg-white hover:text-violet-700 hover:border-white hover:scale-[1.03]";
+
+    const caseStudyButton = project.caseStudy ? (
+      <Link
+        href={project.caseStudy}
+        className={`${ctaClass} ${project.link ? outlineClass : solidClass}`}
+      >
+        {t({ pt: "Ver estudo de caso", en: "View case study" })}
+        <FileText className="h-3.5 w-3.5" />
+      </Link>
+    ) : null;
 
     if (project.discontinued) {
       return (
-        <span
-          className={`${ctaClass} bg-white/10 text-zinc-400 cursor-not-allowed`}
-          aria-disabled="true"
-        >
-          <Lock className="h-3.5 w-3.5" />
-          {t({ pt: "Descontinuado", en: "Discontinued" })}
-        </span>
+        <div className="flex flex-wrap items-center gap-3">
+          <span
+            className={`${ctaClass} bg-white/10 text-zinc-400 cursor-not-allowed`}
+            aria-disabled="true"
+          >
+            <Lock className="h-3.5 w-3.5" />
+            {t({ pt: "Descontinuado", en: "Discontinued" })}
+          </span>
+          {caseStudyButton}
+        </div>
       );
     }
 
     if (project.private) {
       return (
-        <span
-          className={`${ctaClass} bg-white/10 text-zinc-400 cursor-not-allowed`}
-          aria-disabled="true"
-        >
-          <Lock className="h-3.5 w-3.5" />
-          {t({ pt: "Privado", en: "Private" })}
-        </span>
+        <div className="flex flex-wrap items-center gap-3">
+          <span
+            className={`${ctaClass} bg-white/10 text-zinc-400 cursor-not-allowed`}
+            aria-disabled="true"
+          >
+            <Lock className="h-3.5 w-3.5" />
+            {t({ pt: "Privado", en: "Private" })}
+          </span>
+          {caseStudyButton}
+        </div>
       );
     }
 
@@ -746,10 +764,7 @@ export default function Page() {
       );
     }
 
-    const outlineClass =
-      "border border-white/35 text-white hover:bg-white hover:text-violet-700 hover:border-white hover:scale-[1.03]";
-
-    if (project.link && project.caseStudy) {
+    if (project.link && caseStudyButton) {
       return (
         <div className="flex flex-wrap items-center gap-3">
           <a
@@ -760,20 +775,13 @@ export default function Page() {
           >
             {project.ctaLabel ? t(project.ctaLabel) : t({ pt: "Visite o website", en: "Visit website" })}
           </a>
-          <Link href={project.caseStudy} className={`${ctaClass} ${outlineClass}`}>
-            {t({ pt: "Ver estudo de caso", en: "View case study" })}
-            <FileText className="h-3.5 w-3.5" />
-          </Link>
+          {caseStudyButton}
         </div>
       );
     }
 
-    if (project.caseStudy) {
-      return (
-        <Link href={project.caseStudy} className={`${ctaClass} ${solidClass}`}>
-          {t({ pt: "Saiba mais", en: "Learn more" })}
-        </Link>
-      );
+    if (caseStudyButton) {
+      return caseStudyButton;
     }
 
     if (project.link) {
