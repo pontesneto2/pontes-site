@@ -37,14 +37,17 @@ export default function SiteHeader({
   navLinks = DEFAULT_NAV_LINKS,
   searchIndex = [],
   cta = DEFAULT_CTA,
+  secondaryCta,
 }: {
   navLinks?: Array<{ href: string; label: Bilingual }>;
   searchIndex?: SearchEntry[];
   cta?: { label: Bilingual; href: string };
+  secondaryCta?: { label: Bilingual; href: string };
 }) {
   const { lang, setLang } = useLanguage();
   const t = (v: Bilingual) => tr(lang, v);
   const ctaIsExternal = cta.href.startsWith("http");
+  const secondaryIsExternal = secondaryCta?.href.startsWith("http") ?? false;
 
   const [navOpen, setNavOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -117,6 +120,15 @@ export default function SiteHeader({
             </div>
             <div className="flex items-center gap-3">
               <LanguageSwitch lang={lang} setLang={setLang} />
+              {secondaryCta && (
+                <a
+                  href={secondaryCta.href}
+                  {...(secondaryIsExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                  className="px-3 py-1.5 rounded-xl border border-white/20 text-zinc-200 hover:bg-white/5 hover:text-white transition-colors"
+                >
+                  {t(secondaryCta.label)}
+                </a>
+              )}
               <a
                 href={cta.href}
                 {...(ctaIsExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
@@ -174,6 +186,16 @@ export default function SiteHeader({
             >
               {t(cta.label)}
             </a>
+            {secondaryCta && (
+              <a
+                href={secondaryCta.href}
+                {...(secondaryIsExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                className="text-center rounded-xl px-3 py-3 border border-white/15 text-zinc-200 hover:bg-white/5 transition-colors"
+                onClick={() => setNavOpen(false)}
+              >
+                {t(secondaryCta.label)}
+              </a>
+            )}
             {navLinks.map((link) => (
               <Link
                 key={link.href}
