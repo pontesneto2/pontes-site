@@ -17,9 +17,9 @@ export default function MarqueeIdealizadores() {
   const items = [...IDEALIZADORES, ...IDEALIZADORES];
 
   return (
-    <section className="border-t border-white/10 py-8">
+    <section className="border-t border-white/10 py-6">
       <div className="mx-auto max-w-7xl px-6 text-center">
-        <span className="mb-4 block font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-500">
+        <span className="mb-3 block font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-500">
           {tr(lang, { pt: "Já entreguei projetos para", en: "I've already delivered projects for" })}
         </span>
       </div>
@@ -32,9 +32,9 @@ export default function MarqueeIdealizadores() {
       >
         <div className="tc-marquee-track flex w-max items-center">
           {items.map((name, index) => (
-            <span key={`${name}-${index}`} className="whitespace-nowrap px-4 font-display text-lg font-semibold text-zinc-500 transition-colors hover:text-zinc-200" style={{ fontFamily: "var(--font-space-grotesk)" }}>
+            <span key={`${name}-${index}`} className="whitespace-nowrap px-2 font-display text-base font-semibold text-zinc-500 transition-colors hover:text-zinc-200" style={{ fontFamily: "var(--font-space-grotesk)" }}>
               {name}
-              <span className="pl-8 text-violet-400/30" aria-hidden="true">
+              <span className="pl-4 text-violet-400/30" aria-hidden="true">
                 •
               </span>
             </span>
