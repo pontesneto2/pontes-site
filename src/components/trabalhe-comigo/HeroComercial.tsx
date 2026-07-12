@@ -65,8 +65,8 @@ export default function HeroComercial() {
 
           <p className="mt-6 max-w-2xl text-base text-zinc-400 sm:text-lg">
             {t({
-              pt: "Sistemas, sites, aplicativos e outras soluções digitais construídos por um ",
-              en: "Systems, websites, apps and other digital solutions built by a ",
+              pt: "Olá, pode me chamar de Francisco. Sistemas, sites, aplicativos e outras soluções digitais construídos por um ",
+              en: "Hi, you can call me Francisco. Systems, websites, apps and other digital solutions built by a ",
             })}
             <b className="text-zinc-200">{t({ pt: "Engenheiro de Software", en: "Software Engineer" })}</b>
             {t({
