@@ -2,8 +2,8 @@
 
 import { motion } from "framer-motion";
 import { MessageCircle } from "lucide-react";
-import { useLanguage, tr } from "@/lib/language-context";
-import type { Proposal } from "./types";
+import { useLanguage, tr, type Lang } from "@/lib/language-context";
+import type { Investimento, Proposal } from "./types";
 
 const PORTE_LABEL: Record<Proposal["porte"], { pt: string; en: string }> = {
   pequeno: { pt: "Pequeno", en: "Small" },
@@ -13,6 +13,15 @@ const PORTE_LABEL: Record<Proposal["porte"], { pt: string; en: string }> = {
 
 function formatBRL(value: number) {
   return value.toLocaleString("pt-BR", { style: "currency", currency: "BRL", maximumFractionDigits: 0 });
+}
+
+function investimentoTexto(investimento: Investimento, lang: Lang) {
+  if (investimento.modelo === "faixa" && investimento.max !== null) {
+    return `${formatBRL(investimento.min)} – ${formatBRL(investimento.max)}`;
+  }
+  return lang === "pt"
+    ? `A partir de ${formatBRL(investimento.min)}`
+    : `From ${formatBRL(investimento.min)}`;
 }
 
 export default function PropostaResultado({ proposal, description }: { proposal: Proposal; description: string }) {
@@ -81,14 +90,28 @@ export default function PropostaResultado({ proposal, description }: { proposal:
 
           <div className="rounded-lg border border-white/10 bg-white/[0.04] p-4">
             <div className="mb-2 font-mono text-[11px] uppercase tracking-wide text-zinc-400">
-              {tr(lang, { pt: "Investimento estimado", en: "Estimated investment" })}
+              {tr(lang, { pt: "Faixa de referência", en: "Reference range" })}
             </div>
             <div className="bg-gradient-to-r from-violet-500 to-fuchsia-500 bg-clip-text text-lg font-semibold text-transparent">
-              {formatBRL(proposal.faixaInvestimento.min)} – {formatBRL(proposal.faixaInvestimento.max)}
+              {investimentoTexto(proposal.investimento, lang)}
             </div>
+            {proposal.investimento.horaBRL !== null && (
+              <div className="mt-1 font-mono text-[11px] text-zinc-400">
+                {tr(lang, { pt: "ou ", en: "or " })}
+                {formatBRL(proposal.investimento.horaBRL)}
+                {tr(lang, { pt: "/h", en: "/h" })}
+              </div>
+            )}
             <div className="mt-1.5 font-mono text-[11px] text-zinc-400">{proposal.pagamentoSugerido}</div>
           </div>
         </div>
+
+        <p className="mt-4 rounded-lg border border-white/10 bg-white/[0.03] px-4 py-3 text-[12.5px] text-zinc-400">
+          {tr(lang, {
+            pt: "Esses valores são uma faixa de referência, não uma cotação fechada. Cada projeto vira uma proposta personalizada depois de eu entender o contexto.",
+            en: "These figures are a reference range, not a closed quote. Every project becomes a personalized proposal once I understand the context.",
+          })}
+        </p>
       </div>
 
       <div className="flex flex-wrap gap-3 border-t border-white/10 p-6">

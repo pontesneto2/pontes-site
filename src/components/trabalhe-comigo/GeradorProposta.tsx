@@ -1,12 +1,12 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { Loader2 } from "lucide-react";
+import { useRef, useState, type ReactNode } from "react";
+import { Loader2, ChevronDown } from "lucide-react";
 import { track } from "@vercel/analytics";
 import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
 import SectionHeading from "./SectionHeading";
 import PropostaResultado from "./PropostaResultado";
-import type { Proposal, PropostaResponse } from "./types";
+import type { Existente, Proposal, PropostaResponse, TipoProjeto, Urgencia } from "./types";
 
 const EXAMPLES: Array<{ chip: Bilingual; text: Bilingual }> = [
   {
@@ -39,6 +39,63 @@ const EXAMPLES: Array<{ chip: Bilingual; text: Bilingual }> = [
   },
 ];
 
+const TIPO_OPTIONS: Array<{ value: TipoProjeto; label: Bilingual }> = [
+  { value: "sistema_saas", label: { pt: "Sistema web / SaaS", en: "Web system / SaaS" } },
+  { value: "app_mobile", label: { pt: "Aplicativo mobile (iOS/Android)", en: "Mobile app (iOS/Android)" } },
+  { value: "site_landing", label: { pt: "Site ou landing page", en: "Website or landing page" } },
+  { value: "api_integracao", label: { pt: "API ou integração", en: "API or integration" } },
+  { value: "migracao", label: { pt: "Migração de sistema", en: "System migration" } },
+  { value: "manutencao", label: { pt: "Manutenção / evolução", en: "Maintenance / evolution" } },
+];
+
+const EXISTENTE_OPTIONS: Array<{ value: Existente; label: Bilingual }> = [
+  { value: "do_zero", label: { pt: "Começar do zero", en: "Start from scratch" } },
+  { value: "continuar", label: { pt: "Continuar um sistema que já existe", en: "Continue an existing system" } },
+  { value: "migracao_existente", label: { pt: "Migrar um sistema existente", en: "Migrate an existing system" } },
+];
+
+const URGENCIA_OPTIONS: Array<{ value: Urgencia; label: Bilingual }> = [
+  { value: "tranquilo", label: { pt: "Tranquilo, sem pressa", en: "Relaxed, no rush" } },
+  { value: "normal", label: { pt: "Prazo normal", en: "Normal timeline" } },
+  { value: "urgente", label: { pt: "É urgente", en: "It's urgent" } },
+];
+
+const ORCAMENTO_OPTIONS: Array<{ value: string; label: Bilingual }> = [
+  { value: "", label: { pt: "Prefiro não informar", en: "Prefer not to say" } },
+  { value: "Até R$ 2.000", label: { pt: "Até R$ 2.000", en: "Up to R$ 2,000" } },
+  { value: "R$ 2.000 a 5.000", label: { pt: "R$ 2.000 a 5.000", en: "R$ 2,000 to 5,000" } },
+  { value: "R$ 5.000 a 15.000", label: { pt: "R$ 5.000 a 15.000", en: "R$ 5,000 to 15,000" } },
+  { value: "Acima de R$ 15.000", label: { pt: "Acima de R$ 15.000", en: "Above R$ 15,000" } },
+];
+
+function SelectField({
+  label,
+  value,
+  onChange,
+  children,
+}: {
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+  children: ReactNode;
+}) {
+  return (
+    <label className="block">
+      <span className="mb-1.5 block font-mono text-[11px] uppercase tracking-wide text-zinc-400">{label}</span>
+      <div className="relative">
+        <select
+          value={value}
+          onChange={(event) => onChange(event.target.value)}
+          className="w-full appearance-none rounded-xl border border-white/20 bg-black/30 px-4 py-3 pr-9 text-sm text-white focus:border-violet-400/40 focus:outline-none"
+        >
+          {children}
+        </select>
+        <ChevronDown className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-400" />
+      </div>
+    </label>
+  );
+}
+
 type Status = "idle" | "loading" | "success" | "fallback";
 
 export default function GeradorProposta() {
@@ -46,13 +103,21 @@ export default function GeradorProposta() {
   const t = (v: Bilingual) => tr(lang, v);
 
   const [description, setDescription] = useState("");
+  const [tipo, setTipo] = useState("");
+  const [existente, setExistente] = useState("");
+  const [urgencia, setUrgencia] = useState("");
+  const [orcamento, setOrcamento] = useState("");
+  const [siteReferencia, setSiteReferencia] = useState("");
   const [status, setStatus] = useState<Status>("idle");
   const [proposal, setProposal] = useState<Proposal | null>(null);
   const formLoadedAt = useRef(Date.now());
   const honeypotRef = useRef<HTMLInputElement>(null);
 
+  const canGenerate =
+    tipo !== "" && existente !== "" && urgencia !== "" && description.trim().length >= 20;
+
   async function handleGenerate() {
-    if (description.trim().length < 20) return;
+    if (!canGenerate) return;
     setStatus("loading");
 
     try {
@@ -61,6 +126,11 @@ export default function GeradorProposta() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           description: description.trim(),
+          tipo,
+          existente,
+          urgencia,
+          orcamento,
+          siteReferencia: siteReferencia.trim(),
           company: honeypotRef.current?.value ?? "",
           formLoadedAt: formLoadedAt.current,
           lang,
@@ -120,6 +190,49 @@ export default function GeradorProposta() {
               aria-hidden="true"
             />
 
+            <div className="mt-6 grid grid-cols-1 gap-3.5 sm:grid-cols-3">
+              <SelectField label={t({ pt: "Tipo de projeto", en: "Project type" })} value={tipo} onChange={setTipo}>
+                <option value="" disabled className="bg-zinc-900">
+                  {t({ pt: "Selecione...", en: "Select..." })}
+                </option>
+                {TIPO_OPTIONS.map((option) => (
+                  <option key={option.value} value={option.value} className="bg-zinc-900">
+                    {t(option.label)}
+                  </option>
+                ))}
+              </SelectField>
+
+              <SelectField
+                label={t({ pt: "Ponto de partida", en: "Starting point" })}
+                value={existente}
+                onChange={setExistente}
+              >
+                <option value="" disabled className="bg-zinc-900">
+                  {t({ pt: "Selecione...", en: "Select..." })}
+                </option>
+                {EXISTENTE_OPTIONS.map((option) => (
+                  <option key={option.value} value={option.value} className="bg-zinc-900">
+                    {t(option.label)}
+                  </option>
+                ))}
+              </SelectField>
+
+              <SelectField
+                label={t({ pt: "Prazo / urgência", en: "Timeline / urgency" })}
+                value={urgencia}
+                onChange={setUrgencia}
+              >
+                <option value="" disabled className="bg-zinc-900">
+                  {t({ pt: "Selecione...", en: "Select..." })}
+                </option>
+                {URGENCIA_OPTIONS.map((option) => (
+                  <option key={option.value} value={option.value} className="bg-zinc-900">
+                    {t(option.label)}
+                  </option>
+                ))}
+              </SelectField>
+            </div>
+
             <textarea
               value={description}
               onChange={(event) => setDescription(event.target.value)}
@@ -143,11 +256,38 @@ export default function GeradorProposta() {
               ))}
             </div>
 
+            <div className="mt-4 grid grid-cols-1 gap-3.5 sm:grid-cols-2">
+              <SelectField
+                label={t({ pt: "Orçamento disponível (opcional)", en: "Available budget (optional)" })}
+                value={orcamento}
+                onChange={setOrcamento}
+              >
+                {ORCAMENTO_OPTIONS.map((option) => (
+                  <option key={option.value || "none"} value={option.value} className="bg-zinc-900">
+                    {t(option.label)}
+                  </option>
+                ))}
+              </SelectField>
+
+              <label className="block">
+                <span className="mb-1.5 block font-mono text-[11px] uppercase tracking-wide text-zinc-400">
+                  {t({ pt: "Site de referência (opcional)", en: "Reference site (optional)" })}
+                </span>
+                <input
+                  type="url"
+                  value={siteReferencia}
+                  onChange={(event) => setSiteReferencia(event.target.value)}
+                  placeholder={t({ pt: "https://um-site-que-te-inspira.com", en: "https://a-site-you-like.com" })}
+                  className="w-full rounded-xl border border-white/20 bg-black/30 px-4 py-3 text-sm text-white placeholder:text-zinc-500 focus:border-violet-400/40 focus:outline-none"
+                />
+              </label>
+            </div>
+
             <div className="mt-6">
               <button
                 type="button"
                 onClick={handleGenerate}
-                disabled={status === "loading" || description.trim().length < 20}
+                disabled={status === "loading" || !canGenerate}
                 className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-violet-700 transition-all hover:scale-[1.03] disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {status === "loading" && <Loader2 className="h-4 w-4 animate-spin" />}
@@ -158,8 +298,8 @@ export default function GeradorProposta() {
 
             <p className="mt-5 font-mono text-[11px] text-zinc-500">
               {t({
-                pt: "* Estimativa preliminar gerada por IA. Faixas de investimento são ilustrativas. O valor final é fechado depois de uma conversa rápida.",
-                en: "* Preliminary AI-generated estimate. Investment ranges are illustrative. The final price is set after a quick conversation.",
+                pt: "* Estimativa preliminar gerada por IA. Os valores são uma faixa de referência, não uma cotação fechada. Cada projeto vira uma proposta personalizada depois de eu entender o contexto.",
+                en: "* Preliminary AI-generated estimate. The figures are a reference range, not a closed quote. Every project becomes a personalized proposal once I understand the context.",
               })}
             </p>
 
