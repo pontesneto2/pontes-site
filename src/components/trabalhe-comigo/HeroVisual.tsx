@@ -4,7 +4,7 @@ import { Code2, LayoutGrid, Cpu, Boxes, Smartphone } from "lucide-react";
 
 export default function HeroVisual() {
   return (
-    <div className="relative mx-auto w-full max-w-[520px]" aria-hidden="true">
+    <div className="relative mx-auto w-full max-w-[320px] sm:max-w-[420px] lg:max-w-[520px]" aria-hidden="true">
       {/* brilho de fundo */}
       <div
         className="pointer-events-none absolute inset-0 -z-10 blur-2xl"

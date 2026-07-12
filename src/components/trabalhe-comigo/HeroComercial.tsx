@@ -83,7 +83,7 @@ export default function HeroComercial() {
             initial={{ opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.7, ease: "easeOut", delay: 0.15 }}
-            className="hidden lg:block"
+            className="mt-4 lg:mt-0"
           >
             <HeroVisual />
           </motion.div>
