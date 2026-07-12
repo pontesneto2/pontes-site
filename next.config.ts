@@ -27,6 +27,11 @@ const nextConfig: NextConfig = {
         destination: "https://fcopts.com.br/:path*",
         permanent: true,
       },
+      {
+        source: "/work-with-me",
+        destination: "/trabalhe-comigo",
+        permanent: true,
+      },
     ];
   },
 };
