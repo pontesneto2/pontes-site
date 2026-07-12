@@ -1,33 +1,23 @@
-import type { Porte } from "@/components/trabalhe-comigo/types";
+import type { Porte, Investimento } from "@/components/trabalhe-comigo/types";
 
 /**
- * [[VERIFICAR: confirmar com o usuário]] Valores placeholder vindos do protótipo
- * (trabalhe-comigo.html / prompt-agente-trabalhe-comigo.md). Usados só para calibrar
- * o raciocínio da IA no system prompt — nunca renderizados na UI nem retornados
- * ao client como número de hora.
+ * Taxa horária de referência (confirmada pelo Francisco em 2026-07-12). Vale para
+ * projetos médio/grande cobrados por hora e serve de âncora para o motor de estimativa.
  */
-export const HOURLY_RATES = {
-  dedicacaoAlta: 60, // R$/h para +10h/semana
-  padrao: 70, // R$/h padrão, mínimo 4h/semana
-  avulso: 120, // R$/h avulso, sem recorrência
-} as const;
+export const HOURLY_RATE = 70;
 
 /**
- * [[VERIFICAR]] Faixas de horas estimadas por porte (heurística própria, não
- * confirmada pelo usuário) usadas apenas para calcular a faixa de investimento
- * a partir da taxa "padrão". Ajustar assim que os valores reais forem definidos.
+ * Faixas de referência por porte (confirmadas pelo Francisco em 2026-07-12). NÃO são
+ * cotações fechadas: cada projeto vira uma proposta personalizada depois de entender o
+ * contexto. Pequeno é uma faixa fechada; médio e grande são "a partir de" (podem também
+ * ser cobrados por hora a HOURLY_RATE).
  */
-const ESTIMATED_HOURS_BY_PORTE: Record<Porte, { min: number; max: number }> = {
-  pequeno: { min: 40, max: 80 },
-  medio: { min: 120, max: 280 },
-  grande: { min: 350, max: 700 },
+const INVESTIMENTO_POR_PORTE: Record<Porte, Investimento> = {
+  pequeno: { modelo: "faixa", min: 800, max: 1700, horaBRL: null, moeda: "BRL" },
+  medio: { modelo: "a_partir", min: 2000, max: null, horaBRL: HOURLY_RATE, moeda: "BRL" },
+  grande: { modelo: "a_partir", min: 3000, max: null, horaBRL: HOURLY_RATE, moeda: "BRL" },
 };
 
-export function getFaixaInvestimento(porte: Porte): { min: number; max: number; moeda: "BRL" } {
-  const hours = ESTIMATED_HOURS_BY_PORTE[porte];
-  return {
-    min: Math.round(hours.min * HOURLY_RATES.padrao),
-    max: Math.round(hours.max * HOURLY_RATES.padrao),
-    moeda: "BRL",
-  };
+export function getInvestimento(porte: Porte): Investimento {
+  return INVESTIMENTO_POR_PORTE[porte];
 }

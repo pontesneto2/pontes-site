@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import type { Porte, PropostaFallbackReason, PropostaResponse } from "@/components/trabalhe-comigo/types";
-import { HOURLY_RATES, getFaixaInvestimento } from "@/lib/proposta/pricing.server";
+import { HOURLY_RATE, getInvestimento } from "@/lib/proposta/pricing.server";
 import { checkRateLimit, getClientIp } from "@/lib/proposta/rate-limit.server";
 
 const MIN_DESCRIPTION_LENGTH = 20;
@@ -24,12 +24,19 @@ type AiProposalShape = {
 function buildSystemPrompt(lang: "pt" | "en") {
   return `Você é o assistente comercial de Francisco Pontes, engenheiro de software full stack sênior, freelance e remoto (PT/EN). Stack: TypeScript, React, Next.js, React Native/Expo, Node.js, NestJS, Express, PostgreSQL, Prisma, Sequelize, Redis, Docker, CI/CD, Vercel, Railway, AWS.
 
-Internamente (nunca mencione isso na resposta), projetos são precificados a partir de R$${HOURLY_RATES.padrao}/hora como taxa padrão. Use isso só para calibrar seu raciocínio de porte, nunca para calcular ou mencionar valores em reais na resposta.
+Internamente (nunca mencione isso na resposta), a taxa horária de referência é R$${HOURLY_RATE}/hora. Use isso só para calibrar seu raciocínio de porte, nunca para calcular ou mencionar valores em reais na resposta.
 
 A partir da descrição do visitante, produza um escopo comercial PRELIMINAR, realista e conservador, respondendo ${lang === "en" ? "in English" : "em português"}. Responda APENAS com um objeto JSON válido, sem markdown, sem cercas de código, sem texto fora do JSON. Estrutura exata:
-{"tipo":"string curta","resumo":"2 frases","stack":["3 a 6 techs reais da stack dele"],"entregaveis":["3 a 5"],"prazoEstimado":"faixa realista, ex: 8 a 12 semanas","porte":"pequeno" | "medio" | "grande","pagamentoSugerido":"sugestão (Pacote, Por hora ou Mensal) + 1 frase"}.
+{"tipo":"string curta","resumo":"2 frases","stack":["3 a 6 techs reais da stack dele"],"entregaveis":["3 a 5"],"prazoEstimado":"faixa realista de prazo","porte":"pequeno" | "medio" | "grande","pagamentoSugerido":"sugestão (Pacote, Por hora ou Mensal) + 1 frase"}.
 
-Critério de porte: pequeno = site/landing ou app simples; medio = sistema web ou app com várias features; grande = SaaS/marketplace/multi-plataforma. NÃO invente valores em reais em nenhum campo.`;
+Critério de porte e prazo:
+- pequeno = site estático ou landing page. Prazo típico: 7 dias úteis.
+- medio = sistema web (plataforma, painel, área logada). Prazo típico: até 60 dias conforme a complexidade.
+- grande = SaaS, marketplace, projeto multiplataforma OU aplicativo mobile (iOS/Android). Prazo: conforme o escopo, geralmente vários meses.
+
+REGRA IMPORTANTE: aplicativo mobile e sistema web são escopos DIFERENTES. Se o visitante pede só um sistema web, não inclua app mobile nos entregáveis, e vice-versa. Só trate como multiplataforma (app + web) se ele pedir explicitamente os dois. Um aplicativo mobile, mesmo simples, é porte grande.
+
+NÃO invente valores em reais em nenhum campo. O prazoEstimado deve respeitar as âncoras acima.`;
 }
 
 function isValidAiProposal(value: unknown): value is Required<AiProposalShape> {
@@ -158,7 +165,7 @@ export async function POST(request: NextRequest) {
         prazoEstimado: parsed.prazoEstimado,
         porte,
         pagamentoSugerido: parsed.pagamentoSugerido,
-        faixaInvestimento: getFaixaInvestimento(porte),
+        investimento: getInvestimento(porte),
       },
     });
   } catch {

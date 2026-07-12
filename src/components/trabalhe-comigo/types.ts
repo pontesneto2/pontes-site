@@ -1,5 +1,13 @@
 export type Porte = "pequeno" | "medio" | "grande";
 
+export type Investimento = {
+  modelo: "faixa" | "a_partir";
+  min: number;
+  max: number | null;
+  horaBRL: number | null;
+  moeda: "BRL";
+};
+
 export type Proposal = {
   tipo: string;
   resumo: string;
@@ -8,7 +16,7 @@ export type Proposal = {
   prazoEstimado: string;
   porte: Porte;
   pagamentoSugerido: string;
-  faixaInvestimento: { min: number; max: number; moeda: "BRL" };
+  investimento: Investimento;
 };
 
 export type PropostaFallbackReason = "rate_limited" | "timeout" | "ai_error" | "invalid_response";

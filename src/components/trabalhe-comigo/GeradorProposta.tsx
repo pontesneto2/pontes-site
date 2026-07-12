@@ -158,8 +158,8 @@ export default function GeradorProposta() {
 
             <p className="mt-5 font-mono text-[11px] text-zinc-500">
               {t({
-                pt: "* Estimativa preliminar gerada por IA. Faixas de investimento são ilustrativas. O valor final é fechado depois de uma conversa rápida.",
-                en: "* Preliminary AI-generated estimate. Investment ranges are illustrative. The final price is set after a quick conversation.",
+                pt: "* Estimativa preliminar gerada por IA. Os valores são uma faixa de referência, não uma cotação fechada. Cada projeto vira uma proposta personalizada depois de eu entender o contexto.",
+                en: "* Preliminary AI-generated estimate. The figures are a reference range, not a closed quote. Every project becomes a personalized proposal once I understand the context.",
               })}
             </p>
 
