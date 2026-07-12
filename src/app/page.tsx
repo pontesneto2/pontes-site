@@ -855,7 +855,7 @@ export default function Page() {
         <SiteHeader
           navLinks={navLinks}
           searchIndex={searchIndex}
-          cta={{ label: { pt: "Me contrate", en: "Hire me" }, href: "/trabalhe-comigo" }}
+          cta={{ label: { pt: "Peça um orçamento", en: "Get a quote" }, href: "/trabalhe-comigo" }}
           secondaryCta={{ label: { pt: "Baixar CV", en: "Download CV" }, href: CV_URL }}
           ctaBadge={{ pt: "Novo", en: "New" }}
         />

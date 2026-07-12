@@ -138,7 +138,7 @@ export default function SiteHeader({
               >
                 {t(cta.label)}
                 {ctaBadge && (
-                  <span className="absolute -right-2.5 -top-2 rotate-12 rounded-full bg-amber-400 px-1.5 py-0.5 text-[9px] font-bold uppercase leading-none tracking-wide text-zinc-950 shadow-md shadow-black/30">
+                  <span className="absolute -right-2 -top-1.5 rotate-12 rounded-full bg-amber-400 px-1 py-px text-[8px] font-bold uppercase leading-none tracking-wide text-zinc-950 shadow-sm shadow-black/30">
                     {t(ctaBadge)}
                   </span>
                 )}
@@ -193,7 +193,7 @@ export default function SiteHeader({
             >
               {t(cta.label)}
               {ctaBadge && (
-                <span className="absolute -top-2 right-3 rotate-12 rounded-full bg-amber-400 px-1.5 py-0.5 text-[9px] font-bold uppercase leading-none tracking-wide text-zinc-950 shadow-md shadow-black/30">
+                <span className="absolute -top-1.5 right-3 rotate-12 rounded-full bg-amber-400 px-1 py-px text-[8px] font-bold uppercase leading-none tracking-wide text-zinc-950 shadow-sm shadow-black/30">
                   {t(ctaBadge)}
                 </span>
               )}
