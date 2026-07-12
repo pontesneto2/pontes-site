@@ -4,12 +4,21 @@ import { useLanguage, tr } from "@/lib/language-context";
 
 const IDEALIZADORES = [
   "Governo do Ceará",
+  "Fedex PT",
+  "Sarrubbo Advogados",
+  "Ematerce",
+  "FlixBus Tickets UK",
+  "Idace",
   "Instituto Agropolos",
+  "Projeto São José IV",
   "Click Software House",
   "Com3 Brasil",
+  "Meoocarro",
+  "Movimenta Filmes",
   "Silva & Duarte Advogados",
   "Instituto Anjos Digitais",
   "Alfa Construções",
+  "Hey Canada Imigration",
 ];
 
 export default function MarqueeIdealizadores() {
