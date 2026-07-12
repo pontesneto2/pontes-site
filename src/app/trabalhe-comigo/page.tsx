@@ -52,12 +52,12 @@ export default function TrabalheComigoPage() {
       <HeroComercial />
       <MarqueeIdealizadores />
       <OQueEuConstruo />
+      <GeradorProposta />
       <TecnologiasStacks />
       <ComoEuTrabalho />
-      <GeradorProposta />
-      <CasosReais />
       <ComoFuncionaInvestimento />
       <SegurancaJuridica />
+      <CasosReais />
       <FaqAccordion />
       <ContatoSection />
       <SobreMim />
