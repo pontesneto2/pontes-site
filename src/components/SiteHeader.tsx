@@ -38,11 +38,13 @@ export default function SiteHeader({
   searchIndex = [],
   cta = DEFAULT_CTA,
   secondaryCta,
+  ctaBadge,
 }: {
   navLinks?: Array<{ href: string; label: Bilingual }>;
   searchIndex?: SearchEntry[];
   cta?: { label: Bilingual; href: string };
   secondaryCta?: { label: Bilingual; href: string };
+  ctaBadge?: Bilingual;
 }) {
   const { lang, setLang } = useLanguage();
   const t = (v: Bilingual) => tr(lang, v);
@@ -132,9 +134,14 @@ export default function SiteHeader({
               <a
                 href={cta.href}
                 {...(ctaIsExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                className="px-3 py-1.5 rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-500 text-white shadow-lg shadow-fuchsia-700/20"
+                className="relative px-3 py-1.5 rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-500 text-white shadow-lg shadow-fuchsia-700/20"
               >
                 {t(cta.label)}
+                {ctaBadge && (
+                  <span className="absolute -right-2.5 -top-2 rotate-12 rounded-full bg-amber-400 px-1.5 py-0.5 text-[9px] font-bold uppercase leading-none tracking-wide text-zinc-950 shadow-md shadow-black/30">
+                    {t(ctaBadge)}
+                  </span>
+                )}
               </a>
               <SearchBox
                 searchOpen={searchOpen}
@@ -181,10 +188,15 @@ export default function SiteHeader({
             <a
               href={cta.href}
               {...(ctaIsExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-              className="text-center rounded-xl px-3 py-3 bg-gradient-to-r from-violet-600 to-fuchsia-500 text-white font-medium shadow-lg shadow-fuchsia-700/20"
+              className="relative text-center rounded-xl px-3 py-3 bg-gradient-to-r from-violet-600 to-fuchsia-500 text-white font-medium shadow-lg shadow-fuchsia-700/20"
               onClick={() => setNavOpen(false)}
             >
               {t(cta.label)}
+              {ctaBadge && (
+                <span className="absolute -top-2 right-3 rotate-12 rounded-full bg-amber-400 px-1.5 py-0.5 text-[9px] font-bold uppercase leading-none tracking-wide text-zinc-950 shadow-md shadow-black/30">
+                  {t(ctaBadge)}
+                </span>
+              )}
             </a>
             {secondaryCta && (
               <a

@@ -857,6 +857,7 @@ export default function Page() {
           searchIndex={searchIndex}
           cta={{ label: { pt: "Me contrate", en: "Hire me" }, href: "/trabalhe-comigo" }}
           secondaryCta={{ label: { pt: "Baixar CV", en: "Download CV" }, href: CV_URL }}
+          ctaBadge={{ pt: "Novo", en: "New" }}
         />
 
         <main id="content">
