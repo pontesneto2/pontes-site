@@ -30,7 +30,7 @@ export default function HeroComercial() {
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
               <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-400" />
             </span>
-            {t({ pt: "Disponível para novos projetos · remoto", en: "Available for new projects · remote" })}
+            {t({ pt: "Disponível para novos projetos · Remoto", en: "Available for new projects · Remote" })}
           </div>
 
           <h1 className="mt-6 max-w-3xl text-4xl font-bold leading-[1.08] tracking-tight sm:text-6xl" style={{ fontFamily: "var(--font-space-grotesk)" }}>
