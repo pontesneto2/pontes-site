@@ -1,18 +1,38 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { MessageCircle } from "lucide-react";
 import { track } from "@vercel/analytics";
 import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
 import { scrollToId } from "./scroll";
 import HeroVisual from "./HeroVisual";
 
-const stats: Array<{ value: string; label: Bilingual }> = [
-  { value: "6+", label: { pt: "anos de experiência", en: "years of experience" } },
-  { value: "15+", label: { pt: "projetos em produção", en: "projects in production" } },
-  { value: "PT/EN", label: { pt: "atendimento remoto", en: "remote support" } },
-  { value: "Gov · Startups", label: { pt: "clientes atendidos", en: "clients served" } },
-];
+function TypedHeadline({ prefix, suffix }: { prefix: string; suffix: string }) {
+  const full = prefix + suffix;
+  const [count, setCount] = useState(0);
+  const done = count >= full.length;
+
+  useEffect(() => {
+    if (done) return;
+    const timer = setTimeout(() => setCount((c) => c + 1), 45);
+    return () => clearTimeout(timer);
+  }, [count, done]);
+
+  const shownPrefix = prefix.slice(0, Math.min(count, prefix.length));
+  const shownSuffix = count > prefix.length ? suffix.slice(0, count - prefix.length) : "";
+
+  return (
+    <>
+      {shownPrefix}
+      <span className="bg-gradient-to-r from-violet-500 to-fuchsia-500 bg-clip-text text-transparent">
+        {shownSuffix}
+      </span>
+      <span className={done ? "typewriter-cursor" : ""} style={{ color: "#e879f9" }}>
+        _
+      </span>
+    </>
+  );
+}
 
 export default function HeroComercial() {
   const { lang } = useLanguage();
@@ -36,21 +56,22 @@ export default function HeroComercial() {
           </div>
 
           <h1 className="mt-6 max-w-3xl text-4xl font-bold leading-[1.08] tracking-tight sm:text-6xl" style={{ fontFamily: "var(--font-space-grotesk)" }}>
-            {t({ pt: "Software sob medida, ", en: "Custom software, " })}
-            <span className="bg-gradient-to-r from-violet-500 to-fuchsia-500 bg-clip-text text-transparent">
-              {t({ pt: "do esboço ao deploy.", en: "from sketch to deploy." })}
-            </span>
+            <TypedHeadline
+              key={lang}
+              prefix={t({ pt: "Software sob medida, ", en: "Custom software, " })}
+              suffix={t({ pt: "do esboço ao deploy", en: "from sketch to deploy" })}
+            />
           </h1>
 
           <p className="mt-6 max-w-2xl text-base text-zinc-400 sm:text-lg">
             {t({
-              pt: "Sistemas, sites, aplicativos bem como prestação de serviços construídos por um ",
-              en: "Systems, websites, apps as well as professional services built by a ",
+              pt: "Sistemas, sites, aplicativos e outras soluções digitais construídos por um ",
+              en: "Systems, websites, apps and other digital solutions built by a ",
             })}
-            <b className="text-zinc-200">{t({ pt: "Engenheiro de Softwares", en: "Software Engineer" })}</b>
+            <b className="text-zinc-200">{t({ pt: "Engenheiro de Software", en: "Software Engineer" })}</b>
             {t({
-              pt: ". Trabalho com a governança de quem já colocou dezenas de produtos em produção pra governo, empresas e startups. Sem terceirização e sem enrolação. Conheça mais!",
-              en: ". I work with the governance of someone who has already shipped dozens of products to production for government, companies and startups. No outsourcing, no runaround. Learn more!",
+              pt: ". Trabalho com a governança de quem já colocou dezenas de produtos em produção para o governo, fintechs e startups. Entrega rápida, sem terceirização e sem enrolação. Monte sua proposta.",
+              en: ". I work with the governance of someone who has already shipped dozens of products to production for government, fintechs and startups. Fast delivery, no outsourcing, no runaround. Build your proposal.",
             })}
           </p>
 
@@ -66,16 +87,6 @@ export default function HeroComercial() {
               {t({ pt: "Montar minha proposta agora", en: "Build my proposal now" })}
               <span aria-hidden="true">→</span>
             </a>
-            <a
-              href="https://wa.me/5585981888896"
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => track("trabalhe_comigo_whatsapp_click", { source: "hero" })}
-              className="inline-flex items-center gap-2 rounded-full border border-white/20 px-6 py-3 text-sm font-semibold text-white transition-all hover:border-white/50 hover:bg-white/5"
-            >
-              <MessageCircle className="h-4 w-4" />
-              {t({ pt: "Falar no WhatsApp", en: "Chat on WhatsApp" })}
-            </a>
           </div>
         </motion.div>
 
@@ -87,19 +98,6 @@ export default function HeroComercial() {
           >
             <HeroVisual />
           </motion.div>
-        </div>
-
-        <div className="mt-14 grid grid-cols-2 gap-3.5 sm:grid-cols-4">
-          {stats.map((stat) => (
-            <div key={stat.value} className="rounded-2xl border border-white/10 bg-white/[0.04] p-5">
-              <div className="text-2xl font-semibold" style={{ fontFamily: "var(--font-space-grotesk)" }}>
-                {stat.value}
-              </div>
-              <div className="mt-1.5 font-mono text-[11px] uppercase tracking-wide text-zinc-400">
-                {t(stat.label)}
-              </div>
-            </div>
-          ))}
         </div>
       </div>
     </header>
