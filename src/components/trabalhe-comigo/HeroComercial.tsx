@@ -5,6 +5,7 @@ import { MessageCircle } from "lucide-react";
 import { track } from "@vercel/analytics";
 import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
 import { scrollToId } from "./scroll";
+import HeroVisual from "./HeroVisual";
 
 const stats: Array<{ value: string; label: Bilingual }> = [
   { value: "6+", label: { pt: "anos de experiência", en: "years of experience" } },
@@ -20,6 +21,7 @@ export default function HeroComercial() {
   return (
     <header className="pt-20 sm:pt-24 pb-16">
       <div className="mx-auto max-w-7xl px-6">
+        <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr]">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
@@ -76,6 +78,16 @@ export default function HeroComercial() {
             </a>
           </div>
         </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.96 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.7, ease: "easeOut", delay: 0.15 }}
+            className="hidden lg:block"
+          >
+            <HeroVisual />
+          </motion.div>
+        </div>
 
         <div className="mt-14 grid grid-cols-2 gap-3.5 sm:grid-cols-4">
           {stats.map((stat) => (
