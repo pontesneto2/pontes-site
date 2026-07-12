@@ -1,15 +1,54 @@
 import { NextRequest, NextResponse } from "next/server";
-import type { Porte, PropostaFallbackReason, PropostaResponse } from "@/components/trabalhe-comigo/types";
+import type {
+  Porte,
+  TipoProjeto,
+  Existente,
+  Urgencia,
+  PropostaFallbackReason,
+  PropostaResponse,
+} from "@/components/trabalhe-comigo/types";
 import { HOURLY_RATE, getInvestimento } from "@/lib/proposta/pricing.server";
 import { checkRateLimit, getClientIp } from "@/lib/proposta/rate-limit.server";
 
 const MIN_DESCRIPTION_LENGTH = 20;
 const MAX_DESCRIPTION_LENGTH = 2000;
+const MAX_FIELD_LENGTH = 300;
 const ANTHROPIC_MODEL = "claude-haiku-4-5-20251001";
 const REQUEST_TIMEOUT_MS = 12_000;
 const WHATSAPP_URL = "https://wa.me/5585981888896";
 
 const VALID_PORTES: Porte[] = ["pequeno", "medio", "grande"];
+const VALID_TIPOS: TipoProjeto[] = [
+  "sistema_saas",
+  "app_mobile",
+  "site_landing",
+  "api_integracao",
+  "migracao",
+  "manutencao",
+];
+const VALID_EXISTENTES: Existente[] = ["do_zero", "continuar", "migracao_existente"];
+const VALID_URGENCIAS: Urgencia[] = ["tranquilo", "normal", "urgente"];
+
+const TIPO_LABEL: Record<TipoProjeto, string> = {
+  sistema_saas: "Sistema web / SaaS",
+  app_mobile: "Aplicativo mobile (iOS/Android)",
+  site_landing: "Site ou landing page",
+  api_integracao: "API ou integração",
+  migracao: "Migração de sistema",
+  manutencao: "Manutenção / evolução de sistema existente",
+};
+
+const EXISTENTE_LABEL: Record<Existente, string> = {
+  do_zero: "Começa do zero",
+  continuar: "Continua um sistema que já existe",
+  migracao_existente: "Migra um sistema existente para nova stack",
+};
+
+const URGENCIA_LABEL: Record<Urgencia, string> = {
+  tranquilo: "Sem pressa",
+  normal: "Prazo normal",
+  urgente: "Urgente",
+};
 
 type AiProposalShape = {
   tipo?: string;
@@ -31,8 +70,10 @@ A partir da descrição do visitante, produza um escopo comercial PRELIMINAR, re
 
 Critério de porte e prazo:
 - pequeno = site estático ou landing page. Prazo típico: 7 dias úteis.
-- medio = sistema web (plataforma, painel, área logada). Prazo típico: até 60 dias conforme a complexidade.
+- medio = sistema web (plataforma, painel, área logada), API/integração, ou manutenção/evolução. Prazo típico: até 60 dias conforme a complexidade.
 - grande = SaaS, marketplace, projeto multiplataforma OU aplicativo mobile (iOS/Android). Prazo: conforme o escopo, geralmente vários meses.
+
+Use o campo "Tipo de projeto" do contexto como principal sinal para o porte, ajustando pela complexidade descrita.
 
 REGRA IMPORTANTE: aplicativo mobile e sistema web são escopos DIFERENTES. Se o visitante pede só um sistema web, não inclua app mobile nos entregáveis, e vice-versa. Só trate como multiplataforma (app + web) se ele pedir explicitamente os dois. Um aplicativo mobile, mesmo simples, é porte grande.
 
@@ -70,12 +111,18 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
   }
 
-  const { description, company, formLoadedAt, lang } = body as {
-    description?: string;
-    company?: string;
-    formLoadedAt?: number;
-    lang?: string;
-  };
+  const { description, tipo, existente, urgencia, orcamento, siteReferencia, company, formLoadedAt, lang } =
+    body as {
+      description?: string;
+      tipo?: string;
+      existente?: string;
+      urgencia?: string;
+      orcamento?: string;
+      siteReferencia?: string;
+      company?: string;
+      formLoadedAt?: number;
+      lang?: string;
+    };
 
   // Honeypot: bots preenchem campos ocultos, humanos nunca veem.
   if (company) {
@@ -96,6 +143,22 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Invalid description" }, { status: 400 });
   }
 
+  if (
+    !VALID_TIPOS.includes(tipo as TipoProjeto) ||
+    !VALID_EXISTENTES.includes(existente as Existente) ||
+    !VALID_URGENCIAS.includes(urgencia as Urgencia)
+  ) {
+    return NextResponse.json({ error: "Missing or invalid fields" }, { status: 400 });
+  }
+
+  if ((orcamento && orcamento.length > MAX_FIELD_LENGTH) || (siteReferencia && siteReferencia.length > MAX_FIELD_LENGTH)) {
+    return NextResponse.json({ error: "Field too long" }, { status: 400 });
+  }
+
+  const tipoProjeto = tipo as TipoProjeto;
+  const existenteProjeto = existente as Existente;
+  const urgenciaProjeto = urgencia as Urgencia;
+
   const ip = getClientIp(request);
   if (!checkRateLimit(ip)) {
     return fallback("rate_limited");
@@ -107,6 +170,16 @@ export async function POST(request: NextRequest) {
   }
 
   const isEnglish = lang === "en";
+  const contextoLinhas = [
+    `Descrição do projeto: ${description.trim()}`,
+    `Tipo de projeto: ${TIPO_LABEL[tipoProjeto]}`,
+    `Situação: ${EXISTENTE_LABEL[existenteProjeto]}`,
+    `Urgência: ${URGENCIA_LABEL[urgenciaProjeto]}`,
+  ];
+  if (orcamento?.trim()) contextoLinhas.push(`Orçamento informado pelo cliente: ${orcamento.trim()}`);
+  if (siteReferencia?.trim()) contextoLinhas.push(`Site de referência: ${siteReferencia.trim()}`);
+  const userContent = contextoLinhas.join("\n");
+
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
 
@@ -122,7 +195,7 @@ export async function POST(request: NextRequest) {
         model: ANTHROPIC_MODEL,
         max_tokens: 1000,
         system: buildSystemPrompt(isEnglish ? "en" : "pt"),
-        messages: [{ role: "user", content: description.trim() }],
+        messages: [{ role: "user", content: userContent }],
       }),
       signal: controller.signal,
     });
@@ -165,7 +238,10 @@ export async function POST(request: NextRequest) {
         prazoEstimado: parsed.prazoEstimado,
         porte,
         pagamentoSugerido: parsed.pagamentoSugerido,
-        investimento: getInvestimento(porte),
+        investimento: getInvestimento(porte, {
+          existente: existenteProjeto,
+          urgencia: urgenciaProjeto,
+        }),
       },
     });
   } catch {

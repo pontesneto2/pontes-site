@@ -1,4 +1,4 @@
-import type { Porte, Investimento } from "@/components/trabalhe-comigo/types";
+import type { Porte, Investimento, Existente, Urgencia } from "@/components/trabalhe-comigo/types";
 
 /**
  * Taxa horária de referência (confirmada pelo Francisco em 2026-07-12). Vale para
@@ -18,6 +18,38 @@ const INVESTIMENTO_POR_PORTE: Record<Porte, Investimento> = {
   grande: { modelo: "a_partir", min: 3000, max: null, horaBRL: HOURLY_RATE, moeda: "BRL" },
 };
 
-export function getInvestimento(porte: Porte): Investimento {
-  return INVESTIMENTO_POR_PORTE[porte];
+/**
+ * Ajustes de preço confirmados pelo Francisco (2026-07-12): partir do zero é o preço
+ * padrão; continuar um sistema existente encarece 10%; migrar reduz 20%. Urgência aplica
+ * +50% sobre valores e hora.
+ */
+const FATOR_EXISTENTE: Record<Existente, number> = {
+  do_zero: 1,
+  continuar: 1.1,
+  migracao_existente: 0.8,
+};
+
+const FATOR_URGENCIA: Record<Urgencia, number> = {
+  tranquilo: 1,
+  normal: 1,
+  urgente: 1.5,
+};
+
+function roundTo(value: number, step: number) {
+  return Math.round(value / step) * step;
+}
+
+export function getInvestimento(
+  porte: Porte,
+  opts: { existente: Existente; urgencia: Urgencia }
+): Investimento {
+  const base = INVESTIMENTO_POR_PORTE[porte];
+  const fator = FATOR_EXISTENTE[opts.existente] * FATOR_URGENCIA[opts.urgencia];
+  return {
+    modelo: base.modelo,
+    min: roundTo(base.min * fator, 10),
+    max: base.max === null ? null : roundTo(base.max * fator, 10),
+    horaBRL: base.horaBRL === null ? null : roundTo(base.horaBRL * fator, 5),
+    moeda: base.moeda,
+  };
 }

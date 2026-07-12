@@ -1,5 +1,17 @@
 export type Porte = "pequeno" | "medio" | "grande";
 
+export type TipoProjeto =
+  | "sistema_saas"
+  | "app_mobile"
+  | "site_landing"
+  | "api_integracao"
+  | "migracao"
+  | "manutencao";
+
+export type Existente = "do_zero" | "continuar" | "migracao_existente";
+
+export type Urgencia = "tranquilo" | "normal" | "urgente";
+
 export type Investimento = {
   modelo: "faixa" | "a_partir";
   min: number;
