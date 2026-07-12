@@ -37,14 +37,19 @@ export default function SiteHeader({
   navLinks = DEFAULT_NAV_LINKS,
   searchIndex = [],
   cta = DEFAULT_CTA,
+  secondaryCta,
+  ctaBadge,
 }: {
   navLinks?: Array<{ href: string; label: Bilingual }>;
   searchIndex?: SearchEntry[];
   cta?: { label: Bilingual; href: string };
+  secondaryCta?: { label: Bilingual; href: string };
+  ctaBadge?: Bilingual;
 }) {
   const { lang, setLang } = useLanguage();
   const t = (v: Bilingual) => tr(lang, v);
   const ctaIsExternal = cta.href.startsWith("http");
+  const secondaryIsExternal = secondaryCta?.href.startsWith("http") ?? false;
 
   const [navOpen, setNavOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -117,12 +122,26 @@ export default function SiteHeader({
             </div>
             <div className="flex items-center gap-3">
               <LanguageSwitch lang={lang} setLang={setLang} />
+              {secondaryCta && (
+                <a
+                  href={secondaryCta.href}
+                  {...(secondaryIsExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                  className="px-3 py-1.5 rounded-xl border border-white/20 text-zinc-200 hover:bg-white/5 hover:text-white transition-colors"
+                >
+                  {t(secondaryCta.label)}
+                </a>
+              )}
               <a
                 href={cta.href}
                 {...(ctaIsExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                className="px-3 py-1.5 rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-500 text-white shadow-lg shadow-fuchsia-700/20"
+                className="relative px-3 py-1.5 rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-500 text-white shadow-lg shadow-fuchsia-700/20"
               >
                 {t(cta.label)}
+                {ctaBadge && (
+                  <span className="absolute -right-2 -top-1.5 rotate-12 rounded-full bg-amber-400 px-1 py-px text-[8px] font-bold uppercase leading-none tracking-wide text-zinc-950 shadow-sm shadow-black/30">
+                    {t(ctaBadge)}
+                  </span>
+                )}
               </a>
               <SearchBox
                 searchOpen={searchOpen}
@@ -169,11 +188,26 @@ export default function SiteHeader({
             <a
               href={cta.href}
               {...(ctaIsExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-              className="text-center rounded-xl px-3 py-3 bg-gradient-to-r from-violet-600 to-fuchsia-500 text-white font-medium shadow-lg shadow-fuchsia-700/20"
+              className="relative text-center rounded-xl px-3 py-3 bg-gradient-to-r from-violet-600 to-fuchsia-500 text-white font-medium shadow-lg shadow-fuchsia-700/20"
               onClick={() => setNavOpen(false)}
             >
               {t(cta.label)}
+              {ctaBadge && (
+                <span className="absolute -top-1.5 right-3 rotate-12 rounded-full bg-amber-400 px-1 py-px text-[8px] font-bold uppercase leading-none tracking-wide text-zinc-950 shadow-sm shadow-black/30">
+                  {t(ctaBadge)}
+                </span>
+              )}
             </a>
+            {secondaryCta && (
+              <a
+                href={secondaryCta.href}
+                {...(secondaryIsExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                className="text-center rounded-xl px-3 py-3 border border-white/15 text-zinc-200 hover:bg-white/5 transition-colors"
+                onClick={() => setNavOpen(false)}
+              >
+                {t(secondaryCta.label)}
+              </a>
+            )}
             {navLinks.map((link) => (
               <Link
                 key={link.href}

@@ -809,6 +809,12 @@ export default function Page() {
   };
 
   const navLinks = [
+    { href: "/#intro", label: { pt: "Sobre", en: "About" } },
+    { href: "/#projects", label: { pt: "Projetos", en: "Projects" } },
+    { href: "/#about", label: { pt: "Contato", en: "Contact" } },
+  ];
+
+  const searchSections = [
     { href: "/", label: { pt: "Início", en: "Home" } },
     { href: "/#intro", label: { pt: "Sobre", en: "About" } },
     { href: "/#skills-tools", label: { pt: "Skills & Tools", en: "Skills & Tools" } },
@@ -818,7 +824,7 @@ export default function Page() {
   ];
 
   const searchIndex: SearchEntry[] = [
-    ...navLinks.map((link) => ({
+    ...searchSections.map((link) => ({
       label: t(link.label),
       href: link.href,
       group: { pt: "Seção", en: "Section" },
@@ -846,7 +852,13 @@ export default function Page() {
 
       <div className="relative z-10">
         {/* NAV */}
-        <SiteHeader navLinks={navLinks} searchIndex={searchIndex} />
+        <SiteHeader
+          navLinks={navLinks}
+          searchIndex={searchIndex}
+          cta={{ label: { pt: "Peça um orçamento", en: "Get a quote" }, href: "/trabalhe-comigo" }}
+          secondaryCta={{ label: { pt: "Baixar CV", en: "Download CV" }, href: CV_URL }}
+          ctaBadge={{ pt: "Novo", en: "New" }}
+        />
 
         <main id="content">
           <Hero />
