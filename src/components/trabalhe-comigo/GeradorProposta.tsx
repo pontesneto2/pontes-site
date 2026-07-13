@@ -1,30 +1,51 @@
 "use client";
 
 import { useRef, useState, type ReactNode } from "react";
-import { Loader2, ChevronDown } from "lucide-react";
+import {
+  Loader2,
+  ChevronDown,
+  Sparkles,
+  LayoutDashboard,
+  Smartphone,
+  ShoppingCart,
+  Rocket,
+  Plug,
+  type LucideIcon,
+} from "lucide-react";
 import { track } from "@vercel/analytics";
 import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
 import SectionHeading from "./SectionHeading";
 import PropostaResultado from "./PropostaResultado";
 import type { Existente, Proposal, PropostaResponse, TipoProjeto, Urgencia } from "./types";
 
-const EXAMPLES: Array<{ chip: Bilingual; text: Bilingual }> = [
+const EXAMPLES: Array<{ chip: Bilingual; text: Bilingual; icon: LucideIcon }> = [
   {
     chip: { pt: "Sistema de gestão", en: "Management system" },
+    icon: LayoutDashboard,
     text: {
       pt: "Um sistema web de gestão para minha clínica, com agenda, prontuário e cobrança recorrente.",
       en: "A web management system for my clinic, with scheduling, medical records and recurring billing.",
     },
   },
   {
-    chip: { pt: "App marketplace", en: "Marketplace app" },
+    chip: { pt: "App mobile", en: "Mobile app" },
+    icon: Smartphone,
     text: {
       pt: "Um aplicativo iOS e Android de marketplace conectando prestadores e clientes, com pagamento integrado.",
       en: "An iOS and Android marketplace app connecting providers and clients, with integrated payment.",
     },
   },
   {
+    chip: { pt: "E-commerce", en: "E-commerce" },
+    icon: ShoppingCart,
+    text: {
+      pt: "Uma loja virtual (e-commerce) com catálogo de produtos, carrinho, pagamento e painel de pedidos.",
+      en: "An online store (e-commerce) with product catalog, cart, checkout and an orders dashboard.",
+    },
+  },
+  {
     chip: { pt: "Landing + CRM", en: "Landing + CRM" },
+    icon: Rocket,
     text: {
       pt: "Uma landing page de alta conversão para captar leads da minha consultoria, integrada ao meu CRM.",
       en: "A high-conversion landing page to capture leads for my consulting business, integrated with my CRM.",
@@ -32,6 +53,7 @@ const EXAMPLES: Array<{ chip: Bilingual; text: Bilingual }> = [
   },
   {
     chip: { pt: "API de integração", en: "Integration API" },
+    icon: Plug,
     text: {
       pt: "Uma API para integrar meu e-commerce com a transportadora e emitir etiquetas automaticamente.",
       en: "An API to integrate my e-commerce with the carrier and automatically issue shipping labels.",
@@ -73,20 +95,36 @@ function SelectField({
   value,
   onChange,
   children,
+  step,
 }: {
   label: string;
   value: string;
   onChange: (value: string) => void;
   children: ReactNode;
+  step?: number;
 }) {
+  const filled = value !== "";
   return (
     <label className="block">
-      <span className="mb-1.5 block font-mono text-[11px] uppercase tracking-wide text-zinc-400">{label}</span>
+      <span className="mb-2 flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-wide text-zinc-400">
+        {step !== undefined && (
+          <span
+            className={`flex h-4 w-4 items-center justify-center rounded-full text-[10px] font-semibold transition-colors ${
+              filled ? "bg-violet-500 text-white" : "bg-white/10 text-zinc-400"
+            }`}
+          >
+            {filled ? "✓" : step}
+          </span>
+        )}
+        {label}
+      </span>
       <div className="relative">
         <select
           value={value}
           onChange={(event) => onChange(event.target.value)}
-          className="w-full appearance-none rounded-xl border border-white/20 bg-black/30 px-4 py-3 pr-9 text-sm text-white focus:border-violet-400/40 focus:outline-none"
+          className={`w-full appearance-none rounded-xl border bg-white/[0.03] px-4 py-3 pr-9 text-sm text-white transition-colors hover:border-white/30 focus:border-violet-400/60 focus:outline-none focus:ring-2 focus:ring-violet-500/25 ${
+            filled ? "border-violet-400/40" : "border-white/15"
+          }`}
         >
           {children}
         </select>
@@ -163,22 +201,29 @@ export default function GeradorProposta() {
 
         <div className="overflow-hidden rounded-3xl border border-violet-400/35 bg-gradient-to-b from-violet-500/[0.08] to-transparent">
           <div className="flex items-center gap-2 border-b border-white/10 bg-black/25 px-5 py-3.5 font-mono text-xs text-zinc-400">
-            <span className="h-2.5 w-2.5 rounded-full bg-fuchsia-500" />
+            <span className="h-2.5 w-2.5 animate-pulse rounded-full bg-fuchsia-500 shadow-[0_0_8px] shadow-fuchsia-500/70" />
             <span className="h-2.5 w-2.5 rounded-full bg-zinc-500" />
             <span className="h-2.5 w-2.5 rounded-full bg-zinc-500" />
             <span className="ml-1.5">~/fcopts/gerador-de-proposta</span>
           </div>
 
           <div className="p-6 sm:p-8">
-            <h3 className="max-w-sm text-xl font-semibold text-white">
-              {t({ pt: "O que você precisa construir?", en: "What do you need to build?" })}
-            </h3>
-            <p className="mt-2.5 max-w-xl text-sm text-zinc-400">
-              {t({
-                pt: "Quanto mais detalhe (tipo de produto, funcionalidades, público), melhor a estimativa.",
-                en: "The more detail (product type, features, audience), the better the estimate.",
-              })}
-            </p>
+            <div className="flex items-start gap-3.5">
+              <span className="mt-0.5 flex h-10 w-10 flex-none items-center justify-center rounded-xl bg-gradient-to-br from-violet-500/30 to-fuchsia-500/20 ring-1 ring-violet-400/30">
+                <Sparkles className="h-5 w-5 text-violet-300" />
+              </span>
+              <div>
+                <h3 className="text-xl font-semibold text-white sm:text-2xl">
+                  {t({ pt: "O que você precisa construir?", en: "What do you need to build?" })}
+                </h3>
+                <p className="mt-1.5 max-w-xl text-sm text-zinc-400">
+                  {t({
+                    pt: "Quanto mais detalhe (tipo de produto, funcionalidades, público), melhor a estimativa.",
+                    en: "The more detail (product type, features, audience), the better the estimate.",
+                  })}
+                </p>
+              </div>
+            </div>
 
             <input
               ref={honeypotRef}
@@ -191,7 +236,7 @@ export default function GeradorProposta() {
             />
 
             <div className="mt-6 grid grid-cols-1 gap-3.5 sm:grid-cols-3">
-              <SelectField label={t({ pt: "Tipo de projeto", en: "Project type" })} value={tipo} onChange={setTipo}>
+              <SelectField step={1} label={t({ pt: "Tipo de projeto", en: "Project type" })} value={tipo} onChange={setTipo}>
                 <option value="" disabled className="bg-zinc-900">
                   {t({ pt: "Selecione...", en: "Select..." })}
                 </option>
@@ -203,6 +248,7 @@ export default function GeradorProposta() {
               </SelectField>
 
               <SelectField
+                step={2}
                 label={t({ pt: "Ponto de partida", en: "Starting point" })}
                 value={existente}
                 onChange={setExistente}
@@ -218,6 +264,7 @@ export default function GeradorProposta() {
               </SelectField>
 
               <SelectField
+                step={3}
                 label={t({ pt: "Prazo / urgência", en: "Timeline / urgency" })}
                 value={urgencia}
                 onChange={setUrgencia}
@@ -233,27 +280,60 @@ export default function GeradorProposta() {
               </SelectField>
             </div>
 
-            <textarea
-              value={description}
-              onChange={(event) => setDescription(event.target.value)}
-              placeholder={t({
-                pt: "Ex.: Preciso de um app de delivery com painel do lojista, pagamento no cartão e rastreamento do pedido em tempo real...",
-                en: "E.g.: I need a delivery app with a merchant dashboard, card payment and real-time order tracking...",
-              })}
-              className="mt-6 min-h-[110px] w-full resize-y rounded-2xl border border-white/20 bg-black/30 p-4 text-[15.5px] text-white placeholder:text-zinc-500 focus:border-violet-400/40 focus:outline-none focus:ring-2 focus:ring-violet-500/20"
-            />
-
-            <div className="mt-3 flex flex-wrap gap-2">
-              {EXAMPLES.map((example) => (
-                <button
-                  key={t(example.chip)}
-                  type="button"
-                  onClick={() => setDescription(t(example.text))}
-                  className="rounded-full border border-white/15 px-3 py-1.5 font-mono text-xs text-zinc-400 transition-colors hover:border-violet-400/40 hover:bg-violet-500/10 hover:text-white"
+            <div className="mt-6">
+              <span className="mb-2 flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-wide text-zinc-400">
+                <span
+                  className={`flex h-4 w-4 items-center justify-center rounded-full text-[10px] font-semibold transition-colors ${
+                    description.trim().length >= 20 ? "bg-violet-500 text-white" : "bg-white/10 text-zinc-400"
+                  }`}
                 >
-                  {t(example.chip)}
-                </button>
-              ))}
+                  {description.trim().length >= 20 ? "✓" : 4}
+                </span>
+                {t({ pt: "Descreva seu projeto", en: "Describe your project" })}
+              </span>
+              <textarea
+                value={description}
+                onChange={(event) => setDescription(event.target.value)}
+                placeholder={t({
+                  pt: "Ex.: Preciso de um app de delivery com painel do lojista, pagamento no cartão e rastreamento do pedido em tempo real...",
+                  en: "E.g.: I need a delivery app with a merchant dashboard, card payment and real-time order tracking...",
+                })}
+                className={`min-h-[110px] w-full resize-y rounded-2xl border bg-white/[0.03] p-4 text-[15.5px] text-white placeholder:text-zinc-500 transition-colors hover:border-white/30 focus:border-violet-400/60 focus:outline-none focus:ring-2 focus:ring-violet-500/25 ${
+                  description.trim().length >= 20 ? "border-violet-400/40" : "border-white/15"
+                }`}
+              />
+              {description.length > 0 && description.trim().length < 20 && (
+                <span className="mt-1.5 block text-right font-mono text-[11px] text-amber-400/80">
+                  {t({
+                    pt: `Faltam ${20 - description.trim().length} caracteres`,
+                    en: `${20 - description.trim().length} characters to go`,
+                  })}
+                </span>
+              )}
+            </div>
+
+            <div className="mt-4">
+              <span className="font-mono text-[11px] uppercase tracking-wide text-zinc-500">
+                {t({ pt: "Sem ideias? Comece por um exemplo →", en: "No ideas? Start from an example →" })}
+              </span>
+              <div className="mt-2 flex flex-wrap gap-2">
+                {EXAMPLES.map((example) => {
+                  const Icon = example.icon;
+                  return (
+                    <button
+                      key={t(example.chip)}
+                      type="button"
+                      onClick={() => setDescription(t(example.text))}
+                      className="group inline-flex items-center gap-2 rounded-full border border-violet-400/25 bg-gradient-to-b from-violet-500/[0.12] to-violet-500/[0.04] px-3.5 py-2 font-mono text-xs text-zinc-200 transition-all hover:-translate-y-0.5 hover:border-violet-400/60 hover:from-violet-500/25 hover:to-fuchsia-500/10 hover:text-white hover:shadow-md hover:shadow-violet-500/20"
+                    >
+                      <span className="flex h-5 w-5 items-center justify-center rounded-full bg-violet-500/20 text-violet-300 transition-colors group-hover:bg-fuchsia-500/30 group-hover:text-fuchsia-200">
+                        <Icon className="h-3 w-3" />
+                      </span>
+                      {t(example.chip)}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
 
             <div className="mt-4 grid grid-cols-1 gap-3.5 sm:grid-cols-2">
@@ -278,22 +358,38 @@ export default function GeradorProposta() {
                   value={siteReferencia}
                   onChange={(event) => setSiteReferencia(event.target.value)}
                   placeholder={t({ pt: "https://um-site-que-te-inspira.com", en: "https://a-site-you-like.com" })}
-                  className="w-full rounded-xl border border-white/20 bg-black/30 px-4 py-3 text-sm text-white placeholder:text-zinc-500 focus:border-violet-400/40 focus:outline-none"
+                  className="w-full rounded-xl border border-white/15 bg-white/[0.03] px-4 py-3 text-sm text-white placeholder:text-zinc-500 transition-colors hover:border-white/30 focus:border-violet-400/60 focus:outline-none focus:ring-2 focus:ring-violet-500/25"
                 />
               </label>
             </div>
 
-            <div className="mt-6">
+            <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2">
               <button
                 type="button"
                 onClick={handleGenerate}
                 disabled={status === "loading" || !canGenerate}
-                className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-violet-700 transition-all hover:scale-[1.03] disabled:cursor-not-allowed disabled:opacity-50"
+                className="group inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-500 px-7 py-3.5 text-sm font-semibold text-white shadow-lg shadow-violet-500/30 transition-all hover:shadow-xl hover:shadow-fuchsia-500/40 hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-40 disabled:shadow-none disabled:hover:brightness-100"
               >
-                {status === "loading" && <Loader2 className="h-4 w-4 animate-spin" />}
+                {status === "loading" ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  <Sparkles className="h-4 w-4" />
+                )}
                 {t({ pt: "Gerar proposta", en: "Generate proposal" })}
-                {status !== "loading" && <span aria-hidden="true">→</span>}
+                {status !== "loading" && (
+                  <span aria-hidden="true" className="transition-transform group-hover:translate-x-0.5">
+                    →
+                  </span>
+                )}
               </button>
+              {!canGenerate && status !== "loading" && (
+                <span className="text-xs text-zinc-500">
+                  {t({
+                    pt: "Selecione os 3 campos e descreva seu projeto para gerar",
+                    en: "Fill the 3 fields and describe your project to generate",
+                  })}
+                </span>
+              )}
             </div>
 
             <p className="mt-5 font-mono text-[11px] text-zinc-500">
