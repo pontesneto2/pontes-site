@@ -9,6 +9,10 @@ export const BRAND = {
   email: "contato@fcopts.com.br",
   whatsapp: "+55 85 98188-8896",
   whatsappUrl: "https://wa.me/5585981888896",
+  github: "github.com/pontesneto2",
+  githubUrl: "https://github.com/pontesneto2",
+  linkedin: "linkedin.com/in/fcopts",
+  linkedinUrl: "https://www.linkedin.com/in/fcopts",
   logoUrl: "/images/FCO.png",
 } as const;
 
@@ -94,6 +98,7 @@ export function docLabels(lang: Lang) {
     porte: pt ? "Porte" : "Size",
     investimento: pt ? "Investimento (faixa de referência)" : "Investment (reference range)",
     pagamento: pt ? "Condições de pagamento" : "Payment terms",
+    proponente: pt ? "Proponente" : "Provider",
     juridico: pt ? "Termos e condições" : "Terms and conditions",
     aceite: pt ? "Aceite" : "Acceptance",
     deAcordo: pt ? "De acordo" : "Agreed",

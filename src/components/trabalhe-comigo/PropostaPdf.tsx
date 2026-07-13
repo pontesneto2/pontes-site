@@ -33,12 +33,23 @@ const s = StyleSheet.create({
     transform: "rotate(-38deg)",
     fontFamily: "Helvetica-Bold",
   },
-  headerRow: { flexDirection: "row", justifyContent: "space-between", alignItems: "flex-start" },
+  headerBand: {
+    backgroundColor: "#0e0e14",
+    borderRadius: 8,
+    paddingHorizontal: 16,
+    paddingVertical: 14,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
   logo: { width: 132, height: 29, objectFit: "contain" },
   headerRight: { alignItems: "flex-end" },
-  docTitle: { fontFamily: "Helvetica-Bold", fontSize: 15, color: INK },
-  metaLine: { fontSize: 8.5, color: MUTED },
-  accent: { height: 3, marginTop: 12, marginBottom: 18, borderRadius: 2, backgroundColor: VIOLET },
+  docTitle: { fontFamily: "Helvetica-Bold", fontSize: 15, color: "#ffffff" },
+  metaLine: { fontSize: 8.5, color: "#b9b3c9" },
+  accent: { height: 3, marginTop: 10, marginBottom: 18, borderRadius: 2, backgroundColor: VIOLET },
+  proponenteBox: { flexDirection: "row", flexWrap: "wrap", marginTop: 2 },
+  proponenteItem: { fontSize: 8.5, color: MUTED, marginRight: 12, marginBottom: 2 },
+  proponenteNome: { fontFamily: "Helvetica-Bold", fontSize: 10, color: INK },
   tipo: { fontFamily: "Helvetica-Bold", fontSize: 17, color: INK, marginBottom: 2 },
   portePill: { fontSize: 8, color: VIOLET, marginBottom: 12 },
   sectionLabel: {
@@ -126,8 +137,8 @@ export default function PropostaPdf({ proposal, numero, dataEmissao, validade, l
           {L.preliminar}
         </Text>
 
-        {/* Cabeçalho */}
-        <View style={s.headerRow}>
+        {/* Cabeçalho (faixa escura pra logo aparecer) */}
+        <View style={s.headerBand}>
           <Image style={s.logo} src={BRAND.logoUrl} />
           <View style={s.headerRight}>
             <Text style={s.docTitle}>{L.documento}</Text>
@@ -188,6 +199,18 @@ export default function PropostaPdf({ proposal, numero, dataEmissao, validade, l
             {horaLinha && <Text style={s.boxSub}>{horaLinha}</Text>}
             <Text style={s.boxSub}>{proposal.pagamentoSugerido}</Text>
           </View>
+        </View>
+
+        <Text style={s.sectionLabel}>{L.proponente}</Text>
+        <Text style={s.proponenteNome}>
+          {BRAND.nome} · {BRAND.cargo[lang]}
+        </Text>
+        <View style={s.proponenteBox}>
+          <Text style={s.proponenteItem}>{BRAND.email}</Text>
+          <Text style={s.proponenteItem}>{BRAND.whatsapp}</Text>
+          <Text style={s.proponenteItem}>{BRAND.site}</Text>
+          <Text style={s.proponenteItem}>{BRAND.github}</Text>
+          <Text style={s.proponenteItem}>{BRAND.linkedin}</Text>
         </View>
 
         <Text style={s.sectionLabel}>{L.juridico}</Text>
