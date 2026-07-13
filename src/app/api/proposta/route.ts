@@ -7,8 +7,9 @@ import type {
   PropostaFallbackReason,
   PropostaResponse,
 } from "@/components/trabalhe-comigo/types";
-import { HOURLY_RATE, getInvestimento } from "@/lib/proposta/pricing.server";
+import { HOURLY_RATE, getInvestimento, getPrazoEstimado } from "@/lib/proposta/pricing.server";
 import { checkRateLimit, getClientIp } from "@/lib/proposta/rate-limit.server";
+import { verifyTurnstile } from "@/lib/proposta/turnstile.server";
 
 const MIN_DESCRIPTION_LENGTH = 20;
 const MAX_DESCRIPTION_LENGTH = 2000;
@@ -55,8 +56,7 @@ type AiProposalShape = {
   resumo?: string;
   stack?: string[];
   entregaveis?: string[];
-  fases?: Array<{ titulo?: string; descricao?: string; prazo?: string }>;
-  prazoEstimado?: string;
+  fases?: Array<{ titulo?: string; descricao?: string }>;
   porte?: string;
   pagamentoSugerido?: string;
 };
@@ -67,20 +67,20 @@ function buildSystemPrompt(lang: "pt" | "en") {
 Internamente (nunca mencione isso na resposta), a taxa horária de referência é R$${HOURLY_RATE}/hora. Use isso só para calibrar seu raciocínio de porte, nunca para calcular ou mencionar valores em reais na resposta.
 
 A partir da descrição do visitante, produza um escopo comercial PRELIMINAR, realista e conservador, respondendo ${lang === "en" ? "in English" : "em português"}. Responda APENAS com um objeto JSON válido, sem markdown, sem cercas de código, sem texto fora do JSON. Estrutura exata:
-{"tipo":"string curta","resumo":"2 frases","stack":["3 a 6 techs reais da stack dele"],"entregaveis":["3 a 5"],"fases":[{"titulo":"Fase 1 - nome curto","descricao":"1 frase do que entra nessa fase","prazo":"faixa curta, ex: 2 a 3 semanas"}],"prazoEstimado":"faixa realista de prazo","porte":"pequeno" | "medio" | "grande","pagamentoSugerido":"sugestão (Pacote, Por hora ou Mensal) + 1 frase"}.
+{"tipo":"string curta","resumo":"2 frases","stack":["3 a 6 techs reais da stack dele"],"entregaveis":["3 a 5"],"fases":[{"titulo":"Fase 1 - nome curto","descricao":"1 frase do que entra nessa fase"}],"porte":"pequeno" | "medio" | "grande","pagamentoSugerido":"sugestão (Pacote, Por hora ou Mensal) + 1 frase"}.
 
-O campo "fases" deve ter de 2 a 4 fases que dividam o projeto em etapas lógicas (ex.: Descoberta e design, MVP, Evolução, Lançamento e suporte), coerentes com os entregáveis e cujos prazos somados fiquem próximos do prazoEstimado.
+O campo "fases" deve ter de 2 a 4 fases que dividam o projeto em etapas lógicas (ex.: Descoberta e design, MVP, Evolução, Lançamento e suporte), coerentes com os entregáveis, apresentadas como uma linha do tempo do começo ao fim do projeto. NÃO inclua prazo, datas nem duração em nenhuma fase.
 
-Critério de porte e prazo:
-- pequeno = site estático ou landing page. Prazo típico: 7 dias úteis.
-- medio = sistema web (plataforma, painel, área logada), API/integração, ou manutenção/evolução. Prazo típico: até 60 dias conforme a complexidade.
-- grande = SaaS, marketplace, projeto multiplataforma OU aplicativo mobile (iOS/Android). Prazo: conforme o escopo, geralmente vários meses.
+Critério de porte (usado internamente para calibrar o prazo padrão, que NÃO é sua responsabilidade gerar):
+- pequeno = site estático ou landing page. Prazo típico: a partir de 2 dias úteis.
+- medio = sistema web (plataforma, painel, área logada), API/integração, ou manutenção/evolução. Prazo típico: a partir de 20 dias úteis conforme a complexidade.
+- grande = SaaS, marketplace, projeto multiplataforma OU aplicativo mobile (iOS/Android). Prazo típico: a partir de 30 dias úteis.
 
 Use o campo "Tipo de projeto" do contexto como principal sinal para o porte, ajustando pela complexidade descrita.
 
 REGRA IMPORTANTE: aplicativo mobile e sistema web são escopos DIFERENTES. Se o visitante pede só um sistema web, não inclua app mobile nos entregáveis, e vice-versa. Só trate como multiplataforma (app + web) se ele pedir explicitamente os dois. Um aplicativo mobile, mesmo simples, é porte grande.
 
-NÃO invente valores em reais em nenhum campo. O prazoEstimado deve respeitar as âncoras acima.`;
+NÃO invente valores em reais nem prazos/datas em nenhum campo. Prazo e investimento são definidos fora do JSON.`;
 }
 
 function isValidAiProposal(value: unknown): value is Required<AiProposalShape> {
@@ -95,11 +95,7 @@ function isValidAiProposal(value: unknown): value is Required<AiProposalShape> {
     v.entregaveis.every((e) => typeof e === "string") &&
     Array.isArray(v.fases) &&
     v.fases.length > 0 &&
-    v.fases.every(
-      (f) =>
-        f && typeof f.titulo === "string" && typeof f.descricao === "string" && typeof f.prazo === "string"
-    ) &&
-    typeof v.prazoEstimado === "string" &&
+    v.fases.every((f) => f && typeof f.titulo === "string" && typeof f.descricao === "string") &&
     typeof v.porte === "string" &&
     VALID_PORTES.includes(v.porte as Porte) &&
     typeof v.pagamentoSugerido === "string"
@@ -120,18 +116,29 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
   }
 
-  const { description, tipo, existente, urgencia, orcamento, siteReferencia, company, formLoadedAt, lang } =
-    body as {
-      description?: string;
-      tipo?: string;
-      existente?: string;
-      urgencia?: string;
-      orcamento?: string;
-      siteReferencia?: string;
-      company?: string;
-      formLoadedAt?: number;
-      lang?: string;
-    };
+  const {
+    description,
+    tipo,
+    existente,
+    urgencia,
+    orcamento,
+    siteReferencia,
+    company,
+    formLoadedAt,
+    lang,
+    turnstileToken,
+  } = body as {
+    description?: string;
+    tipo?: string;
+    existente?: string;
+    urgencia?: string;
+    orcamento?: string;
+    siteReferencia?: string;
+    company?: string;
+    formLoadedAt?: number;
+    lang?: string;
+    turnstileToken?: string;
+  };
 
   // Honeypot: bots preenchem campos ocultos, humanos nunca veem.
   if (company) {
@@ -169,6 +176,13 @@ export async function POST(request: NextRequest) {
   const urgenciaProjeto = urgencia as Urgencia;
 
   const ip = getClientIp(request);
+
+  // Verificação Cloudflare Turnstile: bloqueia bots antes de gastar tokens na IA.
+  const captchaOk = await verifyTurnstile(turnstileToken, ip);
+  if (!captchaOk) {
+    return fallback("captcha_failed");
+  }
+
   if (!checkRateLimit(ip)) {
     return fallback("rate_limited");
   }
@@ -247,9 +261,8 @@ export async function POST(request: NextRequest) {
         fases: parsed.fases.map((f) => ({
           titulo: f.titulo as string,
           descricao: f.descricao as string,
-          prazo: f.prazo as string,
         })),
-        prazoEstimado: parsed.prazoEstimado,
+        prazoEstimado: getPrazoEstimado(porte, isEnglish ? "en" : "pt"),
         porte,
         pagamentoSugerido: parsed.pagamentoSugerido,
         investimento: getInvestimento(porte, {

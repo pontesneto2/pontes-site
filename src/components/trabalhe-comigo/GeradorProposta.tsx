@@ -17,6 +17,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { track } from "@vercel/analytics";
+import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
 import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
 import SectionHeading from "./SectionHeading";
 import { gerarNumeroProposta, porteLabel } from "@/lib/proposta/proposta-doc";
@@ -182,9 +183,15 @@ export default function GeradorProposta() {
   const [modalOpen, setModalOpen] = useState(false);
   const formLoadedAt = useRef(Date.now());
   const honeypotRef = useRef<HTMLInputElement>(null);
+  const turnstileRef = useRef<TurnstileInstance | null>(null);
+  const [turnstileToken, setTurnstileToken] = useState("");
+  const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
 
-  const canGenerate =
+  const fieldsReady =
     tipo !== "" && existente !== "" && urgencia !== "" && description.trim().length >= 20;
+  // Sem site key configurada (ex.: dev), o captcha não bloqueia — espelha o bypass do servidor.
+  const captchaReady = !turnstileSiteKey || turnstileToken !== "";
+  const canGenerate = fieldsReady && captchaReady;
 
   async function handleGenerate() {
     if (!canGenerate) return;
@@ -204,6 +211,7 @@ export default function GeradorProposta() {
           company: honeypotRef.current?.value ?? "",
           formLoadedAt: formLoadedAt.current,
           lang,
+          turnstileToken,
         }),
       });
 
@@ -222,6 +230,10 @@ export default function GeradorProposta() {
     } catch {
       setStatus("fallback");
       track("trabalhe_comigo_proposta_fallback", { reason: "network_error" });
+    } finally {
+      // Token do Turnstile é de uso único: reseta para a próxima geração.
+      setTurnstileToken("");
+      turnstileRef.current?.reset();
     }
   }
 
@@ -397,6 +409,19 @@ export default function GeradorProposta() {
               </label>
             </div>
 
+            {turnstileSiteKey && (
+              <div className="mt-6">
+                <Turnstile
+                  ref={turnstileRef}
+                  siteKey={turnstileSiteKey}
+                  options={{ theme: "dark", size: "flexible", language: lang }}
+                  onSuccess={setTurnstileToken}
+                  onExpire={() => setTurnstileToken("")}
+                  onError={() => setTurnstileToken("")}
+                />
+              </div>
+            )}
+
             <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2">
               <button
                 type="button"
@@ -417,11 +442,19 @@ export default function GeradorProposta() {
                 )}
               </button>
               {status === "loading" && <LoadingEtapas />}
-              {!canGenerate && status !== "loading" && (
+              {!fieldsReady && status !== "loading" && (
                 <span className="text-xs text-zinc-500">
                   {t({
                     pt: "Selecione os 3 campos e descreva seu projeto para gerar",
                     en: "Fill the 3 fields and describe your project to generate",
+                  })}
+                </span>
+              )}
+              {fieldsReady && !captchaReady && status !== "loading" && (
+                <span className="text-xs text-zinc-500">
+                  {t({
+                    pt: "Confirme que você não é um robô para gerar",
+                    en: "Confirm you're not a robot to generate",
                   })}
                 </span>
               )}

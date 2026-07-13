@@ -7,6 +7,21 @@ import type { Porte, Investimento, Existente, Urgencia } from "@/components/trab
 export const HOURLY_RATE = 70;
 
 /**
+ * Prazo estimado padronizado por porte (confirmado pelo Francisco). É a fonte da
+ * verdade do prazo: a IA NÃO gera mais prazo livre (evita "X semanas" que assusta o
+ * cliente). Sempre "a partir de", pois cada projeto fecha o prazo após conversa.
+ */
+export const PRAZO_POR_PORTE: Record<Porte, { pt: string; en: string }> = {
+  pequeno: { pt: "A partir de 2 dias úteis", en: "From 2 business days" },
+  medio: { pt: "A partir de 20 dias úteis", en: "From 20 business days" },
+  grande: { pt: "A partir de 30 dias úteis", en: "From 30 business days" },
+};
+
+export function getPrazoEstimado(porte: Porte, lang: "pt" | "en"): string {
+  return PRAZO_POR_PORTE[porte][lang];
+}
+
+/**
  * Faixas de referência por porte (confirmadas pelo Francisco em 2026-07-12). NÃO são
  * cotações fechadas: cada projeto vira uma proposta personalizada depois de entender o
  * contexto. Pequeno é uma faixa fechada; médio e grande são "a partir de" (podem também
