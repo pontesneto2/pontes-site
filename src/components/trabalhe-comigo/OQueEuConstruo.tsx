@@ -218,7 +218,7 @@ export default function OQueEuConstruo() {
       style={{
         backgroundColor: "#08080b",
         backgroundImage:
-          "radial-gradient(60% 50% at 85% 0%, rgba(244,63,94,0.12), transparent 70%), radial-gradient(55% 45% at 15% 0%, rgba(245,158,11,0.08), transparent 70%)",
+          "radial-gradient(50% 40% at 85% 0%, rgba(249,115,22,0.05), transparent 72%), radial-gradient(48% 38% at 15% 0%, rgba(147,51,234,0.05), transparent 72%)",
       }}
     >
       <div className="mx-auto max-w-[720px] px-6">

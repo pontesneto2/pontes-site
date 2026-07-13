@@ -18,9 +18,10 @@ import {
 } from "lucide-react";
 import { track } from "@vercel/analytics";
 import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
+import Image from "next/image";
 import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
 import { usePropostaPrefill } from "@/lib/proposta/prefill-context";
-import SectionHeading from "./SectionHeading";
+import TcSectionHeader from "./TcSectionHeader";
 import { gerarNumeroProposta, porteLabel } from "@/lib/proposta/proposta-doc";
 import type { Existente, Proposal, PropostaResponse, TipoProjeto, Urgencia } from "./types";
 
@@ -122,6 +123,13 @@ const ORCAMENTO_OPTIONS: Array<{ value: string; label: Bilingual }> = [
   { value: "Acima de R$ 15.000", label: { pt: "Acima de R$ 15.000", en: "Above R$ 15,000" } },
 ];
 
+const FRANCISCO_STATS: Array<{ value: string; label: Bilingual }> = [
+  { value: "6+", label: { pt: "anos de experiência", en: "years of experience" } },
+  { value: "15+", label: { pt: "projetos em produção", en: "projects in production" } },
+  { value: "PT/EN", label: { pt: "atendimento remoto", en: "remote support" } },
+  { value: "Gov · Startups", label: { pt: "clientes atendidos", en: "clients served" } },
+];
+
 function SelectField({
   label,
   value,
@@ -140,11 +148,7 @@ function SelectField({
     <label className="block">
       <span className="mb-2 flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-wide text-zinc-400">
         {step !== undefined && (
-          <span
-            className={`flex h-4 w-4 items-center justify-center rounded-full text-[10px] font-semibold transition-colors ${
-              filled ? "bg-rose-500 text-white" : "bg-white/10 text-zinc-400"
-            }`}
-          >
+          <span className="flex h-[18px] w-[18px] items-center justify-center rounded-[5px] bg-gradient-to-br from-rose-500 to-amber-500 text-[10px] font-semibold text-white">
             {filled ? "✓" : step}
           </span>
         )}
@@ -252,12 +256,17 @@ export default function GeradorProposta() {
 
   return (
     <section id="proposta" className="scroll-mt-20 border-t border-white/10 py-20" style={{ backgroundColor: "#101018" }}>
-      <div className="mx-auto max-w-4xl px-6">
-        <SectionHeading
-          title={{ pt: "Monte sua proposta com nossa IA", en: "Build your proposal with our AI" }}
-          kicker={{ pt: "Escopo e estimativa na hora", en: "Scope and estimate on the spot" }}
+      <div className="mx-auto max-w-6xl px-6">
+        <TcSectionHeader
+          label={{ pt: "Monte sua proposta", en: "Build your proposal" }}
+          title={{ pt: "Monte sua proposta com IA", en: "Build your proposal with AI" }}
+          subtitle={{
+            pt: "Quanto mais detalhe você der (tipo de produto, funcionalidades, público), melhor a estimativa. É uma faixa de referência, não uma cotação fechada.",
+            en: "The more detail you give (product type, features, audience), the better the estimate. It's a reference range, not a closed quote.",
+          }}
         />
 
+        <div className="grid gap-6 lg:grid-cols-[1.55fr_0.85fr] lg:items-start">
         <div className="overflow-hidden rounded-3xl border border-rose-400/35 bg-gradient-to-b from-rose-500/[0.08] to-transparent">
           <div className="flex items-center gap-2 border-b border-white/10 bg-black/25 px-5 py-3.5 font-mono text-xs text-zinc-400">
             <span className="h-2.5 w-2.5 animate-pulse rounded-full bg-amber-500 shadow-[0_0_8px] shadow-amber-500/70" />
@@ -277,8 +286,8 @@ export default function GeradorProposta() {
                 </h3>
                 <p className="mt-1.5 max-w-xl text-sm text-zinc-400">
                   {t({
-                    pt: "Quanto mais detalhe você der (tipo de produto, funcionalidades, público), melhor a estimativa. É uma faixa de referência, não uma cotação fechada.",
-                    en: "The more detail you give (product type, features, audience), the better the estimate. It's a reference range, not a closed quote.",
+                    pt: "Preencha os campos e receba uma estimativa de escopo, prazo e investimento na hora.",
+                    en: "Fill in the fields and get a scope, timeline and investment estimate on the spot.",
                   })}
                 </p>
               </div>
@@ -341,14 +350,13 @@ export default function GeradorProposta() {
 
             <div className="mt-6">
               <span className="mb-2 flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-wide text-zinc-400">
-                <span
-                  className={`flex h-4 w-4 items-center justify-center rounded-full text-[10px] font-semibold transition-colors ${
-                    description.trim().length >= 20 ? "bg-rose-500 text-white" : "bg-white/10 text-zinc-400"
-                  }`}
-                >
+                <span className="flex h-[18px] w-[18px] items-center justify-center rounded-[5px] bg-gradient-to-br from-rose-500 to-amber-500 text-[10px] font-semibold text-white">
                   {description.trim().length >= 20 ? "✓" : 4}
                 </span>
                 {t({ pt: "Descreva seu projeto", en: "Describe your project" })}
+                <span className="ml-auto normal-case text-zinc-500">
+                  {t({ pt: `${description.length} caracteres`, en: `${description.length} characters` })}
+                </span>
               </span>
               <textarea
                 value={description}
@@ -435,12 +443,12 @@ export default function GeradorProposta() {
               </div>
             )}
 
-            <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2">
+            <div className="mt-6 flex flex-col gap-2.5">
               <button
                 type="button"
                 onClick={handleGenerate}
                 disabled={status === "loading" || !canGenerate}
-                className="group inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-rose-600 to-amber-500 px-7 py-3.5 text-sm font-semibold text-white shadow-lg shadow-rose-500/30 transition-all hover:shadow-xl hover:shadow-amber-500/40 hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-40 disabled:shadow-none disabled:hover:brightness-100"
+                className="group flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-rose-600 to-amber-500 px-7 py-3.5 text-sm font-semibold text-white shadow-lg shadow-rose-500/30 transition-all hover:scale-[1.01] hover:shadow-xl hover:shadow-amber-500/40 hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-40 disabled:shadow-none disabled:hover:scale-100 disabled:hover:brightness-100"
               >
                 {status === "loading" ? (
                   <Loader2 className="h-4 w-4 animate-spin" />
@@ -560,6 +568,41 @@ export default function GeradorProposta() {
               </div>
             )}
           </div>
+        </div>
+
+          <aside className="rounded-3xl border border-white/10 bg-white/[0.03] p-6 text-center transition-all hover:border-white/20 lg:sticky lg:top-24">
+            <div className="mx-auto h-20 w-20 rounded-full bg-gradient-to-br from-amber-500 via-rose-600 to-rose-800 p-[3px]">
+              <div className="relative h-full w-full overflow-hidden rounded-full">
+                <Image src="/pontes-institucional.png" alt="Francisco Pontes" fill sizes="80px" className="object-cover" />
+              </div>
+            </div>
+            <h3 className="mt-3 text-lg font-semibold text-white" style={{ fontFamily: "var(--font-space-grotesk)" }}>
+              Francisco Pontes
+            </h3>
+            <p className="mt-0.5 font-mono text-[11px] text-rose-300">
+              {t({ pt: "Engenheiro de Software Sênior", en: "Senior Software Engineer" })}
+            </p>
+            <p className="mt-3 text-[13px] leading-relaxed text-zinc-400">
+              {t({
+                pt: "Quem vai analisar seu projeto e montar sua proposta pessoalmente.",
+                en: "The person who'll review your project and build your proposal personally.",
+              })}
+            </p>
+            <div className="mt-5 grid grid-cols-2 gap-3 border-t border-white/10 pt-5">
+              {FRANCISCO_STATS.map((s) => (
+                <div key={s.value}>
+                  <div className="bg-gradient-to-r from-rose-400 to-amber-400 bg-clip-text text-lg font-bold text-transparent">
+                    {s.value}
+                  </div>
+                  <div className="font-mono text-[10px] uppercase tracking-wide text-zinc-500">{t(s.label)}</div>
+                </div>
+              ))}
+            </div>
+            <span className="mt-5 inline-flex items-center gap-1.5 rounded-full border border-emerald-400/30 bg-emerald-400/10 px-3 py-1 font-mono text-[11px] text-emerald-300">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+              {t({ pt: "Disponível · Remoto", en: "Available · Remote" })}
+            </span>
+          </aside>
         </div>
       </div>
     </section>
