@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
 import SectionHeading from "./SectionHeading";
 
@@ -77,32 +78,62 @@ export default function CasosReais() {
           title={{ pt: "Casos reais, resultados reais", en: "Real cases, real results" }}
           kicker={{ pt: "Projetos em produção, números medidos", en: "Projects in production, measured numbers" }}
         />
-        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-          {CASES.map((item) => (
-            <div
-              key={item.title}
-              className="rounded-3xl border border-white/10 bg-white/[0.04] p-6 transition-all hover:-translate-y-1 hover:border-white/20 hover:bg-white/[0.07]"
-            >
-              <span className="inline-block rounded-md border border-white/20 bg-white/[0.07] px-2.5 py-1 font-mono text-[10.5px] uppercase tracking-wide text-violet-200">
-                {t(item.tag)}
-              </span>
-              <h3 className="mb-1.5 mt-3.5 text-xl font-semibold text-white">{item.title}</h3>
-              <div className="font-mono text-xs text-zinc-500">{t(item.who)}</div>
-              <p className="mt-2.5 text-sm text-zinc-400">{t(item.description)}</p>
-              <div className="mt-4 flex flex-wrap gap-5">
-                {item.metrics.map((metric) => (
-                  <div key={metric.value}>
-                    <div className="bg-gradient-to-r from-violet-500 to-fuchsia-500 bg-clip-text text-lg font-semibold text-transparent">
-                      {metric.value}
+        <div
+          className="tc-cases overflow-hidden"
+          style={{
+            maskImage: "linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent)",
+            WebkitMaskImage: "linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent)",
+          }}
+        >
+          <div className="tc-cases-track flex w-max gap-4">
+            {[...CASES, ...CASES].map((item, index) => (
+              <div
+                key={`${item.title}-${index}`}
+                className="flex w-[330px] shrink-0 flex-col rounded-3xl border border-white/10 bg-white/[0.04] p-6 transition-colors hover:border-white/20 hover:bg-white/[0.07] sm:w-[360px]"
+              >
+                <span className="inline-block w-fit rounded-md border border-white/20 bg-white/[0.07] px-2.5 py-1 font-mono text-[10.5px] uppercase tracking-wide text-violet-200">
+                  {t(item.tag)}
+                </span>
+                <h3 className="mb-1.5 mt-3.5 text-xl font-semibold text-white">{item.title}</h3>
+                <div className="font-mono text-xs text-zinc-500">{t(item.who)}</div>
+                <p className="mt-2.5 text-sm text-zinc-400">{t(item.description)}</p>
+                <div className="mt-auto flex flex-wrap gap-5 pt-4">
+                  {item.metrics.map((metric) => (
+                    <div key={metric.value}>
+                      <div className="bg-gradient-to-r from-violet-500 to-fuchsia-500 bg-clip-text text-lg font-semibold text-transparent">
+                        {metric.value}
+                      </div>
+                      <div className="font-mono text-[11px] text-zinc-400">{t(metric.label)}</div>
                     </div>
-                    <div className="font-mono text-[11px] text-zinc-400">{t(metric.label)}</div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-8 text-center">
+          <Link
+            href="/#projects"
+            className="inline-flex items-center gap-2 rounded-full border border-white/15 px-5 py-2.5 text-sm font-medium text-zinc-400 transition-colors hover:border-violet-400/40 hover:text-white"
+          >
+            {t({ pt: "Veja mais projetos", en: "See more projects" })}
+            <span aria-hidden="true">→</span>
+          </Link>
         </div>
       </div>
+
+      <style>{`
+        .tc-cases-track { animation: tc-cases-scroll 45s linear infinite; }
+        .tc-cases:hover .tc-cases-track { animation-play-state: paused; }
+        @keyframes tc-cases-scroll {
+          from { transform: translateX(0); }
+          to { transform: translateX(calc(-50% - 0.5rem)); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .tc-cases-track { animation: none; }
+        }
+      `}</style>
     </section>
   );
 }

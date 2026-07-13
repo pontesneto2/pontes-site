@@ -5,6 +5,19 @@ import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
 import SectionHeading from "./SectionHeading";
 import { FAQ_ITEMS } from "./faq-data";
 
+function renderAnswer(text: string) {
+  const idx = text.indexOf(".");
+  if (idx === -1) return text;
+  const first = text.slice(0, idx + 1);
+  const rest = text.slice(idx + 1);
+  return (
+    <>
+      <strong className="font-semibold text-violet-200">{first}</strong>
+      {rest}
+    </>
+  );
+}
+
 export default function FaqAccordion() {
   const { lang } = useLanguage();
   const t = (v: Bilingual) => tr(lang, v);
@@ -26,7 +39,7 @@ export default function FaqAccordion() {
                 {t(item.question)}
                 <Plus className="h-5 w-5 shrink-0 text-fuchsia-400 transition-transform group-open:rotate-45" />
               </summary>
-              <p className="mt-3.5 max-w-3xl text-sm text-zinc-400">{t(item.answer)}</p>
+              <p className="mt-3.5 max-w-3xl text-sm text-zinc-400">{renderAnswer(t(item.answer))}</p>
             </details>
           ))}
         </div>

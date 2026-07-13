@@ -49,7 +49,7 @@ const PLANS: Array<{
   {
     featured: true,
     flag: { pt: "MAIS ESCOLHIDO", en: "MOST CHOSEN" },
-    name: { pt: "Pacote por projeto", en: "Project package" },
+    name: { pt: "Orçamento fixo", en: "Fixed budget" },
     price: { pt: "Orçamento", en: "Quote" },
     priceSuffix: { pt: "fechado", en: "fixed" },
     note: { pt: "definido na proposta", en: "defined in the proposal" },
@@ -61,7 +61,7 @@ const PLANS: Array<{
     ],
   },
   {
-    name: { pt: "Por hora", en: "Hourly" },
+    name: { pt: "Orçamento por hora", en: "Hourly budget" },
     price: { pt: "Sob", en: "By" },
     priceSuffix: { pt: "conversa", en: "quote" },
     note: { pt: "conforme o volume de horas", en: "based on the volume of hours" },
@@ -73,7 +73,7 @@ const PLANS: Array<{
     ],
   },
   {
-    name: { pt: "Mensal / evolução", en: "Monthly / retainer" },
+    name: { pt: "Orçamento mensal / evolução", en: "Monthly budget / retainer" },
     price: { pt: "Sob", en: "By" },
     priceSuffix: { pt: "conversa", en: "quote" },
     note: { pt: "parceria contínua", en: "ongoing partnership" },
@@ -140,7 +140,7 @@ export default function ComoFuncionaInvestimento() {
         </div>
 
         <div className="mb-3.5 mt-8 text-center font-mono text-[11px] uppercase tracking-wide text-violet-300">
-          {t({ pt: "Modelos de pagamento", en: "Payment models" })}
+          {t({ pt: "Modelos de orçamento", en: "Budget models" })}
         </div>
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
           {PLANS.map((plan) => (
