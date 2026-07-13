@@ -18,7 +18,7 @@ export default function SectionHeading({ title, kicker }: { title: Bilingual; ki
 
   useEffect(() => {
     if (!inView || done) return;
-    const timer = setTimeout(() => setCount((c) => c + 1), 40);
+    const timer = setTimeout(() => setCount((c) => c + 1), 85);
     return () => clearTimeout(timer);
   }, [inView, count, done]);
 
@@ -30,11 +30,9 @@ export default function SectionHeading({ title, kicker }: { title: Bilingual; ki
         style={{ fontFamily: "var(--font-space-grotesk)" }}
       >
         {full.slice(0, count)}
-        {!done && (
-          <span className="typewriter-cursor" style={{ color: "#e879f9" }}>
-            _
-          </span>
-        )}
+        <span className={done ? "typewriter-cursor" : ""} style={{ color: "#e879f9" }}>
+          _
+        </span>
       </h2>
       <p className="mt-2.5 font-mono text-[10px] font-light uppercase tracking-[0.2em] text-zinc-500">
         {tr(lang, kicker)}
