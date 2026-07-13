@@ -53,40 +53,40 @@ const EXAMPLES: Array<{ chip: Bilingual; text: Bilingual; icon: LucideIcon }> = 
     chip: { pt: "Sistema de gestão", en: "Management system" },
     icon: LayoutDashboard,
     text: {
-      pt: "Um sistema web de gestão para minha clínica, com agenda, prontuário e cobrança recorrente.",
-      en: "A web management system for my clinic, with scheduling, medical records and recurring billing.",
+      pt: "Um sistema web de gestão com cadastros, painel administrativo, relatórios e controle de acesso por perfil.",
+      en: "A web management system with records, an admin panel, reports and role-based access control.",
     },
   },
   {
     chip: { pt: "App mobile", en: "Mobile app" },
     icon: Smartphone,
     text: {
-      pt: "Um aplicativo iOS e Android de marketplace conectando prestadores e clientes, com pagamento integrado.",
-      en: "An iOS and Android marketplace app connecting providers and clients, with integrated payment.",
+      pt: "Um aplicativo mobile para iOS e Android, com login, notificações e área do usuário.",
+      en: "A mobile app for iOS and Android, with login, notifications and a user area.",
     },
   },
   {
     chip: { pt: "E-commerce", en: "E-commerce" },
     icon: ShoppingCart,
     text: {
-      pt: "Uma loja virtual (e-commerce) com catálogo de produtos, carrinho, pagamento e painel de pedidos.",
-      en: "An online store (e-commerce) with product catalog, cart, checkout and an orders dashboard.",
+      pt: "Uma loja virtual com catálogo de produtos, carrinho, pagamento online e painel de pedidos.",
+      en: "An online store with product catalog, cart, online checkout and an orders dashboard.",
     },
   },
   {
-    chip: { pt: "Landing + CRM", en: "Landing + CRM" },
+    chip: { pt: "Landing page", en: "Landing page" },
     icon: Rocket,
     text: {
-      pt: "Uma landing page de alta conversão para captar leads da minha consultoria, integrada ao meu CRM.",
-      en: "A high-conversion landing page to capture leads for my consulting business, integrated with my CRM.",
+      pt: "Uma landing page de alta conversão para captar contatos, integrada ao meu CRM.",
+      en: "A high-conversion landing page to capture contacts, integrated with my CRM.",
     },
   },
   {
-    chip: { pt: "API de integração", en: "Integration API" },
+    chip: { pt: "API / integração", en: "API / integration" },
     icon: Plug,
     text: {
-      pt: "Uma API para integrar meu e-commerce com a transportadora e emitir etiquetas automaticamente.",
-      en: "An API to integrate my e-commerce with the carrier and automatically issue shipping labels.",
+      pt: "Uma API para integrar meus sistemas e automatizar processos entre ferramentas.",
+      en: "An API to integrate my systems and automate processes between tools.",
     },
   },
 ];
@@ -358,10 +358,10 @@ export default function GeradorProposta() {
                       key={t(example.chip)}
                       type="button"
                       onClick={() => setDescription(t(example.text))}
-                      className="group inline-flex items-center gap-2 rounded-full border border-violet-400/25 bg-gradient-to-b from-violet-500/[0.12] to-violet-500/[0.04] px-3.5 py-2 font-mono text-xs text-zinc-200 transition-all hover:-translate-y-0.5 hover:border-violet-400/60 hover:from-violet-500/25 hover:to-fuchsia-500/10 hover:text-white hover:shadow-md hover:shadow-violet-500/20"
+                      className="group inline-flex items-center gap-1.5 rounded-full border border-violet-400/25 bg-gradient-to-b from-violet-500/[0.12] to-violet-500/[0.04] px-3 py-1.5 font-mono text-[11px] text-zinc-200 transition-all hover:-translate-y-0.5 hover:border-violet-400/60 hover:from-violet-500/25 hover:to-fuchsia-500/10 hover:text-white hover:shadow-md hover:shadow-violet-500/20"
                     >
-                      <span className="flex h-5 w-5 items-center justify-center rounded-full bg-violet-500/20 text-violet-300 transition-colors group-hover:bg-fuchsia-500/30 group-hover:text-fuchsia-200">
-                        <Icon className="h-3 w-3" />
+                      <span className="flex h-4 w-4 items-center justify-center rounded-full bg-violet-500/20 text-violet-300 transition-colors group-hover:bg-fuchsia-500/30 group-hover:text-fuchsia-200">
+                        <Icon className="h-2.5 w-2.5" />
                       </span>
                       {t(example.chip)}
                     </button>
@@ -485,6 +485,7 @@ export default function GeradorProposta() {
 
             {proposal && numero && (
               <PropostaModal
+                key={numero}
                 proposal={proposal}
                 description={description.trim()}
                 numero={numero}
