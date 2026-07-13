@@ -1,10 +1,11 @@
 import type { Porte, Investimento, Existente, Urgencia } from "@/components/trabalhe-comigo/types";
 
 /**
- * Taxa horária de referência (confirmada pelo Francisco em 2026-07-12). Vale para
- * projetos médio/grande cobrados por hora e serve de âncora para o motor de estimativa.
+ * Taxa horária de referência exibida no documento (confirmada pelo Francisco em 2026-07-13).
+ * Vale para projetos médio/grande cobrados por hora e serve de âncora para o motor de estimativa.
+ * Os R$70/h ficam como promoção oferecida na conversa, fora do documento.
  */
-export const HOURLY_RATE = 70;
+export const HOURLY_RATE = 120;
 
 /**
  * Prazo estimado padronizado por porte (confirmado pelo Francisco). É a fonte da
@@ -22,26 +23,26 @@ export function getPrazoEstimado(porte: Porte, lang: "pt" | "en"): string {
 }
 
 /**
- * Faixas de referência por porte (confirmadas pelo Francisco em 2026-07-12). NÃO são
+ * Faixas de referência por porte (confirmadas pelo Francisco em 2026-07-13). NÃO são
  * cotações fechadas: cada projeto vira uma proposta personalizada depois de entender o
- * contexto. Pequeno é uma faixa fechada; médio e grande são "a partir de" (podem também
- * ser cobrados por hora a HOURLY_RATE).
+ * contexto. Pequeno e médio são faixas fechadas (mostram teto, evitam a conta prazo×hora);
+ * grande é "a partir de". Médio e grande também podem ser cobrados por hora a HOURLY_RATE.
  */
 const INVESTIMENTO_POR_PORTE: Record<Porte, Investimento> = {
-  pequeno: { modelo: "faixa", min: 800, max: 1700, horaBRL: null, moeda: "BRL" },
-  medio: { modelo: "a_partir", min: 2000, max: null, horaBRL: HOURLY_RATE, moeda: "BRL" },
-  grande: { modelo: "a_partir", min: 3000, max: null, horaBRL: HOURLY_RATE, moeda: "BRL" },
+  pequeno: { modelo: "faixa", min: 800, max: 3500, horaBRL: null, moeda: "BRL" },
+  medio: { modelo: "faixa", min: 3000, max: 20000, horaBRL: HOURLY_RATE, moeda: "BRL" },
+  grande: { modelo: "a_partir", min: 5000, max: null, horaBRL: HOURLY_RATE, moeda: "BRL" },
 };
 
 /**
- * Ajustes de preço confirmados pelo Francisco (2026-07-12): partir do zero é o preço
- * padrão; continuar um sistema existente encarece 10%; migrar reduz 20%. Urgência aplica
- * +50% sobre valores e hora.
+ * Ajustes de preço confirmados pelo Francisco (2026-07-13): partir do zero é o preço
+ * padrão; continuar um sistema existente encarece 10%; migrar é o mais caro (+25%, pelo
+ * trabalho com legado, dados e paridade). Urgência aplica +50% sobre valores e hora.
  */
 const FATOR_EXISTENTE: Record<Existente, number> = {
   do_zero: 1,
   continuar: 1.1,
-  migracao_existente: 0.8,
+  migracao_existente: 1.25,
 };
 
 const FATOR_URGENCIA: Record<Urgencia, number> = {

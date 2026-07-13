@@ -25,6 +25,7 @@ import {
   addDias,
   clausulasLegais,
   docLabels,
+  formasPagamento,
   formatBRL,
   formatData,
   investimentoTexto,
@@ -369,9 +370,19 @@ export default function PropostaModal({ proposal, description, numero, open, onC
                           {t("ou", "or")} {formatBRL(proposal.investimento.horaBRL)}/h
                         </div>
                       )}
-                      <div className="mt-1 font-mono text-[11px] text-zinc-500">{proposal.pagamentoSugerido}</div>
                     </div>
                   </div>
+
+                  <Section label={L.formasPagamento}>
+                    <ul className="space-y-1.5">
+                      {formasPagamento(lang).map((p, i) => (
+                        <li key={i} className="relative pl-4 text-sm text-zinc-700">
+                          <span className="absolute left-0 text-fuchsia-500">•</span>
+                          {p}
+                        </li>
+                      ))}
+                    </ul>
+                  </Section>
 
                   <Section label={L.proponente}>
                     <p className="text-sm font-semibold text-zinc-900">
