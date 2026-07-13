@@ -1,15 +1,15 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ShieldCheck, Flame, ArrowRight } from "lucide-react";
+import { Flame, ArrowRight } from "lucide-react";
 import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
 import SectionHeading from "./SectionHeading";
 import { scrollToId } from "./scroll";
 
 /* [[VERIFICAR: valores sugeridos com base em mercado — ajuste os reais]] */
-const PRECO_DE = "R$ 2.900";
-const PRECO_POR = "R$ 1.900";
-const PRECO_PARCELA = "12x de R$ 190";
+const PRECO_DE = "R$ 1.700";
+const PRECO_POR = "R$ 800";
+const PRECO_PARCELA = "10x de R$ 80";
 
 const PLANS: Array<{
   featured?: boolean;
@@ -78,28 +78,36 @@ export default function ComoFuncionaInvestimento() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.4 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
-          className="relative overflow-hidden rounded-3xl border border-violet-400/40 bg-gradient-to-b from-violet-500/[0.14] to-transparent p-8 text-center shadow-[0_0_60px_-15px_rgba(168,85,247,0.5)] sm:p-10"
+          className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-violet-700 via-fuchsia-700 to-purple-800 p-8 text-center shadow-[0_25px_70px_-20px_rgba(168,85,247,0.7)] sm:p-12"
         >
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-400/40 bg-amber-400/10 px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-wide text-amber-300">
+          {/* Etiqueta diagonal */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute right-[-62px] top-[30px] w-[240px] rotate-45 bg-amber-400 py-1.5 text-center font-mono text-[10px] font-bold uppercase tracking-wider text-violet-950 shadow-lg"
+          >
+            {t({ pt: "Oferta por tempo limitado", en: "Limited time offer" })}
+          </div>
+
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-white/30 bg-white/10 px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-wide text-white">
             <Flame className="h-3.5 w-3.5" />
             {t({ pt: "Condição de lançamento", en: "Launch pricing" })}
           </span>
 
-          <p className="mt-5 text-sm text-zinc-400">
+          <p className="mt-5 text-sm text-violet-100">
             {t({ pt: "Tire seu projeto do papel a partir de", en: "Get your project off the ground from" })}
           </p>
           <div className="mt-2 flex items-end justify-center gap-3">
-            <span className="text-lg font-medium text-zinc-500 line-through">{PRECO_DE}</span>
-            <span className="bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-5xl font-extrabold leading-none text-transparent sm:text-6xl">
+            <span className="text-lg font-medium text-white/50 line-through">{PRECO_DE}</span>
+            <span className="text-5xl font-extrabold leading-none text-white drop-shadow-sm sm:text-6xl">
               {PRECO_POR}
             </span>
           </div>
-          <p className="mt-2.5 font-mono text-[13px] text-zinc-400">
+          <p className="mt-2.5 font-mono text-[13px] text-violet-100">
             {t({ pt: "ou em até ", en: "or up to " })}
             {PRECO_PARCELA}
           </p>
 
-          <p className="mx-auto mt-5 max-w-md text-[13px] leading-relaxed text-zinc-500">
+          <p className="mx-auto mt-5 max-w-md text-[13px] leading-relaxed text-violet-100/80">
             {t({
               pt: "Valor de entrada. O valor exato depende do escopo, monte sua proposta com IA e receba a estimativa do seu projeto na hora.",
               en: "Entry price. The exact value depends on scope, build your proposal with AI and get your project's estimate on the spot.",
@@ -109,16 +117,16 @@ export default function ComoFuncionaInvestimento() {
           <a
             href="#proposta"
             onClick={scrollToId("proposta")}
-            className="mt-7 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-500 px-8 py-3.5 text-sm font-semibold text-white shadow-lg shadow-violet-500/30 transition-all hover:scale-[1.03] hover:brightness-110"
+            className="mt-7 inline-flex items-center gap-2 rounded-full bg-white px-8 py-3.5 text-sm font-semibold text-violet-700 shadow-lg shadow-black/20 transition-all hover:scale-[1.03] hover:bg-violet-50"
           >
             {t({ pt: "Montar minha proposta", en: "Build my proposal" })}
             <ArrowRight className="h-4 w-4" />
           </a>
         </motion.div>
 
-        {/* Modelos de orçamento */}
+        {/* Modelos de contratação */}
         <div className="mb-3.5 mt-10 text-center font-mono text-[11px] uppercase tracking-wide text-violet-300">
-          {t({ pt: "Modelos de orçamento", en: "Budget models" })}
+          {t({ pt: "Modelos de contratação", en: "Engagement models" })}
         </div>
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
           {PLANS.map((plan) => (
@@ -151,20 +159,6 @@ export default function ComoFuncionaInvestimento() {
               </ul>
             </div>
           ))}
-        </div>
-
-        {/* Risco */}
-        <div className="mt-4 flex flex-col items-center gap-4 rounded-2xl border border-violet-400/35 bg-gradient-to-r from-violet-500/10 to-transparent p-5 sm:flex-row">
-          <div className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-violet-400/35 bg-violet-500/10 text-violet-300">
-            <ShieldCheck className="h-[22px] w-[22px]" />
-          </div>
-          <p className="text-center text-sm text-zinc-400 sm:text-left">
-            <b className="text-white">{t({ pt: "O risco é meu, não seu.", en: "The risk is mine, not yours." })}</b>{" "}
-            {t({
-              pt: "Você paga 50% para começar e só solta a outra metade quando a solução está entregue e funcionando.",
-              en: "You pay 50% to start and only release the rest when the solution is delivered and working.",
-            })}
-          </p>
         </div>
       </div>
     </section>
