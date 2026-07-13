@@ -43,8 +43,8 @@ function LoadingEtapas() {
     return () => clearInterval(id);
   }, []);
   return (
-    <span className="inline-flex items-center gap-2 font-mono text-xs text-orange-300">
-      <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-amber-400" />
+    <span className="inline-flex items-center gap-2 font-mono text-xs text-violet-300">
+      <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-fuchsia-400" />
       {tr(lang, LOADING_STEPS[i])}
     </span>
   );
@@ -140,7 +140,7 @@ function SelectField({
     <label className="block">
       <span className="mb-2 flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-wide text-zinc-400">
         {step !== undefined && (
-          <span className="flex h-[18px] w-[18px] items-center justify-center rounded-[5px] bg-gradient-to-br from-orange-500 to-amber-500 text-[10px] font-semibold text-white">
+          <span className="flex h-[18px] w-[18px] items-center justify-center rounded-[5px] bg-gradient-to-br from-violet-500 to-fuchsia-500 text-[10px] font-semibold text-white">
             {filled ? "✓" : step}
           </span>
         )}
@@ -150,8 +150,8 @@ function SelectField({
         <select
           value={value}
           onChange={(event) => onChange(event.target.value)}
-          className={`w-full appearance-none rounded-xl border bg-white/[0.03] px-4 py-2.5 pr-9 text-sm text-white transition-colors hover:border-white/30 focus:border-orange-400/60 focus:outline-none focus:ring-2 focus:ring-orange-500/25 ${
-            filled ? "border-orange-400/40" : "border-white/15"
+          className={`w-full appearance-none rounded-xl border bg-white/[0.03] px-4 py-2.5 pr-9 text-sm text-white transition-colors hover:border-white/30 focus:border-violet-400/60 focus:outline-none focus:ring-2 focus:ring-violet-500/25 ${
+            filled ? "border-violet-400/40" : "border-white/15"
           }`}
         >
           {children}
@@ -260,7 +260,7 @@ export default function GeradorProposta() {
 
         <div className="overflow-hidden rounded-3xl border border-white/10 bg-white/[0.06]">
           <div className="flex items-center gap-2 border-b border-white/10 bg-black/25 px-5 py-3.5 font-mono text-xs text-zinc-400">
-            <span className="h-2.5 w-2.5 animate-pulse rounded-full bg-amber-500 shadow-[0_0_8px] shadow-amber-500/70" />
+            <span className="h-2.5 w-2.5 animate-pulse rounded-full bg-fuchsia-500 shadow-[0_0_8px] shadow-fuchsia-500/70" />
             <span className="h-2.5 w-2.5 rounded-full bg-zinc-500" />
             <span className="h-2.5 w-2.5 rounded-full bg-zinc-500" />
             <span className="ml-1.5">~/fcopts/gerador-de-proposta</span>
@@ -268,19 +268,13 @@ export default function GeradorProposta() {
 
           <div className="p-6 sm:p-8">
             <div className="flex items-start gap-3.5">
-              <span className="mt-0.5 flex h-10 w-10 flex-none items-center justify-center rounded-xl bg-gradient-to-br from-orange-500/30 to-amber-500/20 ring-1 ring-orange-400/30">
-                <Sparkles className="h-5 w-5 text-orange-300" />
+              <span className="mt-0.5 flex h-10 w-10 flex-none items-center justify-center rounded-xl bg-gradient-to-br from-violet-500/30 to-fuchsia-500/20 ring-1 ring-violet-400/30">
+                <Sparkles className="h-5 w-5 text-violet-300" />
               </span>
               <div>
                 <h3 className="text-xl font-semibold text-white sm:text-2xl">
                   {t({ pt: "O que você precisa construir?", en: "What do you need to build?" })}
                 </h3>
-                <p className="mt-1.5 max-w-xl text-sm text-zinc-400">
-                  {t({
-                    pt: "Preencha os campos e receba uma estimativa de escopo, prazo e investimento na hora.",
-                    en: "Fill in the fields and get a scope, timeline and investment estimate on the spot.",
-                  })}
-                </p>
               </div>
             </div>
 
@@ -341,7 +335,7 @@ export default function GeradorProposta() {
 
             <div className="mt-6">
               <span className="mb-2 flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-wide text-zinc-400">
-                <span className="flex h-[18px] w-[18px] items-center justify-center rounded-[5px] bg-gradient-to-br from-orange-500 to-amber-500 text-[10px] font-semibold text-white">
+                <span className="flex h-[18px] w-[18px] items-center justify-center rounded-[5px] bg-gradient-to-br from-violet-500 to-fuchsia-500 text-[10px] font-semibold text-white">
                   {description.trim().length >= 20 ? "✓" : 4}
                 </span>
                 {t({ pt: "Descreva seu projeto", en: "Describe your project" })}
@@ -356,12 +350,12 @@ export default function GeradorProposta() {
                   pt: "Ex.: Preciso de um app de delivery com painel do lojista, pagamento no cartão e rastreamento do pedido em tempo real...",
                   en: "E.g.: I need a delivery app with a merchant dashboard, card payment and real-time order tracking...",
                 })}
-                className={`min-h-[92px] w-full resize-y rounded-2xl border bg-white/[0.03] p-3.5 text-[15px] text-white placeholder:text-zinc-500 transition-colors hover:border-white/30 focus:border-orange-400/60 focus:outline-none focus:ring-2 focus:ring-orange-500/25 ${
-                  description.trim().length >= 20 ? "border-orange-400/40" : "border-white/15"
+                className={`min-h-[92px] w-full resize-y rounded-2xl border bg-white/[0.03] p-3.5 text-[15px] text-white placeholder:text-zinc-500 transition-colors hover:border-white/30 focus:border-violet-400/60 focus:outline-none focus:ring-2 focus:ring-violet-500/25 ${
+                  description.trim().length >= 20 ? "border-violet-400/40" : "border-white/15"
                 }`}
               />
               {description.length > 0 && description.trim().length < 20 && (
-                <span className="mt-1.5 block text-right font-mono text-[11px] text-amber-400/80">
+                <span className="mt-1.5 block text-right font-mono text-[11px] text-fuchsia-400/80">
                   {t({
                     pt: `Faltam ${20 - description.trim().length} caracteres`,
                     en: `${20 - description.trim().length} characters to go`,
@@ -382,9 +376,9 @@ export default function GeradorProposta() {
                       key={t(example.chip)}
                       type="button"
                       onClick={() => setDescription(t(example.text))}
-                      className="group inline-flex items-center gap-1.5 rounded-full border border-orange-400/25 bg-gradient-to-b from-orange-500/[0.12] to-orange-500/[0.04] px-3 py-1.5 font-mono text-[11px] text-zinc-200 transition-all hover:-translate-y-0.5 hover:border-orange-400/60 hover:from-orange-500/25 hover:to-amber-500/10 hover:text-white hover:shadow-md hover:shadow-orange-500/20"
+                      className="group inline-flex items-center gap-1.5 rounded-full border border-violet-400/25 bg-gradient-to-b from-violet-500/[0.12] to-violet-500/[0.04] px-3 py-1.5 font-mono text-[11px] text-zinc-200 transition-all hover:-translate-y-0.5 hover:border-violet-400/60 hover:from-violet-500/25 hover:to-fuchsia-500/10 hover:text-white hover:shadow-md hover:shadow-violet-500/20"
                     >
-                      <span className="flex h-4 w-4 items-center justify-center rounded-full bg-orange-500/20 text-orange-300 transition-colors group-hover:bg-amber-500/30 group-hover:text-amber-200">
+                      <span className="flex h-4 w-4 items-center justify-center rounded-full bg-violet-500/20 text-violet-300 transition-colors group-hover:bg-fuchsia-500/30 group-hover:text-fuchsia-200">
                         <Icon className="h-2.5 w-2.5" />
                       </span>
                       {t(example.chip)}
@@ -416,7 +410,7 @@ export default function GeradorProposta() {
                   value={siteReferencia}
                   onChange={(event) => setSiteReferencia(event.target.value)}
                   placeholder={t({ pt: "https://um-site-que-te-inspira.com", en: "https://a-site-you-like.com" })}
-                  className="w-full rounded-xl border border-white/15 bg-white/[0.03] px-4 py-2.5 text-sm text-white placeholder:text-zinc-500 transition-colors hover:border-white/30 focus:border-orange-400/60 focus:outline-none focus:ring-2 focus:ring-orange-500/25"
+                  className="w-full rounded-xl border border-white/15 bg-white/[0.03] px-4 py-2.5 text-sm text-white placeholder:text-zinc-500 transition-colors hover:border-white/30 focus:border-violet-400/60 focus:outline-none focus:ring-2 focus:ring-violet-500/25"
                 />
               </label>
             </div>
@@ -439,7 +433,7 @@ export default function GeradorProposta() {
                 type="button"
                 onClick={handleGenerate}
                 disabled={status === "loading" || !canGenerate}
-                className="group flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-orange-600 to-amber-500 px-7 py-3.5 text-sm font-semibold text-white shadow-lg shadow-orange-500/30 transition-all hover:scale-[1.01] hover:shadow-xl hover:shadow-amber-500/40 hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-40 disabled:shadow-none disabled:hover:scale-100 disabled:hover:brightness-100"
+                className="group flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-500 px-7 py-3.5 text-sm font-semibold text-white shadow-lg shadow-violet-500/30 transition-all hover:scale-[1.01] hover:shadow-xl hover:shadow-fuchsia-500/40 hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-40 disabled:shadow-none disabled:hover:scale-100 disabled:hover:brightness-100"
               >
                 {status === "loading" ? (
                   <Loader2 className="h-4 w-4 animate-spin" />
@@ -480,7 +474,7 @@ export default function GeradorProposta() {
             </p>
 
             {status === "success" && proposal && (
-              <div className="mt-6 rounded-2xl border border-orange-400/30 bg-orange-500/[0.06] p-6">
+              <div className="mt-6 rounded-2xl border border-violet-400/30 bg-violet-500/[0.06] p-6">
                 <div className="flex items-start gap-3">
                   <span className="mt-0.5 inline-flex h-9 w-9 flex-none items-center justify-center rounded-full bg-emerald-500/15 text-emerald-300">
                     <Sparkles className="h-5 w-5" />
@@ -488,7 +482,7 @@ export default function GeradorProposta() {
                   <div>
                     <p className="font-semibold text-white">
                       {t({ pt: "Sua proposta está pronta!", en: "Your proposal is ready!" })}{" "}
-                      <span className="font-mono text-xs text-orange-300">{numero}</span>
+                      <span className="font-mono text-xs text-violet-300">{numero}</span>
                     </p>
                     <p className="mt-0.5 text-sm text-zinc-400">
                       {proposal.tipo} · {t({ pt: "porte", en: "size" })} {porteLabel(proposal.porte, lang)} ·{" "}
@@ -503,7 +497,7 @@ export default function GeradorProposta() {
                       setModalOpen(true);
                       track("trabalhe_comigo_proposta_modal_aberto", { porte: proposal.porte });
                     }}
-                    className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-orange-700 transition-all hover:scale-[1.03]"
+                    className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-violet-700 transition-all hover:scale-[1.03]"
                   >
                     <Eye className="h-4 w-4" />
                     {t({ pt: "Ver proposta completa", en: "View full proposal" })}
@@ -551,7 +545,7 @@ export default function GeradorProposta() {
                   href="https://wa.me/5585981888896"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-4 inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-orange-700 transition-all hover:scale-[1.03]"
+                  className="mt-4 inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-violet-700 transition-all hover:scale-[1.03]"
                 >
                   {t({ pt: "Falar no WhatsApp", en: "Chat on WhatsApp" })}
                   <span aria-hidden="true">→</span>

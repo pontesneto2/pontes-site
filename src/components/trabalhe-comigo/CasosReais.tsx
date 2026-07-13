@@ -106,7 +106,7 @@ export default function CasosReais() {
                 <div className="mt-auto flex flex-wrap gap-5 pt-4">
                   {item.metrics.map((metric) => (
                     <div key={metric.value}>
-                      <div className="bg-gradient-to-r from-rose-500 to-amber-500 bg-clip-text text-lg font-semibold text-transparent">
+                      <div className="bg-gradient-to-r from-violet-500 to-fuchsia-500 bg-clip-text text-lg font-semibold text-transparent">
                         {metric.value}
                       </div>
                       <div className="font-mono text-[11px] text-zinc-400">{t(metric.label)}</div>
@@ -130,7 +130,7 @@ export default function CasosReais() {
         <div className="mt-8 text-center">
           <Link
             href="/#projects"
-            className="inline-flex items-center gap-2 rounded-full border border-white/15 px-5 py-2.5 text-sm font-medium text-zinc-400 transition-colors hover:border-rose-400/40 hover:text-white"
+            className="inline-flex items-center gap-2 rounded-full border border-white/15 px-5 py-2.5 text-sm font-medium text-zinc-400 transition-colors hover:border-violet-400/40 hover:text-white"
           >
             {t({ pt: "Veja mais projetos", en: "See more projects" })}
             <span aria-hidden="true">→</span>

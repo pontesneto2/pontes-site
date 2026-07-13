@@ -77,13 +77,13 @@ export default function ComoEuTrabalho() {
             {/* Linha contínua ligando os nós das pontas */}
             <div
               aria-hidden="true"
-              className="absolute left-[8.33%] right-[8.33%] top-[23px] h-px -translate-y-1/2 bg-gradient-to-r from-rose-500 to-amber-500 opacity-55"
+              className="absolute left-[8.33%] right-[8.33%] top-[23px] h-px -translate-y-1/2 bg-gradient-to-r from-violet-500 to-fuchsia-500 opacity-55"
             />
             <ol className="relative flex">
               {STEPS.map((step, index) => (
                 <li key={t(step.title)} className="flex flex-1 flex-col items-center px-2 text-center">
                   <span
-                    className="flex h-[46px] w-[46px] items-center justify-center rounded-full bg-gradient-to-br from-rose-500 to-amber-500 text-base font-bold text-white shadow-[0_8px_22px_-6px_rgba(244,63,94,0.7)]"
+                    className="flex h-[46px] w-[46px] items-center justify-center rounded-full bg-gradient-to-br from-violet-500 to-fuchsia-500 text-base font-bold text-white shadow-[0_8px_22px_-6px_rgba(147,51,234,0.55)]"
                     style={{ fontFamily: "var(--font-space-grotesk)" }}
                   >
                     {String(index + 1).padStart(2, "0")}

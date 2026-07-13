@@ -16,7 +16,7 @@ export default function HeroVisual() {
 
       {/* ícones flutuando atrás */}
       <Code2 className="tc-hv-f1 absolute left-[4%] top-[8%] h-12 w-12 text-violet-400/10" />
-      <LayoutGrid className="tc-hv-f2 absolute right-[6%] top-[4%] h-9 w-9 text-amber-400/15" />
+      <LayoutGrid className="tc-hv-f2 absolute right-[6%] top-[4%] h-9 w-9 text-fuchsia-400/15" />
       <Smartphone className="tc-hv-f2 absolute left-[8%] bottom-[8%] h-10 w-10 text-violet-400/10" />
       <Cpu className="tc-hv-f1 absolute right-[3%] bottom-[18%] h-14 w-14 text-orange-400/15" />
       <Boxes className="tc-hv-f2 absolute right-[30%] top-[2%] h-8 w-8 text-violet-400/10" />

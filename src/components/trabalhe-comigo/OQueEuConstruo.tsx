@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import {
   LayoutGrid,
   Smartphone,
@@ -10,7 +9,6 @@ import {
   ShieldCheck,
   Server,
   Check,
-  ChevronDown,
   type LucideIcon,
 } from "lucide-react";
 import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
@@ -174,20 +172,9 @@ const SERVICES: Service[] = [
   },
 ];
 
-const ORANGE_GRADIENT = "linear-gradient(135deg,#f97316,#fbbf24)";
-
 export default function OQueEuConstruo() {
   const { lang } = useLanguage();
   const t = (v: Bilingual) => tr(lang, v);
-
-  const [openIds, setOpenIds] = useState<Set<string>>(new Set());
-  const toggleOpen = (id: string) =>
-    setOpenIds((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
 
   return (
     <section
@@ -204,56 +191,43 @@ export default function OQueEuConstruo() {
           label={{ pt: "Serviços", en: "Services" }}
           title={{ pt: "Do esboço ao no ar, sob medida pro seu negócio", en: "From sketch to live, tailored to your business" }}
           subtitle={{
-            pt: "Passe o mouse ou toque na seta de cada serviço para ver os detalhes.",
-            en: "Hover or tap the arrow on each service to see the details.",
+            pt: "Tudo o que posso construir pra você, do sistema sob medida à sustentação.",
+            en: "Everything I can build for you, from custom systems to ongoing support.",
           }}
         />
 
-        {/* Grid de serviços */}
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+        {/* Grid de serviços (estático) */}
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
           {SERVICES.map((service) => {
-            const isOpen = openIds.has(service.id);
             const Icon = service.icon;
             const cat = CATEGORY[service.category];
             return (
               <div
                 key={service.id}
-                className="group relative flex flex-col rounded-2xl border border-white/[0.08] bg-white/[0.02] p-5 transition-all hover:border-white/20 hover:bg-white/[0.04]"
+                className="flex flex-col items-center rounded-2xl border border-white/[0.08] bg-white/[0.02] p-6 text-center transition-all hover:border-white/20 hover:bg-white/[0.04]"
               >
-                <div className="flex items-start justify-between gap-3">
-                  <span
-                    className="flex h-11 w-11 items-center justify-center rounded-[11px] text-[#c9a6ff] transition-all group-hover:bg-gradient-to-br group-hover:from-orange-500 group-hover:to-amber-500 group-hover:text-white"
-                    style={isOpen ? { background: ORANGE_GRADIENT, color: "#ffffff" } : { backgroundColor: "rgba(168,85,247,0.10)" }}
-                  >
-                    <Icon className="h-[21px] w-[21px]" />
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() => toggleOpen(service.id)}
-                    aria-expanded={isOpen}
-                    aria-label={t({ pt: "Ver detalhes", en: "See details" })}
-                    className="flex h-8 w-8 items-center justify-center rounded-full text-[#8c8c9a] transition-colors hover:bg-white/5 hover:text-white"
-                  >
-                    <ChevronDown className={`h-5 w-5 transition-transform duration-200 group-hover:rotate-180 ${isOpen ? "rotate-180" : ""}`} />
-                  </button>
-                </div>
+                <span
+                  className="flex h-12 w-12 items-center justify-center rounded-[13px] text-[#c9a6ff]"
+                  style={{ backgroundColor: "rgba(168,85,247,0.12)" }}
+                >
+                  <Icon className="h-[22px] w-[22px]" />
+                </span>
 
-                <div className="mt-3.5 flex flex-wrap items-center gap-x-2.5 gap-y-1.5">
-                  <h3 className="text-[16px] font-medium leading-tight text-[#f0f0f5]" style={{ fontFamily: "var(--font-space-grotesk)" }}>
-                    {t(service.name)}
-                  </h3>
-                  <span
-                    className="inline-flex items-center gap-1.5 rounded-full px-2 py-[3px] font-mono text-[10px] font-semibold uppercase tracking-wide"
-                    style={{ color: cat.color, border: `1px solid ${cat.color}55`, backgroundColor: `${cat.color}1a` }}
-                  >
-                    <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: cat.color, boxShadow: `0 0 6px ${cat.color}` }} />
-                    {t({ pt: service.category, en: t(cat.label).toUpperCase() })}
-                  </span>
-                </div>
-                <p className="mt-1 text-[13px] leading-snug text-[#8c8c9a]">{t(service.tag)}</p>
+                <h3 className="mt-4 text-[17px] font-semibold leading-tight text-[#f0f0f5]" style={{ fontFamily: "var(--font-space-grotesk)" }}>
+                  {t(service.name)}
+                </h3>
 
-                {/* Detalhes: abrem no hover ou ao clicar na seta */}
-                <div className={`mt-4 border-t border-white/[0.06] pt-4 group-hover:block ${isOpen ? "block" : "hidden"}`}>
+                <span
+                  className="mt-2 inline-flex items-center gap-1.5 rounded-full px-2 py-[3px] font-mono text-[10px] font-semibold uppercase tracking-wide"
+                  style={{ color: cat.color, border: `1px solid ${cat.color}55`, backgroundColor: `${cat.color}1a` }}
+                >
+                  <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: cat.color, boxShadow: `0 0 6px ${cat.color}` }} />
+                  {t({ pt: service.category, en: t(cat.label).toUpperCase() })}
+                </span>
+
+                <p className="mt-2 text-[13px] leading-snug text-[#8c8c9a]">{t(service.tag)}</p>
+
+                <div className="mt-4 w-full border-t border-white/[0.06] pt-4 text-left">
                   <p className="text-[14px] leading-relaxed text-[#c2c2ce]">{t(service.description)}</p>
                   <ul className="mt-3.5 space-y-2">
                     {service.bullets.map((bullet) => (

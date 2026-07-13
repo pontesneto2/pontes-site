@@ -18,7 +18,7 @@ export default function TcFooter() {
         {/* Assinatura */}
         <div className="flex items-center gap-2.5">
           <span
-            className="flex h-[26px] w-[26px] items-center justify-center rounded-lg bg-gradient-to-br from-rose-500 to-amber-500 text-[13px] font-bold text-white"
+            className="flex h-[26px] w-[26px] items-center justify-center rounded-lg bg-gradient-to-br from-violet-500 to-fuchsia-500 text-[13px] font-bold text-white"
             style={{ fontFamily: "var(--font-space-grotesk)" }}
           >
             F
