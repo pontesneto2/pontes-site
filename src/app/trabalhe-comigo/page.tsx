@@ -6,7 +6,6 @@ import { useLanguage, tr } from "@/lib/language-context";
 import HeroComercial from "@/components/trabalhe-comigo/HeroComercial";
 import MarqueeIdealizadores from "@/components/trabalhe-comigo/MarqueeIdealizadores";
 import OQueEuConstruo from "@/components/trabalhe-comigo/OQueEuConstruo";
-import TecnologiasStacks from "@/components/trabalhe-comigo/TecnologiasStacks";
 import ComoEuTrabalho from "@/components/trabalhe-comigo/ComoEuTrabalho";
 import GeradorProposta from "@/components/trabalhe-comigo/GeradorProposta";
 import CasosReais from "@/components/trabalhe-comigo/CasosReais";
@@ -53,7 +52,6 @@ export default function TrabalheComigoPage() {
       <MarqueeIdealizadores />
       <OQueEuConstruo />
       <GeradorProposta />
-      <TecnologiasStacks />
       <ComoEuTrabalho />
       <ComoFuncionaInvestimento />
       <SegurancaJuridica />

@@ -1,5 +1,6 @@
 "use client";
 
+import { Layers } from "lucide-react";
 import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
 import SectionHeading from "./SectionHeading";
 
@@ -53,12 +54,41 @@ export default function ComoEuTrabalho() {
   const t = (v: Bilingual) => tr(lang, v);
 
   return (
-    <section id="como-trabalho" className="scroll-mt-20 border-t border-white/10 py-20">
+    <section
+      id="como-trabalho"
+      className="scroll-mt-20 border-y border-white/10 bg-white/[0.02] py-20"
+    >
       <div className="mx-auto max-w-7xl px-6">
         <SectionHeading
           title={{ pt: "Como eu trabalho", en: "How I work" }}
-          kicker={{ pt: "Processo previsível, escopo no papel", en: "Predictable process, scope on paper" }}
+          kicker={{
+            pt: "Da escolha da tecnologia à entrega, tudo no papel",
+            en: "From choosing the tech to delivery, all on paper",
+          }}
         />
+
+        {/* Callout destacado: escolha da stack */}
+        <div className="mb-8 flex items-start gap-5 rounded-2xl border border-violet-400/35 bg-gradient-to-b from-violet-500/12 to-transparent p-6 shadow-[0_0_40px_-12px_rgba(139,92,246,0.35)]">
+          <div className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-violet-400/35 bg-violet-500/10 text-violet-300">
+            <Layers className="h-6 w-6" />
+          </div>
+          <div>
+            <h3 className="mb-2 text-lg font-semibold text-white">
+              {t({
+                pt: "Você escolhe a stack, ou eu escolho a melhor pra você.",
+                en: "You choose the stack, or I choose the best one for you.",
+              })}
+            </h3>
+            <p className="max-w-3xl text-sm text-zinc-400">
+              {t({
+                pt: "Se o seu projeto já exige uma tecnologia específica, eu me adapto a ela sem problema. Se não exige, eu escolho a melhor engenharia para o caso, pensando em performance, manutenção, prazo e custo. A tecnologia trabalha a favor do seu produto, nunca o contrário.",
+                en: "If your project already requires a specific technology, I adapt to it without issue. If it doesn't, I pick the best engineering for the case, considering performance, maintenance, timeline and cost. Technology works in favor of your product, never the other way around.",
+              })}
+            </p>
+          </div>
+        </div>
+
+        {/* Passos do processo */}
         <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2 lg:grid-cols-3">
           {STEPS.map((step, index) => (
             <div
