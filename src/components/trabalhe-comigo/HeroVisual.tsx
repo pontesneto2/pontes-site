@@ -10,15 +10,15 @@ export default function HeroVisual() {
         className="pointer-events-none absolute inset-0 -z-10 blur-2xl"
         style={{
           background:
-            "radial-gradient(45% 45% at 35% 40%, rgba(139,92,246,0.28), transparent 70%), radial-gradient(45% 45% at 70% 65%, rgba(217,70,239,0.20), transparent 70%)",
+            "radial-gradient(45% 45% at 35% 40%, rgba(139,92,246,0.26), transparent 70%), radial-gradient(42% 42% at 72% 68%, rgba(249,115,22,0.22), transparent 70%), radial-gradient(40% 40% at 60% 30%, rgba(251,191,36,0.14), transparent 70%)",
         }}
       />
 
       {/* ícones flutuando atrás */}
       <Code2 className="tc-hv-f1 absolute left-[4%] top-[8%] h-12 w-12 text-violet-400/10" />
-      <LayoutGrid className="tc-hv-f2 absolute right-[6%] top-[4%] h-9 w-9 text-fuchsia-400/10" />
+      <LayoutGrid className="tc-hv-f2 absolute right-[6%] top-[4%] h-9 w-9 text-amber-400/15" />
       <Smartphone className="tc-hv-f2 absolute left-[8%] bottom-[8%] h-10 w-10 text-violet-400/10" />
-      <Cpu className="tc-hv-f1 absolute right-[3%] bottom-[18%] h-14 w-14 text-fuchsia-400/10" />
+      <Cpu className="tc-hv-f1 absolute right-[3%] bottom-[18%] h-14 w-14 text-orange-400/15" />
       <Boxes className="tc-hv-f2 absolute right-[30%] top-[2%] h-8 w-8 text-violet-400/10" />
 
       {/* dispositivos */}
@@ -34,6 +34,10 @@ export default function HeroVisual() {
           <linearGradient id="tc-hg" x1="0" y1="0" x2="1" y2="1">
             <stop offset="0" stopColor="#8b5cf6" />
             <stop offset="1" stopColor="#d946ef" />
+          </linearGradient>
+          <linearGradient id="tc-hg-o" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stopColor="#f97316" />
+            <stop offset="1" stopColor="#fbbf24" />
           </linearGradient>
           <radialGradient id="tc-hglow" cx="0.5" cy="0.5" r="0.5">
             <stop offset="0" stopColor="#8b5cf6" stopOpacity="0.28" />
@@ -58,11 +62,11 @@ export default function HeroVisual() {
           <rect x="150" y="116" width="120" height="9" rx="4" fill="rgba(255,255,255,0.16)" />
           <rect x="150" y="132" width="80" height="6" rx="3" fill="rgba(255,255,255,0.08)" />
           <rect x="150" y="150" width="90" height="42" rx="8" fill="url(#tc-hg)" opacity="0.92" />
-          <rect x="248" y="150" width="94" height="42" rx="8" fill="rgba(255,255,255,0.05)" />
+          <rect x="248" y="150" width="94" height="42" rx="8" fill="url(#tc-hg-o)" opacity="0.5" />
           <rect x="150" y="222" width="12" height="18" rx="3" fill="rgba(255,255,255,0.15)" />
-          <rect x="168" y="212" width="12" height="28" rx="3" fill="rgba(255,255,255,0.15)" />
+          <rect x="168" y="212" width="12" height="28" rx="3" fill="url(#tc-hg-o)" />
           <rect x="186" y="204" width="12" height="36" rx="3" fill="url(#tc-hg)" />
-          <rect x="204" y="216" width="12" height="24" rx="3" fill="rgba(255,255,255,0.15)" />
+          <rect x="204" y="216" width="12" height="24" rx="3" fill="url(#tc-hg-o)" />
           <rect x="222" y="198" width="12" height="42" rx="3" fill="url(#tc-hg)" />
           <rect x="240" y="208" width="12" height="32" rx="3" fill="rgba(255,255,255,0.15)" />
           <rect x="44" y="262" width="344" height="12" rx="4" fill="#1c1c24" />

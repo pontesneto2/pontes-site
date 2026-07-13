@@ -24,10 +24,10 @@ function TypedHeadline({ prefix, suffix }: { prefix: string; suffix: string }) {
   return (
     <>
       {shownPrefix}
-      <span className="bg-gradient-to-r from-violet-500 to-fuchsia-500 bg-clip-text text-transparent">
+      <span className="bg-gradient-to-r from-rose-500 to-amber-500 bg-clip-text text-transparent">
         {shownSuffix}
       </span>
-      <span className={done ? "typewriter-cursor" : ""} style={{ color: "#e879f9" }}>
+      <span className={done ? "typewriter-cursor" : ""} style={{ color: "#fb7185" }}>
         _
       </span>
     </>
@@ -82,7 +82,7 @@ export default function HeroComercial() {
                 track("trabalhe_comigo_cta_proposta", { source: "hero" });
                 scrollToId("proposta")(event);
               }}
-              className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-violet-700 transition-all hover:scale-[1.03] hover:bg-zinc-100 hover:shadow-[0_10px_30px_-8px_rgba(0,0,0,0.5)]"
+              className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-orange-500 to-amber-400 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-orange-500/25 transition-all hover:scale-[1.03] hover:brightness-110"
             >
               {t({ pt: "Montar minha proposta agora", en: "Build my proposal now" })}
               <span aria-hidden="true">→</span>
