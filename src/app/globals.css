@@ -37,3 +37,35 @@ body {
 .typewriter-cursor {
   animation: blink-caret 1s step-end infinite;
 }
+
+/* Cursor da máquina de escrever da seção de Serviços (blink ~1.05s) */
+@keyframes blink-caret-slow {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.typewriter-cursor-slow {
+  animation: blink-caret-slow 1.05s step-end infinite;
+}
+
+/* Abertura do acordeão de serviços */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.25s ease-out;
+}

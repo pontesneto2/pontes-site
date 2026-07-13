@@ -19,6 +19,7 @@ import {
 import { track } from "@vercel/analytics";
 import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
 import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
+import { usePropostaPrefill } from "@/lib/proposta/prefill-context";
 import SectionHeading from "./SectionHeading";
 import { gerarNumeroProposta, porteLabel } from "@/lib/proposta/proposta-doc";
 import type { Existente, Proposal, PropostaResponse, TipoProjeto, Urgencia } from "./types";
@@ -170,6 +171,7 @@ type Status = "idle" | "loading" | "success" | "fallback";
 export default function GeradorProposta() {
   const { lang } = useLanguage();
   const t = (v: Bilingual) => tr(lang, v);
+  const { request } = usePropostaPrefill();
 
   const [description, setDescription] = useState("");
   const [tipo, setTipo] = useState("");
@@ -192,6 +194,17 @@ export default function GeradorProposta() {
   // Sem site key configurada (ex.: dev), o captcha não bloqueia — espelha o bypass do servidor.
   const captchaReady = !turnstileSiteKey || turnstileToken !== "";
   const canGenerate = fieldsReady && captchaReady;
+
+  // Prefill vindo da seção de Serviços: a seleção alimenta a descrição e os
+  // campos de tipo/ponto de partida, então o usuário só refina e gera.
+  useEffect(() => {
+    if (!request) return;
+    setDescription(request.payload.description);
+    if (request.payload.tipo) setTipo(request.payload.tipo);
+    if (request.payload.existente) setExistente(request.payload.existente);
+    // O resultado anterior deixa de valer com o novo escopo.
+    setStatus("idle");
+  }, [request?.nonce]); // eslint-disable-line react-hooks/exhaustive-deps
 
   async function handleGenerate() {
     if (!canGenerate) return;
