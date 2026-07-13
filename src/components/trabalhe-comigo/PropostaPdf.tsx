@@ -19,17 +19,17 @@ const FUCHSIA = "#c026d3";
 const INK = "#1f2430";
 const MUTED = "#5b6472";
 const LINE = "#e6e3ef";
-const SOFT = "#f7f6fb";
 
 const s = StyleSheet.create({
   page: { paddingTop: 42, paddingBottom: 64, paddingHorizontal: 44, fontSize: 10, color: INK, lineHeight: 1.5 },
   watermark: {
     position: "absolute",
-    top: 320,
-    left: 90,
-    fontSize: 90,
-    color: "#000000",
-    opacity: 0.04,
+    top: 350,
+    left: 8,
+    fontSize: 38,
+    letterSpacing: 2,
+    color: "#c026d3",
+    opacity: 0.1,
     transform: "rotate(-38deg)",
     fontFamily: "Helvetica-Bold",
   },
@@ -77,11 +77,24 @@ const s = StyleSheet.create({
     marginRight: 5,
     marginBottom: 5,
   },
-  faseCard: { borderWidth: 1, borderColor: LINE, borderRadius: 6, padding: 9, marginBottom: 6, backgroundColor: SOFT },
-  faseHead: { flexDirection: "row", justifyContent: "space-between", marginBottom: 2 },
+  fasesWrap: { marginLeft: 8, borderLeftWidth: 1, borderColor: LINE, marginTop: 2 },
+  faseRow: { flexDirection: "row", marginBottom: 8 },
+  faseNum: {
+    width: 16,
+    height: 16,
+    marginLeft: -8,
+    marginRight: 10,
+    borderRadius: 8,
+    backgroundColor: VIOLET,
+    color: "#ffffff",
+    fontFamily: "Helvetica-Bold",
+    fontSize: 9,
+    textAlign: "center",
+    paddingTop: 3,
+  },
+  faseBody: { flex: 1 },
   faseTitulo: { fontFamily: "Helvetica-Bold", fontSize: 10, color: INK },
-  fasePrazo: { fontSize: 8.5, color: VIOLET },
-  faseDesc: { fontSize: 9, color: MUTED },
+  faseDesc: { fontSize: 9, color: MUTED, marginTop: 1 },
   grid2: { flexDirection: "row", gap: 12, marginTop: 4 },
   box: { flex: 1, borderWidth: 1, borderColor: LINE, borderRadius: 6, padding: 10 },
   boxLabel: { fontSize: 8, color: MUTED, textTransform: "uppercase", letterSpacing: 0.6, marginBottom: 3 },
@@ -91,10 +104,6 @@ const s = StyleSheet.create({
   legalItem: { flexDirection: "row", marginBottom: 3 },
   legalNum: { width: 14, fontSize: 8.5, color: VIOLET, fontFamily: "Helvetica-Bold" },
   legalText: { flex: 1, fontSize: 8.5, color: MUTED },
-  aceiteRow: { flexDirection: "row", gap: 24, marginTop: 10 },
-  aceiteCol: { flex: 1 },
-  aceiteLine: { borderTopWidth: 1, borderColor: "#b9b4c9", marginTop: 26, paddingTop: 4 },
-  aceiteName: { fontSize: 8.5, color: MUTED },
   footer: {
     position: "absolute",
     bottom: 26,
@@ -118,10 +127,9 @@ type Props = {
   validade: string;
   lang: Lang;
   qrDataUrl?: string;
-  nomeCliente?: string;
 };
 
-export default function PropostaPdf({ proposal, numero, dataEmissao, validade, lang, qrDataUrl, nomeCliente }: Props) {
+export default function PropostaPdf({ proposal, numero, dataEmissao, validade, lang, qrDataUrl }: Props) {
   const L = docLabels(lang);
   const clausulas = clausulasLegais(lang);
   const investLinha = investimentoTexto(proposal.investimento, lang);
@@ -134,7 +142,7 @@ export default function PropostaPdf({ proposal, numero, dataEmissao, validade, l
     <Document title={`${L.documento} ${numero}`} author={BRAND.nome}>
       <Page size="A4" style={s.page}>
         <Text style={s.watermark} fixed>
-          {L.preliminar}
+          {L.semValidade}
         </Text>
 
         {/* Cabeçalho (faixa escura pra logo aparecer) */}
@@ -169,15 +177,17 @@ export default function PropostaPdf({ proposal, numero, dataEmissao, validade, l
         ))}
 
         <Text style={s.sectionLabel}>{L.fases}</Text>
-        {proposal.fases.map((f, i) => (
-          <View style={s.faseCard} key={i}>
-            <View style={s.faseHead}>
-              <Text style={s.faseTitulo}>{f.titulo}</Text>
-              <Text style={s.fasePrazo}>{f.prazo}</Text>
+        <View style={s.fasesWrap}>
+          {proposal.fases.map((f, i) => (
+            <View style={s.faseRow} key={i}>
+              <Text style={s.faseNum}>{i + 1}</Text>
+              <View style={s.faseBody}>
+                <Text style={s.faseTitulo}>{f.titulo}</Text>
+                <Text style={s.faseDesc}>{f.descricao}</Text>
+              </View>
             </View>
-            <Text style={s.faseDesc}>{f.descricao}</Text>
-          </View>
-        ))}
+          ))}
+        </View>
 
         <Text style={s.sectionLabel}>{L.stack}</Text>
         <View style={s.chipsRow}>
@@ -220,29 +230,6 @@ export default function PropostaPdf({ proposal, numero, dataEmissao, validade, l
             <Text style={s.legalText}>{c}</Text>
           </View>
         ))}
-
-        <Text style={s.sectionLabel}>{L.aceite}</Text>
-        <View style={s.aceiteRow}>
-          <View style={s.aceiteCol}>
-            <View style={s.aceiteLine}>
-              <Text style={s.aceiteName}>
-                {L.cliente}
-                {nomeCliente ? `: ${nomeCliente}` : ""}
-              </Text>
-              <Text style={s.aceiteName}>
-                {L.deAcordo} · {L.data}: ___/___/______
-              </Text>
-            </View>
-          </View>
-          <View style={s.aceiteCol}>
-            <View style={s.aceiteLine}>
-              <Text style={s.aceiteName}>
-                {L.prestador}: {BRAND.nome}
-              </Text>
-              <Text style={s.aceiteName}>{BRAND.email}</Text>
-            </View>
-          </View>
-        </View>
 
         {/* Rodapé fixo */}
         <View style={s.footer} fixed>

@@ -66,17 +66,19 @@ export function formatData(date: Date, lang: Lang) {
 export function clausulasLegais(lang: Lang): string[] {
   if (lang === "en") {
     return [
+      "This document was generated automatically by the visitor through an AI tool. It has no signature, contractual value or legal validity, and does not represent any commitment by the provider.",
+      "No figure or timeline stated here is binding until formally confirmed in writing by Francisco Pontes.",
       `This proposal is valid for ${VALIDADE_DIAS} calendar days from the issue date.`,
-      "Preliminary estimate generated with the help of artificial intelligence. Scope, timeline and figures are approximate and may vary after a conversation and a detailed analysis.",
-      "This document is a commercial estimate and does not constitute a contract or a binding offer.",
+      "Preliminary AI-generated estimate. Scope, timeline and figures are approximate and may vary after a conversation and a detailed analysis.",
       "Suggested payment terms: 50% at the start and 50% on delivery, to be confirmed in the service agreement.",
       "The scope was inferred from the information provided by the client and is subject to refinement.",
     ];
   }
   return [
+    "Documento gerado automaticamente pelo próprio visitante através de uma ferramenta de inteligência artificial. Não possui assinatura, valor contratual ou validade jurídica, e não representa qualquer compromisso do prestador.",
+    "Nenhum valor ou prazo aqui indicado é vinculante até confirmação formal por escrito de Francisco Pontes.",
     `Esta proposta é válida por ${VALIDADE_DIAS} dias corridos a partir da data de emissão.`,
     "Estimativa preliminar gerada com apoio de inteligência artificial. Escopo, prazo e valores são aproximados e podem variar após uma conversa e uma análise detalhada.",
-    "Este documento é uma estimativa comercial e não constitui contrato nem proposta vinculante.",
     "Condições de pagamento sugeridas: 50% no início e 50% na entrega, a confirmar em contrato de prestação de serviços.",
     "O escopo foi inferido a partir das informações fornecidas pelo cliente e está sujeito a refinamento.",
   ];
@@ -92,7 +94,7 @@ export function docLabels(lang: Lang) {
     validade: pt ? "Válida até" : "Valid until",
     resumo: pt ? "Resumo do projeto" : "Project summary",
     escopo: pt ? "Entregáveis" : "Deliverables",
-    fases: pt ? "Fases e cronograma" : "Phases and timeline",
+    fases: pt ? "Etapas do projeto" : "Project timeline",
     stack: pt ? "Tecnologias sugeridas" : "Suggested technologies",
     prazo: pt ? "Prazo estimado" : "Estimated timeline",
     porte: pt ? "Porte" : "Size",
@@ -106,6 +108,7 @@ export function docLabels(lang: Lang) {
     prestador: pt ? "Prestador" : "Provider",
     data: pt ? "Data" : "Date",
     preliminar: pt ? "PRELIMINAR" : "PRELIMINARY",
+    semValidade: pt ? "SEM VALIDADE JURÍDICA" : "NOT LEGALLY BINDING",
   };
 }
 

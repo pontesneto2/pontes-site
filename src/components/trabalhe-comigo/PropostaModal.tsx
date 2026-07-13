@@ -100,7 +100,7 @@ export default function PropostaModal({ proposal, description, numero, open, onC
     };
   }, [open, onClose]);
 
-  function pdfDoc(nomeCliente?: string) {
+  function pdfDoc() {
     return (
       <PropostaPdf
         proposal={proposal}
@@ -109,7 +109,6 @@ export default function PropostaModal({ proposal, description, numero, open, onC
         validade={validadeFmt}
         lang={lang}
         qrDataUrl={qrDataUrl}
-        nomeCliente={nomeCliente}
       />
     );
   }
@@ -117,7 +116,7 @@ export default function PropostaModal({ proposal, description, numero, open, onC
   async function handleDownload() {
     setDownloading(true);
     try {
-      const blob = await pdf(pdfDoc(nome.trim() || undefined)).toBlob();
+      const blob = await pdf(pdfDoc()).toBlob();
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
@@ -134,7 +133,7 @@ export default function PropostaModal({ proposal, description, numero, open, onC
     if (!canSubmit) return;
     setSendStatus("sending");
     try {
-      const blob = await pdf(pdfDoc(nome.trim())).toBlob();
+      const blob = await pdf(pdfDoc()).toBlob();
       const pdfBase64 = await blobToBase64(blob);
       const res = await fetch("/api/proposta-send", {
         method: "POST",
@@ -330,17 +329,17 @@ export default function PropostaModal({ proposal, description, numero, open, onC
                   </Section>
 
                   <Section label={L.fases}>
-                    <div className="space-y-2">
+                    <ol className="relative ml-3 border-l border-zinc-200">
                       {proposal.fases.map((f, i) => (
-                        <div key={i} className="rounded-lg border border-zinc-200 bg-zinc-50 p-3">
-                          <div className="flex items-center justify-between gap-3">
-                            <span className="text-sm font-semibold text-zinc-900">{f.titulo}</span>
-                            <span className="shrink-0 font-mono text-[11px] text-violet-700">{f.prazo}</span>
-                          </div>
+                        <li key={i} className="relative pb-4 pl-6 last:pb-0">
+                          <span className="absolute -left-[9px] top-0.5 flex h-[18px] w-[18px] items-center justify-center rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-500 font-mono text-[10px] font-semibold text-white">
+                            {i + 1}
+                          </span>
+                          <span className="block text-sm font-semibold text-zinc-900">{f.titulo}</span>
                           <p className="mt-0.5 text-[13px] text-zinc-500">{f.descricao}</p>
-                        </div>
+                        </li>
                       ))}
-                    </div>
+                    </ol>
                   </Section>
 
                   <Section label={L.stack}>

@@ -23,7 +23,6 @@ export type Investimento = {
 export type Fase = {
   titulo: string;
   descricao: string;
-  prazo: string;
 };
 
 export type Proposal = {
@@ -38,7 +37,12 @@ export type Proposal = {
   investimento: Investimento;
 };
 
-export type PropostaFallbackReason = "rate_limited" | "timeout" | "ai_error" | "invalid_response";
+export type PropostaFallbackReason =
+  | "rate_limited"
+  | "timeout"
+  | "ai_error"
+  | "invalid_response"
+  | "captcha_failed";
 
 export type PropostaResponse =
   | { ok: true; proposal: Proposal }
