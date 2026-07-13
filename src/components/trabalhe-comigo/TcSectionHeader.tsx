@@ -51,7 +51,7 @@ export default function TcSectionHeader({
         style={{ fontFamily: "var(--font-space-grotesk)" }}
       >
         {full.slice(0, count)}
-        <span className={done ? "typewriter-cursor" : ""} style={{ color: "#fb7185" }}>
+        <span className={done ? "typewriter-cursor" : ""} style={{ color: "#fb923c" }}>
           _
         </span>
       </h2>

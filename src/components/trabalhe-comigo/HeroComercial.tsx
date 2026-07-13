@@ -24,10 +24,10 @@ function TypedHeadline({ prefix, suffix }: { prefix: string; suffix: string }) {
   return (
     <>
       {shownPrefix}
-      <span className="bg-gradient-to-r from-rose-500 to-amber-500 bg-clip-text text-transparent">
+      <span className="bg-gradient-to-r from-violet-500 to-fuchsia-500 bg-clip-text text-transparent">
         {shownSuffix}
       </span>
-      <span className={done ? "typewriter-cursor" : ""} style={{ color: "#fb7185" }}>
+      <span className={done ? "typewriter-cursor" : ""} style={{ color: "#fb923c" }}>
         _
       </span>
     </>
