@@ -1,12 +1,13 @@
 "use client";
 
-import { FileText, Receipt, ShieldCheck, Lock, FileCode, type LucideIcon } from "lucide-react";
+import { FileCheck, ClipboardList, Receipt, Lock, Code2, ShieldCheck, type LucideIcon } from "lucide-react";
 import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
-import SectionHeading from "./SectionHeading";
+import TcSectionHeader from "./TcSectionHeader";
+import Reveal from "./Reveal";
 
 const ITEMS: Array<{ icon: LucideIcon; title: Bilingual; description: Bilingual }> = [
   {
-    icon: FileText,
+    icon: FileCheck,
     title: { pt: "Contrato de prestação", en: "Service agreement" },
     description: {
       pt: "Serviço, prazos, valores e responsabilidades formalizados antes de começar.",
@@ -14,18 +15,18 @@ const ITEMS: Array<{ icon: LucideIcon; title: Bilingual; description: Bilingual 
     },
   },
   {
-    icon: FileCode,
+    icon: ClipboardList,
     title: { pt: "Escopo documentado", en: "Documented scope" },
     description: {
-      pt: "Proposta comercial detalhada, com o que está e o que não está incluído, sem zona cinzenta.",
-      en: "Detailed commercial proposal, with what's included and what isn't, no gray areas.",
+      pt: "Proposta detalhada, com o que está e o que não está incluído. Sem zona cinzenta.",
+      en: "Detailed proposal, with what's included and what isn't. No gray areas.",
     },
   },
   {
     icon: Receipt,
     title: { pt: "Nota fiscal", en: "Invoice" },
     description: {
-      pt: "Emissão de NF pra cada pagamento, com tudo dentro da legalidade.",
+      pt: "Emissão de NF pra cada pagamento, tudo dentro da legalidade.",
       en: "Invoice issued for every payment, fully within the law.",
     },
   },
@@ -38,8 +39,8 @@ const ITEMS: Array<{ icon: LucideIcon; title: Bilingual; description: Bilingual 
     },
   },
   {
-    icon: FileCode,
-    title: { pt: "Código é seu", en: "The code is yours" },
+    icon: Code2,
+    title: { pt: "O código é seu", en: "The code is yours" },
     description: {
       pt: "Propriedade intelectual transferida na entrega. O que você paga, você leva.",
       en: "Intellectual property transferred upon delivery. What you pay for, you own.",
@@ -60,24 +61,39 @@ export default function SegurancaJuridica() {
   const t = (v: Bilingual) => tr(lang, v);
 
   return (
-    <section className="border-t border-white/10 py-20">
+    <section className="border-t border-white/10 py-20" style={{ backgroundColor: "#08080b" }}>
       <div className="mx-auto max-w-7xl px-6">
-        <SectionHeading
-          title={{ pt: "Segurança jurídica pra você", en: "Legal security for you" }}
-          kicker={{ pt: "Contrato, escopo e código na entrega", en: "Contract, scope and code on delivery" }}
+        <TcSectionHeader
+          label={{ pt: "Segurança", en: "Security" }}
+          title={{ pt: "Você contrata com segurança, do início ao fim", en: "You hire with confidence, from start to finish" }}
+          subtitle={{
+            pt: "Contrato, escopo, nota fiscal e o código fonte é seu",
+            en: "Contract, scope, invoice and the source code is yours",
+          }}
         />
-        <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2 lg:grid-cols-3">
-          {ITEMS.map((item) => (
-            <div
-              key={t(item.title)}
-              className="rounded-2xl border border-white/10 bg-white/[0.04] p-6 transition-all hover:border-white/20 hover:bg-white/[0.07]"
-            >
-              <div className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-violet-400/35 bg-violet-500/10 text-violet-300">
-                <item.icon className="h-[22px] w-[22px]" />
+
+        <svg width="0" height="0" className="absolute" aria-hidden="true">
+          <defs>
+            <linearGradient id="tc-orange-grad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stopColor="#fb923c" />
+              <stop offset="1" stopColor="#ea580c" />
+            </linearGradient>
+          </defs>
+        </svg>
+
+        <div className="mx-auto grid max-w-[920px] grid-cols-1 gap-x-12 md:grid-cols-2">
+          {ITEMS.map((item, i) => (
+            <Reveal key={t(item.title)} delay={i * 0.08} className="flex items-start gap-4 border-b border-white/[0.08] py-5">
+              <span className="flex h-[46px] w-[46px] flex-none items-center justify-center rounded-full border border-orange-400/25">
+                <item.icon className="h-[21px] w-[21px]" strokeWidth={1.75} style={{ stroke: "url(#tc-orange-grad)" }} />
+              </span>
+              <div>
+                <h3 className="text-[16.5px] font-semibold text-white" style={{ fontFamily: "var(--font-space-grotesk)" }}>
+                  {t(item.title)}
+                </h3>
+                <p className="mt-1 text-[13.5px] leading-relaxed text-[#9a9aa7]">{t(item.description)}</p>
               </div>
-              <h3 className="mb-1.5 mt-3 text-base font-semibold text-white">{t(item.title)}</h3>
-              <p className="text-[13.5px] text-zinc-400">{t(item.description)}</p>
-            </div>
+            </Reveal>
           ))}
         </div>
       </div>

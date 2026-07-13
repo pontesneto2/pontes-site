@@ -62,6 +62,20 @@ export function formatData(date: Date, lang: Lang) {
   });
 }
 
+/** Formas de pagamento (texto fixo e autoritativo, fonte única — sem geração por IA). */
+export function formasPagamento(lang: Lang): string[] {
+  if (lang === "en") {
+    return [
+      "Pix or credit card in up to 12 installments (installment interest charged by the operator).",
+      "Fixed package: 50% on contract signing and 50% on delivery.",
+    ];
+  }
+  return [
+    "Pix ou cartão de crédito em até 12x (parcelamento sujeito a juros da operadora).",
+    "Pacote fechado: 50% na assinatura do contrato e 50% na entrega.",
+  ];
+}
+
 /** Cláusulas jurídicas (texto próprio, sem travessão). */
 export function clausulasLegais(lang: Lang): string[] {
   if (lang === "en") {
@@ -70,7 +84,7 @@ export function clausulasLegais(lang: Lang): string[] {
       "No figure or timeline stated here is binding until formally confirmed in writing by Francisco Pontes.",
       `This proposal is valid for ${VALIDADE_DIAS} calendar days from the issue date.`,
       "Preliminary AI-generated estimate. Scope, timeline and figures are approximate and may vary after a conversation and a detailed analysis.",
-      "Suggested payment terms: 50% at the start and 50% on delivery, to be confirmed in the service agreement.",
+      "Payment methods and terms as stated above, to be confirmed in the service agreement.",
       "The scope was inferred from the information provided by the client and is subject to refinement.",
     ];
   }
@@ -79,7 +93,7 @@ export function clausulasLegais(lang: Lang): string[] {
     "Nenhum valor ou prazo aqui indicado é vinculante até confirmação formal por escrito de Francisco Pontes.",
     `Esta proposta é válida por ${VALIDADE_DIAS} dias corridos a partir da data de emissão.`,
     "Estimativa preliminar gerada com apoio de inteligência artificial. Escopo, prazo e valores são aproximados e podem variar após uma conversa e uma análise detalhada.",
-    "Condições de pagamento sugeridas: 50% no início e 50% na entrega, a confirmar em contrato de prestação de serviços.",
+    "Formas e condições de pagamento conforme indicado acima, a confirmar em contrato de prestação de serviços.",
     "O escopo foi inferido a partir das informações fornecidas pelo cliente e está sujeito a refinamento.",
   ];
 }
@@ -99,15 +113,9 @@ export function docLabels(lang: Lang) {
     prazo: pt ? "Prazo estimado" : "Estimated timeline",
     porte: pt ? "Porte" : "Size",
     investimento: pt ? "Investimento (faixa de referência)" : "Investment (reference range)",
-    pagamento: pt ? "Condições de pagamento" : "Payment terms",
+    formasPagamento: pt ? "Formas de pagamento" : "Payment methods",
     proponente: pt ? "Proponente" : "Provider",
     juridico: pt ? "Termos e condições" : "Terms and conditions",
-    aceite: pt ? "Aceite" : "Acceptance",
-    deAcordo: pt ? "De acordo" : "Agreed",
-    cliente: pt ? "Cliente" : "Client",
-    prestador: pt ? "Prestador" : "Provider",
-    data: pt ? "Data" : "Date",
-    preliminar: pt ? "PRELIMINAR" : "PRELIMINARY",
     semValidade: pt ? "SEM VALIDADE JURÍDICA" : "NOT LEGALLY BINDING",
   };
 }

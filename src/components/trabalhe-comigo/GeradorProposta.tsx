@@ -6,21 +6,16 @@ import {
   Loader2,
   ChevronDown,
   Sparkles,
-  LayoutDashboard,
-  Smartphone,
-  ShoppingCart,
-  Rocket,
-  Plug,
   Eye,
   RefreshCw,
   Pencil,
-  type LucideIcon,
 } from "lucide-react";
 import { track } from "@vercel/analytics";
 import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
 import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
 import { usePropostaPrefill } from "@/lib/proposta/prefill-context";
-import SectionHeading from "./SectionHeading";
+import TcSectionHeader from "./TcSectionHeader";
+import Reveal from "./Reveal";
 import { gerarNumeroProposta, porteLabel } from "@/lib/proposta/proposta-doc";
 import type { Existente, Proposal, PropostaResponse, TipoProjeto, Urgencia } from "./types";
 
@@ -50,49 +45,6 @@ function LoadingEtapas() {
   );
 }
 
-const EXAMPLES: Array<{ chip: Bilingual; text: Bilingual; icon: LucideIcon }> = [
-  {
-    chip: { pt: "Sistema de gestão", en: "Management system" },
-    icon: LayoutDashboard,
-    text: {
-      pt: "Um sistema web de gestão com cadastros, painel administrativo, relatórios e controle de acesso por perfil.",
-      en: "A web management system with records, an admin panel, reports and role-based access control.",
-    },
-  },
-  {
-    chip: { pt: "App mobile", en: "Mobile app" },
-    icon: Smartphone,
-    text: {
-      pt: "Um aplicativo mobile para iOS e Android, com login, notificações e área do usuário.",
-      en: "A mobile app for iOS and Android, with login, notifications and a user area.",
-    },
-  },
-  {
-    chip: { pt: "E-commerce", en: "E-commerce" },
-    icon: ShoppingCart,
-    text: {
-      pt: "Uma loja virtual com catálogo de produtos, carrinho, pagamento online e painel de pedidos.",
-      en: "An online store with product catalog, cart, online checkout and an orders dashboard.",
-    },
-  },
-  {
-    chip: { pt: "Landing page", en: "Landing page" },
-    icon: Rocket,
-    text: {
-      pt: "Uma landing page de alta conversão para captar contatos, integrada ao meu CRM.",
-      en: "A high-conversion landing page to capture contacts, integrated with my CRM.",
-    },
-  },
-  {
-    chip: { pt: "API / integração", en: "API / integration" },
-    icon: Plug,
-    text: {
-      pt: "Uma API para integrar meus sistemas e automatizar processos entre ferramentas.",
-      en: "An API to integrate my systems and automate processes between tools.",
-    },
-  },
-];
-
 const TIPO_OPTIONS: Array<{ value: TipoProjeto; label: Bilingual }> = [
   { value: "sistema_saas", label: { pt: "Sistema web / SaaS", en: "Web system / SaaS" } },
   { value: "app_mobile", label: { pt: "Aplicativo mobile (iOS/Android)", en: "Mobile app (iOS/Android)" } },
@@ -114,14 +66,6 @@ const URGENCIA_OPTIONS: Array<{ value: Urgencia; label: Bilingual }> = [
   { value: "urgente", label: { pt: "É urgente", en: "It's urgent" } },
 ];
 
-const ORCAMENTO_OPTIONS: Array<{ value: string; label: Bilingual }> = [
-  { value: "", label: { pt: "Prefiro não informar", en: "Prefer not to say" } },
-  { value: "Até R$ 2.000", label: { pt: "Até R$ 2.000", en: "Up to R$ 2,000" } },
-  { value: "R$ 2.000 a 5.000", label: { pt: "R$ 2.000 a 5.000", en: "R$ 2,000 to 5,000" } },
-  { value: "R$ 5.000 a 15.000", label: { pt: "R$ 5.000 a 15.000", en: "R$ 5,000 to 15,000" } },
-  { value: "Acima de R$ 15.000", label: { pt: "Acima de R$ 15.000", en: "Above R$ 15,000" } },
-];
-
 function SelectField({
   label,
   value,
@@ -140,12 +84,8 @@ function SelectField({
     <label className="block">
       <span className="mb-2 flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-wide text-zinc-400">
         {step !== undefined && (
-          <span
-            className={`flex h-4 w-4 items-center justify-center rounded-full text-[10px] font-semibold transition-colors ${
-              filled ? "bg-violet-500 text-white" : "bg-white/10 text-zinc-400"
-            }`}
-          >
-            {filled ? "✓" : step}
+          <span className="flex h-[18px] w-[18px] items-center justify-center rounded-[5px] bg-gradient-to-br from-violet-500 to-fuchsia-500 text-[10px] font-semibold text-white">
+            {step}
           </span>
         )}
         {label}
@@ -154,7 +94,7 @@ function SelectField({
         <select
           value={value}
           onChange={(event) => onChange(event.target.value)}
-          className={`w-full appearance-none rounded-xl border bg-white/[0.03] px-4 py-3 pr-9 text-sm text-white transition-colors hover:border-white/30 focus:border-violet-400/60 focus:outline-none focus:ring-2 focus:ring-violet-500/25 ${
+          className={`w-full appearance-none rounded-xl border bg-white/[0.03] px-4 py-2.5 pr-9 text-sm text-white transition-colors hover:border-white/30 focus:border-violet-400/60 focus:outline-none focus:ring-2 focus:ring-violet-500/25 ${
             filled ? "border-violet-400/40" : "border-white/15"
           }`}
         >
@@ -177,8 +117,6 @@ export default function GeradorProposta() {
   const [tipo, setTipo] = useState("");
   const [existente, setExistente] = useState("");
   const [urgencia, setUrgencia] = useState("");
-  const [orcamento, setOrcamento] = useState("");
-  const [siteReferencia, setSiteReferencia] = useState("");
   const [status, setStatus] = useState<Status>("idle");
   const [proposal, setProposal] = useState<Proposal | null>(null);
   const [numero, setNumero] = useState("");
@@ -219,8 +157,6 @@ export default function GeradorProposta() {
           tipo,
           existente,
           urgencia,
-          orcamento,
-          siteReferencia: siteReferencia.trim(),
           company: honeypotRef.current?.value ?? "",
           formLoadedAt: formLoadedAt.current,
           lang,
@@ -251,14 +187,18 @@ export default function GeradorProposta() {
   }
 
   return (
-    <section id="proposta" className="scroll-mt-20 border-t border-white/10 py-20">
-      <div className="mx-auto max-w-4xl px-6">
-        <SectionHeading
-          title={{ pt: "Monte sua proposta com nossa IA", en: "Build your proposal with our AI" }}
-          kicker={{ pt: "Escopo e estimativa na hora", en: "Scope and estimate on the spot" }}
+    <section id="proposta" className="scroll-mt-20 border-t border-white/10 py-20" style={{ backgroundColor: "#101018" }}>
+      <div className="mx-auto max-w-7xl px-6">
+        <TcSectionHeader
+          label={{ pt: "Monte sua proposta", en: "Build your proposal" }}
+          title={{ pt: "Monte sua proposta agora mesmo", en: "Build your proposal right now" }}
+          subtitle={{
+            pt: "Quanto mais detalhe você der (tipo de produto, funcionalidades, público), melhor a estimativa. É uma faixa de referência, não uma cotação fechada.",
+            en: "The more detail you give (product type, features, audience), the better the estimate. It's a reference range, not a closed quote.",
+          }}
         />
 
-        <div className="overflow-hidden rounded-3xl border border-violet-400/35 bg-gradient-to-b from-violet-500/[0.08] to-transparent">
+        <Reveal className="overflow-hidden rounded-3xl border border-white/10 bg-white/[0.06]">
           <div className="flex items-center gap-2 border-b border-white/10 bg-black/25 px-5 py-3.5 font-mono text-xs text-zinc-400">
             <span className="h-2.5 w-2.5 animate-pulse rounded-full bg-fuchsia-500 shadow-[0_0_8px] shadow-fuchsia-500/70" />
             <span className="h-2.5 w-2.5 rounded-full bg-zinc-500" />
@@ -267,21 +207,13 @@ export default function GeradorProposta() {
           </div>
 
           <div className="p-6 sm:p-8">
-            <div className="flex items-start gap-3.5">
-              <span className="mt-0.5 flex h-10 w-10 flex-none items-center justify-center rounded-xl bg-gradient-to-br from-violet-500/30 to-fuchsia-500/20 ring-1 ring-violet-400/30">
+            <div className="flex items-center gap-3.5">
+              <span className="flex h-10 w-10 flex-none items-center justify-center rounded-xl bg-gradient-to-br from-violet-500/30 to-fuchsia-500/20 ring-1 ring-violet-400/30">
                 <Sparkles className="h-5 w-5 text-violet-300" />
               </span>
-              <div>
-                <h3 className="text-xl font-semibold text-white sm:text-2xl">
-                  {t({ pt: "O que você precisa construir?", en: "What do you need to build?" })}
-                </h3>
-                <p className="mt-1.5 max-w-xl text-sm text-zinc-400">
-                  {t({
-                    pt: "Quanto mais detalhe (tipo de produto, funcionalidades, público), melhor a estimativa.",
-                    en: "The more detail (product type, features, audience), the better the estimate.",
-                  })}
-                </p>
-              </div>
+              <h3 className="text-xl font-semibold text-white sm:text-2xl">
+                {t({ pt: "O que você precisa construir?", en: "What do you need to build?" })}
+              </h3>
             </div>
 
             <input
@@ -341,14 +273,13 @@ export default function GeradorProposta() {
 
             <div className="mt-6">
               <span className="mb-2 flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-wide text-zinc-400">
-                <span
-                  className={`flex h-4 w-4 items-center justify-center rounded-full text-[10px] font-semibold transition-colors ${
-                    description.trim().length >= 20 ? "bg-violet-500 text-white" : "bg-white/10 text-zinc-400"
-                  }`}
-                >
-                  {description.trim().length >= 20 ? "✓" : 4}
+                <span className="flex h-[18px] w-[18px] items-center justify-center rounded-[5px] bg-gradient-to-br from-violet-500 to-fuchsia-500 text-[10px] font-semibold text-white">
+                  4
                 </span>
                 {t({ pt: "Descreva seu projeto", en: "Describe your project" })}
+                <span className="ml-auto normal-case text-zinc-500">
+                  {t({ pt: `${description.length} caracteres`, en: `${description.length} characters` })}
+                </span>
               </span>
               <textarea
                 value={description}
@@ -357,69 +288,18 @@ export default function GeradorProposta() {
                   pt: "Ex.: Preciso de um app de delivery com painel do lojista, pagamento no cartão e rastreamento do pedido em tempo real...",
                   en: "E.g.: I need a delivery app with a merchant dashboard, card payment and real-time order tracking...",
                 })}
-                className={`min-h-[110px] w-full resize-y rounded-2xl border bg-white/[0.03] p-4 text-[15.5px] text-white placeholder:text-zinc-500 transition-colors hover:border-white/30 focus:border-violet-400/60 focus:outline-none focus:ring-2 focus:ring-violet-500/25 ${
+                className={`min-h-[92px] w-full resize-y rounded-2xl border bg-white/[0.03] p-3.5 text-[15px] text-white placeholder:text-zinc-500 transition-colors hover:border-white/30 focus:border-violet-400/60 focus:outline-none focus:ring-2 focus:ring-violet-500/25 ${
                   description.trim().length >= 20 ? "border-violet-400/40" : "border-white/15"
                 }`}
               />
               {description.length > 0 && description.trim().length < 20 && (
-                <span className="mt-1.5 block text-right font-mono text-[11px] text-amber-400/80">
+                <span className="mt-1.5 block text-right font-mono text-[11px] text-fuchsia-400/80">
                   {t({
                     pt: `Faltam ${20 - description.trim().length} caracteres`,
                     en: `${20 - description.trim().length} characters to go`,
                   })}
                 </span>
               )}
-            </div>
-
-            <div className="mt-4">
-              <span className="font-mono text-[11px] uppercase tracking-wide text-zinc-500">
-                {t({ pt: "Sem ideias? Comece por um exemplo →", en: "No ideas? Start from an example →" })}
-              </span>
-              <div className="mt-2 flex flex-wrap gap-2">
-                {EXAMPLES.map((example) => {
-                  const Icon = example.icon;
-                  return (
-                    <button
-                      key={t(example.chip)}
-                      type="button"
-                      onClick={() => setDescription(t(example.text))}
-                      className="group inline-flex items-center gap-1.5 rounded-full border border-violet-400/25 bg-gradient-to-b from-violet-500/[0.12] to-violet-500/[0.04] px-3 py-1.5 font-mono text-[11px] text-zinc-200 transition-all hover:-translate-y-0.5 hover:border-violet-400/60 hover:from-violet-500/25 hover:to-fuchsia-500/10 hover:text-white hover:shadow-md hover:shadow-violet-500/20"
-                    >
-                      <span className="flex h-4 w-4 items-center justify-center rounded-full bg-violet-500/20 text-violet-300 transition-colors group-hover:bg-fuchsia-500/30 group-hover:text-fuchsia-200">
-                        <Icon className="h-2.5 w-2.5" />
-                      </span>
-                      {t(example.chip)}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            <div className="mt-4 grid grid-cols-1 gap-3.5 sm:grid-cols-2">
-              <SelectField
-                label={t({ pt: "Orçamento disponível (opcional)", en: "Available budget (optional)" })}
-                value={orcamento}
-                onChange={setOrcamento}
-              >
-                {ORCAMENTO_OPTIONS.map((option) => (
-                  <option key={option.value || "none"} value={option.value} className="bg-zinc-900">
-                    {t(option.label)}
-                  </option>
-                ))}
-              </SelectField>
-
-              <label className="block">
-                <span className="mb-1.5 block font-mono text-[11px] uppercase tracking-wide text-zinc-400">
-                  {t({ pt: "Site de referência (opcional)", en: "Reference site (optional)" })}
-                </span>
-                <input
-                  type="url"
-                  value={siteReferencia}
-                  onChange={(event) => setSiteReferencia(event.target.value)}
-                  placeholder={t({ pt: "https://um-site-que-te-inspira.com", en: "https://a-site-you-like.com" })}
-                  className="w-full rounded-xl border border-white/15 bg-white/[0.03] px-4 py-3 text-sm text-white placeholder:text-zinc-500 transition-colors hover:border-white/30 focus:border-violet-400/60 focus:outline-none focus:ring-2 focus:ring-violet-500/25"
-                />
-              </label>
             </div>
 
             {turnstileSiteKey && (
@@ -435,12 +315,12 @@ export default function GeradorProposta() {
               </div>
             )}
 
-            <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2">
+            <div className="mt-6 flex flex-col gap-2.5">
               <button
                 type="button"
                 onClick={handleGenerate}
                 disabled={status === "loading" || !canGenerate}
-                className="group inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-500 px-7 py-3.5 text-sm font-semibold text-white shadow-lg shadow-violet-500/30 transition-all hover:shadow-xl hover:shadow-fuchsia-500/40 hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-40 disabled:shadow-none disabled:hover:brightness-100"
+                className="group flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-500 px-7 py-3.5 text-sm font-semibold text-white shadow-lg shadow-violet-500/30 transition-all hover:scale-[1.02] hover:shadow-xl hover:shadow-fuchsia-500/40 hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-40 disabled:shadow-none disabled:hover:scale-100 disabled:hover:brightness-100"
               >
                 {status === "loading" ? (
                   <Loader2 className="h-4 w-4 animate-spin" />
@@ -455,14 +335,6 @@ export default function GeradorProposta() {
                 )}
               </button>
               {status === "loading" && <LoadingEtapas />}
-              {!fieldsReady && status !== "loading" && (
-                <span className="text-xs text-zinc-500">
-                  {t({
-                    pt: "Selecione os 3 campos e descreva seu projeto para gerar",
-                    en: "Fill the 3 fields and describe your project to generate",
-                  })}
-                </span>
-              )}
               {fieldsReady && !captchaReady && status !== "loading" && (
                 <span className="text-xs text-zinc-500">
                   {t({
@@ -504,7 +376,7 @@ export default function GeradorProposta() {
                       setModalOpen(true);
                       track("trabalhe_comigo_proposta_modal_aberto", { porte: proposal.porte });
                     }}
-                    className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-violet-700 transition-all hover:scale-[1.03]"
+                    className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-violet-700 transition-all hover:scale-[1.02]"
                   >
                     <Eye className="h-4 w-4" />
                     {t({ pt: "Ver proposta completa", en: "View full proposal" })}
@@ -552,7 +424,7 @@ export default function GeradorProposta() {
                   href="https://wa.me/5585981888896"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-4 inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-violet-700 transition-all hover:scale-[1.03]"
+                  className="mt-4 inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-violet-700 transition-all hover:scale-[1.02]"
                 >
                   {t({ pt: "Falar no WhatsApp", en: "Chat on WhatsApp" })}
                   <span aria-hidden="true">→</span>
@@ -560,7 +432,7 @@ export default function GeradorProposta() {
               </div>
             )}
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

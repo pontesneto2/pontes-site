@@ -13,9 +13,21 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/trabalhe-comigo",
   },
+  keywords: [
+    "engenheiro de software",
+    "desenvolvedor full stack",
+    "sistema sob medida",
+    "desenvolvimento de aplicativo",
+    "criação de site",
+    "SaaS",
+    "freelancer remoto",
+    "Francisco Pontes",
+  ],
   openGraph: {
     type: "website",
     url: "/trabalhe-comigo",
+    siteName: "Francisco Pontes",
+    locale: "pt_BR",
     title: "Software sob medida, da ideia ao lançamento | Francisco Pontes",
     description:
       "Sistemas, sites e apps construídos por um engenheiro full stack sênior. Proposta na hora com IA, contrato e código seu na entrega.",

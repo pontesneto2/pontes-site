@@ -1,8 +1,8 @@
 "use client";
 
-import { Layers } from "lucide-react";
+import { motion, useReducedMotion } from "framer-motion";
 import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
-import SectionHeading from "./SectionHeading";
+import TcSectionHeader from "./TcSectionHeader";
 
 const STEPS: Array<{ title: Bilingual; description: Bilingual }> = [
   {
@@ -52,73 +52,75 @@ const STEPS: Array<{ title: Bilingual; description: Bilingual }> = [
 export default function ComoEuTrabalho() {
   const { lang } = useLanguage();
   const t = (v: Bilingual) => tr(lang, v);
+  const reduce = useReducedMotion();
+
+  // Container com stagger: dispara quando a timeline entra na viewport e revela
+  // os nós um a um (01→06), igual no desktop e no mobile.
+  const container = {
+    hidden: {},
+    show: { transition: { staggerChildren: reduce ? 0 : 0.45 } },
+  };
+  const item = {
+    hidden: { opacity: reduce ? 1 : 0, y: reduce ? 0 : 22 },
+    show: { opacity: 1, y: 0, transition: { duration: reduce ? 0 : 0.65, ease: [0.22, 1, 0.36, 1] } },
+  };
 
   return (
     <section
       id="como-trabalho"
-      className="scroll-mt-20 border-y border-white/10 bg-white/[0.02] py-20"
+      className="scroll-mt-20 border-y border-white/10 py-20"
+      style={{ backgroundColor: "#08080b" }}
     >
       <div className="mx-auto max-w-7xl px-6">
-        <SectionHeading
-          title={{ pt: "Como eu trabalho", en: "How I work" }}
-          kicker={{
+        <TcSectionHeader
+          label={{ pt: "Como funciona", en: "How it works" }}
+          title={{
             pt: "Da escolha da tecnologia à entrega, tudo no papel",
             en: "From choosing the tech to delivery, all on paper",
           }}
+          subtitle={{
+            pt: "Você escolhe a stack, ou eu escolho a melhor pra você. A tecnologia trabalha a favor do seu produto, nunca o contrário.",
+            en: "You choose the stack, or I choose the best one for you. Technology works in favor of your product, never the other way around.",
+          }}
         />
 
-        {/* Callout destacado: escolha da stack */}
-        <div className="mb-8 flex items-start gap-5 rounded-2xl border border-violet-400/35 bg-gradient-to-b from-violet-500/12 to-transparent p-6 shadow-[0_0_40px_-12px_rgba(139,92,246,0.35)]">
-          <div className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-violet-400/35 bg-violet-500/10 text-violet-300">
-            <Layers className="h-6 w-6" />
-          </div>
-          <div>
-            <h3 className="mb-2 text-lg font-semibold text-white">
-              {t({
-                pt: "Você escolhe a stack, ou eu escolho a melhor pra você.",
-                en: "You choose the stack, or I choose the best one for you.",
-              })}
-            </h3>
-            <p className="max-w-3xl text-sm text-zinc-400">
-              {t({
-                pt: "Se o seu projeto já exige uma tecnologia específica, eu me adapto a ela sem problema. Se não exige, eu escolho a melhor engenharia para o caso, pensando em performance, manutenção, prazo e custo. A tecnologia trabalha a favor do seu produto, nunca o contrário.",
-                en: "If your project already requires a specific technology, I adapt to it without issue. If it doesn't, I pick the best engineering for the case, considering performance, maintenance, timeline and cost. Technology works in favor of your product, never the other way around.",
-              })}
-            </p>
-          </div>
-        </div>
-
-        {/* Passos do processo - linha do tempo horizontal */}
-        <ol className="grid grid-cols-2 gap-y-9 sm:grid-cols-3 lg:grid-cols-6">
-          {STEPS.map((step, index) => {
-            const isFirst = index === 0;
-            const isLast = index === STEPS.length - 1;
-            return (
-              <li key={t(step.title)} className="flex flex-col">
-                {/* Nó + linha conectora horizontal */}
-                <div className="flex items-center">
+        {/* Timeline: horizontal no desktop, empilhada no mobile/tablet */}
+        <div className="lg:overflow-x-auto lg:pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <div className="relative mx-auto lg:min-w-[860px]">
+            {/* Linha contínua ligando os nós das pontas (apenas desktop) */}
+            <div
+              aria-hidden="true"
+              className="absolute left-[8.33%] right-[8.33%] top-[23px] hidden h-px -translate-y-1/2 bg-gradient-to-r from-violet-500 to-fuchsia-500 opacity-55 lg:block"
+            />
+            <motion.div
+              className="relative flex flex-col gap-10 lg:flex-row lg:gap-0"
+              variants={container}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.2 }}
+            >
+              {STEPS.map((step, index) => (
+                <motion.div key={t(step.title)} variants={item} className="flex flex-1 flex-col items-center px-2 text-center">
                   <span
-                    aria-hidden="true"
-                    className={`h-px flex-1 ${isFirst ? "opacity-0" : "bg-gradient-to-l from-violet-500/50 to-fuchsia-500/20"}`}
-                  />
-                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-violet-400/40 bg-gradient-to-b from-violet-500/15 to-transparent font-mono text-sm font-semibold text-violet-300 shadow-[0_0_20px_-6px_rgba(139,92,246,0.6)]">
+                    className="flex h-[46px] w-[46px] items-center justify-center rounded-full bg-gradient-to-br from-violet-500 to-fuchsia-500 text-base font-bold text-white shadow-[0_8px_22px_-6px_rgba(147,51,234,0.55)]"
+                    style={{ fontFamily: "var(--font-space-grotesk)" }}
+                  >
                     {String(index + 1).padStart(2, "0")}
                   </span>
-                  <span
-                    aria-hidden="true"
-                    className={`h-px flex-1 ${isLast ? "opacity-0" : "bg-gradient-to-r from-violet-500/50 to-fuchsia-500/20"}`}
-                  />
-                </div>
-
-                {/* Conteúdo */}
-                <div className="mt-4 px-3 text-center">
-                  <h3 className="text-base font-semibold text-white">{t(step.title)}</h3>
-                  <p className="mt-1.5 text-[13px] leading-relaxed text-zinc-400">{t(step.description)}</p>
-                </div>
-              </li>
-            );
-          })}
-        </ol>
+                  <h3
+                    className="mt-4 text-[17px] font-semibold text-white"
+                    style={{ fontFamily: "var(--font-space-grotesk)" }}
+                  >
+                    {t(step.title)}
+                  </h3>
+                  <p className="mt-1.5 max-w-[180px] text-[13.5px] leading-relaxed text-[#9a9aa7]">
+                    {t(step.description)}
+                  </p>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+        </div>
       </div>
     </section>
   );

@@ -33,7 +33,6 @@ export type Proposal = {
   fases: Fase[];
   prazoEstimado: string;
   porte: Porte;
-  pagamentoSugerido: string;
   investimento: Investimento;
 };
 

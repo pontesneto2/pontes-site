@@ -1,6 +1,7 @@
 "use client";
 
 import { useLanguage, tr } from "@/lib/language-context";
+import Reveal from "./Reveal";
 
 const IDEALIZADORES = [
   "Governo do Ceará",
@@ -33,24 +34,26 @@ export default function MarqueeIdealizadores() {
           {tr(lang, { pt: "Já entreguei projetos para", en: "I've already delivered projects for" })}
         </span>
       </div>
-      <div
-        className="tc-marquee overflow-hidden"
-        style={{
-          maskImage: "linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent)",
-          WebkitMaskImage: "linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent)",
-        }}
-      >
-        <div className="tc-marquee-track flex w-max items-center">
-          {items.map((name, index) => (
-            <span key={`${name}-${index}`} className="whitespace-nowrap px-2 font-display text-base font-semibold text-zinc-500 transition-colors hover:text-zinc-200" style={{ fontFamily: "var(--font-space-grotesk)" }}>
-              {name}
-              <span className="pl-4 text-violet-400/30" aria-hidden="true">
-                •
+      <Reveal>
+        <div
+          className="tc-marquee overflow-hidden"
+          style={{
+            maskImage: "linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent)",
+            WebkitMaskImage: "linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent)",
+          }}
+        >
+          <div className="tc-marquee-track flex w-max items-center">
+            {items.map((name, index) => (
+              <span key={`${name}-${index}`} className="whitespace-nowrap px-2 font-display text-base font-semibold text-zinc-500 transition-colors hover:text-zinc-200" style={{ fontFamily: "var(--font-space-grotesk)" }}>
+                {name}
+                <span className="pl-4 text-violet-400/30" aria-hidden="true">
+                  •
+                </span>
               </span>
-            </span>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
+      </Reveal>
       <style>{`
         .tc-marquee-track {
           animation: tc-marquee 34s linear infinite;

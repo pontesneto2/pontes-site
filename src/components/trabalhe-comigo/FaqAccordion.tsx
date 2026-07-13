@@ -1,8 +1,10 @@
 "use client";
 
-import { Plus } from "lucide-react";
+import { useState } from "react";
+import { ChevronDown } from "lucide-react";
 import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
-import SectionHeading from "./SectionHeading";
+import TcSectionHeader from "./TcSectionHeader";
+import Reveal from "./Reveal";
 import { FAQ_ITEMS } from "./faq-data";
 
 function renderAnswer(text: string) {
@@ -12,7 +14,7 @@ function renderAnswer(text: string) {
   const rest = text.slice(idx + 1);
   return (
     <>
-      <strong className="font-semibold text-violet-200">{first}</strong>
+      <strong className="font-semibold text-[#e3e3ea]">{first}</strong>
       {rest}
     </>
   );
@@ -21,27 +23,47 @@ function renderAnswer(text: string) {
 export default function FaqAccordion() {
   const { lang } = useLanguage();
   const t = (v: Bilingual) => tr(lang, v);
+  const [openIndex, setOpenIndex] = useState<number>(0);
 
   return (
-    <section id="faq" className="scroll-mt-20 border-t border-white/10 py-20">
-      <div className="mx-auto max-w-4xl px-6">
-        <SectionHeading
-          title={{ pt: "Perguntas frequentes", en: "Frequently asked questions" }}
-          kicker={{ pt: "Tudo que você precisa saber antes de conversar", en: "Everything you need to know before we talk" }}
+    <section id="faq" className="scroll-mt-20 border-t border-white/10 py-20" style={{ backgroundColor: "#08080b" }}>
+      <div className="mx-auto max-w-7xl px-6">
+        <TcSectionHeader
+          label={{ pt: "FAQ", en: "FAQ" }}
+          title={{ pt: "Tudo que você precisa saber antes de conversar", en: "Everything you need to know before we talk" }}
         />
-        <div className="overflow-hidden rounded-2xl border border-white/10">
-          {FAQ_ITEMS.map((item, index) => (
-            <details
-              key={t(item.question)}
-              className={`group cursor-pointer bg-white/[0.04] p-5 ${index !== FAQ_ITEMS.length - 1 ? "border-b border-white/10" : ""}`}
-            >
-              <summary className="flex list-none items-center justify-between gap-4 text-base font-semibold text-white [&::-webkit-details-marker]:hidden">
-                {t(item.question)}
-                <Plus className="h-5 w-5 shrink-0 text-fuchsia-400 transition-transform group-open:rotate-45" />
-              </summary>
-              <p className="mt-3.5 max-w-3xl text-sm text-zinc-400">{renderAnswer(t(item.answer))}</p>
-            </details>
-          ))}
+
+        <div className="mx-auto max-w-[820px] overflow-hidden rounded-[18px] border border-white/[0.08] bg-white/[0.015]">
+          {FAQ_ITEMS.map((item, index) => {
+            const open = openIndex === index;
+            return (
+              <Reveal
+                key={t(item.question)}
+                delay={index * 0.08}
+                className={index !== FAQ_ITEMS.length - 1 ? "border-b border-white/[0.07]" : ""}
+              >
+                <button
+                  type="button"
+                  onClick={() => setOpenIndex(open ? -1 : index)}
+                  aria-expanded={open}
+                  className="flex w-full items-center justify-between gap-4 px-5 py-[18px] text-left transition-colors hover:bg-white/[0.03]"
+                >
+                  <span className="text-[16.5px] font-medium text-white" style={{ fontFamily: "var(--font-space-grotesk)" }}>
+                    {t(item.question)}
+                  </span>
+                  <ChevronDown
+                    className="h-5 w-5 flex-none transition-transform duration-200"
+                    style={{ color: "#c9a6ff", transform: open ? "rotate(180deg)" : "rotate(0deg)" }}
+                  />
+                </button>
+                {open && (
+                  <p className="animate-fade-up max-w-[640px] px-5 pb-5 text-[15px] leading-relaxed text-[#b3b3c0]">
+                    {renderAnswer(t(item.answer))}
+                  </p>
+                )}
+              </Reveal>
+            );
+          })}
         </div>
       </div>
     </section>
