@@ -1,12 +1,14 @@
 "use client";
 
 import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
 import SectionHeading from "./SectionHeading";
 
 const CASES: Array<{
   tag: Bilingual;
   title: string;
+  link: string;
   who: Bilingual;
   description: Bilingual;
   metrics: Array<{ value: string; label: Bilingual }>;
@@ -14,6 +16,7 @@ const CASES: Array<{
   {
     tag: { pt: "App mobile + web + admin", en: "Mobile app + web + admin" },
     title: "Ucopiloto",
+    link: "https://www.ucopiloto.com.br/",
     who: { pt: "Idealizadora: Click Software House · DevOps solo", en: "Idealized by: Click Software House · Solo DevOps" },
     description: {
       pt: "Plataforma que conecta motoristas e oficinas: agendamentos, orçamentos e acompanhamento de serviços. iOS, Android, web e painel, tudo entregue por uma pessoa.",
@@ -28,6 +31,7 @@ const CASES: Array<{
   {
     tag: { pt: "Sistema web / PWA", en: "Web system / PWA" },
     title: "Sistema Escolar do Colégio da PM/CE",
+    link: "https://www.com3brasil.com.br/v9/app/cpmce/login/",
     who: { pt: "Idealizadora: Com3 Brasil · time de 3 a 4 devs", en: "Idealized by: Com3 Brasil · team of 3 to 4 devs" },
     description: {
       pt: "Gestão escolar com acesso por perfil para acompanhamento acadêmico e administrativo, entregue antes do prazo.",
@@ -42,6 +46,7 @@ const CASES: Array<{
   {
     tag: { pt: "Sistema de gestão gov", en: "Government management system" },
     title: "FEDAF, Governo do Ceará",
+    link: "https://sistemas2.sda.ce.gov.br/scriptcase/app/fedaf/login/",
     who: { pt: "Desenvolvedor Full Stack", en: "Full Stack Developer" },
     description: {
       pt: "Sistema de gestão do Fundo Estadual de Desenvolvimento da Agricultura Familiar, em escala estadual.",
@@ -55,6 +60,7 @@ const CASES: Array<{
   {
     tag: { pt: "Site institucional", en: "Corporate website" },
     title: "Silva & Duarte Advogados",
+    link: "https://www.silvaeduarteadvogados.com/",
     who: { pt: "Full Stack solo · 1 mês", en: "Solo Full Stack · 1 month" },
     description: {
       pt: "Site institucional do escritório, com áreas de atuação e canais de contato. Do briefing ao ar em poucas semanas.",
@@ -107,6 +113,15 @@ export default function CasosReais() {
                     </div>
                   ))}
                 </div>
+                <a
+                  href={item.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-5 inline-flex items-center justify-center gap-1.5 rounded-full border border-violet-400/30 bg-violet-500/10 px-4 py-2.5 text-[13px] font-semibold text-violet-100 transition-colors hover:border-violet-400/60 hover:bg-violet-500/20"
+                >
+                  {t({ pt: "Visitar projeto", en: "Visit project" })}
+                  <ArrowUpRight className="h-3.5 w-3.5" />
+                </a>
               </div>
             ))}
           </div>

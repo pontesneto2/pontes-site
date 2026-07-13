@@ -1,13 +1,12 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Flame, ArrowRight } from "lucide-react";
+import { Flame, ArrowRight, Star } from "lucide-react";
 import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
 import SectionHeading from "./SectionHeading";
 import { scrollToId } from "./scroll";
 
-/* [[VERIFICAR: valores sugeridos com base em mercado — ajuste os reais]] */
-const PRECO_DE = "R$ 1.700";
+const PRECO_DE = "R$ 1.500";
 const PRECO_POR = "R$ 800";
 const PRECO_PARCELA = "10x de R$ 80";
 
@@ -88,8 +87,8 @@ export default function ComoFuncionaInvestimento() {
             {t({ pt: "Oferta por tempo limitado", en: "Limited time offer" })}
           </div>
 
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-white/30 bg-white/10 px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-wide text-white">
-            <Flame className="h-3.5 w-3.5" />
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-300/50 bg-amber-400/15 px-3.5 py-1.5 font-mono text-[11px] font-bold uppercase tracking-wide text-amber-50 shadow-[0_0_25px_-4px_rgba(251,191,36,0.7)]">
+            <Flame className="h-3.5 w-3.5 fill-amber-400 text-orange-500 drop-shadow-[0_0_6px_rgba(251,146,60,0.8)]" />
             {t({ pt: "Condição de lançamento", en: "Launch pricing" })}
           </span>
 
@@ -132,27 +131,53 @@ export default function ComoFuncionaInvestimento() {
           {PLANS.map((plan) => (
             <div
               key={t(plan.name)}
-              className={`relative rounded-2xl border p-7 ${
+              className={`relative rounded-2xl border p-7 transition-transform duration-200 hover:scale-[1.02] ${
                 plan.featured
-                  ? "border-violet-400/35 bg-gradient-to-b from-violet-500/10 to-transparent"
+                  ? "border-violet-400/50 bg-gradient-to-br from-violet-700 via-purple-800 to-purple-950 shadow-[0_25px_70px_-25px_rgba(168,85,247,0.85)] ring-1 ring-inset ring-white/10"
                   : "border-white/10 bg-white/[0.04]"
               }`}
             >
               {plan.flag && (
-                <span className="absolute right-4 top-4 rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500 px-2.5 py-1 font-mono text-[10px] font-semibold text-zinc-950">
+                <span className="absolute -top-3 right-4 inline-flex items-center gap-1 rounded-full bg-gradient-to-r from-fuchsia-400 to-violet-400 px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-wide text-violet-950 shadow-[0_0_20px_-2px_rgba(217,70,239,0.9)] ring-1 ring-white/40">
+                  <Star className="h-3 w-3 fill-amber-400 text-amber-400" />
                   {t(plan.flag)}
                 </span>
               )}
-              <div className="font-mono text-xs uppercase tracking-wide text-zinc-400">{t(plan.name)}</div>
+              <div
+                className={`font-mono text-xs uppercase tracking-wide ${
+                  plan.featured ? "text-violet-200" : "text-zinc-400"
+                }`}
+              >
+                {t(plan.name)}
+              </div>
               <div className="mt-3.5 text-3xl font-bold text-white">
                 {t(plan.price)}{" "}
-                <small className="font-mono text-sm font-normal text-zinc-400">{t(plan.priceSuffix)}</small>
+                <small
+                  className={`font-mono text-sm font-normal ${
+                    plan.featured ? "text-violet-200/80" : "text-zinc-400"
+                  }`}
+                >
+                  {t(plan.priceSuffix)}
+                </small>
               </div>
-              <div className="mt-1 font-mono text-[11px] text-violet-300">{t(plan.note)}</div>
+              <div
+                className={`mt-1 font-mono text-[11px] ${
+                  plan.featured ? "text-fuchsia-200" : "text-violet-300"
+                }`}
+              >
+                {t(plan.note)}
+              </div>
               <ul className="mt-4 flex flex-col gap-2.5">
                 {plan.items.map((item) => (
-                  <li key={t(item)} className="relative pl-4 text-sm text-zinc-400">
-                    <span className="absolute left-0 text-fuchsia-400">•</span>
+                  <li
+                    key={t(item)}
+                    className={`relative pl-4 text-sm ${
+                      plan.featured ? "text-violet-50" : "text-zinc-400"
+                    }`}
+                  >
+                    <span className={`absolute left-0 ${plan.featured ? "text-fuchsia-300" : "text-fuchsia-400"}`}>
+                      •
+                    </span>
                     {t(item)}
                   </li>
                 ))}
