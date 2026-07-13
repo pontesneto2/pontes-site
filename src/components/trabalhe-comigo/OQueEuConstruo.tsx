@@ -113,27 +113,34 @@ export default function OQueEuConstruo() {
           title={{ pt: "Serviços", en: "Services" }}
           kicker={{ pt: "Do zero, ou assumindo o que já existe", en: "From scratch, or taking over what already exists" }}
         />
-        <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+        <div className="grid grid-cols-1 items-start gap-4 lg:grid-cols-3">
           {GROUPS.map((group) => (
             <div
               key={t(group.categoria)}
               className="rounded-2xl border border-white/10 bg-white/[0.04] p-6 transition-colors hover:border-white/20"
             >
-              <div className="mb-4 flex items-center gap-2.5">
+              <div className="mb-2 flex items-center gap-2.5">
                 <span className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-violet-400/35 bg-violet-500/10 text-violet-300">
                   <group.categoriaIcon className="h-[18px] w-[18px]" />
                 </span>
                 <h3 className="font-mono text-[11px] uppercase tracking-wide text-violet-300">{t(group.categoria)}</h3>
               </div>
-              <div className="flex flex-col divide-y divide-white/5">
+              <div className="flex flex-col">
                 {group.items.map((item) => (
-                  <div key={t(item.title)} className="flex items-start gap-3 py-3 first:pt-0 last:pb-0">
-                    <span className="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/5 text-zinc-300">
-                      <item.icon className="h-[17px] w-[17px]" />
-                    </span>
-                    <div>
+                  <div
+                    key={t(item.title)}
+                    className="group/item cursor-default border-b border-white/5 py-3 last:border-b-0 last:pb-0"
+                  >
+                    <div className="flex items-center gap-3">
+                      <span className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/5 text-zinc-300 transition-colors group-hover/item:bg-violet-500/10 group-hover/item:text-violet-300">
+                        <item.icon className="h-[17px] w-[17px]" />
+                      </span>
                       <div className="text-sm font-semibold text-white">{t(item.title)}</div>
-                      <div className="mt-0.5 text-[13px] leading-snug text-zinc-400">{t(item.description)}</div>
+                    </div>
+                    <div className="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 [@media(hover:none)]:grid-rows-[1fr] group-hover/item:grid-rows-[1fr] motion-reduce:transition-none">
+                      <div className="overflow-hidden">
+                        <p className="pl-11 pt-2 text-[13px] leading-snug text-zinc-400">{t(item.description)}</p>
+                      </div>
                     </div>
                   </div>
                 ))}
