@@ -14,7 +14,7 @@ function TypedHeadline({ prefix, suffix }: { prefix: string; suffix: string }) {
 
   useEffect(() => {
     if (done) return;
-    const timer = setTimeout(() => setCount((c) => c + 1), 45);
+    const timer = setTimeout(() => setCount((c) => c + 1), 85);
     return () => clearTimeout(timer);
   }, [count, done]);
 

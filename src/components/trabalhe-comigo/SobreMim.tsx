@@ -49,8 +49,8 @@ export default function SobreMim() {
             </div>
             <p className="text-[15px] leading-relaxed text-zinc-400">
               {tr(lang, {
-                pt: "Sou o Francisco. Engenheiro de software full stack com mais de 6 anos construindo produtos digitais de ponta a ponta. Já entreguei sistemas para órgãos públicos do Ceará, para empresas privadas e em projetos internacionais, passando por web, mobile, DevOps e UX/UI.",
-                en: "I'm Francisco. Full stack software engineer with over 6 years building digital products end to end. I've shipped systems for public agencies in Ceará, private companies and international projects, spanning web, mobile, DevOps and UX/UI.",
+                pt: "Sou o Francisco. Engenheiro de software full stack com mais de 6 anos construindo produtos digitais de ponta a ponta. Já entreguei sistemas para órgãos públicos do Ceará, para empresas privadas e em projetos internacionais, passando por web, mobile, DevOps e infraestrutura.",
+                en: "I'm Francisco. Full stack software engineer with over 6 years building digital products end to end. I've shipped systems for public agencies in Ceará, private companies and international projects, spanning web, mobile, DevOps and infrastructure.",
               })}
             </p>
             <p className="mt-3.5 text-[15px] leading-relaxed text-zinc-400">
