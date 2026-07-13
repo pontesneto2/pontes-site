@@ -1,7 +1,7 @@
 "use client";
 
 import SiteHeader, { type SearchEntry } from "@/components/SiteHeader";
-import SiteFooter from "@/components/SiteFooter";
+import TcFooter from "@/components/trabalhe-comigo/TcFooter";
 import { useLanguage, tr } from "@/lib/language-context";
 import { PropostaPrefillProvider } from "@/lib/proposta/prefill-context";
 import HeroComercial from "@/components/trabalhe-comigo/HeroComercial";
@@ -62,7 +62,7 @@ export default function TrabalheComigoPage() {
       <FaqAccordion />
       <ContatoSection />
       <SobreMim />
-      <SiteFooter />
+      <TcFooter />
       <FloatingMobileCTA />
     </div>
   );
