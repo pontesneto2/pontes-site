@@ -277,8 +277,8 @@ export default function GeradorProposta() {
                 </h3>
                 <p className="mt-1.5 max-w-xl text-sm text-zinc-400">
                   {t({
-                    pt: "Quanto mais detalhe (tipo de produto, funcionalidades, público), melhor a estimativa.",
-                    en: "The more detail (product type, features, audience), the better the estimate.",
+                    pt: "Quanto mais detalhe você der (tipo de produto, funcionalidades, público), melhor a estimativa. É uma faixa de referência, não uma cotação fechada.",
+                    en: "The more detail you give (product type, features, audience), the better the estimate. It's a reference range, not a closed quote.",
                   })}
                 </p>
               </div>
