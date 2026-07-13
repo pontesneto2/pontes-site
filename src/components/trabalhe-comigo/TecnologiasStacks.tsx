@@ -4,33 +4,6 @@ import { Layers } from "lucide-react";
 import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
 import SectionHeading from "./SectionHeading";
 
-const GROUPS: Array<{ label: Bilingual; techs: string[] }> = [
-  {
-    label: { pt: "Frontend & Mobile", en: "Frontend & Mobile" },
-    techs: ["TypeScript", "React", "Next.js", "React Native", "Expo", "Vue.js", "Tailwind CSS", "JavaScript"],
-  },
-  {
-    label: { pt: "Backend & APIs", en: "Backend & APIs" },
-    techs: ["Node.js", "NestJS", "Express", "Python", "C# / .NET", "PHP / Laravel", "Java / Spring", "GraphQL"],
-  },
-  {
-    label: { pt: "Banco & Dados", en: "Database & Data" },
-    techs: ["PostgreSQL", "Prisma", "Sequelize", "MySQL", "MongoDB", "Redis"],
-  },
-  {
-    label: { pt: "DevOps & Cloud", en: "DevOps & Cloud" },
-    techs: ["Docker", "CI/CD", "GitHub Actions", "Vercel", "Railway", "AWS", "Azure", "Kubernetes", "Nginx", "Linux"],
-  },
-  {
-    label: { pt: "Qualidade & Testes", en: "Quality & Testing" },
-    techs: ["Jest", "Playwright", "Cypress", "Testes E2E"],
-  },
-  {
-    label: { pt: "Produto & Design", en: "Product & Design" },
-    techs: ["Figma", "Design Systems", "Prototipagem", "UX/UI", "Acessibilidade"],
-  },
-];
-
 export default function TecnologiasStacks() {
   const { lang } = useLanguage();
   const t = (v: Bilingual) => tr(lang, v);
@@ -62,41 +35,6 @@ export default function TecnologiasStacks() {
             </p>
           </div>
         </div>
-
-        <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2 lg:grid-cols-3">
-          {GROUPS.map((group) => (
-            <div key={t(group.label)} className="rounded-2xl border border-white/10 bg-white/[0.04] p-5">
-              <div className="mb-3.5 font-mono text-[11px] uppercase tracking-wide text-violet-300">
-                {t(group.label)}
-              </div>
-              <div className="flex flex-wrap gap-1.5">
-                {group.techs.map((tech) => (
-                  <span
-                    key={tech}
-                    className="rounded-full border border-white/15 px-2.5 py-1 font-mono text-[11.5px] text-zinc-200"
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <p className="mt-4 font-mono text-xs text-zinc-500">
-          {t({
-            pt: "Não viu a tecnologia do seu projeto? É bem provável que eu já trabalhe com ela. ",
-            en: "Didn't see your project's technology here? I've likely already worked with it. ",
-          })}
-          <a
-            href="https://wa.me/5585981888896"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-violet-300 underline underline-offset-2 hover:text-violet-200"
-          >
-            {t({ pt: "Me pergunte no WhatsApp.", en: "Ask me on WhatsApp." })}
-          </a>
-        </p>
       </div>
     </section>
   );
