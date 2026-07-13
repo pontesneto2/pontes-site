@@ -9,7 +9,6 @@ import {
   ArrowRightLeft,
   Server,
   Repeat,
-  Palette,
   Code2,
   type LucideIcon,
 } from "lucide-react";
@@ -101,20 +100,6 @@ const GROUPS: Array<{ categoria: Bilingual; categoriaIcon: LucideIcon; items: Se
       },
     ],
   },
-  {
-    categoria: { pt: "Produto & Design", en: "Product & Design" },
-    categoriaIcon: Palette,
-    items: [
-      {
-        icon: Palette,
-        title: { pt: "UX/UI & produto", en: "UX/UI & product" },
-        description: {
-          pt: "Design de interface, prototipagem e design systems. Quem desenha também entrega o código.",
-          en: "Interface design, prototyping and design systems. The person who designs also ships the code.",
-        },
-      },
-    ],
-  },
 ];
 
 export default function OQueEuConstruo() {
@@ -128,7 +113,7 @@ export default function OQueEuConstruo() {
           title={{ pt: "Serviços", en: "Services" }}
           kicker={{ pt: "Do zero, ou assumindo o que já existe", en: "From scratch, or taking over what already exists" }}
         />
-        <div className="grid grid-cols-1 items-start gap-4 lg:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
           {GROUPS.map((group) => (
             <div
               key={t(group.categoria)}
