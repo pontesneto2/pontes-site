@@ -97,7 +97,7 @@ export default function CasosReais() {
                 key={`${item.title}-${index}`}
                 className="flex w-[330px] shrink-0 flex-col rounded-3xl border border-white/10 bg-white/[0.04] p-6 transition-colors hover:border-white/20 hover:bg-white/[0.07] sm:w-[360px]"
               >
-                <span className="inline-block w-fit rounded-md border border-white/20 bg-white/[0.07] px-2.5 py-1 font-mono text-[10.5px] uppercase tracking-wide text-rose-200">
+                <span className="inline-block w-fit rounded-md bg-gradient-to-r from-orange-500 to-amber-500 px-2.5 py-1 font-mono text-[10.5px] font-semibold uppercase tracking-wide text-zinc-950">
                   {t(item.tag)}
                 </span>
                 <h3 className="mb-1.5 mt-3.5 text-xl font-semibold text-white">{item.title}</h3>
@@ -117,7 +117,7 @@ export default function CasosReais() {
                   href={item.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-5 inline-flex items-center justify-center gap-1.5 rounded-full border border-rose-400/30 bg-rose-500/10 px-4 py-2.5 text-[13px] font-semibold text-rose-100 transition-colors hover:border-rose-400/60 hover:bg-rose-500/20"
+                  className="mt-5 inline-flex items-center justify-center gap-1.5 rounded-full bg-gradient-to-r from-orange-500 to-amber-400 px-4 py-2.5 text-[13px] font-semibold text-white transition-all hover:scale-[1.02] hover:brightness-110"
                 >
                   {t({ pt: "Visitar projeto", en: "Visit project" })}
                   <ArrowUpRight className="h-3.5 w-3.5" />

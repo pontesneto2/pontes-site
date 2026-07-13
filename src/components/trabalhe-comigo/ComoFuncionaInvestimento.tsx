@@ -77,7 +77,7 @@ export default function ComoFuncionaInvestimento() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.4 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
-          className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-rose-700 via-amber-700 to-rose-800 p-8 text-center shadow-[0_25px_70px_-20px_rgba(244,63,94,0.7)] sm:p-12"
+          className="relative mx-auto overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-rose-700 via-amber-700 to-rose-800 p-6 text-center shadow-[0_14px_44px_-22px_rgba(244,63,94,0.4)] sm:p-9 lg:max-w-[60%]"
         >
           {/* Etiqueta diagonal */}
           <div
@@ -87,7 +87,7 @@ export default function ComoFuncionaInvestimento() {
             {t({ pt: "Oferta por tempo limitado", en: "Limited time offer" })}
           </div>
 
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-300/50 bg-amber-400/15 px-3.5 py-1.5 font-mono text-[11px] font-bold uppercase tracking-wide text-amber-50 shadow-[0_0_25px_-4px_rgba(251,191,36,0.7)]">
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-300/50 bg-amber-400/15 px-3.5 py-1.5 font-mono text-[11px] font-bold uppercase tracking-wide text-amber-50 shadow-[0_0_14px_-6px_rgba(251,191,36,0.4)]">
             <Flame className="h-3.5 w-3.5 fill-amber-400 text-orange-500 drop-shadow-[0_0_6px_rgba(251,146,60,0.8)]" />
             {t({ pt: "Condição de lançamento", en: "Launch pricing" })}
           </span>
@@ -97,7 +97,7 @@ export default function ComoFuncionaInvestimento() {
           </p>
           <div className="mt-2 flex items-end justify-center gap-3">
             <span className="text-lg font-medium text-white/50 line-through">{PRECO_DE}</span>
-            <span className="text-5xl font-extrabold leading-none text-white drop-shadow-sm sm:text-6xl">
+            <span className="text-4xl font-extrabold leading-none text-white drop-shadow-sm sm:text-5xl">
               {PRECO_POR}
             </span>
           </div>
@@ -133,7 +133,7 @@ export default function ComoFuncionaInvestimento() {
               key={t(plan.name)}
               className={`relative rounded-2xl border p-7 transition-transform duration-200 hover:scale-[1.02] ${
                 plan.featured
-                  ? "border-rose-400/50 bg-gradient-to-br from-rose-700 via-rose-800 to-rose-950 shadow-[0_25px_70px_-25px_rgba(244,63,94,0.85)] ring-1 ring-inset ring-white/10"
+                  ? "border-rose-400/50 bg-gradient-to-br from-rose-700 via-rose-800 to-rose-950 shadow-[0_14px_44px_-26px_rgba(244,63,94,0.45)] ring-1 ring-inset ring-white/10"
                   : "border-white/10 bg-white/[0.04]"
               }`}
             >

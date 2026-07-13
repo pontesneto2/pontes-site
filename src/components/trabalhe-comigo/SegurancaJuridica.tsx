@@ -71,11 +71,20 @@ export default function SegurancaJuridica() {
           }}
         />
 
+        <svg width="0" height="0" className="absolute" aria-hidden="true">
+          <defs>
+            <linearGradient id="tc-orange-grad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stopColor="#fb923c" />
+              <stop offset="1" stopColor="#ea580c" />
+            </linearGradient>
+          </defs>
+        </svg>
+
         <div className="mx-auto grid max-w-[920px] grid-cols-1 gap-x-12 md:grid-cols-2">
           {ITEMS.map((item) => (
             <div key={t(item.title)} className="flex items-start gap-4 border-b border-white/[0.08] py-5">
-              <span className="flex h-[46px] w-[46px] flex-none items-center justify-center rounded-full border border-white/15 text-amber-500">
-                <item.icon className="h-[21px] w-[21px]" strokeWidth={1.75} />
+              <span className="flex h-[46px] w-[46px] flex-none items-center justify-center rounded-full border border-orange-400/25">
+                <item.icon className="h-[21px] w-[21px]" strokeWidth={1.75} style={{ stroke: "url(#tc-orange-grad)" }} />
               </span>
               <div>
                 <h3 className="text-[16.5px] font-semibold text-white" style={{ fontFamily: "var(--font-space-grotesk)" }}>

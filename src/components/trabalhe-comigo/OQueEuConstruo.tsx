@@ -11,11 +11,9 @@ import {
   Server,
   Check,
   ChevronDown,
-  ArrowRight,
   type LucideIcon,
 } from "lucide-react";
 import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
-import { usePropostaPrefill } from "@/lib/proposta/prefill-context";
 import type { Existente, TipoProjeto } from "./types";
 import TcSectionHeader from "./TcSectionHeader";
 
@@ -176,40 +174,20 @@ const SERVICES: Service[] = [
   },
 ];
 
-const ACCENT_GRADIENT = "linear-gradient(135deg,#f43f5e,#f59e0b)";
 const ORANGE_GRADIENT = "linear-gradient(135deg,#f97316,#fbbf24)";
 
 export default function OQueEuConstruo() {
   const { lang } = useLanguage();
   const t = (v: Bilingual) => tr(lang, v);
-  const { requestPrefill } = usePropostaPrefill();
 
-  const [expandedId, setExpandedId] = useState<string | null>(null);
-  const [selected, setSelected] = useState<Set<string>>(new Set());
-
-  const toggleExpanded = (id: string) => setExpandedId((prev) => (prev === id ? null : id));
-  const toggleSelected = (id: string) =>
-    setSelected((prev) => {
+  const [openIds, setOpenIds] = useState<Set<string>>(new Set());
+  const toggleOpen = (id: string) =>
+    setOpenIds((prev) => {
       const next = new Set(prev);
       if (next.has(id)) next.delete(id);
       else next.add(id);
       return next;
     });
-
-  const selectedCount = selected.size;
-
-  const handleMontarProposta = () => {
-    const chosen = [...selected]
-      .map((id) => SERVICES.find((s) => s.id === id))
-      .filter((s): s is Service => Boolean(s));
-    if (chosen.length > 0) {
-      const intro = lang === "pt" ? "Tenho interesse nos seguintes serviços:" : "I'm interested in the following services:";
-      const lines = chosen.map((s) => `- ${t(s.name)} (${t(s.tag)})`).join("\n");
-      const first = chosen[0];
-      requestPrefill({ description: `${intro}\n${lines}`, tipo: first.tipo, existente: first.existente });
-    }
-    document.getElementById("proposta")?.scrollIntoView({ behavior: "smooth" });
-  };
 
   return (
     <section
@@ -221,158 +199,78 @@ export default function OQueEuConstruo() {
           "radial-gradient(50% 40% at 85% 0%, rgba(249,115,22,0.05), transparent 72%), radial-gradient(48% 38% at 15% 0%, rgba(147,51,234,0.05), transparent 72%)",
       }}
     >
-      <div className="mx-auto max-w-[720px] px-6">
+      <div className="mx-auto max-w-7xl px-6">
         <TcSectionHeader
           label={{ pt: "Serviços", en: "Services" }}
           title={{ pt: "Do esboço ao no ar, sob medida pro seu negócio", en: "From sketch to live, tailored to your business" }}
           subtitle={{
-            pt: "Toque num serviço para ver os detalhes e marque os que você precisa — eles entram direto na sua proposta.",
-            en: "Tap a service to see the details and pick the ones you need — they go straight into your proposal.",
+            pt: "Passe o mouse ou toque na seta de cada serviço para ver os detalhes.",
+            en: "Hover or tap the arrow on each service to see the details.",
           }}
         />
 
-        {/* Acordeão */}
-        <div className="overflow-hidden rounded-[20px] border border-white/[0.08]">
-          {SERVICES.map((service, index) => {
-            const isOpen = expandedId === service.id;
-            const isSelected = selected.has(service.id);
+        {/* Grid de serviços */}
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+          {SERVICES.map((service) => {
+            const isOpen = openIds.has(service.id);
             const Icon = service.icon;
             const cat = CATEGORY[service.category];
             return (
               <div
                 key={service.id}
-                className={index !== SERVICES.length - 1 ? "border-b border-white/[0.06]" : ""}
+                className="group relative flex flex-col rounded-2xl border border-white/[0.08] bg-white/[0.02] p-5 transition-all hover:border-white/20 hover:bg-white/[0.04]"
               >
-                {/* Linha clicável */}
-                <button
-                  type="button"
-                  onClick={() => toggleExpanded(service.id)}
-                  aria-expanded={isOpen}
-                  className="group flex w-full items-center gap-3.5 px-4 py-[17px] text-left transition-colors"
-                  style={{ backgroundColor: isOpen ? "rgba(244,63,94,0.06)" : undefined }}
-                  onMouseEnter={(e) => {
-                    if (!isOpen) e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.03)";
-                  }}
-                  onMouseLeave={(e) => {
-                    if (!isOpen) e.currentTarget.style.backgroundColor = "";
-                  }}
-                >
+                <div className="flex items-start justify-between gap-3">
                   <span
-                    className="flex h-11 w-11 flex-none items-center justify-center rounded-[11px] transition-all"
-                    style={{
-                      background: isOpen ? ACCENT_GRADIENT : "rgba(168,85,247,0.10)",
-                      color: isOpen ? "#ffffff" : "#c9a6ff",
-                    }}
+                    className="flex h-11 w-11 items-center justify-center rounded-[11px] text-[#c9a6ff] transition-all group-hover:bg-gradient-to-br group-hover:from-orange-500 group-hover:to-amber-500 group-hover:text-white"
+                    style={isOpen ? { background: ORANGE_GRADIENT, color: "#ffffff" } : { backgroundColor: "rgba(168,85,247,0.10)" }}
                   >
                     <Icon className="h-[21px] w-[21px]" />
                   </span>
+                  <button
+                    type="button"
+                    onClick={() => toggleOpen(service.id)}
+                    aria-expanded={isOpen}
+                    aria-label={t({ pt: "Ver detalhes", en: "See details" })}
+                    className="flex h-8 w-8 items-center justify-center rounded-full text-[#8c8c9a] transition-colors hover:bg-white/5 hover:text-white"
+                  >
+                    <ChevronDown className={`h-5 w-5 transition-transform duration-200 group-hover:rotate-180 ${isOpen ? "rotate-180" : ""}`} />
+                  </button>
+                </div>
 
-                  <span className="min-w-0 flex-1">
-                    <span className="flex flex-wrap items-center gap-x-2.5 gap-y-1">
-                      <span
-                        className="text-[16.5px] font-medium leading-tight text-[#f0f0f5]"
-                        style={{ fontFamily: "var(--font-space-grotesk)" }}
-                      >
-                        {t(service.name)}
-                      </span>
-                      {/* Tag de categoria */}
-                      <span
-                        className="inline-flex items-center gap-1.5 rounded-full px-2 py-[3px] font-mono text-[10px] font-semibold uppercase tracking-wide"
-                        style={{
-                          color: cat.color,
-                          border: `1px solid ${cat.color}55`,
-                          backgroundColor: `${cat.color}1a`,
-                        }}
-                      >
-                        <span
-                          className="h-1.5 w-1.5 rounded-full"
-                          style={{ backgroundColor: cat.color, boxShadow: `0 0 6px ${cat.color}` }}
-                        />
-                        {t({ pt: service.category, en: t(cat.label).toUpperCase() })}
-                      </span>
-                      {isSelected && (
-                        <span
-                          className="rounded-full px-2 py-[3px] font-mono text-[10px] font-semibold uppercase"
-                          style={{ color: "#f7a94a", border: "1px solid rgba(249,115,22,0.4)", backgroundColor: "rgba(249,115,22,0.10)" }}
-                        >
-                          {t({ pt: "na proposta", en: "in proposal" })}
-                        </span>
-                      )}
-                    </span>
-                    <span className="mt-0.5 block text-[13px] leading-snug text-[#8c8c9a]">{t(service.tag)}</span>
+                <div className="mt-3.5 flex flex-wrap items-center gap-x-2.5 gap-y-1.5">
+                  <h3 className="text-[16px] font-medium leading-tight text-[#f0f0f5]" style={{ fontFamily: "var(--font-space-grotesk)" }}>
+                    {t(service.name)}
+                  </h3>
+                  <span
+                    className="inline-flex items-center gap-1.5 rounded-full px-2 py-[3px] font-mono text-[10px] font-semibold uppercase tracking-wide"
+                    style={{ color: cat.color, border: `1px solid ${cat.color}55`, backgroundColor: `${cat.color}1a` }}
+                  >
+                    <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: cat.color, boxShadow: `0 0 6px ${cat.color}` }} />
+                    {t({ pt: service.category, en: t(cat.label).toUpperCase() })}
                   </span>
+                </div>
+                <p className="mt-1 text-[13px] leading-snug text-[#8c8c9a]">{t(service.tag)}</p>
 
-                  <ChevronDown
-                    className="h-5 w-5 flex-none transition-transform duration-[250ms]"
-                    style={{ color: isOpen ? "#f8a37a" : "#8c8c9a", transform: isOpen ? "rotate(180deg)" : "rotate(0deg)" }}
-                  />
-                </button>
-
-                {/* Conteúdo aberto */}
-                {isOpen && (
-                  <div className="animate-fade-up px-4 pb-6 sm:pl-[72px]">
-                    <p className="text-[15px] leading-relaxed text-[#c2c2ce]">{t(service.description)}</p>
-
-                    <ul className="mt-4 space-y-2.5">
-                      {service.bullets.map((bullet) => (
-                        <li key={t(bullet)} className="flex items-start gap-2.5">
-                          <span
-                            className="mt-0.5 flex h-[18px] w-[18px] flex-none items-center justify-center rounded-[5px]"
-                            style={{ backgroundColor: "rgba(168,85,247,0.14)", color: "#c9a6ff" }}
-                          >
-                            <Check className="h-3 w-3" strokeWidth={2.5} />
-                          </span>
-                          <span className="text-[14.5px] leading-snug text-[#d5d5df]">{t(bullet)}</span>
-                        </li>
-                      ))}
-                    </ul>
-
-                    <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2.5">
-                      <button
-                        type="button"
-                        onClick={() => toggleSelected(service.id)}
-                        className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition-all hover:brightness-110"
-                        style={
-                          isSelected
-                            ? { color: "#f7a94a", border: "1px solid rgba(249,115,22,0.5)", backgroundColor: "rgba(249,115,22,0.08)" }
-                            : { color: "#ffffff", background: ORANGE_GRADIENT, boxShadow: "0 8px 20px -8px rgba(249,115,22,0.5)" }
-                        }
-                      >
-                        {isSelected && <Check className="h-4 w-4" strokeWidth={2.5} />}
-                        {isSelected
-                          ? t({ pt: "Adicionado à proposta", en: "Added to proposal" })
-                          : t({ pt: "Adicionar à proposta", en: "Add to proposal" })}
-                      </button>
-                      <span className="text-[13.5px] italic text-[#83839a]">{t(service.ideal)}</span>
-                    </div>
-                  </div>
-                )}
+                {/* Detalhes: abrem no hover ou ao clicar na seta */}
+                <div className={`mt-4 border-t border-white/[0.06] pt-4 group-hover:block ${isOpen ? "block" : "hidden"}`}>
+                  <p className="text-[14px] leading-relaxed text-[#c2c2ce]">{t(service.description)}</p>
+                  <ul className="mt-3.5 space-y-2">
+                    {service.bullets.map((bullet) => (
+                      <li key={t(bullet)} className="flex items-start gap-2.5">
+                        <span className="mt-0.5 flex h-[18px] w-[18px] flex-none items-center justify-center rounded-[5px]" style={{ backgroundColor: "rgba(168,85,247,0.14)", color: "#c9a6ff" }}>
+                          <Check className="h-3 w-3" strokeWidth={2.5} />
+                        </span>
+                        <span className="text-[13.5px] leading-snug text-[#d5d5df]">{t(bullet)}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <p className="mt-3.5 text-[13px] italic text-[#83839a]">{t(service.ideal)}</p>
+                </div>
               </div>
             );
           })}
         </div>
-
-        {/* CTA: montar proposta com os selecionados */}
-        {selectedCount > 0 && (
-          <div className="mt-8 flex flex-col items-center gap-3 text-center">
-            <span className="text-[14px] text-[#8c8c9a]">
-              {t({
-                pt: `${selectedCount} ${selectedCount === 1 ? "serviço selecionado" : "serviços selecionados"}`,
-                en: `${selectedCount} ${selectedCount === 1 ? "service selected" : "services selected"}`,
-              })}
-            </span>
-            <button
-              type="button"
-              onClick={handleMontarProposta}
-              className="group inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 text-sm font-semibold text-white shadow-lg transition-all hover:brightness-110"
-              style={{ background: ACCENT_GRADIENT, boxShadow: "0 10px 28px -10px rgba(244,63,94,0.6)" }}
-            >
-              {t({ pt: "Montar minha proposta", en: "Build my proposal" })}
-              <span>· {selectedCount}</span>
-              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-            </button>
-          </div>
-        )}
       </div>
     </section>
   );
