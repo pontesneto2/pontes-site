@@ -23,12 +23,17 @@ function TypedHeadline({ prefix, suffix }: { prefix: string; suffix: string }) {
 
   return (
     <>
-      {shownPrefix}
-      <span className="bg-gradient-to-r from-violet-500 to-fuchsia-500 bg-clip-text text-transparent">
-        {shownSuffix}
-      </span>
-      <span className={done ? "typewriter-cursor" : ""} style={{ color: "#fb923c" }}>
-        _
+      {/* Texto real do H1 no DOM para SEO/leitores de tela (renderizado no servidor) */}
+      <span className="sr-only">{full}</span>
+      {/* Animação de máquina de escrever, apenas visual */}
+      <span aria-hidden="true">
+        {shownPrefix}
+        <span className="bg-gradient-to-r from-violet-500 to-fuchsia-500 bg-clip-text text-transparent">
+          {shownSuffix}
+        </span>
+        <span className={done ? "typewriter-cursor" : ""} style={{ color: "#fb923c" }}>
+          _
+        </span>
       </span>
     </>
   );
@@ -82,7 +87,7 @@ export default function HeroComercial() {
                 track("trabalhe_comigo_cta_proposta", { source: "hero" });
                 scrollToId("proposta")(event);
               }}
-              className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-orange-500 to-amber-400 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-orange-500/25 transition-all hover:scale-[1.03] hover:brightness-110"
+              className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-500 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-violet-500/30 transition-all hover:scale-[1.02] hover:brightness-110"
             >
               {t({ pt: "Montar minha proposta agora", en: "Build my proposal now" })}
               <span aria-hidden="true">→</span>

@@ -40,8 +40,8 @@ export default function TcSectionHeader({
   return (
     <div className="mx-auto mb-12 max-w-6xl px-4 text-center">
       <div className="mb-4 inline-flex items-center gap-2">
-        <span className="h-2.5 w-2.5 rounded-[3px] bg-gradient-to-br from-violet-500 to-fuchsia-500" />
-        <span className="font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-[#9a7cff]">
+        <span className="h-2.5 w-2.5 rounded-[3px] bg-gradient-to-br from-orange-500 to-amber-400" />
+        <span className="bg-gradient-to-r from-orange-500 to-amber-400 bg-clip-text font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-transparent">
           {t(label)}
         </span>
       </div>
@@ -50,9 +50,14 @@ export default function TcSectionHeader({
         className="text-[clamp(1.55rem,3.4vw,2.4rem)] font-bold leading-tight tracking-tight text-white lg:whitespace-nowrap"
         style={{ fontFamily: "var(--font-space-grotesk)" }}
       >
-        {full.slice(0, count)}
-        <span className={done ? "typewriter-cursor" : ""} style={{ color: "#9a7cff" }}>
-          _
+        {/* Texto real no DOM para SEO e leitores de tela (renderizado no servidor) */}
+        <span className="sr-only">{full}</span>
+        {/* Animação de máquina de escrever, apenas visual */}
+        <span aria-hidden="true">
+          {full.slice(0, count)}
+          <span className={done ? "typewriter-cursor" : ""} style={{ color: "#fb923c" }}>
+            _
+          </span>
         </span>
       </h2>
       {subtitle && (
