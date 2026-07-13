@@ -3,6 +3,7 @@
 import SiteHeader, { type SearchEntry } from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { useLanguage, tr } from "@/lib/language-context";
+import { PropostaPrefillProvider } from "@/lib/proposta/prefill-context";
 import HeroComercial from "@/components/trabalhe-comigo/HeroComercial";
 import MarqueeIdealizadores from "@/components/trabalhe-comigo/MarqueeIdealizadores";
 import OQueEuConstruo from "@/components/trabalhe-comigo/OQueEuConstruo";
@@ -50,8 +51,10 @@ export default function TrabalheComigoPage() {
       />
       <HeroComercial />
       <MarqueeIdealizadores />
-      <OQueEuConstruo />
-      <GeradorProposta />
+      <PropostaPrefillProvider>
+        <OQueEuConstruo />
+        <GeradorProposta />
+      </PropostaPrefillProvider>
       <ComoEuTrabalho />
       <ComoFuncionaInvestimento />
       <SegurancaJuridica />
