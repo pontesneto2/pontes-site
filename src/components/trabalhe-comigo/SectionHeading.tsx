@@ -30,7 +30,7 @@ export default function SectionHeading({ title, kicker }: { title: Bilingual; ki
         style={{ fontFamily: "var(--font-space-grotesk)" }}
       >
         {full.slice(0, count)}
-        <span className={done ? "typewriter-cursor" : ""} style={{ color: "#e879f9" }}>
+        <span className={done ? "typewriter-cursor" : ""} style={{ color: "#fb923c" }}>
           _
         </span>
       </h2>

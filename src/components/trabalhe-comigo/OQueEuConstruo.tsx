@@ -7,20 +7,20 @@ import {
   Waypoints,
   RefreshCw,
   ShieldCheck,
-  Server,
   Check,
   type LucideIcon,
 } from "lucide-react";
 import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
 import type { Existente, TipoProjeto } from "./types";
 import TcSectionHeader from "./TcSectionHeader";
+import Reveal from "./Reveal";
 
 type Category = "CRIAR" | "EVOLUIR" | "MANTER";
 
-const CATEGORY: Record<Category, { label: Bilingual; color: string }> = {
-  CRIAR: { label: { pt: "Criar", en: "Create" }, color: "#a855f7" },
-  EVOLUIR: { label: { pt: "Evoluir", en: "Evolve" }, color: "#38bdf8" },
-  MANTER: { label: { pt: "Manter", en: "Maintain" }, color: "#34d399" },
+const CATEGORY: Record<Category, { label: Bilingual; ribbon: string }> = {
+  CRIAR: { label: { pt: "Criação", en: "Creation" }, ribbon: "from-orange-500 to-amber-400 shadow-orange-500/30" },
+  EVOLUIR: { label: { pt: "Evolução", en: "Evolution" }, ribbon: "from-emerald-500 to-green-400 shadow-emerald-500/30" },
+  MANTER: { label: { pt: "Manutenção", en: "Maintenance" }, ribbon: "from-red-500 to-rose-500 shadow-red-500/30" },
 };
 
 type Service = {
@@ -151,25 +151,6 @@ const SERVICES: Service[] = [
     tipo: "manutencao",
     existente: "continuar",
   },
-  {
-    id: "infra",
-    icon: Server,
-    category: "MANTER",
-    name: { pt: "Seu produto sempre no ar", en: "Your product always online" },
-    tag: { pt: "Hospedagem e infraestrutura monitorada", en: "Hosting and monitored infrastructure" },
-    description: {
-      pt: "Hospedagem e infraestrutura estável, 100% monitorada, pagando só o que consome.",
-      en: "Stable, fully monitored infrastructure, paying only for what you use.",
-    },
-    bullets: [
-      { pt: "Monitorado 24/7 — resolvo antes de você notar", en: "Monitored 24/7 — I fix it before you notice" },
-      { pt: "Backups automáticos e recuperação garantida", en: "Automatic backups and guaranteed recovery" },
-      { pt: "Paga só o que usar, escala quando precisar", en: "Pay only for what you use, scale when needed" },
-    ],
-    ideal: { pt: "Ideal pra quem já caiu no pior momento possível.", en: "Ideal for those who've already gone down at the worst possible moment." },
-    tipo: "manutencao",
-    existente: "continuar",
-  },
 ];
 
 export default function OQueEuConstruo() {
@@ -189,7 +170,7 @@ export default function OQueEuConstruo() {
       <div className="mx-auto max-w-7xl px-6">
         <TcSectionHeader
           label={{ pt: "Serviços", en: "Services" }}
-          title={{ pt: "Do esboço ao no ar, sob medida pro seu negócio", en: "From sketch to live, tailored to your business" }}
+          title={{ pt: "Faço tudo para você", en: "I do it all for you" }}
           subtitle={{
             pt: "Tudo o que posso construir pra você, do sistema sob medida à sustentação.",
             en: "Everything I can build for you, from custom systems to ongoing support.",
@@ -198,14 +179,19 @@ export default function OQueEuConstruo() {
 
         {/* Grid de serviços (estático) */}
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
-          {SERVICES.map((service) => {
+          {SERVICES.map((service, i) => {
             const Icon = service.icon;
             const cat = CATEGORY[service.category];
             return (
-              <div
+              <Reveal
                 key={service.id}
-                className="flex flex-col items-center rounded-2xl border border-white/[0.08] bg-white/[0.02] p-6 text-center transition-all hover:border-white/20 hover:bg-white/[0.04]"
+                delay={(i % 3) * 0.08}
+                className="relative flex flex-col items-center overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.02] p-6 text-center transition-all hover:border-white/20 hover:bg-white/[0.04]"
               >
+                <span className={`absolute right-[-30px] top-[18px] inline-flex rotate-45 items-center bg-gradient-to-r ${cat.ribbon} px-9 py-[3px] font-mono text-[10px] font-bold uppercase tracking-wide text-white shadow-sm`}>
+                  {t(cat.label).toUpperCase()}
+                </span>
+
                 <span
                   className="flex h-12 w-12 items-center justify-center rounded-[13px] text-[#c9a6ff]"
                   style={{ backgroundColor: "rgba(168,85,247,0.12)" }}
@@ -216,14 +202,6 @@ export default function OQueEuConstruo() {
                 <h3 className="mt-4 text-[17px] font-semibold leading-tight text-[#f0f0f5]" style={{ fontFamily: "var(--font-space-grotesk)" }}>
                   {t(service.name)}
                 </h3>
-
-                <span
-                  className="mt-2 inline-flex items-center gap-1.5 rounded-full px-2 py-[3px] font-mono text-[10px] font-semibold uppercase tracking-wide"
-                  style={{ color: cat.color, border: `1px solid ${cat.color}55`, backgroundColor: `${cat.color}1a` }}
-                >
-                  <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: cat.color, boxShadow: `0 0 6px ${cat.color}` }} />
-                  {t({ pt: service.category, en: t(cat.label).toUpperCase() })}
-                </span>
 
                 <p className="mt-2 text-[13px] leading-snug text-[#8c8c9a]">{t(service.tag)}</p>
 
@@ -241,7 +219,7 @@ export default function OQueEuConstruo() {
                   </ul>
                   <p className="mt-3.5 text-[13px] italic text-[#83839a]">{t(service.ideal)}</p>
                 </div>
-              </div>
+              </Reveal>
             );
           })}
         </div>

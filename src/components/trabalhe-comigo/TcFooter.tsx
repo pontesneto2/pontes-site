@@ -12,24 +12,16 @@ export default function TcFooter() {
   return (
     <footer className="border-t border-white/[0.06]" style={{ backgroundColor: "#08080b" }}>
       <div
-        className="mx-auto flex max-w-[1160px] flex-wrap items-center justify-between gap-4 py-8"
+        className="mx-auto flex max-w-[1160px] flex-col items-center gap-4 py-8 text-center sm:flex-row sm:justify-between sm:text-left"
         style={{ paddingLeft: "clamp(20px,5vw,40px)", paddingRight: "clamp(20px,5vw,40px)" }}
       >
         {/* Assinatura */}
-        <div className="flex items-center gap-2.5">
-          <span
-            className="flex h-[26px] w-[26px] items-center justify-center rounded-lg bg-gradient-to-br from-violet-500 to-fuchsia-500 text-[13px] font-bold text-white"
-            style={{ fontFamily: "var(--font-space-grotesk)" }}
-          >
-            F
-          </span>
-          <span className="text-[13.5px] text-[#8c8c9a]">
-            {t({ pt: "Feito à mão · © 2026 Francisco Pontes", en: "Handcrafted · © 2026 Francisco Pontes" })}
-          </span>
-        </div>
+        <span className="text-[13.5px] text-[#8c8c9a]">
+          {t({ pt: "Feito à mão · © 2026 Francisco Pontes", en: "Handcrafted · © 2026 Francisco Pontes" })}
+        </span>
 
         {/* Links */}
-        <div className="flex flex-wrap items-center gap-[18px]">
+        <div className="flex flex-wrap items-center justify-center gap-[18px] sm:justify-start">
           <a href="https://fcopts.com.br/privacidade" target="_blank" rel="noopener noreferrer" className={linkClass}>
             {t({ pt: "Privacidade", en: "Privacy" })}
           </a>

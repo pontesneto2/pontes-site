@@ -1,10 +1,33 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Flame, ArrowRight, Star } from "lucide-react";
+import { useRef } from "react";
+import { motion, useInView, useReducedMotion } from "framer-motion";
+import { ArrowRight, Star } from "lucide-react";
 import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
-import SectionHeading from "./SectionHeading";
+import TcSectionHeader from "./TcSectionHeader";
+import Reveal from "./Reveal";
 import { scrollToId } from "./scroll";
+
+function FlameGradient({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} aria-hidden="true">
+      <defs>
+        <linearGradient id="flame-orange" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#fbbf24" />
+          <stop offset="100%" stopColor="#f97316" />
+        </linearGradient>
+      </defs>
+      <path
+        d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"
+        fill="url(#flame-orange)"
+        stroke="url(#flame-orange)"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
 
 const PRECO_DE = "R$ 1.500";
 const PRECO_POR = "R$ 800";
@@ -63,17 +86,26 @@ export default function ComoFuncionaInvestimento() {
   const { lang } = useLanguage();
   const t = (v: Bilingual) => tr(lang, v);
 
+  // Entrada coreografada do card de preço: risca o valor antigo e revela o novo.
+  const priceRef = useRef<HTMLDivElement>(null);
+  const priceInView = useInView(priceRef, { once: true, amount: 0.4 });
+  const reduce = useReducedMotion();
+  const show = priceInView || !!reduce;
+  const d = (n: number) => (reduce ? 0 : n); // atrasos zerados em reduced-motion
+
   return (
     <section id="investimento" className="scroll-mt-20 border-t border-white/10 py-20" style={{ backgroundColor: "#101018" }}>
       <div className="mx-auto max-w-7xl px-6">
-        <SectionHeading
+        <TcSectionHeader
+          label={{ pt: "Investimento", en: "Investment" }}
           title={{ pt: "Como funciona o investimento", en: "How the investment works" }}
-          kicker={{ pt: "Transparente, sem letra miúda", en: "Transparent, no fine print" }}
+          subtitle={{ pt: "Transparente, sem letra miúda", en: "Transparent, no fine print" }}
         />
 
         {/* Hero de preço */}
         <motion.div
-          initial={{ opacity: 0, y: 22 }}
+          ref={priceRef}
+          initial={reduce ? false : { opacity: 0, y: 22 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.4 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
@@ -88,49 +120,93 @@ export default function ComoFuncionaInvestimento() {
           </div>
 
           <span className="inline-flex items-center gap-1.5 rounded-full border border-fuchsia-300/50 bg-fuchsia-400/15 px-3.5 py-1.5 font-mono text-[11px] font-bold uppercase tracking-wide text-fuchsia-50 shadow-[0_0_14px_-6px_rgba(251,191,36,0.4)]">
-            <Flame className="h-3.5 w-3.5 fill-fuchsia-400 text-orange-500 drop-shadow-[0_0_6px_rgba(251,146,60,0.8)]" />
+            <FlameGradient className="h-3.5 w-3.5 drop-shadow-[0_0_6px_rgba(251,146,60,0.8)]" />
             {t({ pt: "Condição de lançamento", en: "Launch pricing" })}
           </span>
 
-          <p className="mt-5 text-sm text-violet-100">
+          <motion.p
+            initial={reduce ? false : { opacity: 0, y: 10 }}
+            animate={show ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+            transition={{ duration: 0.4, delay: d(0.2) }}
+            className="mt-5 text-sm text-violet-100"
+          >
             {t({ pt: "Tire seu projeto do papel a partir de", en: "Get your project off the ground from" })}
-          </p>
+          </motion.p>
           <div className="mt-2 flex items-end justify-center gap-3">
-            <span className="text-lg font-medium text-white/50 line-through">{PRECO_DE}</span>
-            <span className="text-4xl font-extrabold leading-none text-white drop-shadow-sm sm:text-5xl">
+            <motion.span
+              initial={reduce ? false : { opacity: 0, y: 8 }}
+              animate={show ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
+              transition={{ duration: 0.4, delay: d(0.45) }}
+              className="relative text-lg font-medium text-white/50"
+            >
+              {PRECO_DE}
+              {/* Risco que anima cruzando o valor antigo */}
+              <motion.span
+                aria-hidden="true"
+                initial={reduce ? false : { scaleX: 0 }}
+                animate={show ? { scaleX: 1 } : { scaleX: 0 }}
+                transition={{ duration: 0.35, delay: d(0.95), ease: "easeInOut" }}
+                style={{ transformOrigin: "left" }}
+                className="absolute left-0 top-1/2 h-[2px] w-full -translate-y-1/2 rounded-full bg-white/80"
+              />
+            </motion.span>
+            {/* Novo valor: entra com "pop" de mola + brilho — a surpresa */}
+            <motion.span
+              initial={reduce ? false : { opacity: 0, scale: 0.55 }}
+              animate={show ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.55 }}
+              transition={{ type: "spring", stiffness: 320, damping: 14, delay: d(1.2) }}
+              className="text-4xl font-extrabold leading-none text-white drop-shadow-[0_0_18px_rgba(255,255,255,0.4)] sm:text-5xl"
+            >
               {PRECO_POR}
-            </span>
+            </motion.span>
           </div>
-          <p className="mt-2.5 font-mono text-[13px] text-violet-100">
+          <motion.p
+            initial={reduce ? false : { opacity: 0, y: 8 }}
+            animate={show ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
+            transition={{ duration: 0.4, delay: d(1.45) }}
+            className="mt-2.5 font-mono text-[13px] text-violet-100"
+          >
             {t({ pt: "ou em até ", en: "or up to " })}
             {PRECO_PARCELA}
-          </p>
+          </motion.p>
 
-          <p className="mx-auto mt-5 max-w-md text-[13px] leading-relaxed text-violet-100/80">
+          <motion.p
+            initial={reduce ? false : { opacity: 0, y: 8 }}
+            animate={show ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
+            transition={{ duration: 0.4, delay: d(1.6) }}
+            className="mx-auto mt-5 max-w-md text-[13px] leading-relaxed text-violet-100/80"
+          >
             {t({
               pt: "Valor de entrada. O valor exato depende do escopo, monte sua proposta com IA e receba a estimativa do seu projeto na hora.",
               en: "Entry price. The exact value depends on scope, build your proposal with AI and get your project's estimate on the spot.",
             })}
-          </p>
+          </motion.p>
 
-          <a
-            href="#proposta"
-            onClick={scrollToId("proposta")}
-            className="mt-7 inline-flex items-center gap-2 rounded-full bg-white px-8 py-3.5 text-sm font-semibold text-violet-700 shadow-lg shadow-black/20 transition-all hover:scale-[1.03] hover:bg-violet-50"
+          <motion.div
+            initial={reduce ? false : { opacity: 0, y: 10 }}
+            animate={show ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+            transition={{ duration: 0.4, delay: d(1.75) }}
+            className="mt-7 inline-block"
           >
-            {t({ pt: "Montar minha proposta", en: "Build my proposal" })}
-            <ArrowRight className="h-4 w-4" />
-          </a>
+            <a
+              href="#proposta"
+              onClick={scrollToId("proposta")}
+              className="inline-flex items-center gap-2 rounded-full bg-white px-8 py-3.5 text-sm font-semibold text-violet-700 shadow-lg shadow-black/20 transition-all hover:scale-[1.02] hover:bg-violet-50"
+            >
+              {t({ pt: "Montar minha proposta", en: "Build my proposal" })}
+              <ArrowRight className="h-4 w-4" />
+            </a>
+          </motion.div>
         </motion.div>
 
         {/* Modelos de contratação */}
-        <div className="mb-3.5 mt-10 text-center font-mono text-[11px] uppercase tracking-wide text-violet-300">
+        <Reveal className="mb-3.5 mt-10 text-center font-mono text-[11px] uppercase tracking-wide text-violet-300">
           {t({ pt: "Modelos de contratação", en: "Engagement models" })}
-        </div>
+        </Reveal>
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
-          {PLANS.map((plan) => (
+          {PLANS.map((plan, i) => (
+            <Reveal key={t(plan.name)} delay={i * 0.08}>
             <div
-              key={t(plan.name)}
               className={`relative rounded-2xl border p-7 transition-transform duration-200 hover:scale-[1.02] ${
                 plan.featured
                   ? "border-violet-400/50 bg-gradient-to-br from-violet-700 via-purple-800 to-purple-950 shadow-[0_14px_44px_-26px_rgba(147,51,234,0.45)] ring-1 ring-inset ring-white/10"
@@ -138,8 +214,8 @@ export default function ComoFuncionaInvestimento() {
               }`}
             >
               {plan.flag && (
-                <span className="absolute -top-3 right-4 inline-flex items-center gap-1 rounded-full bg-gradient-to-r from-fuchsia-400 to-violet-400 px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-wide text-violet-950 shadow-[0_0_20px_-2px_rgba(245,158,11,0.9)] ring-1 ring-white/40">
-                  <Star className="h-3 w-3 fill-fuchsia-400 text-fuchsia-400" />
+                <span className="absolute -top-3 right-4 inline-flex items-center gap-1 rounded-full bg-gradient-to-r from-orange-500 to-amber-400 px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-wide text-orange-950 shadow-[0_0_20px_-2px_rgba(245,158,11,0.9)] ring-1 ring-white/40">
+                  <Star className="h-3 w-3 fill-orange-950 text-orange-950" />
                   {t(plan.flag)}
                 </span>
               )}
@@ -183,6 +259,7 @@ export default function ComoFuncionaInvestimento() {
                 ))}
               </ul>
             </div>
+            </Reveal>
           ))}
         </div>
       </div>

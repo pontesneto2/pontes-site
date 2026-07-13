@@ -3,6 +3,7 @@
 import { FileCheck, ClipboardList, Receipt, Lock, Code2, ShieldCheck, type LucideIcon } from "lucide-react";
 import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
 import TcSectionHeader from "./TcSectionHeader";
+import Reveal from "./Reveal";
 
 const ITEMS: Array<{ icon: LucideIcon; title: Bilingual; description: Bilingual }> = [
   {
@@ -66,8 +67,8 @@ export default function SegurancaJuridica() {
           label={{ pt: "Segurança", en: "Security" }}
           title={{ pt: "Você contrata com segurança, do início ao fim", en: "You hire with confidence, from start to finish" }}
           subtitle={{
-            pt: "Nada de acordo verbal: contrato, escopo, nota fiscal e o código no seu nome — tudo formalizado pra você contratar sem risco.",
-            en: "No verbal agreements: contract, scope, invoice and the code in your name — everything formalized so you hire without risk.",
+            pt: "Contrato, escopo, nota fiscal e o código fonte é seu",
+            en: "Contract, scope, invoice and the source code is yours",
           }}
         />
 
@@ -81,8 +82,8 @@ export default function SegurancaJuridica() {
         </svg>
 
         <div className="mx-auto grid max-w-[920px] grid-cols-1 gap-x-12 md:grid-cols-2">
-          {ITEMS.map((item) => (
-            <div key={t(item.title)} className="flex items-start gap-4 border-b border-white/[0.08] py-5">
+          {ITEMS.map((item, i) => (
+            <Reveal key={t(item.title)} delay={i * 0.08} className="flex items-start gap-4 border-b border-white/[0.08] py-5">
               <span className="flex h-[46px] w-[46px] flex-none items-center justify-center rounded-full border border-orange-400/25">
                 <item.icon className="h-[21px] w-[21px]" strokeWidth={1.75} style={{ stroke: "url(#tc-orange-grad)" }} />
               </span>
@@ -92,7 +93,7 @@ export default function SegurancaJuridica() {
                 </h3>
                 <p className="mt-1 text-[13.5px] leading-relaxed text-[#9a9aa7]">{t(item.description)}</p>
               </div>
-            </div>
+            </Reveal>
           ))}
         </div>
       </div>

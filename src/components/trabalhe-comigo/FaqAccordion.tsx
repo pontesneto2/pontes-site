@@ -4,6 +4,7 @@ import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
 import TcSectionHeader from "./TcSectionHeader";
+import Reveal from "./Reveal";
 import { FAQ_ITEMS } from "./faq-data";
 
 function renderAnswer(text: string) {
@@ -36,8 +37,9 @@ export default function FaqAccordion() {
           {FAQ_ITEMS.map((item, index) => {
             const open = openIndex === index;
             return (
-              <div
+              <Reveal
                 key={t(item.question)}
+                delay={index * 0.08}
                 className={index !== FAQ_ITEMS.length - 1 ? "border-b border-white/[0.07]" : ""}
               >
                 <button
@@ -59,7 +61,7 @@ export default function FaqAccordion() {
                     {renderAnswer(t(item.answer))}
                   </p>
                 )}
-              </div>
+              </Reveal>
             );
           })}
         </div>

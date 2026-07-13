@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
-import SectionHeading from "./SectionHeading";
+import TcSectionHeader from "./TcSectionHeader";
+import Reveal from "./Reveal";
 
 const CASES: Array<{
   tag: Bilingual;
@@ -80,9 +81,10 @@ export default function CasosReais() {
   return (
     <section id="casos" className="scroll-mt-20 border-t border-white/10 py-20" style={{ backgroundColor: "#101018" }}>
       <div className="mx-auto max-w-7xl px-6">
-        <SectionHeading
+        <TcSectionHeader
+          label={{ pt: "Portfólio", en: "Portfolio" }}
           title={{ pt: "Casos reais, resultados reais", en: "Real cases, real results" }}
-          kicker={{ pt: "Projetos em produção, números medidos", en: "Projects in production, measured numbers" }}
+          subtitle={{ pt: "Projetos em produção, números medidos", en: "Projects in production, measured numbers" }}
         />
         <div
           className="tc-cases overflow-hidden"
@@ -127,7 +129,7 @@ export default function CasosReais() {
           </div>
         </div>
 
-        <div className="mt-8 text-center">
+        <Reveal className="mt-8 text-center">
           <Link
             href="/#projects"
             className="inline-flex items-center gap-2 rounded-full border border-white/15 px-5 py-2.5 text-sm font-medium text-zinc-400 transition-colors hover:border-violet-400/40 hover:text-white"
@@ -135,7 +137,7 @@ export default function CasosReais() {
             {t({ pt: "Veja mais projetos", en: "See more projects" })}
             <span aria-hidden="true">→</span>
           </Link>
-        </div>
+        </Reveal>
       </div>
 
       <style>{`

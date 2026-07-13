@@ -16,11 +16,12 @@ import FaqAccordion from "@/components/trabalhe-comigo/FaqAccordion";
 import ContatoSection from "@/components/trabalhe-comigo/ContatoSection";
 import SobreMim from "@/components/trabalhe-comigo/SobreMim";
 import FloatingMobileCTA from "@/components/trabalhe-comigo/FloatingMobileCTA";
+import Preloader from "@/components/Preloader";
 import { FAQ_ITEMS } from "@/components/trabalhe-comigo/faq-data";
 
 const NAV_LINKS = [
   { href: "/trabalhe-comigo#servicos", label: { pt: "Serviços", en: "Services" } },
-  { href: "/trabalhe-comigo#casos", label: { pt: "Casos", en: "Cases" } },
+  { href: "/trabalhe-comigo#casos", label: { pt: "Portfólio", en: "Portfolio" } },
   { href: "/trabalhe-comigo#investimento", label: { pt: "Investimento", en: "Investment" } },
   { href: "/trabalhe-comigo#contato", label: { pt: "Contato", en: "Contact" } },
 ];
@@ -44,6 +45,7 @@ export default function TrabalheComigoPage() {
 
   return (
     <div className="min-h-screen pb-20 md:pb-0">
+      <Preloader variant="orange" />
       <SiteHeader
         navLinks={NAV_LINKS}
         searchIndex={searchIndex}
@@ -60,8 +62,18 @@ export default function TrabalheComigoPage() {
       <SegurancaJuridica />
       <CasosReais />
       <FaqAccordion />
-      <ContatoSection />
-      <SobreMim />
+      <section
+        id="contato"
+        className="scroll-mt-20 border-t border-white/10 py-20"
+        style={{ backgroundColor: "#101018" }}
+      >
+        <div className="mx-auto max-w-7xl px-6">
+          <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
+            <SobreMim />
+            <ContatoSection />
+          </div>
+        </div>
+      </section>
       <TcFooter />
       <FloatingMobileCTA />
     </div>
