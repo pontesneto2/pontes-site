@@ -1,41 +1,15 @@
 "use client";
 
-import { ShieldCheck, Globe, LayoutDashboard, Smartphone, Clock, type LucideIcon } from "lucide-react";
+import { motion } from "framer-motion";
+import { ShieldCheck, Flame, ArrowRight } from "lucide-react";
 import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
 import SectionHeading from "./SectionHeading";
+import { scrollToId } from "./scroll";
 
-const REFERENCE_TIERS: Array<{
-  icon: LucideIcon;
-  porte: Bilingual;
-  tipo: Bilingual;
-  preco: Bilingual;
-  hora?: Bilingual;
-  prazo: Bilingual;
-}> = [
-  {
-    icon: Globe,
-    porte: { pt: "Pequeno", en: "Small" },
-    tipo: { pt: "Site estático ou landing page", en: "Static site or landing page" },
-    preco: { pt: "R$ 800 – R$ 1.700", en: "R$ 800 – R$ 1,700" },
-    prazo: { pt: "7 dias úteis", en: "7 business days" },
-  },
-  {
-    icon: LayoutDashboard,
-    porte: { pt: "Médio", en: "Medium" },
-    tipo: { pt: "Sistema web: plataforma, painel, área logada", en: "Web system: platform, dashboard, logged area" },
-    preco: { pt: "A partir de R$ 2.000", en: "From R$ 2,000" },
-    hora: { pt: "ou R$ 70/h", en: "or R$ 70/h" },
-    prazo: { pt: "até 60 dias", en: "up to 60 days" },
-  },
-  {
-    icon: Smartphone,
-    porte: { pt: "Grande", en: "Large" },
-    tipo: { pt: "App mobile, SaaS, marketplace ou multiplataforma", en: "Mobile app, SaaS, marketplace or multiplatform" },
-    preco: { pt: "A partir de R$ 3.000", en: "From R$ 3,000" },
-    hora: { pt: "ou R$ 70/h", en: "or R$ 70/h" },
-    prazo: { pt: "conforme o escopo", en: "based on scope" },
-  },
-];
+/* [[VERIFICAR: valores sugeridos com base em mercado — ajuste os reais]] */
+const PRECO_DE = "R$ 2.900";
+const PRECO_POR = "R$ 1.900";
+const PRECO_PARCELA = "12x de R$ 190";
 
 const PLANS: Array<{
   featured?: boolean;
@@ -98,48 +72,52 @@ export default function ComoFuncionaInvestimento() {
           kicker={{ pt: "Transparente, sem letra miúda", en: "Transparent, no fine print" }}
         />
 
-        <div className="mb-4">
-          <div className="mb-3.5 text-center font-mono text-[11px] uppercase tracking-wide text-violet-300">
-            {t({ pt: "Faixas de referência por tipo de projeto", en: "Reference ranges by project type" })}
-          </div>
-          <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-3">
-            {REFERENCE_TIERS.map((tier) => (
-              <div key={t(tier.porte)} className="rounded-2xl border border-white/10 bg-white/[0.04] p-5">
-                <div className="flex items-center gap-2.5">
-                  <span className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-violet-400/35 bg-violet-500/10 text-violet-300">
-                    <tier.icon className="h-[18px] w-[18px]" />
-                  </span>
-                  <span className="font-mono text-[11px] uppercase tracking-wide text-zinc-400">{t(tier.porte)}</span>
-                </div>
-                <div className="mt-3.5 bg-gradient-to-r from-violet-500 to-fuchsia-500 bg-clip-text text-xl font-bold text-transparent">
-                  {t(tier.preco)}
-                </div>
-                {tier.hora && <div className="mt-0.5 font-mono text-[11px] text-zinc-400">{t(tier.hora)}</div>}
-                <div className="mt-2.5 inline-flex items-center gap-1.5 rounded-full border border-white/10 px-2.5 py-1 font-mono text-[10.5px] text-zinc-300">
-                  <Clock className="h-3 w-3" />
-                  {t(tier.prazo)}
-                </div>
-                <p className="mt-3 text-[13px] text-zinc-400">{t(tier.tipo)}</p>
-              </div>
-            ))}
-          </div>
-          <div className="mt-3.5 flex flex-col gap-2 sm:flex-row">
-            <p className="flex-1 rounded-lg border border-white/10 bg-white/[0.03] px-4 py-2.5 text-[12.5px] text-zinc-400">
-              <b className="text-zinc-200">
-                {t({ pt: "App e sistema web são projetos diferentes.", en: "App and web system are different projects." })}
-              </b>{" "}
-              {t({ pt: "Contratar um não obriga ter o outro.", en: "Hiring one doesn't require the other." })}
-            </p>
-            <p className="flex-1 rounded-lg border border-white/10 bg-white/[0.03] px-4 py-2.5 text-[12.5px] text-zinc-400">
-              {t({
-                pt: "São faixas de referência, não valores fechados. Cada projeto vira uma proposta personalizada.",
-                en: "These are reference ranges, not fixed prices. Every project becomes a personalized proposal.",
-              })}
-            </p>
-          </div>
-        </div>
+        {/* Hero de preço */}
+        <motion.div
+          initial={{ opacity: 0, y: 22 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+          className="relative overflow-hidden rounded-3xl border border-violet-400/40 bg-gradient-to-b from-violet-500/[0.14] to-transparent p-8 text-center shadow-[0_0_60px_-15px_rgba(168,85,247,0.5)] sm:p-10"
+        >
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-400/40 bg-amber-400/10 px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-wide text-amber-300">
+            <Flame className="h-3.5 w-3.5" />
+            {t({ pt: "Condição de lançamento", en: "Launch pricing" })}
+          </span>
 
-        <div className="mb-3.5 mt-8 text-center font-mono text-[11px] uppercase tracking-wide text-violet-300">
+          <p className="mt-5 text-sm text-zinc-400">
+            {t({ pt: "Tire seu projeto do papel a partir de", en: "Get your project off the ground from" })}
+          </p>
+          <div className="mt-2 flex items-end justify-center gap-3">
+            <span className="text-lg font-medium text-zinc-500 line-through">{PRECO_DE}</span>
+            <span className="bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-5xl font-extrabold leading-none text-transparent sm:text-6xl">
+              {PRECO_POR}
+            </span>
+          </div>
+          <p className="mt-2.5 font-mono text-[13px] text-zinc-400">
+            {t({ pt: "ou em até ", en: "or up to " })}
+            {PRECO_PARCELA}
+          </p>
+
+          <p className="mx-auto mt-5 max-w-md text-[13px] leading-relaxed text-zinc-500">
+            {t({
+              pt: "Valor de entrada. O valor exato depende do escopo, monte sua proposta com IA e receba a estimativa do seu projeto na hora.",
+              en: "Entry price. The exact value depends on scope, build your proposal with AI and get your project's estimate on the spot.",
+            })}
+          </p>
+
+          <a
+            href="#proposta"
+            onClick={scrollToId("proposta")}
+            className="mt-7 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-500 px-8 py-3.5 text-sm font-semibold text-white shadow-lg shadow-violet-500/30 transition-all hover:scale-[1.03] hover:brightness-110"
+          >
+            {t({ pt: "Montar minha proposta", en: "Build my proposal" })}
+            <ArrowRight className="h-4 w-4" />
+          </a>
+        </motion.div>
+
+        {/* Modelos de orçamento */}
+        <div className="mb-3.5 mt-10 text-center font-mono text-[11px] uppercase tracking-wide text-violet-300">
           {t({ pt: "Modelos de orçamento", en: "Budget models" })}
         </div>
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
@@ -163,7 +141,7 @@ export default function ComoFuncionaInvestimento() {
                 <small className="font-mono text-sm font-normal text-zinc-400">{t(plan.priceSuffix)}</small>
               </div>
               <div className="mt-1 font-mono text-[11px] text-violet-300">{t(plan.note)}</div>
-              <ul className="mt-4.5 flex flex-col gap-2.5">
+              <ul className="mt-4 flex flex-col gap-2.5">
                 {plan.items.map((item) => (
                   <li key={t(item)} className="relative pl-4 text-sm text-zinc-400">
                     <span className="absolute left-0 text-fuchsia-400">•</span>
@@ -175,6 +153,7 @@ export default function ComoFuncionaInvestimento() {
           ))}
         </div>
 
+        {/* Risco */}
         <div className="mt-4 flex flex-col items-center gap-4 rounded-2xl border border-violet-400/35 bg-gradient-to-r from-violet-500/10 to-transparent p-5 sm:flex-row">
           <div className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-violet-400/35 bg-violet-500/10 text-violet-300">
             <ShieldCheck className="h-[22px] w-[22px]" />
@@ -187,13 +166,6 @@ export default function ComoFuncionaInvestimento() {
             })}
           </p>
         </div>
-
-        <p className="mt-4 font-mono text-xs text-zinc-500">
-          {t({
-            pt: "Quer uma estimativa agora? Use o gerador de proposta com IA.",
-            en: "Want an estimate now? Use the AI proposal generator.",
-          })}
-        </p>
       </div>
     </section>
   );
