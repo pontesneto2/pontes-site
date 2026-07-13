@@ -157,7 +157,7 @@ export default function GeradorProposta() {
     <section id="proposta" className="scroll-mt-20 border-t border-white/10 py-20">
       <div className="mx-auto max-w-4xl px-6">
         <SectionHeading
-          title={{ pt: "Monte sua proposta com IA", en: "Build your proposal with AI" }}
+          title={{ pt: "Monte sua proposta com nossa IA", en: "Build your proposal with our AI" }}
           kicker={{ pt: "Escopo e estimativa na hora", en: "Scope and estimate on the spot" }}
         />
 
