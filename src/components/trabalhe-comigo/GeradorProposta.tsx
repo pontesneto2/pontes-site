@@ -1,6 +1,7 @@
 "use client";
 
-import { useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
+import dynamic from "next/dynamic";
 import {
   Loader2,
   ChevronDown,
@@ -10,13 +11,42 @@ import {
   ShoppingCart,
   Rocket,
   Plug,
+  Eye,
+  RefreshCw,
+  Pencil,
   type LucideIcon,
 } from "lucide-react";
 import { track } from "@vercel/analytics";
 import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
 import SectionHeading from "./SectionHeading";
-import PropostaResultado from "./PropostaResultado";
+import { gerarNumeroProposta, porteLabel } from "@/lib/proposta/proposta-doc";
 import type { Existente, Proposal, PropostaResponse, TipoProjeto, Urgencia } from "./types";
+
+const PropostaModal = dynamic(() => import("./PropostaModal"), { ssr: false });
+
+const LOADING_STEPS: Bilingual[] = [
+  { pt: "Analisando o escopo…", en: "Analyzing the scope…" },
+  { pt: "Estimando prazo e porte…", en: "Estimating timeline and size…" },
+  { pt: "Montando as fases do projeto…", en: "Building the project phases…" },
+  { pt: "Finalizando sua proposta…", en: "Finishing your proposal…" },
+];
+
+function LoadingEtapas() {
+  const { lang } = useLanguage();
+  const [i, setI] = useState(0);
+  useEffect(() => {
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) return;
+    const id = setInterval(() => setI((v) => (v + 1) % LOADING_STEPS.length), 1400);
+    return () => clearInterval(id);
+  }, []);
+  return (
+    <span className="inline-flex items-center gap-2 font-mono text-xs text-violet-300">
+      <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-fuchsia-400" />
+      {tr(lang, LOADING_STEPS[i])}
+    </span>
+  );
+}
 
 const EXAMPLES: Array<{ chip: Bilingual; text: Bilingual; icon: LucideIcon }> = [
   {
@@ -148,6 +178,8 @@ export default function GeradorProposta() {
   const [siteReferencia, setSiteReferencia] = useState("");
   const [status, setStatus] = useState<Status>("idle");
   const [proposal, setProposal] = useState<Proposal | null>(null);
+  const [numero, setNumero] = useState("");
+  const [modalOpen, setModalOpen] = useState(false);
   const formLoadedAt = useRef(Date.now());
   const honeypotRef = useRef<HTMLInputElement>(null);
 
@@ -179,7 +211,9 @@ export default function GeradorProposta() {
 
       if (data.ok) {
         setProposal(data.proposal);
+        setNumero(gerarNumeroProposta());
         setStatus("success");
+        setModalOpen(true);
         track("trabalhe_comigo_proposta_gerada", { porte: data.proposal.porte });
       } else {
         setStatus("fallback");
@@ -382,6 +416,7 @@ export default function GeradorProposta() {
                   </span>
                 )}
               </button>
+              {status === "loading" && <LoadingEtapas />}
               {!canGenerate && status !== "loading" && (
                 <span className="text-xs text-zinc-500">
                   {t({
@@ -400,7 +435,62 @@ export default function GeradorProposta() {
             </p>
 
             {status === "success" && proposal && (
-              <PropostaResultado proposal={proposal} description={description.trim()} />
+              <div className="mt-6 rounded-2xl border border-violet-400/30 bg-violet-500/[0.06] p-6">
+                <div className="flex items-start gap-3">
+                  <span className="mt-0.5 inline-flex h-9 w-9 flex-none items-center justify-center rounded-full bg-emerald-500/15 text-emerald-300">
+                    <Sparkles className="h-5 w-5" />
+                  </span>
+                  <div>
+                    <p className="font-semibold text-white">
+                      {t({ pt: "Sua proposta está pronta!", en: "Your proposal is ready!" })}{" "}
+                      <span className="font-mono text-xs text-violet-300">{numero}</span>
+                    </p>
+                    <p className="mt-0.5 text-sm text-zinc-400">
+                      {proposal.tipo} · {t({ pt: "porte", en: "size" })} {porteLabel(proposal.porte, lang)} ·{" "}
+                      {proposal.prazoEstimado}
+                    </p>
+                  </div>
+                </div>
+                <div className="mt-4 flex flex-wrap gap-2.5">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setModalOpen(true);
+                      track("trabalhe_comigo_proposta_modal_aberto", { porte: proposal.porte });
+                    }}
+                    className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-violet-700 transition-all hover:scale-[1.03]"
+                  >
+                    <Eye className="h-4 w-4" />
+                    {t({ pt: "Ver proposta completa", en: "View full proposal" })}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleGenerate}
+                    className="inline-flex items-center gap-2 rounded-full border border-white/20 px-5 py-3 text-sm font-semibold text-white transition-colors hover:border-white/40 hover:bg-white/5"
+                  >
+                    <RefreshCw className="h-4 w-4" />
+                    {t({ pt: "Gerar de novo", en: "Generate again" })}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setStatus("idle")}
+                    className="inline-flex items-center gap-2 rounded-full px-4 py-3 text-sm font-semibold text-zinc-400 transition-colors hover:text-white"
+                  >
+                    <Pencil className="h-4 w-4" />
+                    {t({ pt: "Ajustar", en: "Adjust" })}
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {proposal && numero && (
+              <PropostaModal
+                proposal={proposal}
+                description={description.trim()}
+                numero={numero}
+                open={modalOpen}
+                onClose={() => setModalOpen(false)}
+              />
             )}
 
             {status === "fallback" && (

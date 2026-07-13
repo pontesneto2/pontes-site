@@ -20,11 +20,18 @@ export type Investimento = {
   moeda: "BRL";
 };
 
+export type Fase = {
+  titulo: string;
+  descricao: string;
+  prazo: string;
+};
+
 export type Proposal = {
   tipo: string;
   resumo: string;
   stack: string[];
   entregaveis: string[];
+  fases: Fase[];
   prazoEstimado: string;
   porte: Porte;
   pagamentoSugerido: string;

@@ -55,6 +55,7 @@ type AiProposalShape = {
   resumo?: string;
   stack?: string[];
   entregaveis?: string[];
+  fases?: Array<{ titulo?: string; descricao?: string; prazo?: string }>;
   prazoEstimado?: string;
   porte?: string;
   pagamentoSugerido?: string;
@@ -66,7 +67,9 @@ function buildSystemPrompt(lang: "pt" | "en") {
 Internamente (nunca mencione isso na resposta), a taxa horária de referência é R$${HOURLY_RATE}/hora. Use isso só para calibrar seu raciocínio de porte, nunca para calcular ou mencionar valores em reais na resposta.
 
 A partir da descrição do visitante, produza um escopo comercial PRELIMINAR, realista e conservador, respondendo ${lang === "en" ? "in English" : "em português"}. Responda APENAS com um objeto JSON válido, sem markdown, sem cercas de código, sem texto fora do JSON. Estrutura exata:
-{"tipo":"string curta","resumo":"2 frases","stack":["3 a 6 techs reais da stack dele"],"entregaveis":["3 a 5"],"prazoEstimado":"faixa realista de prazo","porte":"pequeno" | "medio" | "grande","pagamentoSugerido":"sugestão (Pacote, Por hora ou Mensal) + 1 frase"}.
+{"tipo":"string curta","resumo":"2 frases","stack":["3 a 6 techs reais da stack dele"],"entregaveis":["3 a 5"],"fases":[{"titulo":"Fase 1 - nome curto","descricao":"1 frase do que entra nessa fase","prazo":"faixa curta, ex: 2 a 3 semanas"}],"prazoEstimado":"faixa realista de prazo","porte":"pequeno" | "medio" | "grande","pagamentoSugerido":"sugestão (Pacote, Por hora ou Mensal) + 1 frase"}.
+
+O campo "fases" deve ter de 2 a 4 fases que dividam o projeto em etapas lógicas (ex.: Descoberta e design, MVP, Evolução, Lançamento e suporte), coerentes com os entregáveis e cujos prazos somados fiquem próximos do prazoEstimado.
 
 Critério de porte e prazo:
 - pequeno = site estático ou landing page. Prazo típico: 7 dias úteis.
@@ -90,6 +93,12 @@ function isValidAiProposal(value: unknown): value is Required<AiProposalShape> {
     v.stack.every((s) => typeof s === "string") &&
     Array.isArray(v.entregaveis) &&
     v.entregaveis.every((e) => typeof e === "string") &&
+    Array.isArray(v.fases) &&
+    v.fases.length > 0 &&
+    v.fases.every(
+      (f) =>
+        f && typeof f.titulo === "string" && typeof f.descricao === "string" && typeof f.prazo === "string"
+    ) &&
     typeof v.prazoEstimado === "string" &&
     typeof v.porte === "string" &&
     VALID_PORTES.includes(v.porte as Porte) &&
@@ -235,6 +244,11 @@ export async function POST(request: NextRequest) {
         resumo: parsed.resumo,
         stack: parsed.stack,
         entregaveis: parsed.entregaveis,
+        fases: parsed.fases.map((f) => ({
+          titulo: f.titulo as string,
+          descricao: f.descricao as string,
+          prazo: f.prazo as string,
+        })),
         prazoEstimado: parsed.prazoEstimado,
         porte,
         pagamentoSugerido: parsed.pagamentoSugerido,
