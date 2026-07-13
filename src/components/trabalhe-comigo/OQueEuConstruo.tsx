@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { useInView } from "framer-motion";
+import { useState } from "react";
 import {
   LayoutGrid,
   Smartphone,
@@ -12,12 +11,10 @@ import {
   Server,
   Check,
   ChevronDown,
-  ArrowRight,
   type LucideIcon,
 } from "lucide-react";
 import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
-import { usePropostaPrefill } from "@/lib/proposta/prefill-context";
-import type { Existente, TipoProjeto } from "./types";
+import SectionHeading from "./SectionHeading";
 
 type Service = {
   id: string;
@@ -27,8 +24,6 @@ type Service = {
   description: Bilingual;
   bullets: [Bilingual, Bilingual, Bilingual];
   ideal: Bilingual;
-  tipo: TipoProjeto;
-  existente: Existente;
 };
 
 type Group = {
@@ -58,8 +53,6 @@ const GROUPS: Group[] = [
           pt: "Ideal pra quem ainda controla tudo no Excel.",
           en: "Ideal for those still running everything on spreadsheets.",
         },
-        tipo: "sistema_saas",
-        existente: "do_zero",
       },
       {
         id: "apps",
@@ -79,8 +72,6 @@ const GROUPS: Group[] = [
           pt: "Ideal pra quem quer estar na tela inicial do cliente.",
           en: "Ideal for those who want to be on the customer's home screen.",
         },
-        tipo: "app_mobile",
-        existente: "do_zero",
       },
       {
         id: "sites",
@@ -100,8 +91,6 @@ const GROUPS: Group[] = [
           pt: "Ideal pra quem investe em tráfego e perde venda no site.",
           en: "Ideal for those investing in traffic but losing sales on the site.",
         },
-        tipo: "site_landing",
-        existente: "do_zero",
       },
     ],
   },
@@ -126,8 +115,6 @@ const GROUPS: Group[] = [
           pt: "Ideal pra quem copia e cola dado entre sistemas o dia todo.",
           en: "Ideal for those copy-pasting data between systems all day.",
         },
-        tipo: "api_integracao",
-        existente: "continuar",
       },
       {
         id: "modernizacao",
@@ -147,8 +134,6 @@ const GROUPS: Group[] = [
           pt: "Ideal pra quem depende de um sistema que ninguém mais mexe.",
           en: "Ideal for those relying on a system nobody dares to touch.",
         },
-        tipo: "migracao",
-        existente: "migracao_existente",
       },
     ],
   },
@@ -173,8 +158,6 @@ const GROUPS: Group[] = [
           pt: "Ideal pra quem ficou na mão do desenvolvedor anterior.",
           en: "Ideal for those left stranded by the previous developer.",
         },
-        tipo: "manutencao",
-        existente: "continuar",
       },
       {
         id: "infra",
@@ -194,90 +177,20 @@ const GROUPS: Group[] = [
           pt: "Ideal pra quem já caiu no pior momento possível.",
           en: "Ideal for those who've already gone down at the worst possible moment.",
         },
-        tipo: "manutencao",
-        existente: "continuar",
       },
     ],
   },
 ];
 
-const ALL_SERVICES: Service[] = GROUPS.flatMap((g) => g.services);
-
 const BRAND_GRADIENT = "linear-gradient(135deg,#a855f7,#d946ef)";
-const ORANGE_GRADIENT = "linear-gradient(135deg,#f97316,#fbbf24)";
-
-const HERO_TITLE: Bilingual = { pt: "O que eu construo pra você", en: "What I build for you" };
-const HERO_SUBTITLE: Bilingual = {
-  pt: "Escolha os serviços que você precisa e monte sua proposta em segundos.",
-  en: "Pick the services you need and build your proposal in seconds.",
-};
-
-function useTypewriter(text: string, speed: number, active: boolean) {
-  const [count, setCount] = useState(0);
-  useEffect(() => {
-    setCount(0);
-  }, [text]);
-  useEffect(() => {
-    if (!active || count >= text.length) return;
-    const reduce =
-      typeof window !== "undefined" &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduce) {
-      setCount(text.length);
-      return;
-    }
-    const timer = setTimeout(() => setCount((c) => c + 1), speed);
-    return () => clearTimeout(timer);
-  }, [active, count, text, speed]);
-  return { typed: text.slice(0, count), done: count >= text.length };
-}
 
 export default function OQueEuConstruo() {
   const { lang } = useLanguage();
   const t = (v: Bilingual) => tr(lang, v);
-  const { requestPrefill } = usePropostaPrefill();
 
   const [expandedId, setExpandedId] = useState<string | null>(null);
-  const [selected, setSelected] = useState<Set<string>>(new Set());
-
-  const heroRef = useRef<HTMLDivElement>(null);
-  const heroInView = useInView(heroRef, { once: true, amount: 0.6 });
-  const title = t(HERO_TITLE);
-  const { typed, done } = useTypewriter(title, 55, heroInView);
 
   const toggleExpanded = (id: string) => setExpandedId((prev) => (prev === id ? null : id));
-
-  const toggleSelected = (id: string) =>
-    setSelected((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
-
-  const selectedCount = selected.size;
-
-  const handleMontarProposta = () => {
-    // Ordem de clique: Set preserva a ordem de inserção, então o tipo/ponto de
-    // partida do form vêm do primeiro serviço que o usuário selecionou.
-    const chosen = [...selected]
-      .map((id) => ALL_SERVICES.find((s) => s.id === id))
-      .filter((s): s is Service => Boolean(s));
-    if (chosen.length > 0) {
-      const intro =
-        lang === "pt"
-          ? "Tenho interesse nos seguintes serviços:"
-          : "I'm interested in the following services:";
-      const lines = chosen.map((s) => `- ${t(s.name)} (${t(s.tag)})`).join("\n");
-      const first = chosen[0];
-      requestPrefill({
-        description: `${intro}\n${lines}`,
-        tipo: first.tipo,
-        existente: first.existente,
-      });
-    }
-    document.getElementById("proposta")?.scrollIntoView({ behavior: "smooth" });
-  };
 
   return (
     <section
@@ -290,28 +203,10 @@ export default function OQueEuConstruo() {
       }}
     >
       <div className="mx-auto max-w-[720px] px-6">
-        {/* Hero */}
-        <div ref={heroRef} className="mb-12 text-center">
-          <h1
-            className="text-3xl font-semibold leading-tight tracking-tight sm:text-4xl"
-            style={{ fontFamily: "var(--font-space-grotesk)", color: "#f4f4f7" }}
-          >
-            {typed}
-            <span
-              className={done ? "typewriter-cursor-slow" : ""}
-              style={{ color: "#a855f7" }}
-              aria-hidden="true"
-            >
-              _
-            </span>
-          </h1>
-          <p
-            className="mx-auto mt-4 max-w-[780px] text-[15.5px] leading-relaxed"
-            style={{ color: "#9a9aa7" }}
-          >
-            {t(HERO_SUBTITLE)}
-          </p>
-        </div>
+        <SectionHeading
+          title={{ pt: "Serviços", en: "Services" }}
+          kicker={{ pt: "Tudo o que posso fazer para você", en: "Everything I can do for you" }}
+        />
 
         {/* Grupos */}
         {GROUPS.map((group) => (
@@ -329,7 +224,6 @@ export default function OQueEuConstruo() {
             <div>
               {group.services.map((service) => {
                 const isOpen = expandedId === service.id;
-                const isSelected = selected.has(service.id);
                 const Icon = service.icon;
                 return (
                   <div
@@ -362,27 +256,11 @@ export default function OQueEuConstruo() {
                       </span>
 
                       <span className="min-w-0 flex-1">
-                        <span className="flex flex-wrap items-center gap-x-2.5 gap-y-1">
-                          <span
-                            className="text-[17px] font-medium leading-tight"
-                            style={{ fontFamily: "var(--font-space-grotesk)", color: "#f0f0f5" }}
-                          >
-                            {t(service.name)}
-                          </span>
-                          {isSelected && (
-                            <span
-                              className="font-mono text-[11px] font-medium"
-                              style={{
-                                color: "#f7a94a",
-                                border: "1px solid rgba(249,115,22,0.4)",
-                                backgroundColor: "rgba(249,115,22,0.10)",
-                                borderRadius: "999px",
-                                padding: "2px 8px",
-                              }}
-                            >
-                              {t({ pt: "Na proposta", en: "In proposal" })}
-                            </span>
-                          )}
+                        <span
+                          className="block text-[17px] font-medium leading-tight"
+                          style={{ fontFamily: "var(--font-space-grotesk)", color: "#f0f0f5" }}
+                        >
+                          {t(service.name)}
                         </span>
                         <span className="mt-0.5 block text-[13px] leading-snug" style={{ color: "#8c8c9a" }}>
                           {t(service.tag)}
@@ -425,34 +303,9 @@ export default function OQueEuConstruo() {
                           ))}
                         </ul>
 
-                        <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2.5">
-                          <button
-                            type="button"
-                            onClick={() => toggleSelected(service.id)}
-                            className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition-all hover:brightness-110"
-                            style={
-                              isSelected
-                                ? {
-                                    color: "#f7a94a",
-                                    border: "1px solid rgba(249,115,22,0.5)",
-                                    backgroundColor: "rgba(249,115,22,0.08)",
-                                  }
-                                : {
-                                    color: "#ffffff",
-                                    background: ORANGE_GRADIENT,
-                                    boxShadow: "0 8px 20px -8px rgba(249,115,22,0.5)",
-                                  }
-                            }
-                          >
-                            {isSelected && <Check className="h-4 w-4" strokeWidth={2.5} />}
-                            {isSelected
-                              ? t({ pt: "Adicionado à proposta", en: "Added to proposal" })
-                              : t({ pt: "Adicionar à proposta", en: "Add to proposal" })}
-                          </button>
-                          <span className="text-[13.5px] italic" style={{ color: "#83839a" }}>
-                            {t(service.ideal)}
-                          </span>
-                        </div>
+                        <p className="mt-4 text-[13.5px] italic" style={{ color: "#83839a" }}>
+                          {t(service.ideal)}
+                        </p>
                       </div>
                     )}
                   </div>
@@ -461,31 +314,6 @@ export default function OQueEuConstruo() {
             </div>
           </div>
         ))}
-
-        {/* CTA final */}
-        <div
-          className="mt-10 flex flex-col gap-4 pt-6 sm:flex-row sm:items-center sm:justify-between"
-          style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}
-        >
-          <span className="text-[14.5px]" style={{ color: "#8c8c9a" }}>
-            {selectedCount > 0
-              ? t({
-                  pt: `${selectedCount} ${selectedCount === 1 ? "serviço" : "serviços"} na sua proposta`,
-                  en: `${selectedCount} ${selectedCount === 1 ? "service" : "services"} in your proposal`,
-                })
-              : t({ pt: "Escolheu o que precisa?", en: "Chose what you need?" })}
-          </span>
-          <button
-            type="button"
-            onClick={handleMontarProposta}
-            className="group inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 text-sm font-semibold text-white shadow-lg transition-all hover:brightness-110"
-            style={{ background: BRAND_GRADIENT, boxShadow: "0 10px 28px -10px rgba(168,85,247,0.6)" }}
-          >
-            {t({ pt: "Montar proposta", en: "Build proposal" })}
-            {selectedCount > 0 && <span>· {selectedCount}</span>}
-            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-          </button>
-        </div>
       </div>
     </section>
   );
