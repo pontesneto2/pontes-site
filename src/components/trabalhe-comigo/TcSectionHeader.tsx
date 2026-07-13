@@ -13,7 +13,7 @@ export default function TcSectionHeader({
 }: {
   label: Bilingual;
   title: Bilingual;
-  subtitle: Bilingual;
+  subtitle?: Bilingual;
 }) {
   const { lang } = useLanguage();
   const t = (v: Bilingual) => tr(lang, v);
@@ -32,9 +32,11 @@ export default function TcSectionHeader({
       >
         {t(title)}
       </h2>
-      <p className="mx-auto mt-4 max-w-[640px] text-[15px] leading-relaxed text-[#a2a2b0]">
-        {t(subtitle)}
-      </p>
+      {subtitle && (
+        <p className="mx-auto mt-4 max-w-[640px] text-[15px] leading-relaxed text-[#a2a2b0]">
+          {t(subtitle)}
+        </p>
+      )}
     </div>
   );
 }
