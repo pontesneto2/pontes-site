@@ -88,21 +88,37 @@ export default function ComoEuTrabalho() {
           </div>
         </div>
 
-        {/* Passos do processo */}
-        <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2 lg:grid-cols-3">
-          {STEPS.map((step, index) => (
-            <div
-              key={t(step.title)}
-              className="rounded-2xl border border-white/10 bg-white/[0.04] p-6 transition-all hover:border-white/20 hover:bg-white/[0.07]"
-            >
-              <div className="bg-gradient-to-r from-violet-500 to-fuchsia-500 bg-clip-text font-mono text-sm tracking-wide text-transparent">
-                {String(index + 1).padStart(2, "0")}
-              </div>
-              <h3 className="mb-2 mt-3 text-lg font-semibold text-white">{t(step.title)}</h3>
-              <p className="text-sm text-zinc-400">{t(step.description)}</p>
-            </div>
-          ))}
-        </div>
+        {/* Passos do processo - linha do tempo horizontal */}
+        <ol className="grid grid-cols-2 gap-y-9 sm:grid-cols-3 lg:grid-cols-6">
+          {STEPS.map((step, index) => {
+            const isFirst = index === 0;
+            const isLast = index === STEPS.length - 1;
+            return (
+              <li key={t(step.title)} className="flex flex-col">
+                {/* Nó + linha conectora horizontal */}
+                <div className="flex items-center">
+                  <span
+                    aria-hidden="true"
+                    className={`h-px flex-1 ${isFirst ? "opacity-0" : "bg-gradient-to-l from-violet-500/50 to-fuchsia-500/20"}`}
+                  />
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-violet-400/40 bg-gradient-to-b from-violet-500/15 to-transparent font-mono text-sm font-semibold text-violet-300 shadow-[0_0_20px_-6px_rgba(139,92,246,0.6)]">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <span
+                    aria-hidden="true"
+                    className={`h-px flex-1 ${isLast ? "opacity-0" : "bg-gradient-to-r from-violet-500/50 to-fuchsia-500/20"}`}
+                  />
+                </div>
+
+                {/* Conteúdo */}
+                <div className="mt-4 px-3 text-center">
+                  <h3 className="text-base font-semibold text-white">{t(step.title)}</h3>
+                  <p className="mt-1.5 text-[13px] leading-relaxed text-zinc-400">{t(step.description)}</p>
+                </div>
+              </li>
+            );
+          })}
+        </ol>
       </div>
     </section>
   );
