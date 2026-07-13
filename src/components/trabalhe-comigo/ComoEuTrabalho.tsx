@@ -1,5 +1,6 @@
 "use client";
 
+import { motion, useReducedMotion } from "framer-motion";
 import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
 import TcSectionHeader from "./TcSectionHeader";
 
@@ -51,6 +52,18 @@ const STEPS: Array<{ title: Bilingual; description: Bilingual }> = [
 export default function ComoEuTrabalho() {
   const { lang } = useLanguage();
   const t = (v: Bilingual) => tr(lang, v);
+  const reduce = useReducedMotion();
+
+  // Container com stagger: dispara quando a timeline entra na viewport e revela
+  // os nós um a um (01→06), igual no desktop e no mobile.
+  const container = {
+    hidden: {},
+    show: { transition: { staggerChildren: reduce ? 0 : 0.45 } },
+  };
+  const item = {
+    hidden: { opacity: reduce ? 1 : 0, y: reduce ? 0 : 22 },
+    show: { opacity: 1, y: 0, transition: { duration: reduce ? 0 : 0.65, ease: [0.22, 1, 0.36, 1] } },
+  };
 
   return (
     <section
@@ -71,17 +84,23 @@ export default function ComoEuTrabalho() {
           }}
         />
 
-        {/* Timeline horizontal */}
-        <div className="overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-          <div className="relative mx-auto min-w-[860px]">
-            {/* Linha contínua ligando os nós das pontas */}
+        {/* Timeline: horizontal no desktop, empilhada no mobile/tablet */}
+        <div className="lg:overflow-x-auto lg:pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <div className="relative mx-auto lg:min-w-[860px]">
+            {/* Linha contínua ligando os nós das pontas (apenas desktop) */}
             <div
               aria-hidden="true"
-              className="absolute left-[8.33%] right-[8.33%] top-[23px] h-px -translate-y-1/2 bg-gradient-to-r from-violet-500 to-fuchsia-500 opacity-55"
+              className="absolute left-[8.33%] right-[8.33%] top-[23px] hidden h-px -translate-y-1/2 bg-gradient-to-r from-violet-500 to-fuchsia-500 opacity-55 lg:block"
             />
-            <ol className="relative flex">
+            <motion.div
+              className="relative flex flex-col gap-10 lg:flex-row lg:gap-0"
+              variants={container}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.2 }}
+            >
               {STEPS.map((step, index) => (
-                <li key={t(step.title)} className="flex flex-1 flex-col items-center px-2 text-center">
+                <motion.div key={t(step.title)} variants={item} className="flex flex-1 flex-col items-center px-2 text-center">
                   <span
                     className="flex h-[46px] w-[46px] items-center justify-center rounded-full bg-gradient-to-br from-violet-500 to-fuchsia-500 text-base font-bold text-white shadow-[0_8px_22px_-6px_rgba(147,51,234,0.55)]"
                     style={{ fontFamily: "var(--font-space-grotesk)" }}
@@ -97,9 +116,9 @@ export default function ComoEuTrabalho() {
                   <p className="mt-1.5 max-w-[180px] text-[13.5px] leading-relaxed text-[#9a9aa7]">
                     {t(step.description)}
                   </p>
-                </li>
+                </motion.div>
               ))}
-            </ol>
+            </motion.div>
           </div>
         </div>
       </div>
