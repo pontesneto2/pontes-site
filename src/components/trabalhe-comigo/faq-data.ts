@@ -32,8 +32,8 @@ export const FAQ_ITEMS: Array<{ question: Bilingual; answer: Bilingual }> = [
   {
     question: { pt: "Quanto tempo leva um projeto?", en: "How long does a project take?" },
     answer: {
-      pt: "Depende do escopo. Um site institucional pode sair em semanas; um sistema ou app completo leva de alguns meses. Use o gerador de proposta acima para uma estimativa na hora.",
-      en: "It depends on the scope. A corporate website can ship in weeks; a full system or app takes a few months. Use the proposal generator above for an instant estimate.",
+      pt: "A partir de 2 dias eu já estou entregando projetos. Monte sua proposta acima e vamos conversar: o prazo exato sai na hora, conforme o porte do que você precisa.",
+      en: "I start delivering projects in as little as 2 days. Build your proposal above and let's talk: you get the exact timeline on the spot, based on the size of what you need.",
     },
   },
   {
