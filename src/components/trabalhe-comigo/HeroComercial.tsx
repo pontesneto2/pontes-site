@@ -65,13 +65,13 @@ export default function HeroComercial() {
 
           <p className="mt-6 max-w-2xl text-base text-zinc-400 sm:text-lg">
             {t({
-              pt: "Olá, pode me chamar de Francisco. Sistemas, sites, aplicativos e outras soluções digitais construídos por um ",
-              en: "Hi, you can call me Francisco. Systems, websites, apps and other digital solutions built by a ",
+              pt: "Sou o Francisco, ",
+              en: "I'm Francisco, ",
             })}
-            <b className="text-zinc-200">{t({ pt: "Engenheiro de Software", en: "Software Engineer" })}</b>
+            <b className="text-zinc-200">{t({ pt: "engenheiro de software sênior", en: "senior software engineer" })}</b>
             {t({
-              pt: ". Trabalho com a governança de quem já colocou dezenas de produtos em produção para o governo, fintechs e startups. Entrega rápida, sem terceirização e sem enrolação. Monte sua proposta.",
-              en: ". I work with the governance of someone who has already shipped dozens of products to production for government, fintechs and startups. Fast delivery, no outsourcing, no runaround. Build your proposal.",
+              pt: " e outras coisas mais. Construo sistemas, apps e sites de ponta a ponta, com contrato, escopo fechado e o código seu na entrega. Sem terceirização, sem enrolação.",
+              en: " and a few other things. I build systems, apps and websites end to end, with a contract, fixed scope and the code yours on delivery. No outsourcing, no runaround.",
             })}
           </p>
 
