@@ -4,6 +4,7 @@ import { useLanguage, tr } from "@/lib/language-context";
 
 const IDEALIZADORES = [
   "Governo do Ceará",
+  "Star Capital",
   "Fedex PT",
   "Sarrubbo Advogados",
   "Ematerce",
