@@ -78,7 +78,7 @@ export default function CasosReais() {
   const t = (v: Bilingual) => tr(lang, v);
 
   return (
-    <section id="casos" className="scroll-mt-20 border-t border-white/10 py-20">
+    <section id="casos" className="scroll-mt-20 border-t border-white/10 py-20" style={{ backgroundColor: "#101018" }}>
       <div className="mx-auto max-w-7xl px-6">
         <SectionHeading
           title={{ pt: "Casos reais, resultados reais", en: "Real cases, real results" }}
@@ -97,7 +97,7 @@ export default function CasosReais() {
                 key={`${item.title}-${index}`}
                 className="flex w-[330px] shrink-0 flex-col rounded-3xl border border-white/10 bg-white/[0.04] p-6 transition-colors hover:border-white/20 hover:bg-white/[0.07] sm:w-[360px]"
               >
-                <span className="inline-block w-fit rounded-md border border-white/20 bg-white/[0.07] px-2.5 py-1 font-mono text-[10.5px] uppercase tracking-wide text-violet-200">
+                <span className="inline-block w-fit rounded-md border border-white/20 bg-white/[0.07] px-2.5 py-1 font-mono text-[10.5px] uppercase tracking-wide text-rose-200">
                   {t(item.tag)}
                 </span>
                 <h3 className="mb-1.5 mt-3.5 text-xl font-semibold text-white">{item.title}</h3>
@@ -106,7 +106,7 @@ export default function CasosReais() {
                 <div className="mt-auto flex flex-wrap gap-5 pt-4">
                   {item.metrics.map((metric) => (
                     <div key={metric.value}>
-                      <div className="bg-gradient-to-r from-violet-500 to-fuchsia-500 bg-clip-text text-lg font-semibold text-transparent">
+                      <div className="bg-gradient-to-r from-rose-500 to-amber-500 bg-clip-text text-lg font-semibold text-transparent">
                         {metric.value}
                       </div>
                       <div className="font-mono text-[11px] text-zinc-400">{t(metric.label)}</div>
@@ -117,7 +117,7 @@ export default function CasosReais() {
                   href={item.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-5 inline-flex items-center justify-center gap-1.5 rounded-full border border-violet-400/30 bg-violet-500/10 px-4 py-2.5 text-[13px] font-semibold text-violet-100 transition-colors hover:border-violet-400/60 hover:bg-violet-500/20"
+                  className="mt-5 inline-flex items-center justify-center gap-1.5 rounded-full border border-rose-400/30 bg-rose-500/10 px-4 py-2.5 text-[13px] font-semibold text-rose-100 transition-colors hover:border-rose-400/60 hover:bg-rose-500/20"
                 >
                   {t({ pt: "Visitar projeto", en: "Visit project" })}
                   <ArrowUpRight className="h-3.5 w-3.5" />
@@ -130,7 +130,7 @@ export default function CasosReais() {
         <div className="mt-8 text-center">
           <Link
             href="/#projects"
-            className="inline-flex items-center gap-2 rounded-full border border-white/15 px-5 py-2.5 text-sm font-medium text-zinc-400 transition-colors hover:border-violet-400/40 hover:text-white"
+            className="inline-flex items-center gap-2 rounded-full border border-white/15 px-5 py-2.5 text-sm font-medium text-zinc-400 transition-colors hover:border-rose-400/40 hover:text-white"
           >
             {t({ pt: "Veja mais projetos", en: "See more projects" })}
             <span aria-hidden="true">→</span>

@@ -16,11 +16,11 @@ export default function SobreMim() {
   const { lang } = useLanguage();
 
   return (
-    <section className="border-t border-white/10 py-20">
+    <section className="border-t border-white/10 py-20" style={{ backgroundColor: "#08080b" }}>
       <div className="mx-auto max-w-7xl px-6">
         <div className="grid grid-cols-1 items-center gap-8 sm:grid-cols-[300px_1fr] sm:gap-12">
           <div className="relative mx-auto w-full max-w-[300px]">
-            <div className="relative aspect-square w-full rounded-full bg-gradient-to-br from-fuchsia-500 via-purple-600 to-violet-800 p-[14px] shadow-[0_0_40px_rgba(147,51,234,0.3)]">
+            <div className="relative aspect-square w-full rounded-full bg-gradient-to-br from-amber-500 via-rose-600 to-rose-800 p-[14px] shadow-[0_0_40px_rgba(147,51,234,0.3)]">
               <div className="relative h-full w-full overflow-hidden rounded-full">
                 <Image
                   src="/pontes-institucional.png"
@@ -31,7 +31,7 @@ export default function SobreMim() {
                 />
               </div>
             </div>
-            <span className="absolute bottom-1 left-1/2 z-10 inline-flex -translate-x-1/2 items-center gap-1.5 rounded-full border border-violet-400/35 bg-black/70 px-3 py-1.5 font-mono text-[11px] text-violet-200 backdrop-blur">
+            <span className="absolute bottom-1 left-1/2 z-10 inline-flex -translate-x-1/2 items-center gap-1.5 rounded-full border border-rose-400/35 bg-black/70 px-3 py-1.5 font-mono text-[11px] text-rose-200 backdrop-blur">
               <i className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
               {tr(lang, { pt: "Disponível · Remoto", en: "Available · Remote" })}
             </span>
@@ -41,7 +41,7 @@ export default function SobreMim() {
             <h3 className="text-2xl font-semibold text-white" style={{ fontFamily: "var(--font-space-grotesk)" }}>
               Francisco Pontes
             </h3>
-            <div className="mb-4 mt-1 font-mono text-xs text-violet-300">
+            <div className="mb-4 mt-1 font-mono text-xs text-rose-300">
               {tr(lang, {
                 pt: "Engenheiro de Software Full Stack Sênior · Fortaleza, BR",
                 en: "Senior Full Stack Software Engineer · Fortaleza, BR",
@@ -66,7 +66,7 @@ export default function SobreMim() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="GitHub"
-                className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-zinc-300 transition-all hover:-translate-y-0.5 hover:border-fuchsia-400/40 hover:bg-fuchsia-500/10 hover:text-fuchsia-200"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-zinc-300 transition-all hover:-translate-y-0.5 hover:border-amber-400/40 hover:bg-amber-500/10 hover:text-amber-200"
               >
                 <Github className="h-5 w-5" />
               </a>
@@ -75,7 +75,7 @@ export default function SobreMim() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="LinkedIn"
-                className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-zinc-300 transition-all hover:-translate-y-0.5 hover:border-fuchsia-400/40 hover:bg-fuchsia-500/10 hover:text-fuchsia-200"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-zinc-300 transition-all hover:-translate-y-0.5 hover:border-amber-400/40 hover:bg-amber-500/10 hover:text-amber-200"
               >
                 <Linkedin className="h-5 w-5" />
               </a>
@@ -84,14 +84,14 @@ export default function SobreMim() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="WhatsApp"
-                className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-zinc-300 transition-all hover:-translate-y-0.5 hover:border-fuchsia-400/40 hover:bg-fuchsia-500/10 hover:text-fuchsia-200"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-zinc-300 transition-all hover:-translate-y-0.5 hover:border-amber-400/40 hover:bg-amber-500/10 hover:text-amber-200"
               >
                 <MessageCircle className="h-5 w-5" />
               </a>
               <a
                 href="mailto:contato@fcopts.com.br"
                 aria-label="E-mail"
-                className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-zinc-300 transition-all hover:-translate-y-0.5 hover:border-fuchsia-400/40 hover:bg-fuchsia-500/10 hover:text-fuchsia-200"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-zinc-300 transition-all hover:-translate-y-0.5 hover:border-amber-400/40 hover:bg-amber-500/10 hover:text-amber-200"
               >
                 <Mail className="h-5 w-5" />
               </a>
@@ -99,7 +99,7 @@ export default function SobreMim() {
                 href={CV_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2.5 text-sm font-semibold text-zinc-300 transition-all hover:-translate-y-0.5 hover:border-fuchsia-400/40 hover:bg-fuchsia-500/10 hover:text-fuchsia-200"
+                className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2.5 text-sm font-semibold text-zinc-300 transition-all hover:-translate-y-0.5 hover:border-amber-400/40 hover:bg-amber-500/10 hover:text-amber-200"
               >
                 <FileDown className="h-4 w-4" />
                 {tr(lang, { pt: "Baixar CV", en: "Download CV" })}

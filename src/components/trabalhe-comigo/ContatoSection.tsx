@@ -10,9 +10,9 @@ export default function ContatoSection() {
   const t = (v: Bilingual) => tr(lang, v);
 
   return (
-    <section id="contato" className="scroll-mt-20 border-t border-white/10 py-20">
+    <section id="contato" className="scroll-mt-20 border-t border-white/10 py-20" style={{ backgroundColor: "#101018" }}>
       <div className="mx-auto max-w-4xl px-6">
-        <div className="rounded-3xl border border-violet-400/35 bg-gradient-to-b from-violet-500/10 to-transparent p-9 sm:p-11">
+        <div className="rounded-3xl border border-rose-400/35 bg-gradient-to-b from-rose-500/10 to-transparent p-9 sm:p-11">
           <h2
             className="max-w-md text-3xl font-bold text-white sm:text-4xl"
             style={{ fontFamily: "var(--font-space-grotesk)" }}
@@ -38,14 +38,14 @@ export default function ContatoSection() {
               href="https://wa.me/5585981888896"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 font-mono text-xs text-zinc-300 transition-colors hover:border-violet-400/40 hover:text-white"
+              className="inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 font-mono text-xs text-zinc-300 transition-colors hover:border-rose-400/40 hover:text-white"
             >
               <MessageCircle className="h-3.5 w-3.5" />
               {t({ pt: "WhatsApp direto", en: "Direct WhatsApp" })}
             </a>
             <a
               href="mailto:contato@fcopts.com.br"
-              className="inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 font-mono text-xs text-zinc-300 transition-colors hover:border-violet-400/40 hover:text-white"
+              className="inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 font-mono text-xs text-zinc-300 transition-colors hover:border-rose-400/40 hover:text-white"
             >
               <Mail className="h-3.5 w-3.5" />
               contato@fcopts.com.br
@@ -54,7 +54,7 @@ export default function ContatoSection() {
               href="https://www.linkedin.com/in/fcopts"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 font-mono text-xs text-zinc-300 transition-colors hover:border-violet-400/40 hover:text-white"
+              className="inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 font-mono text-xs text-zinc-300 transition-colors hover:border-rose-400/40 hover:text-white"
             >
               <Linkedin className="h-3.5 w-3.5" />
               LinkedIn

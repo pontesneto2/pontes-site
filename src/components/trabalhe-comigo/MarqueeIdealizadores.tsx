@@ -44,7 +44,7 @@ export default function MarqueeIdealizadores() {
           {items.map((name, index) => (
             <span key={`${name}-${index}`} className="whitespace-nowrap px-2 font-display text-base font-semibold text-zinc-500 transition-colors hover:text-zinc-200" style={{ fontFamily: "var(--font-space-grotesk)" }}>
               {name}
-              <span className="pl-4 text-violet-400/30" aria-hidden="true">
+              <span className="pl-4 text-rose-400/30" aria-hidden="true">
                 •
               </span>
             </span>
