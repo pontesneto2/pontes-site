@@ -5,7 +5,7 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://fcopts.com.br";
 
 const title = "Contrate um engenheiro de software sênior";
 const description =
-  "Sistemas, sites e aplicativos sob medida, do esboço ao deploy. Engenheiro full stack sênior, remoto (PT/EN), com contrato, escopo fechado e código seu na entrega.";
+  "Sistemas, sites e aplicativos sob medida, da ideia ao lançamento. Engenheiro full stack sênior, remoto (PT/EN), com contrato, escopo fechado e código seu na entrega.";
 
 export const metadata: Metadata = {
   title,
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     url: "/trabalhe-comigo",
-    title: "Software sob medida, do esboço ao deploy | Francisco Pontes",
+    title: "Software sob medida, da ideia ao lançamento | Francisco Pontes",
     description:
       "Sistemas, sites e apps construídos por um engenheiro full stack sênior. Proposta na hora com IA, contrato e código seu na entrega.",
     images: [
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Software sob medida, do esboço ao deploy | Francisco Pontes",
+    title: "Software sob medida, da ideia ao lançamento | Francisco Pontes",
     description,
     images: ["/images/img-link-site-fcopts.png"],
   },

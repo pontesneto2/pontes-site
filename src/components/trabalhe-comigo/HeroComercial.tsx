@@ -59,7 +59,7 @@ export default function HeroComercial() {
             <TypedHeadline
               key={lang}
               prefix={t({ pt: "Software sob medida, ", en: "Custom software, " })}
-              suffix={t({ pt: "do esboço ao deploy", en: "from sketch to deploy" })}
+              suffix={t({ pt: "da ideia ao lançamento", en: "from idea to launch" })}
             />
           </h1>
 
