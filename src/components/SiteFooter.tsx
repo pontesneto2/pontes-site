@@ -20,12 +20,12 @@ export default function SiteFooter() {
           href="https://creativecommons.org/licenses/by-nc/4.0/"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-zinc-600 hover:text-zinc-300 transition-colors"
+          className="text-zinc-400 hover:text-zinc-200 transition-colors"
         >
           Creative Commons BY-NC 4.0
         </a>
         <span className="text-zinc-700">·</span>
-        <Link href="/privacidade" className="text-zinc-600 hover:text-zinc-300 transition-colors">
+        <Link href="/privacidade" className="text-zinc-400 hover:text-zinc-200 transition-colors">
           {t({ pt: "Privacidade", en: "Privacy" })}
         </Link>
         <span className="text-zinc-700">·</span>
@@ -33,7 +33,7 @@ export default function SiteFooter() {
           href="https://vercel.com"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-zinc-600 hover:text-zinc-300 transition-colors"
+          className="text-zinc-400 hover:text-zinc-200 transition-colors"
         >
           {t({ pt: "Hospedado na Vercel", en: "Hosted on Vercel" })}
         </a>

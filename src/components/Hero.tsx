@@ -28,11 +28,16 @@ function TypedName({ onDone }: { onDone: () => void }) {
 
   return (
     <>
-      {line1}
-      <br />
-      {line2}
-      <span className={done ? "typewriter-cursor" : ""} style={{ color: "#e879f9" }}>
-        _
+      {/* Nome real no DOM para SEO/leitores de tela (renderizado no servidor) */}
+      <span className="sr-only">{TYPED_NAME.replace("\n", " ")}</span>
+      {/* Animação de máquina de escrever, apenas visual */}
+      <span aria-hidden="true">
+        {line1}
+        <br />
+        {line2}
+        <span className={done ? "typewriter-cursor" : ""} style={{ color: "#e879f9" }}>
+          _
+        </span>
       </span>
     </>
   );
@@ -74,7 +79,14 @@ function TypedParagraph({ segments, start }: { segments: TypedSegment[]; start: 
     remaining -= take;
   });
 
-  return <>{nodes}</>;
+  return (
+    <>
+      {/* Texto real no DOM para SEO/leitores de tela (renderizado no servidor) */}
+      <span className="sr-only">{full}</span>
+      {/* Animação de máquina de escrever, apenas visual */}
+      <span aria-hidden="true">{nodes}</span>
+    </>
+  );
 }
 
 const floatingIcons = [

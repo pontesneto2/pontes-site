@@ -6,7 +6,7 @@ import Reveal from "./Reveal";
 const IDEALIZADORES = [
   "Governo do Ceará",
   "Star Capital",
-  "Fedex PT",
+  "FedEx PT",
   "Sarrubbo Advogados",
   "Ematerce",
   "FlixBus Tickets UK",
@@ -20,7 +20,7 @@ const IDEALIZADORES = [
   "Silva & Duarte Advogados",
   "Instituto Anjos Digitais",
   "Alfa Construções",
-  "Hey Canada Imigration",
+  "Hey Canada Immigration",
 ];
 
 export default function MarqueeIdealizadores() {
