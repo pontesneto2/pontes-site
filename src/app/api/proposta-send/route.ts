@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import type { Proposal } from "@/components/trabalhe-comigo/types";
-import { checkRateLimit, getClientIp } from "@/lib/proposta/rate-limit.server";
+import { RATE_LIMITS, checkRateLimit, getClientIp } from "@/lib/proposta/rate-limit.server";
 import {
   MAX_POR_JANELA,
   contarPropostasNaJanela,
@@ -79,7 +79,7 @@ export async function POST(request: NextRequest) {
   }
 
   const ip = getClientIp(request);
-  if (!checkRateLimit(ip)) {
+  if (!(await checkRateLimit(`proposta-send:${ip}`, RATE_LIMITS["proposta-send"]))) {
     return NextResponse.json({ error: "Too many requests" }, { status: 429 });
   }
 

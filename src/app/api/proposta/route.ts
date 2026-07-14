@@ -8,8 +8,7 @@ import type {
   PropostaResponse,
 } from "@/components/trabalhe-comigo/types";
 import { HOURLY_RATE, getInvestimento, getPrazoEstimado } from "@/lib/proposta/pricing.server";
-import { checkRateLimit, getClientIp } from "@/lib/proposta/rate-limit.server";
-import { verifyTurnstile } from "@/lib/proposta/turnstile.server";
+import { RATE_LIMITS, checkRateLimit, getClientIp } from "@/lib/proposta/rate-limit.server";
 
 const MIN_DESCRIPTION_LENGTH = 20;
 const MAX_DESCRIPTION_LENGTH = 2000;
@@ -124,7 +123,6 @@ export async function POST(request: NextRequest) {
     company,
     formLoadedAt,
     lang,
-    turnstileToken,
   } = body as {
     description?: string;
     tipo?: string;
@@ -135,7 +133,6 @@ export async function POST(request: NextRequest) {
     company?: string;
     formLoadedAt?: number;
     lang?: string;
-    turnstileToken?: string;
   };
 
   // Honeypot: bots preenchem campos ocultos, humanos nunca veem.
@@ -175,13 +172,8 @@ export async function POST(request: NextRequest) {
 
   const ip = getClientIp(request);
 
-  // Verificação Cloudflare Turnstile: bloqueia bots antes de gastar tokens na IA.
-  const captchaOk = await verifyTurnstile(turnstileToken, ip);
-  if (!captchaOk) {
-    return fallback("captcha_failed");
-  }
-
-  if (!checkRateLimit(ip)) {
+  // Rate-limit durável (Neon) antes de gastar tokens na IA.
+  if (!(await checkRateLimit(`proposta:${ip}`, RATE_LIMITS.proposta))) {
     return fallback("rate_limited");
   }
 

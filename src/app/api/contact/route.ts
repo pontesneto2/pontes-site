@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
+import { RATE_LIMITS, checkRateLimit, getClientIp } from "@/lib/proposta/rate-limit.server";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const NAME_REGEX = /^[\p{L}][\p{L}\s'’-]{1,}$/u;
@@ -97,6 +98,12 @@ export async function POST(request: NextRequest) {
     (phone && phone.length > 40)
   ) {
     return NextResponse.json({ error: "Field too long" }, { status: 400 });
+  }
+
+  // Rate-limit durável por IP: o formulário dispara 2 e-mails por envio.
+  const ip = getClientIp(request);
+  if (!(await checkRateLimit(`contact:${ip}`, RATE_LIMITS.contact))) {
+    return NextResponse.json({ error: "Too many requests" }, { status: 429 });
   }
 
   const apiKey = process.env.RESEND_API_KEY;

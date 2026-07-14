@@ -1,4 +1,4 @@
-import { neon, type NeonQueryFunction } from "@neondatabase/serverless";
+import { getSql, type Sql } from "./db.server";
 import type { Proposal } from "@/components/trabalhe-comigo/types";
 
 /**
@@ -29,25 +29,10 @@ export type LeadRegistro = {
   ip?: string;
 };
 
-// Vercel injeta DATABASE_URL na integração Neon; POSTGRES_URL é o nome usado pelo
-// SDK @vercel/postgres. Aceitamos ambos para não depender de um nome específico.
-function getConnectionString(): string | undefined {
-  return process.env.DATABASE_URL || process.env.POSTGRES_URL || undefined;
-}
-
-let cachedSql: NeonQueryFunction<false, false> | null = null;
-function getSql(): NeonQueryFunction<false, false> | null {
-  if (cachedSql) return cachedSql;
-  const connectionString = getConnectionString();
-  if (!connectionString) return null;
-  cachedSql = neon(connectionString);
-  return cachedSql;
-}
-
 // A criação da tabela roda no máximo uma vez por instância quente e é idempotente
 // (IF NOT EXISTS), então múltiplas instâncias serverless convivem sem problema.
 let schemaReady: Promise<void> | null = null;
-function ensureSchema(sql: NeonQueryFunction<false, false>): Promise<void> {
+function ensureSchema(sql: Sql): Promise<void> {
   if (!schemaReady) {
     schemaReady = (async () => {
       await sql`
