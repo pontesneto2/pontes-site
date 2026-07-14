@@ -40,8 +40,7 @@ export type PropostaFallbackReason =
   | "rate_limited"
   | "timeout"
   | "ai_error"
-  | "invalid_response"
-  | "captcha_failed";
+  | "invalid_response";
 
 export type PropostaResponse =
   | { ok: true; proposal: Proposal }

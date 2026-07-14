@@ -11,7 +11,6 @@ import {
   Pencil,
 } from "lucide-react";
 import { track } from "@vercel/analytics";
-import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
 import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
 import { usePropostaPrefill } from "@/lib/proposta/prefill-context";
 import TcSectionHeader from "./TcSectionHeader";
@@ -108,13 +107,6 @@ function SelectField({
 
 type Status = "idle" | "loading" | "success" | "fallback";
 
-// Sitekey PÚBLICA do widget Turnstile de produção (fcopts.com.br). Fica no código,
-// e não numa env var, de propósito: a sitekey é pública por design (vai no bundle do
-// cliente) e presa ao domínio pela allowlist de hostnames do Cloudflare. Uma env var
-// mal digitada (um "A" a mais: 0x4AAAAAAAD047…) já quebrou a produção com erro 400020,
-// então a fonte da verdade mora aqui, revisável em code review.
-const TURNSTILE_SITE_KEY = "0x4AAAAAD047ugNsqnSuI1D";
-
 export default function GeradorProposta() {
   const { lang } = useLanguage();
   const t = (v: Bilingual) => tr(lang, v);
@@ -130,32 +122,10 @@ export default function GeradorProposta() {
   const [modalOpen, setModalOpen] = useState(false);
   const formLoadedAt = useRef(Date.now());
   const honeypotRef = useRef<HTMLInputElement>(null);
-  const turnstileRef = useRef<TurnstileInstance | null>(null);
-  const [turnstileToken, setTurnstileToken] = useState("");
-  const [captchaUnavailable, setCaptchaUnavailable] = useState(false);
-  // Produção usa sempre a sitekey do código (ignora env var, que pode estar mal
-  // digitada). Em dev, dá pra sobrescrever com a chave de teste "always pass" via
-  // NEXT_PUBLIC_TURNSTILE_SITE_KEY no .env.local.
-  const turnstileSiteKey =
-    process.env.NODE_ENV === "development"
-      ? process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY?.trim() || TURNSTILE_SITE_KEY
-      : TURNSTILE_SITE_KEY;
-
-  // Fail-open: se o widget do Turnstile não emitir um token em tempo hábil
-  // (Cloudflare fora, ad-blocker, domínio fora da allowlist), não travamos o funil.
-  // O servidor mantém honeypot + time-trap + rate-limit como defesa.
-  useEffect(() => {
-    if (!turnstileSiteKey || turnstileToken) return;
-    const id = setTimeout(() => setCaptchaUnavailable(true), 8000);
-    return () => clearTimeout(id);
-  }, [turnstileSiteKey, turnstileToken]);
 
   const fieldsReady =
     tipo !== "" && existente !== "" && urgencia !== "" && description.trim().length >= 20;
-  // Sem site key (dev) OU token resolvido OU captcha indisponível: não bloqueia.
-  // Espelha o fail-open do servidor — o widget nunca derruba o funil sozinho.
-  const captchaReady = !turnstileSiteKey || turnstileToken !== "" || captchaUnavailable;
-  const canGenerate = fieldsReady && captchaReady;
+  const canGenerate = fieldsReady;
 
   // Prefill vindo da seção de Serviços: a seleção alimenta a descrição e os
   // campos de tipo/ponto de partida, então o usuário só refina e gera.
@@ -184,7 +154,6 @@ export default function GeradorProposta() {
           company: honeypotRef.current?.value ?? "",
           formLoadedAt: formLoadedAt.current,
           lang,
-          turnstileToken,
         }),
       });
 
@@ -203,10 +172,6 @@ export default function GeradorProposta() {
     } catch {
       setStatus("fallback");
       track("trabalhe_comigo_proposta_fallback", { reason: "network_error" });
-    } finally {
-      // Token do Turnstile é de uso único: reseta para a próxima geração.
-      setTurnstileToken("");
-      turnstileRef.current?.reset();
     }
   }
 
@@ -326,25 +291,6 @@ export default function GeradorProposta() {
               )}
             </div>
 
-            {turnstileSiteKey && (
-              <div className="mt-6">
-                <Turnstile
-                  ref={turnstileRef}
-                  siteKey={turnstileSiteKey}
-                  options={{ theme: "dark", size: "flexible", language: lang }}
-                  onSuccess={(token) => {
-                    setTurnstileToken(token);
-                    setCaptchaUnavailable(false);
-                  }}
-                  onExpire={() => setTurnstileToken("")}
-                  onError={() => {
-                    setTurnstileToken("");
-                    setCaptchaUnavailable(true);
-                  }}
-                />
-              </div>
-            )}
-
             <div className="mt-6 flex flex-col gap-2.5">
               <button
                 type="button"
@@ -365,14 +311,6 @@ export default function GeradorProposta() {
                 )}
               </button>
               {status === "loading" && <LoadingEtapas />}
-              {fieldsReady && !captchaReady && status !== "loading" && (
-                <span className="text-xs text-zinc-500">
-                  {t({
-                    pt: "Confirme que você não é um robô para gerar",
-                    en: "Confirm you're not a robot to generate",
-                  })}
-                </span>
-              )}
             </div>
 
             <p className="mt-5 font-mono text-[11px] text-zinc-400">
