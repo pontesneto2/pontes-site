@@ -2,6 +2,11 @@ import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import type { Proposal } from "@/components/trabalhe-comigo/types";
 import { checkRateLimit, getClientIp } from "@/lib/proposta/rate-limit.server";
+import {
+  MAX_POR_JANELA,
+  contarPropostasNaJanela,
+  registrarLead,
+} from "@/lib/proposta/leads.server";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const NAME_REGEX = /^[\p{L}][\p{L}\s'’-]{1,}$/u;
@@ -78,6 +83,14 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Too many requests" }, { status: 429 });
   }
 
+  // Limite anti-abuso por e-mail: no máximo MAX_POR_JANELA propostas enviadas na
+  // janela móvel. Fail-open — se o banco não estiver configurado, contarPropostasNaJanela
+  // retorna 0 e o envio segue normal.
+  const jaEnviadas = await contarPropostasNaJanela(email.trim());
+  if (jaEnviadas >= MAX_POR_JANELA) {
+    return NextResponse.json({ ok: false, reason: "limit_reached" }, { status: 429 });
+  }
+
   const apiKey = process.env.RESEND_API_KEY;
   const toEmail = process.env.CONTACT_TO_EMAIL;
   if (!apiKey || !toEmail) {
@@ -115,6 +128,19 @@ export async function POST(request: NextRequest) {
   } catch {
     return NextResponse.json({ error: "Send failed" }, { status: 502 });
   }
+
+  // Registra o lead só depois do envio confirmado — assim a contagem do limite
+  // reflete propostas de fato enviadas. Best-effort: falha aqui não quebra o fluxo.
+  await registrarLead({
+    numero: propostaNumero,
+    email: email.trim(),
+    nome: nome.trim(),
+    whatsapp: whatsapp?.trim() || undefined,
+    proposal,
+    descricao: description?.trim() || undefined,
+    lang,
+    ip,
+  });
 
   // Auto-resposta ao cliente (falha não quebra o fluxo)
   try {
