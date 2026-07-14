@@ -45,7 +45,7 @@ type Props = {
 };
 
 type Stage = "lead" | "preview";
-type SendStatus = "idle" | "sending" | "error";
+type SendStatus = "idle" | "sending" | "error" | "limit";
 
 function blobToBase64(blob: Blob): Promise<string> {
   return new Promise((resolve, reject) => {
@@ -152,10 +152,25 @@ export default function PropostaModal({ proposal, description, numero, open, onC
           lang,
         }),
       });
-      if (!res.ok) throw new Error("failed");
-      setSendStatus("idle");
-      setStage("preview");
-      track("trabalhe_comigo_proposta_enviada", { porte: proposal.porte });
+      const data = (await res.json().catch(() => null)) as
+        | { ok?: boolean; reason?: string }
+        | null;
+
+      if (res.ok && data?.ok) {
+        setSendStatus("idle");
+        setStage("preview");
+        track("trabalhe_comigo_proposta_enviada", { porte: proposal.porte });
+        return;
+      }
+
+      // Limite de 2 propostas por e-mail em 30 dias: mensagem amigável, não erro.
+      if (data?.reason === "limit_reached") {
+        setSendStatus("limit");
+        track("trabalhe_comigo_proposta_limite", { porte: proposal.porte });
+        return;
+      }
+
+      throw new Error("failed");
     } catch {
       setSendStatus("error");
     }
@@ -272,32 +287,61 @@ export default function PropostaModal({ proposal, description, numero, open, onC
                   </span>
                 </label>
 
-                {sendStatus === "error" && (
-                  <p className="mt-3 text-[13px] text-red-500">
-                    {t(
-                      "Não consegui abrir agora. Tente de novo ou fale no WhatsApp.",
-                      "Couldn't open it now. Try again or reach out on WhatsApp."
+                {sendStatus === "limit" ? (
+                  <div className="mt-6 rounded-xl border border-violet-200 bg-violet-50 p-5">
+                    <p className="text-[15px] font-semibold text-zinc-900">
+                      {t(
+                        "Você já enviou 2 propostas nos últimos 30 dias 🙌",
+                        "You've already sent 2 proposals in the last 30 days 🙌"
+                      )}
+                    </p>
+                    <p className="mt-1.5 text-[13.5px] text-zinc-600">
+                      {t(
+                        "Para um novo escopo, me chama direto no WhatsApp que eu monto com você — assim fica mais rápido e pessoal.",
+                        "For a new scope, message me directly on WhatsApp and I'll put it together with you — faster and more personal."
+                      )}
+                    </p>
+                    <a
+                      href={BRAND.whatsappUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => track("trabalhe_comigo_whatsapp_click", { source: "proposta_limite" })}
+                      className="mt-4 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-500 px-6 py-3 text-sm font-semibold text-white transition-all hover:brightness-110"
+                    >
+                      <MessageCircle className="h-4 w-4" />
+                      {t("Falar no WhatsApp", "Chat on WhatsApp")}
+                    </a>
+                  </div>
+                ) : (
+                  <>
+                    {sendStatus === "error" && (
+                      <p className="mt-3 text-[13px] text-red-500">
+                        {t(
+                          "Não consegui abrir agora. Tente de novo ou fale no WhatsApp.",
+                          "Couldn't open it now. Try again or reach out on WhatsApp."
+                        )}
+                      </p>
                     )}
-                  </p>
-                )}
 
-                <button
-                  type="button"
-                  onClick={handleSubmit}
-                  disabled={!canSubmit}
-                  className="mt-6 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-500 px-7 py-3.5 text-sm font-semibold text-white transition-all hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
-                >
-                  {sendStatus === "sending" ? (
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                  ) : (
-                    <ArrowRight className="h-4 w-4" />
-                  )}
-                  {t("Abrir minha proposta", "Open my proposal")}
-                </button>
-                <p className="mt-3 inline-flex items-center gap-1.5 font-mono text-[11px] text-zinc-400">
-                  <ShieldCheck className="h-3.5 w-3.5" />
-                  {t("Seus dados são usados só para este retorno.", "Your data is only used for this follow-up.")}
-                </p>
+                    <button
+                      type="button"
+                      onClick={handleSubmit}
+                      disabled={!canSubmit}
+                      className="mt-6 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-500 px-7 py-3.5 text-sm font-semibold text-white transition-all hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
+                    >
+                      {sendStatus === "sending" ? (
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                      ) : (
+                        <ArrowRight className="h-4 w-4" />
+                      )}
+                      {t("Abrir minha proposta", "Open my proposal")}
+                    </button>
+                    <p className="mt-3 inline-flex items-center gap-1.5 font-mono text-[11px] text-zinc-400">
+                      <ShieldCheck className="h-3.5 w-3.5" />
+                      {t("Seus dados são usados só para este retorno.", "Your data is only used for this follow-up.")}
+                    </p>
+                  </>
+                )}
               </div>
             ) : (
               <>
