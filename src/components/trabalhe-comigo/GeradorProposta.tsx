@@ -125,12 +125,23 @@ export default function GeradorProposta() {
   const honeypotRef = useRef<HTMLInputElement>(null);
   const turnstileRef = useRef<TurnstileInstance | null>(null);
   const [turnstileToken, setTurnstileToken] = useState("");
+  const [captchaUnavailable, setCaptchaUnavailable] = useState(false);
   const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
+
+  // Fail-open: se o widget do Turnstile não emitir um token em tempo hábil
+  // (Cloudflare fora, ad-blocker, domínio fora da allowlist), não travamos o funil.
+  // O servidor mantém honeypot + time-trap + rate-limit como defesa.
+  useEffect(() => {
+    if (!turnstileSiteKey || turnstileToken) return;
+    const id = setTimeout(() => setCaptchaUnavailable(true), 8000);
+    return () => clearTimeout(id);
+  }, [turnstileSiteKey, turnstileToken]);
 
   const fieldsReady =
     tipo !== "" && existente !== "" && urgencia !== "" && description.trim().length >= 20;
-  // Sem site key configurada (ex.: dev), o captcha não bloqueia — espelha o bypass do servidor.
-  const captchaReady = !turnstileSiteKey || turnstileToken !== "";
+  // Sem site key (dev) OU token resolvido OU captcha indisponível: não bloqueia.
+  // Espelha o fail-open do servidor — o widget nunca derruba o funil sozinho.
+  const captchaReady = !turnstileSiteKey || turnstileToken !== "" || captchaUnavailable;
   const canGenerate = fieldsReady && captchaReady;
 
   // Prefill vindo da seção de Serviços: a seleção alimenta a descrição e os
@@ -308,9 +319,15 @@ export default function GeradorProposta() {
                   ref={turnstileRef}
                   siteKey={turnstileSiteKey}
                   options={{ theme: "dark", size: "flexible", language: lang }}
-                  onSuccess={setTurnstileToken}
+                  onSuccess={(token) => {
+                    setTurnstileToken(token);
+                    setCaptchaUnavailable(false);
+                  }}
                   onExpire={() => setTurnstileToken("")}
-                  onError={() => setTurnstileToken("")}
+                  onError={() => {
+                    setTurnstileToken("");
+                    setCaptchaUnavailable(true);
+                  }}
                 />
               </div>
             )}
@@ -345,7 +362,7 @@ export default function GeradorProposta() {
               )}
             </div>
 
-            <p className="mt-5 font-mono text-[11px] text-zinc-500">
+            <p className="mt-5 font-mono text-[11px] text-zinc-400">
               {t({
                 pt: "* Estimativa preliminar gerada por IA. Os valores são uma faixa de referência, não uma cotação fechada. Cada projeto vira uma proposta personalizada depois de eu entender o contexto.",
                 en: "* Preliminary AI-generated estimate. The figures are a reference range, not a closed quote. Every project becomes a personalized proposal once I understand the context.",

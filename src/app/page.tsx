@@ -146,6 +146,8 @@ export default function Page() {
     updateFeaturedScrollProgress();
     window.addEventListener("resize", updateFeaturedScrollProgress);
     return () => window.removeEventListener("resize", updateFeaturedScrollProgress);
+    // Só precisa rodar no mount: registra o listener de resize uma vez.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -628,7 +630,7 @@ export default function Page() {
         pt: "Engenheiro de Software | Gerenciamento de Projeto",
         en: "Software Engineer | Project Management",
       },
-      period: "06/2025-07/2026",
+      period: "06/2025–07/2026",
       location: "Fortaleza - CE",
     },
     {
@@ -637,15 +639,15 @@ export default function Page() {
       period: "2024–2025",
       remote: true,
       languages: "PT/EN",
-      location: "Dublin - Irlanda, UK",
+      location: "Dublin - Irlanda",
     },
     {
-      company: "FedEX Services",
+      company: "FedEx Services",
       role: { pt: "Sênior Desenvolvedor Full Stack", en: "Senior Full Stack Developer" },
       period: "2024–2025",
       remote: true,
       languages: "PT/EN",
-      location: "Dublin - Irlanda, UK",
+      location: "Dublin - Irlanda",
     },
     {
       company: "Instituto Anjos Digitais",
@@ -865,7 +867,7 @@ export default function Page() {
         <main id="content">
           <Hero />
 
-          {/* SOBRE - placeholder provisório */}
+          {/* SOBRE — bio / formação */}
           <section
             id="intro"
             className="relative py-14 border-t border-white/5"
@@ -879,8 +881,8 @@ export default function Page() {
                 className="text-white text-base sm:text-lg leading-relaxed"
               >
                 {t({
-                  pt: "Graduado em Análise e Desenvolvimento de Sistemas pela Universidade Farias Brito, em Fortaleza. Pós Graduado em Engenharia de Software com ênfase em Devops*. Especializado em Desenvolvimento Full Stack pela Digital College. Especializado em UX/UI e design de Produtos Digitais pela EBAC*.",
-                  en: "Bachelor's degree in Systems Analysis and Development from Universidade Farias Brito, in Fortaleza. Postgraduate in Software Engineering with an emphasis on DevOps*. Specialized in Full Stack Development from Digital College. Specialized in UX/UI and Digital Product Design from EBAC*.",
+                  pt: "Graduado em Análise e Desenvolvimento de Sistemas pela Universidade Farias Brito, em Fortaleza. Pós Graduado em Engenharia de Software com ênfase em DevOps. Especializado em Desenvolvimento Full Stack pela Digital College. Especializado em UX/UI e design de Produtos Digitais pela EBAC.",
+                  en: "Bachelor's degree in Systems Analysis and Development from Universidade Farias Brito, in Fortaleza. Postgraduate in Software Engineering with an emphasis on DevOps. Specialized in Full Stack Development from Digital College. Specialized in UX/UI and Digital Product Design from EBAC.",
                 })}
               </motion.p>
 
@@ -961,8 +963,8 @@ export default function Page() {
                         })}{" "}
                         <span className="italic text-violet-300">
                           {t({
-                            pt: "Uso, automatizo e me especializo cada vez mais em Inteligência Artificial mas ainda sou da geração old school que codificava na mão consultando o stackoverflow*, rs. Seja bem vindo ao meu portfólio.",
-                            en: "I use, automate and keep specializing in Artificial Intelligence — but the old-school generation that used to hand-code while checking StackOverflow* is still alive, ha. Welcome to my portfolio.",
+                            pt: "Uso, automatizo e me especializo cada vez mais em Inteligência Artificial mas ainda sou da geração old school que codificava na mão consultando o Stack Overflow, rs. Seja bem vindo ao meu portfólio.",
+                            en: "I use, automate and keep specializing in Artificial Intelligence — but the old-school generation that used to hand-code while checking Stack Overflow is still alive, ha. Welcome to my portfolio.",
                           })}
                         </span>
                       </p>
@@ -1246,7 +1248,7 @@ export default function Page() {
                   >
                     {featuredCurrentIndex + 1}/{featuredProjects.length - 1}
                   </p>
-                  <p className="mt-2.5 text-center text-[11.5px] leading-none text-zinc-500">
+                  <p className="mt-2.5 text-center text-[11.5px] leading-none text-zinc-400">
                     {featuredProjects[featuredCurrentIndex + 1]?.title}
                   </p>
                 </div>

@@ -5,7 +5,9 @@ const description =
   "Política de privacidade do site pessoal de Francisco Pontes, em conformidade com a LGPD (Lei nº 13.709/2018).";
 
 export const metadata: Metadata = {
-  title,
+  // `absolute` evita que o template "%s — Francisco Pontes" do layout raiz
+  // duplique o sufixo (o título já o inclui).
+  title: { absolute: title },
   description,
   alternates: {
     canonical: "/privacidade",
