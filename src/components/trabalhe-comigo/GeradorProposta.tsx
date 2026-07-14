@@ -108,6 +108,13 @@ function SelectField({
 
 type Status = "idle" | "loading" | "success" | "fallback";
 
+// Sitekey PÚBLICA do widget Turnstile de produção (fcopts.com.br). Fica no código,
+// e não numa env var, de propósito: a sitekey é pública por design (vai no bundle do
+// cliente) e presa ao domínio pela allowlist de hostnames do Cloudflare. Uma env var
+// mal digitada (um "A" a mais: 0x4AAAAAAAD047…) já quebrou a produção com erro 400020,
+// então a fonte da verdade mora aqui, revisável em code review.
+const TURNSTILE_SITE_KEY = "0x4AAAAAD047ugNsqnSuI1D";
+
 export default function GeradorProposta() {
   const { lang } = useLanguage();
   const t = (v: Bilingual) => tr(lang, v);
@@ -126,7 +133,13 @@ export default function GeradorProposta() {
   const turnstileRef = useRef<TurnstileInstance | null>(null);
   const [turnstileToken, setTurnstileToken] = useState("");
   const [captchaUnavailable, setCaptchaUnavailable] = useState(false);
-  const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
+  // Produção usa sempre a sitekey do código (ignora env var, que pode estar mal
+  // digitada). Em dev, dá pra sobrescrever com a chave de teste "always pass" via
+  // NEXT_PUBLIC_TURNSTILE_SITE_KEY no .env.local.
+  const turnstileSiteKey =
+    process.env.NODE_ENV === "development"
+      ? process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY?.trim() || TURNSTILE_SITE_KEY
+      : TURNSTILE_SITE_KEY;
 
   // Fail-open: se o widget do Turnstile não emitir um token em tempo hábil
   // (Cloudflare fora, ad-blocker, domínio fora da allowlist), não travamos o funil.
