@@ -20,6 +20,8 @@ Portfólio construído em Next.js (App Router), sem CMS e sem libs de i18n/UI de
 
 **Animações orientadas a viewport.** Framer Motion com `whileInView` em vez de animar tudo no mount — cada seção só anima quando entra na tela, reduzindo trabalho de layout/paint no carregamento inicial.
 
+**Landing comercial com gerador de proposta por IA.** A página `/trabalhe-comigo` (redirect 308 de `/work-with-me`) tem um gerador de proposta: o Route Handler `src/app/api/proposta/route.ts` valida um captcha Cloudflare Turnstile, aplica rate limit e honeypot, chama a Anthropic API (`claude-haiku-4-5`) e devolve uma proposta estruturada com preço/prazo determinísticos (`src/lib/proposta/pricing.server.ts`) — com fallback pro WhatsApp se algo falhar. A proposta gerada vira PDF (`@react-pdf/renderer` + QR code) e pode ser enviada por e-mail via `src/app/api/proposta-send/route.ts`.
+
 ## Stack
 
 | Camada | Escolha | Por quê |
@@ -38,23 +40,30 @@ src/
 ├── app/
 │   ├── layout.tsx        # metadata, fontes, LanguageProvider
 │   ├── page.tsx          # hero, seções, carrossel de projetos
-│   ├── case/<slug>/      # case studies (imidooh, erp-estrela)
+│   ├── trabalhe-comigo/  # landing comercial + gerador de proposta por IA
+│   ├── case/<slug>/      # case studies (ucopiloto, imidooh)
 │   ├── privacidade/      # política de privacidade (LGPD)
-│   ├── api/contact/      # Route Handler: validação + Resend
+│   ├── api/
+│   │   ├── contact/      # Route Handler: validação + Resend
+│   │   ├── github-stats/ # proxy cacheado da API pública do GitHub
+│   │   ├── proposta/     # Turnstile + rate limit + Anthropic → proposta
+│   │   └── proposta-send/# envia o PDF da proposta por e-mail (Resend)
 │   ├── sitemap.ts        # MetadataRoute.Sitemap
 │   └── robots.ts         # MetadataRoute.Robots
 ├── components/
+│   ├── Hero.tsx, SiteHeader.tsx, SiteFooter.tsx, Preloader.tsx
 │   ├── ContactForm.tsx
-│   ├── FloatingIcons3D.tsx
-│   ├── GithubStats.tsx   # fetch client-side na API pública do GitHub
+│   ├── GithubStats.tsx   # estatísticas do GitHub (via /api/github-stats)
 │   ├── SkillsTools.tsx
 │   ├── Testimonials.tsx
-│   └── case/             # blocos reutilizados nas páginas de case study
+│   ├── case/             # blocos reutilizados nas páginas de case study
+│   └── trabalhe-comigo/  # seções da landing + gerador/PDF de proposta
 ├── data/testimonials.json
 └── lib/
     ├── language-context.tsx  # provider de i18n + helper tr()
     ├── constants.ts
-    └── fonts.ts
+    ├── fonts.ts
+    └── proposta/             # pricing, rate limit e Turnstile (server-side)
 ```
 
 ## Rodando localmente
@@ -67,9 +76,16 @@ npm run dev        # http://localhost:3000
 Variáveis de ambiente (`.env.local`):
 
 ```bash
-RESEND_API_KEY=         # sem isso, a rota /api/contact responde 503
-CONTACT_TO_EMAIL=
-NEXT_PUBLIC_SITE_URL=   # opcional, default https://fcopts.com.br
+RESEND_API_KEY=                  # sem isso, /api/contact e /api/proposta-send respondem 503
+CONTACT_TO_EMAIL=                # destino dos e-mails do formulário/proposta
+GITHUB_TOKEN=                    # opcional, eleva o rate limit de /api/github-stats
+ANTHROPIC_API_KEY=               # gerador de proposta por IA; sem isso, cai no fallback
+NEXT_PUBLIC_SITE_URL=            # opcional, default https://fcopts.com.br
+# Cloudflare Turnstile (anti-spam do gerador de proposta).
+# Chaves de teste "always pass" para dev:
+#   site 1x00000000000000000000AA / secret 1x0000000000000000000000000000000AA
+NEXT_PUBLIC_TURNSTILE_SITE_KEY=
+TURNSTILE_SECRET_KEY=
 ```
 
 ```bash
