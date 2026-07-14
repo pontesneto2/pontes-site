@@ -27,6 +27,18 @@ function emailWrapper(innerHtml: string, footerText?: string) {
   `;
 }
 
+// Top row of the auto-reply: site address (orients the reader) + a "received" status pill.
+function emailHeaderRow(statusLabel: string) {
+  return `
+    <table role="presentation" width="100%" style="border-collapse:collapse;margin:0 0 20px;">
+      <tr>
+        <td style="font-size:12px;letter-spacing:.04em;color:#a855f7;font-weight:700;vertical-align:middle;">fcopts.com.br</td>
+        <td style="text-align:right;vertical-align:middle;"><span style="display:inline-block;background-color:#f3e8ff;color:#a855f7;font-size:11px;font-weight:700;letter-spacing:.02em;padding:5px 12px;border-radius:999px;">&#10003; ${statusLabel}</span></td>
+      </tr>
+    </table>
+  `;
+}
+
 export async function POST(request: NextRequest) {
   const body = await request.json().catch(() => null);
 
@@ -109,11 +121,11 @@ export async function POST(request: NextRequest) {
         </tr>
         <tr>
           <td style="padding:6px 0;color:#8b8594;vertical-align:top;">E-mail</td>
-          <td style="padding:6px 0;">${escapeHtml(email.trim())}</td>
+          <td style="padding:6px 0;"><a href="mailto:${escapeHtml(email.trim())}" style="color:#a855f7;text-decoration:none;">${escapeHtml(email.trim())}</a></td>
         </tr>
         ${
           phone?.trim()
-            ? `<tr><td style="padding:6px 0;color:#8b8594;vertical-align:top;">Telefone</td><td style="padding:6px 0;">${escapeHtml(phone.trim())}</td></tr>`
+            ? `<tr><td style="padding:6px 0;color:#8b8594;vertical-align:top;">Telefone</td><td style="padding:6px 0;"><a href="https://wa.me/${phone.replace(/\D/g, "")}" style="color:#a855f7;text-decoration:none;">${escapeHtml(phone.trim())}</a></td></tr>`
             : ""
         }
         ${
@@ -124,6 +136,9 @@ export async function POST(request: NextRequest) {
       </table>
       <p style="margin:22px 0 6px;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#8b8594;font-weight:700;">Mensagem</p>
       <p style="margin:0;font-size:14px;line-height:1.6;color:#18181b;">${toHtmlLines(message.trim())}</p>
+      <div style="margin:28px 0 0;">
+        <a href="mailto:${escapeHtml(email.trim())}" style="display:inline-block;background-color:#a855f7;color:#ffffff;font-size:14px;font-weight:700;text-decoration:none;padding:12px 22px;border-radius:10px;">Responder para ${escapeHtml(name.trim())}</a>
+      </div>
     `);
 
     const { error } = await resend.emails.send({
@@ -143,43 +158,41 @@ export async function POST(request: NextRequest) {
       const autoReplyHtml = isEnglish
         ? emailWrapper(
             `
-              <p style="margin:0 0 4px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#a855f7;font-weight:700;">Francisco Pontes</p>
-              <h1 style="margin:0 0 18px;font-size:21px;line-height:1.3;color:#18181b;">Hi, ${escapeHtml(name.trim())}!</h1>
-              <p style="margin:0 0 14px;font-size:15px;line-height:1.65;color:#3f3f46;">I received your message through the contact form on my portfolio — thanks so much for reaching out!</p>
-              <p style="margin:0 0 22px;font-size:15px;line-height:1.65;color:#3f3f46;">I'll read it carefully and get back to you as soon as possible, directly at the email you used here or by phone/WhatsApp if you prefer. If you'd like to add anything, feel free to just reply to this email.</p>
+              ${emailHeaderRow("Received")}
+              <h1 style="margin:0 0 16px;font-size:21px;line-height:1.3;color:#18181b;">I received your message.</h1>
+              <p style="margin:0 0 24px;font-size:15px;line-height:1.65;color:#3f3f46;">Thanks for writing through my portfolio! I'll read it carefully and get back to you soon, at the email you used here.</p>
               <div style="background-color:#faf9fc;border:1px solid #ece9f5;border-radius:12px;padding:16px 18px;margin:0 0 24px;">
                 <p style="margin:0 0 8px;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#8b8594;font-weight:700;">Your message</p>
                 <p style="margin:0;font-size:14px;line-height:1.6;color:#3f3f46;">${toHtmlLines(message.trim())}</p>
               </div>
               <p style="margin:0 0 4px;font-size:14px;color:#3f3f46;">Other ways to reach me:</p>
-              <p style="margin:0 0 24px;font-size:14px;color:#3f3f46;">Email: <a href="mailto:contato@fcopts.com.br" style="color:#a855f7;text-decoration:none;">contato@fcopts.com.br</a><br />WhatsApp: <a href="https://wa.me/5585981888896" style="color:#a855f7;text-decoration:none;">+55 85 98188-8896</a></p>
-              <p style="margin:0;font-size:14px;color:#3f3f46;">Talk soon,<br /><strong>Francisco Pontes</strong></p>
+              <p style="margin:0 0 20px;font-size:14px;color:#3f3f46;">Email: <a href="mailto:contato@fcopts.com.br" style="color:#a855f7;text-decoration:none;">contato@fcopts.com.br</a><br />WhatsApp: <a href="https://wa.me/5585981888896" style="color:#a855f7;text-decoration:none;">+55 85 98188-8896</a></p>
+              <p style="margin:0;padding-top:20px;border-top:1px solid #ece9f5;font-size:14px;color:#3f3f46;">Talk soon,<br /><strong>Francisco Pontes</strong></p>
             `,
             "You're receiving this email because you sent a message on fcopts.com.br"
           )
         : emailWrapper(
             `
-              <p style="margin:0 0 4px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#a855f7;font-weight:700;">Francisco Pontes</p>
-              <h1 style="margin:0 0 18px;font-size:21px;line-height:1.3;color:#18181b;">Olá, ${escapeHtml(name.trim())}!</h1>
-              <p style="margin:0 0 14px;font-size:15px;line-height:1.65;color:#3f3f46;">Recebi sua mensagem pelo formulário de contato do meu portfólio — muito obrigado por escrever!</p>
-              <p style="margin:0 0 22px;font-size:15px;line-height:1.65;color:#3f3f46;">Vou ler com calma e te responder o quanto antes, direto no e-mail que você usou aqui ou por telefone/WhatsApp, se preferir. Se quiser complementar algo, pode responder este e-mail mesmo, sem problema.</p>
+              ${emailHeaderRow("Recebido")}
+              <h1 style="margin:0 0 16px;font-size:21px;line-height:1.3;color:#18181b;">Recebi sua mensagem.</h1>
+              <p style="margin:0 0 24px;font-size:15px;line-height:1.65;color:#3f3f46;">Obrigado por escrever pelo meu portfólio! Vou ler com atenção e te respondo em breve, no e-mail que você usou aqui.</p>
               <div style="background-color:#faf9fc;border:1px solid #ece9f5;border-radius:12px;padding:16px 18px;margin:0 0 24px;">
                 <p style="margin:0 0 8px;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#8b8594;font-weight:700;">Sua mensagem</p>
                 <p style="margin:0;font-size:14px;line-height:1.6;color:#3f3f46;">${toHtmlLines(message.trim())}</p>
               </div>
               <p style="margin:0 0 4px;font-size:14px;color:#3f3f46;">Outras formas de falar comigo:</p>
-              <p style="margin:0 0 24px;font-size:14px;color:#3f3f46;">E-mail: <a href="mailto:contato@fcopts.com.br" style="color:#a855f7;text-decoration:none;">contato@fcopts.com.br</a><br />WhatsApp: <a href="https://wa.me/5585981888896" style="color:#a855f7;text-decoration:none;">+55 85 98188-8896</a></p>
-              <p style="margin:0;font-size:14px;color:#3f3f46;">Até já,<br /><strong>Francisco Pontes</strong></p>
+              <p style="margin:0 0 20px;font-size:14px;color:#3f3f46;">E-mail: <a href="mailto:contato@fcopts.com.br" style="color:#a855f7;text-decoration:none;">contato@fcopts.com.br</a><br />WhatsApp: <a href="https://wa.me/5585981888896" style="color:#a855f7;text-decoration:none;">+55 85 98188-8896</a></p>
+              <p style="margin:0;padding-top:20px;border-top:1px solid #ece9f5;font-size:14px;color:#3f3f46;">Até já,<br /><strong>Francisco Pontes</strong></p>
             `,
             "Você recebeu este e-mail porque enviou uma mensagem em fcopts.com.br"
           );
 
       await resend.emails.send({
-        from: "Francisco Pontes <contato@fcopts.com.br>",
+        from: "Site Francisco Pontes <contato@fcopts.com.br>",
         to: email.trim(),
         subject: isEnglish
-          ? "I received your message — Francisco Pontes"
-          : "Recebi sua mensagem — Francisco Pontes",
+          ? `Thanks for reaching out, ${name.trim()}!`
+          : `Obrigado pelo contato, ${name.trim()}!`,
         html: autoReplyHtml,
       });
     } catch (autoReplyError) {
