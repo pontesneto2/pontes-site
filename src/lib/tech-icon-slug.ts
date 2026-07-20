@@ -18,6 +18,12 @@ const TECH_ICON_SLUGS: Record<string, string> = {
   MySQL: "mysql",
   MongoDB: "mongodb",
   Figma: "figma",
+  ".NET": "dotnet",
+  "C#": "csharp",
+  PHP: "php",
+  Kubernetes: "kubernetes",
+  Grafana: "grafana",
+  Prometheus: "prometheus",
 };
 
 export function getTechIconSlug(tag: string): string | undefined {
