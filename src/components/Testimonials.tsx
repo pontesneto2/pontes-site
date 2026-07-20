@@ -82,6 +82,8 @@ export default function Testimonials() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [thumbWidth, setThumbWidth] = useState(50);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const items = testimonials as Testimonial[];
   const wheelAccumRef = useRef(0);
   const wheelResetTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const touchStartXRef = useRef<number | null>(null);
@@ -93,6 +95,14 @@ export default function Testimonials() {
     const maxScroll = el.scrollWidth - el.clientWidth;
     setScrollProgress(maxScroll > 0 ? el.scrollLeft / maxScroll : 0);
     setThumbWidth(Math.min(100, (el.clientWidth / el.scrollWidth) * 100));
+
+    const firstCard = el.children[0] as HTMLElement | undefined;
+    if (firstCard) {
+      const gap = 24;
+      const cardStep = firstCard.offsetWidth + gap;
+      const index = Math.round(el.scrollLeft / cardStep);
+      setCurrentIndex(Math.max(0, Math.min(items.length - 1, index)));
+    }
   };
 
   const isAtEnd = () => {
@@ -174,7 +184,7 @@ export default function Testimonials() {
             onTouchEnd={handleTouchEnd}
             className="flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth pt-1 pb-4 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
           >
-            {(testimonials as Testimonial[]).map((item) => (
+            {items.map((item) => (
               <div
                 key={item.name}
                 className="snap-start shrink-0 w-full sm:w-[calc(50%-0.75rem)]"
@@ -184,7 +194,7 @@ export default function Testimonials() {
             ))}
           </div>
 
-          <div className="mt-4 mx-auto h-1.5 w-full max-w-xs rounded-full bg-white/10 overflow-hidden">
+          <div className="mt-3 mx-auto h-1.5 w-full max-w-xs rounded-full bg-white/10 overflow-hidden">
             <div
               className="h-full rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500 transition-[margin-left] duration-150"
               style={{
@@ -193,8 +203,14 @@ export default function Testimonials() {
               }}
             />
           </div>
+          <p
+            className="mt-4 text-center text-lg font-semibold leading-none tabular-nums"
+            style={{ fontFamily: "var(--font-space-grotesk)", color: "#e879f9" }}
+          >
+            {currentIndex + 1}/{items.length}
+          </p>
 
-          <div className="mt-4 text-center">
+          <div className="mt-1.5 text-center">
             <a
               href="https://www.linkedin.com/in/fcopts/details/recommendations/?detailScreenTabIndex=0"
               target="_blank"

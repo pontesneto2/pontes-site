@@ -6,8 +6,10 @@ import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import LanguageSwitch from "@/components/LanguageSwitch";
 import SearchBox from "@/components/SearchBox";
-import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
-import { CV_URL } from "@/lib/constants";
+import { useLanguage, tr, LANG_FLAG, type Bilingual } from "@/lib/language-context";
+import { getCvUrl, CV_URL_PT, CV_URL_EN } from "@/lib/constants";
+
+const isCvUrl = (href: string) => href === CV_URL_PT || href === CV_URL_EN;
 
 export type SearchEntry = { label: string; href: string; group: Bilingual };
 
@@ -28,15 +30,12 @@ function goTo(href: string) {
   }
 }
 
-const DEFAULT_CTA = {
-  label: { pt: "Baixar CV", en: "Download CV" } as Bilingual,
-  href: CV_URL,
-};
+const DEFAULT_CTA_LABEL: Bilingual = { pt: "Baixar CV", en: "Download CV" };
 
 export default function SiteHeader({
   navLinks = DEFAULT_NAV_LINKS,
   searchIndex = [],
-  cta = DEFAULT_CTA,
+  cta,
   secondaryCta,
   ctaBadge,
 }: {
@@ -48,8 +47,11 @@ export default function SiteHeader({
 }) {
   const { lang, setLang } = useLanguage();
   const t = (v: Bilingual) => tr(lang, v);
-  const ctaIsExternal = cta.href.startsWith("http");
+  const effectiveCta = cta ?? { label: DEFAULT_CTA_LABEL, href: getCvUrl(lang) };
+  const ctaIsExternal = effectiveCta.href.startsWith("http");
   const secondaryIsExternal = secondaryCta?.href.startsWith("http") ?? false;
+  const ctaFlag = isCvUrl(effectiveCta.href) ? LANG_FLAG[lang] : null;
+  const secondaryCtaFlag = secondaryCta && isCvUrl(secondaryCta.href) ? LANG_FLAG[lang] : null;
 
   const [navOpen, setNavOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -126,17 +128,21 @@ export default function SiteHeader({
                 <a
                   href={secondaryCta.href}
                   {...(secondaryIsExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                  className="px-3 py-1.5 rounded-xl border border-white/20 text-zinc-200 hover:bg-white/5 hover:text-white transition-colors"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-white/20 text-zinc-200 hover:bg-white/5 hover:text-white transition-colors"
                 >
                   {t(secondaryCta.label)}
+                  {secondaryCtaFlag && (
+                    <span className="text-[0.85em] leading-none">{secondaryCtaFlag}</span>
+                  )}
                 </a>
               )}
               <a
-                href={cta.href}
+                href={effectiveCta.href}
                 {...(ctaIsExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                className="relative px-3 py-1.5 rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-500 text-white shadow-lg shadow-fuchsia-700/20"
+                className="relative inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-500 text-white shadow-lg shadow-fuchsia-700/20"
               >
-                {t(cta.label)}
+                {t(effectiveCta.label)}
+                {ctaFlag && <span className="text-[0.85em] leading-none">{ctaFlag}</span>}
                 {ctaBadge && (
                   <span className="absolute -right-2 -top-1.5 rotate-12 rounded-full bg-amber-400 px-1 py-px text-[8px] font-bold uppercase leading-none tracking-wide text-zinc-950 shadow-sm shadow-black/30">
                     {t(ctaBadge)}
@@ -186,12 +192,13 @@ export default function SiteHeader({
         <div id="mobile-nav" className="md:hidden border-t border-white/5 bg-[#141418]">
           <div className="mx-auto max-w-7xl px-3 py-4 flex flex-col gap-2">
             <a
-              href={cta.href}
+              href={effectiveCta.href}
               {...(ctaIsExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-              className="relative text-center rounded-xl px-3 py-3 bg-gradient-to-r from-violet-600 to-fuchsia-500 text-white font-medium shadow-lg shadow-fuchsia-700/20"
+              className="relative flex items-center justify-center gap-1.5 rounded-xl px-3 py-3 bg-gradient-to-r from-violet-600 to-fuchsia-500 text-white font-medium shadow-lg shadow-fuchsia-700/20"
               onClick={() => setNavOpen(false)}
             >
-              {t(cta.label)}
+              {t(effectiveCta.label)}
+              {ctaFlag && <span className="text-[0.85em] leading-none">{ctaFlag}</span>}
               {ctaBadge && (
                 <span className="absolute -top-1.5 right-3 rotate-12 rounded-full bg-amber-400 px-1 py-px text-[8px] font-bold uppercase leading-none tracking-wide text-zinc-950 shadow-sm shadow-black/30">
                   {t(ctaBadge)}
@@ -202,10 +209,13 @@ export default function SiteHeader({
               <a
                 href={secondaryCta.href}
                 {...(secondaryIsExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                className="text-center rounded-xl px-3 py-3 border border-white/15 text-zinc-200 hover:bg-white/5 transition-colors"
+                className="flex items-center justify-center gap-1.5 rounded-xl px-3 py-3 border border-white/15 text-zinc-200 hover:bg-white/5 transition-colors"
                 onClick={() => setNavOpen(false)}
               >
                 {t(secondaryCta.label)}
+                {secondaryCtaFlag && (
+                  <span className="text-[0.85em] leading-none">{secondaryCtaFlag}</span>
+                )}
               </a>
             )}
             {navLinks.map((link) => (
