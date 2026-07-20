@@ -19,6 +19,7 @@ export const DEFAULT_NAV_LINKS = [
   { href: "/#skills-tools", label: { pt: "Skills & Tools", en: "Skills & Tools" } },
   { href: "/#projects", label: { pt: "Projetos", en: "Projects" } },
   { href: "/#experience", label: { pt: "Trajetória", en: "Journey" } },
+  { href: "/blog", label: { pt: "Blog", en: "Blog" } },
   { href: "/#about", label: { pt: "Contato", en: "Contact" } },
 ];
 

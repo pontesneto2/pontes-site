@@ -37,6 +37,10 @@ export default function SiteFooter() {
         >
           {t({ pt: "Hospedado na Vercel", en: "Hosted on Vercel" })}
         </a>
+        <span className="text-zinc-700">·</span>
+        <Link href="/blog" className="text-zinc-400 hover:text-zinc-200 transition-colors">
+          {t({ pt: "Conheça meu blog", en: "Check out my blog" })}
+        </Link>
       </div>
     </footer>
   );
