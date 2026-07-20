@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import { Github, Linkedin, Mail, FileDown } from "lucide-react";
-import { useLanguage, tr } from "@/lib/language-context";
-import { CV_URL } from "@/lib/constants";
+import { useLanguage, tr, LANG_FLAG } from "@/lib/language-context";
+import { getCvUrl } from "@/lib/constants";
 import Reveal from "./Reveal";
 
 function WhatsappIcon({ className }: { className?: string }) {
@@ -77,13 +77,16 @@ export default function SobreMim() {
           <Mail className="h-5 w-5" />
         </a>
         <a
-          href={CV_URL}
+          href={getCvUrl(lang)}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2.5 text-sm font-semibold text-zinc-300 transition-all hover:scale-[1.02] hover:border-violet-400/40 hover:bg-violet-500/10 hover:text-violet-200"
         >
           <FileDown className="h-4 w-4" />
           {tr(lang, { pt: "Baixar CV", en: "Download CV" })}
+          <span aria-hidden="true" className="text-[0.9em] leading-none">
+            {LANG_FLAG[lang]}
+          </span>
         </a>
       </Reveal>
     </div>

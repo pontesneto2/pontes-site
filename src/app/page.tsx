@@ -11,8 +11,8 @@ import SkillsTools, { SKILL_NAMES } from "@/components/SkillsTools";
 import SiteHeader, { type SearchEntry } from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import Preloader from "@/components/Preloader";
-import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
-import { CV_URL } from "@/lib/constants";
+import { useLanguage, tr, LANG_FLAG, type Bilingual } from "@/lib/language-context";
+import { getCvUrl } from "@/lib/constants";
 import {
   Code,
   Mail,
@@ -31,6 +31,11 @@ import {
   TrendingDown,
   Rocket,
   FileText,
+  Monitor,
+  Layers,
+  Globe,
+  RefreshCcw,
+  AppWindow,
   type LucideIcon,
 } from "lucide-react";
 import {
@@ -112,6 +117,65 @@ function ProjectTagIcon({
     >
       <Icon className={iconClass} />
     </span>
+  );
+}
+
+const categoryBadgeMap: Record<string, { icon: LucideIcon; className: string }> = {
+  "Sistema Web+Admin": {
+    icon: Monitor,
+    className: "bg-blue-500/10 border-blue-400/30 text-blue-300",
+  },
+  "Web System+Admin": {
+    icon: Monitor,
+    className: "bg-blue-500/10 border-blue-400/30 text-blue-300",
+  },
+  "Aplicativo Mobile Nativo": {
+    icon: Smartphone,
+    className: "bg-emerald-500/10 border-emerald-400/30 text-emerald-300",
+  },
+  "Native Mobile App": {
+    icon: Smartphone,
+    className: "bg-emerald-500/10 border-emerald-400/30 text-emerald-300",
+  },
+  "Aplicativo PWA": {
+    icon: AppWindow,
+    className: "bg-amber-500/10 border-amber-400/30 text-amber-300",
+  },
+  "PWA App": {
+    icon: AppWindow,
+    className: "bg-amber-500/10 border-amber-400/30 text-amber-300",
+  },
+  "Site Institucional": {
+    icon: Globe,
+    className: "bg-fuchsia-500/10 border-fuchsia-400/30 text-fuchsia-300",
+  },
+  "Institutional Website": {
+    icon: Globe,
+    className: "bg-fuchsia-500/10 border-fuchsia-400/30 text-fuchsia-300",
+  },
+};
+
+function CategoryPill({ label }: { label: string }) {
+  const config = categoryBadgeMap[label];
+  const Icon = config?.icon ?? Code;
+  const className = config?.className ?? "bg-white/10 border-white/20 text-violet-200";
+  return (
+    <span
+      className={`inline-flex items-center gap-1.5 w-fit px-2.5 py-1 rounded-md text-[10px] font-medium border ${className}`}
+    >
+      <Icon className="h-3 w-3" />
+      {label}
+    </span>
+  );
+}
+
+function CategoryBadge({ labels, compact = false }: { labels: string[]; compact?: boolean }) {
+  return (
+    <div className={`flex flex-wrap gap-1.5 ${compact ? "mb-2" : "mb-4"}`}>
+      {labels.map((l) => (
+        <CategoryPill key={l} label={l} />
+      ))}
+    </div>
   );
 }
 
@@ -218,6 +282,7 @@ export default function Page() {
   };
 
   const FEATURED_PROJECT_BG = "bg-gradient-to-br from-violet-600/60 via-purple-800/55 to-purple-950/65";
+  const NEUTRAL_BG = "bg-zinc-700/40";
 
   const featuredProjects: Array<{
     title: string;
@@ -230,13 +295,40 @@ export default function Page() {
     private?: boolean;
     ctaLabel?: Bilingual;
     blurb: Bilingual;
-    category: Bilingual;
+    category: Bilingual[];
     thumb: string;
     highlights?: Array<{ icon: LucideIcon; value: Bilingual }>;
     impact?: Array<{ icon: LucideIcon; value: Bilingual; label: Bilingual }>;
     bgClass: string;
     scrimClass?: string;
+    productionBadge?: boolean;
   }> = [
+    {
+      title: "SDA Ceará - App Mobile",
+      subtitle: { pt: "", en: "" },
+      tags: ["React Native", "PostgreSQL", ".NET", "C#", "PHP", "Docker", "Kubernetes", "Grafana", "Prometheus"],
+      link: "https://apps.apple.com/br/app/sda-cear%C3%A1/id1465592742",
+      ctaLabel: { pt: "Confira nas lojas iOS e Android", en: "Get it on iOS and Android" },
+      blurb: {
+        pt: "Aplicativo móvel para gerenciamento e acompanhamento dos setores da Secretaria do Desenvolvimento Agrário do Ceará, centralizando processos e indicadores administrativos em um só lugar.",
+        en: "Mobile app to manage and track the sectors of Ceará's State Agrarian Development Department, centralizing administrative processes and indicators in one place.",
+      },
+      category: [{ pt: "Aplicativo Mobile Nativo", en: "Native Mobile App" }, { pt: "Sistema Web+Admin", en: "Web System+Admin" }],
+      thumb: "/images/capa-sda-app.png",
+      bgClass: FEATURED_PROJECT_BG,
+      productionBadge: true,
+      highlights: [
+        { icon: Smartphone, value: { pt: "Publicado - iOS e Android", en: "Published - iOS and Android" } },
+        { icon: Briefcase, value: { pt: "Analista de Sistemas", en: "Systems Analyst" } },
+        { icon: Building2, value: { pt: "Idealizador: Governo do Ceará junto com a Secretaria de Desenvolvimento Agrário", en: "Idealized by: Government of Ceará together with the Secretariat of Agrarian Development" } },
+      ],
+      impact: [
+        { icon: Users, value: { pt: "1.000+", en: "1,000+" }, label: { pt: "Usuários ativos", en: "Active users" } },
+        { icon: RefreshCcw, value: { pt: "Refeito", en: "Rebuilt" }, label: { pt: "Back e front migrados por módulos", en: "Backend & frontend migrated by module" } },
+        { icon: Smartphone, value: { pt: "200+", en: "200+" }, label: { pt: "Logins simultâneos", en: "Concurrent logins" } },
+        { icon: Clock, value: { pt: "1,8 anos", en: "1.8 years" }, label: { pt: "Desenvolvimento sem IA", en: "Development without AI" } },
+      ],
+    },
     {
       title: "Ucopiloto - App",
       subtitle: { pt: "", en: "" },
@@ -258,9 +350,9 @@ export default function Page() {
         pt: "Aplicativo para conectar motoristas e oficinas de maneira inteligente, simplificando agendamentos, orçamentos e o acompanhamento de serviços automotivos. Idealizadora: Click Software House.",
         en: "App that connects drivers and repair shops intelligently, simplifying bookings, quotes and tracking of automotive services. Idealized by: Click Software House.",
       },
-      category: { pt: "Aplicativo Mobile + Sistemas Web", en: "Mobile App + Web Systems" },
+      category: [{ pt: "Aplicativo Mobile Nativo", en: "Native Mobile App" }, { pt: "Sistema Web+Admin", en: "Web System+Admin" }],
       thumb: "/images/capa-ucopiloto.png",
-      bgClass: FEATURED_PROJECT_BG,
+      bgClass: NEUTRAL_BG,
       highlights: [
         { icon: Clock, value: { pt: "5 meses de produção", en: "5 months in production" } },
         { icon: Briefcase, value: { pt: "DevOps solo", en: "Solo DevOps" } },
@@ -283,9 +375,9 @@ export default function Page() {
         pt: "Sistema de gestão escolar para o 2º Colégio da Polícia Militar, com acesso controlado por perfil para acompanhamento acadêmico e administrativo.",
         en: "School management system for the 2nd Military Police School, with role-based access for academic and administrative tracking.",
       },
-      category: { pt: "Sistema Web", en: "Web System" },
+      category: [{ pt: "Sistema Web+Admin", en: "Web System+Admin" }, { pt: "Aplicativo PWA", en: "PWA App" }],
       thumb: "/images/img-sist-pol.jpeg",
-      bgClass: FEATURED_PROJECT_BG,
+      bgClass: NEUTRAL_BG,
       highlights: [
         { icon: Clock, value: { pt: "1,2 anos de produção", en: "1.2 years in production" } },
         { icon: Users, value: { pt: "Equipe: 4 → 3 devs", en: "Team: 4 → 3 devs" } },
@@ -300,6 +392,24 @@ export default function Page() {
       ],
     },
     {
+      title: "Fitvo App Mobile",
+      subtitle: { pt: "", en: "" },
+      tags: ["React Native", "PostgreSQL", "NodeJS", "Docker"],
+      link: "",
+      placeholder: true,
+      blurb: {
+        pt: "Ecossistema mobile para educadores físicos, personal trainers, nutricionistas e nutrólogos esportivos, além de clínicas e academias, reunindo agendamentos, planos de treino e acompanhamento de alunos em um único app.",
+        en: "Mobile ecosystem for physical educators, personal trainers, sports nutritionists and doctors, as well as clinics and gyms, bringing scheduling, training plans and student tracking together in a single app.",
+      },
+      category: [{ pt: "Aplicativo Mobile Nativo", en: "Native Mobile App" }, { pt: "Sistema Web+Admin", en: "Web System+Admin" }],
+      thumb: "/images/capa-fitvo.png",
+      bgClass: NEUTRAL_BG,
+      highlights: [
+        { icon: Clock, value: { pt: "Projeto em desenvolvimento", en: "Project in development" } },
+        { icon: Briefcase, value: { pt: "Engenheiro de Software Senior", en: "Senior Software Engineer" } },
+      ],
+    },
+    {
       title: "Sistema FEDAF - Fundo Estadual de Desenvolvimento da Agricultura",
       subtitle: { pt: "", en: "" },
       tags: ["Git", "Docker", "PHP", "Laravel", "Angular", "Scriptcase"],
@@ -309,9 +419,9 @@ export default function Page() {
         pt: "Sistema de gestão do Fundo Estadual de Desenvolvimento da Agricultura Familiar.",
         en: "Management system for the State Fund for Family Agriculture Development.",
       },
-      category: { pt: "Sistema Web", en: "Web System" },
+      category: [{ pt: "Sistema Web+Admin", en: "Web System+Admin" }],
       thumb: "/images/capa-fedaf.png",
-      bgClass: FEATURED_PROJECT_BG,
+      bgClass: NEUTRAL_BG,
       highlights: [
         { icon: Clock, value: { pt: "13 meses de produção", en: "13 months in production" } },
         { icon: Briefcase, value: { pt: "Desenvolvedor Full Stack", en: "Full Stack Developer" } },
@@ -344,9 +454,9 @@ export default function Page() {
         pt: "Plataforma mobile para operar mídia Digital Out Of Home em recursos visuais dos mais diversos tipos.",
         en: "Mobile platform to operate Digital Out Of Home media across all kinds of visual resources.",
       },
-      category: { pt: "Aplicativo Mobile + Sistemas Web", en: "Mobile App + Web Systems" },
+      category: [{ pt: "Aplicativo Mobile Nativo", en: "Native Mobile App" }, { pt: "Sistema Web+Admin", en: "Web System+Admin" }],
       thumb: "/images/capa-imidooh.png",
-      bgClass: FEATURED_PROJECT_BG,
+      bgClass: NEUTRAL_BG,
       highlights: [
         { icon: Clock, value: { pt: "6 meses", en: "6 months" } },
         { icon: Smartphone, value: { pt: "iOS + Android + Web + Admin", en: "iOS + Android + Web + Admin" } },
@@ -363,9 +473,9 @@ export default function Page() {
         pt: "Sistema estadual de cadastro de produtores da agricultura familiar.",
         en: "State-level registry system for family farming producers.",
       },
-      category: { pt: "Sistema Web", en: "Web System" },
+      category: [{ pt: "Sistema Web+Admin", en: "Web System+Admin" }, { pt: "Aplicativo PWA", en: "PWA App" }],
       thumb: "/images/capa-secaf.png",
-      bgClass: FEATURED_PROJECT_BG,
+      bgClass: NEUTRAL_BG,
       highlights: [
         { icon: Clock, value: { pt: "14 meses de produção", en: "14 months in production" } },
         { icon: Briefcase, value: { pt: "Desenvolvedor Full Stack", en: "Full Stack Developer" } },
@@ -386,9 +496,9 @@ export default function Page() {
         pt: "Sistema de gestão institucional para controle de processos administrativos e indicadores internos.",
         en: "Institutional management system for administrative processes and internal indicators.",
       },
-      category: { pt: "Sistema Web", en: "Web System" },
+      category: [{ pt: "Sistema Web+Admin", en: "Web System+Admin" }, { pt: "Aplicativo PWA", en: "PWA App" }],
       thumb: "/images/capa-sigma.png",
-      bgClass: FEATURED_PROJECT_BG,
+      bgClass: NEUTRAL_BG,
       highlights: [
         { icon: Clock, value: { pt: "12 meses de produção", en: "12 months in production" } },
         { icon: Users, value: { pt: "Equipe: 4 devs", en: "Team: 4 devs" } },
@@ -410,9 +520,9 @@ export default function Page() {
         pt: "Sistema de regularização de matrícula de imóveis cedidos para a população do estado do Ceará.",
         en: "System for regularizing land title records granted to the population of Ceará state.",
       },
-      category: { pt: "Sistema Web", en: "Web System" },
+      category: [{ pt: "Sistema Web+Admin", en: "Web System+Admin" }],
       thumb: "/images/capa-idace.png",
-      bgClass: FEATURED_PROJECT_BG,
+      bgClass: NEUTRAL_BG,
       highlights: [
         { icon: Clock, value: { pt: "14 meses de produção", en: "14 months in production" } },
         { icon: Briefcase, value: { pt: "Desenvolvedor Full Stack", en: "Full Stack Developer" } },
@@ -434,9 +544,9 @@ export default function Page() {
         pt: "Painel de acompanhamento de demandas e ações estratégicas da secretaria, com indicadores em tempo real.",
         en: "Dashboard to track the department's demands and strategic actions, with real-time indicators.",
       },
-      category: { pt: "Sistema Web", en: "Web System" },
+      category: [{ pt: "Sistema Web+Admin", en: "Web System+Admin" }, { pt: "Aplicativo PWA", en: "PWA App" }],
       thumb: "/images/capa-indicadores.png",
-      bgClass: FEATURED_PROJECT_BG,
+      bgClass: NEUTRAL_BG,
       highlights: [
         { icon: Clock, value: { pt: "6 meses de produção", en: "6 months in production" } },
         { icon: Briefcase, value: { pt: "Desenvolvedor Full Stack", en: "Full Stack Developer" } },
@@ -458,9 +568,9 @@ export default function Page() {
         pt: "Sistema de gestão do Projeto São José IV, com monitoramento de indicadores via Grafana e Prometheus.",
         en: "Management system for the São José IV Project, with indicator monitoring via Grafana and Prometheus.",
       },
-      category: { pt: "Sistema Web", en: "Web System" },
+      category: [{ pt: "Sistema Web+Admin", en: "Web System+Admin" }, { pt: "Aplicativo PWA", en: "PWA App" }],
       thumb: "/images/capa-psjiv.png",
-      bgClass: FEATURED_PROJECT_BG,
+      bgClass: NEUTRAL_BG,
       highlights: [
         { icon: Clock, value: { pt: "1 ano de produção", en: "1 year in production" } },
         { icon: Briefcase, value: { pt: "Desenvolvedor Full Stack", en: "Full Stack Developer" } },
@@ -482,9 +592,9 @@ export default function Page() {
         pt: "Diário de obras digital para registrar atividades, ocorrências e o avanço físico da construção.",
         en: "Digital construction logbook to record activities, incidents and physical progress.",
       },
-      category: { pt: "Sistema Web", en: "Web System" },
+      category: [{ pt: "Sistema Web+Admin", en: "Web System+Admin" }, { pt: "Aplicativo PWA", en: "PWA App" }],
       thumb: "/images/capa-diario.png",
-      bgClass: FEATURED_PROJECT_BG,
+      bgClass: NEUTRAL_BG,
       highlights: [
         { icon: Clock, value: { pt: "4 meses de produção", en: "4 months in production" } },
         { icon: Briefcase, value: { pt: "Full Stack solo", en: "Solo Full Stack" } },
@@ -506,9 +616,9 @@ export default function Page() {
         pt: "Site institucional para divulgação de projetos sociais e captação de apoiadores.",
         en: "Institutional website to promote social projects and attract supporters.",
       },
-      category: { pt: "Site Institucional", en: "Institutional Website" },
+      category: [{ pt: "Site Institucional", en: "Institutional Website" }],
       thumb: "/images/capa-anjos.png",
-      bgClass: FEATURED_PROJECT_BG,
+      bgClass: NEUTRAL_BG,
       highlights: [
         { icon: Clock, value: { pt: "2 meses de desenvolvimento", en: "2 months of development" } },
         { icon: Briefcase, value: { pt: "Frontend solo", en: "Solo frontend" } },
@@ -530,9 +640,9 @@ export default function Page() {
         pt: "Site institucional do instituto, com apresentação de projetos e informações institucionais.",
         en: "Institutional website for the institute, presenting projects and institutional information.",
       },
-      category: { pt: "Site Institucional", en: "Institutional Website" },
+      category: [{ pt: "Site Institucional", en: "Institutional Website" }],
       thumb: "/images/capa-agropolos.png",
-      bgClass: FEATURED_PROJECT_BG,
+      bgClass: NEUTRAL_BG,
       highlights: [
         { icon: Clock, value: { pt: "2 meses de desenvolvimento", en: "2 months of development" } },
         { icon: Briefcase, value: { pt: "Frontend + CMS solo", en: "Solo frontend + CMS" } },
@@ -554,9 +664,9 @@ export default function Page() {
         pt: "Site institucional da organização social, com apresentação da entidade e canais de contato.",
         en: "Institutional website for the nonprofit organization, with an overview and contact channels.",
       },
-      category: { pt: "Site Institucional", en: "Institutional Website" },
+      category: [{ pt: "Site Institucional", en: "Institutional Website" }],
       thumb: "/images/capa-ujvp.png",
-      bgClass: FEATURED_PROJECT_BG,
+      bgClass: NEUTRAL_BG,
       highlights: [
         { icon: Clock, value: { pt: "1 mês de desenvolvimento", en: "1 month of development" } },
         { icon: Briefcase, value: { pt: "Frontend solo", en: "Solo frontend" } },
@@ -577,9 +687,9 @@ export default function Page() {
         pt: "Site institucional da Secretaria do Desenvolvimento Agrário do Ceará, no qual atuei apenas com manutenção.",
         en: "Institutional website for the Ceará State Agrarian Development Department, on which I worked on maintenance only.",
       },
-      category: { pt: "Site Institucional", en: "Institutional Website" },
+      category: [{ pt: "Site Institucional", en: "Institutional Website" }],
       thumb: "/images/capa-sda.jpeg",
-      bgClass: FEATURED_PROJECT_BG,
+      bgClass: NEUTRAL_BG,
       highlights: [
         { icon: Clock, value: { pt: "Manutenção contínua", en: "Ongoing maintenance" } },
         { icon: Briefcase, value: { pt: "Manutenção e suporte", en: "Maintenance & support" } },
@@ -600,9 +710,9 @@ export default function Page() {
         pt: "Site institucional do escritório de advocacia, com apresentação das áreas de atuação e canais de contato.",
         en: "Institutional website for the law firm, presenting its practice areas and contact channels.",
       },
-      category: { pt: "Site Institucional", en: "Institutional Website" },
+      category: [{ pt: "Site Institucional", en: "Institutional Website" }],
       thumb: "/images/capa-silva-duarte.png",
-      bgClass: FEATURED_PROJECT_BG,
+      bgClass: NEUTRAL_BG,
       highlights: [
         { icon: Clock, value: { pt: "1 mês de desenvolvimento", en: "1 month of development" } },
         { icon: Briefcase, value: { pt: "Full Stack solo", en: "Solo Full Stack" } },
@@ -762,6 +872,7 @@ export default function Page() {
           className={`${ctaClass} bg-white/10 text-zinc-400 cursor-not-allowed`}
           aria-disabled="true"
         >
+          <Lock className="h-3.5 w-3.5" />
           {t({ pt: "Em breve", en: "Coming soon" })}
         </span>
       );
@@ -860,7 +971,7 @@ export default function Page() {
           navLinks={navLinks}
           searchIndex={searchIndex}
           cta={{ label: { pt: "Peça um orçamento", en: "Get a quote" }, href: "/trabalhe-comigo" }}
-          secondaryCta={{ label: { pt: "Baixar CV", en: "Download CV" }, href: CV_URL }}
+          secondaryCta={{ label: { pt: "Baixar CV", en: "Download CV" }, href: getCvUrl(lang) }}
           ctaBadge={{ pt: "Novo", en: "New" }}
         />
 
@@ -975,12 +1086,15 @@ export default function Page() {
                       whileInView={{ opacity: 1 }}
                       viewport={viewportSettings}
                       transition={{ duration: 0.7, ease: easeOut, delay: 0.1 }}
-                      href={CV_URL}
+                      href={getCvUrl(lang)}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="group mt-8 self-start w-[40%] min-w-fit flex items-center justify-center gap-2 rounded-full px-6 py-2.5 bg-white text-violet-700 text-sm font-medium hover:bg-zinc-100 hover:scale-[1.03] hover:shadow-lg hover:shadow-black/20 transition-all duration-300"
                     >
                       {t({ pt: "Veja o currículo completo", en: "See the full résumé" })}
+                      <span aria-hidden="true" className="text-[0.9em] leading-none">
+                        {LANG_FLAG[lang]}
+                      </span>
                       <FileDown className="h-4 w-4 transition-transform duration-300 group-hover:translate-y-0.5" />
                     </motion.a>
                   </div>
@@ -1042,9 +1156,16 @@ export default function Page() {
                     <motion.article
                       custom={0}
                       variants={fadeUpItem}
-                      className="group rounded-3xl overflow-hidden border border-white/10 shadow-2xl grid md:grid-cols-2 items-stretch hover:border-white/20 hover:-translate-y-1 transition-all duration-300"
+                      className="relative group rounded-3xl overflow-hidden border border-white/10 shadow-2xl grid md:grid-cols-2 items-stretch hover:border-white/20 hover:-translate-y-1 transition-all duration-300"
                     >
-                      <div className="relative min-h-[260px] md:min-h-full bg-[#1a1425]">
+                      {heroProject.productionBadge && (
+                        <div className="absolute top-0 right-0 h-24 w-24 overflow-hidden pointer-events-none z-10">
+                          <span className="absolute top-[22px] right-[-32px] w-[140px] rotate-45 bg-emerald-500 text-center text-[9px] font-bold uppercase tracking-wide text-white py-1 shadow-lg">
+                            {t({ pt: "Aplicativo em produção", en: "App in production" })}
+                          </span>
+                        </div>
+                      )}
+                      <div className="relative min-h-[260px] md:min-h-full bg-[#1a1425] overflow-hidden">
                         {heroProject.thumb ? (
                           <>
                             <Image
@@ -1064,9 +1185,7 @@ export default function Page() {
                       <div className={`relative flex flex-col justify-center p-5 sm:p-6 md:p-10 overflow-hidden ${heroProject.bgClass}`}>
                         <div className="absolute inset-0 bg-black/35 pointer-events-none" />
                         <div className="relative">
-                          <span className="inline-block w-fit px-2 py-0.5 rounded-md text-[10px] font-medium bg-white/10 text-violet-200 border border-white/20 mb-4">
-                            {t(heroProject.category)}
-                          </span>
+                          <CategoryBadge labels={heroProject.category.map(t)} />
                           <h3 className="text-2xl md:text-3xl font-bold text-white">
                             {heroProject.title}
                           </h3>
@@ -1078,6 +1197,7 @@ export default function Page() {
                           <p className="mt-4 text-sm md:text-base text-zinc-200 leading-relaxed">
                             {t(heroProject.blurb)}
                           </p>
+                          <div className="mt-5 border-t border-white/5" />
                           {heroProject.highlights && (
                             <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2">
                               {heroProject.highlights.map((h, i) => {
@@ -1096,7 +1216,7 @@ export default function Page() {
                           )}
                           {heroProject.impact && (
                             <div
-                              className={`mt-5 pt-5 border-t border-white/10 grid gap-4 ${
+                              className={`mt-5 pt-5 border-t border-white/5 grid gap-4 ${
                                 heroProject.impact.length === 3 ? "grid-cols-3" : "grid-cols-2 sm:grid-cols-4"
                               }`}
                             >
@@ -1116,6 +1236,7 @@ export default function Page() {
                               })}
                             </div>
                           )}
+                          <div className="mt-5 border-t border-white/5" />
                           <div className="mt-5 flex flex-wrap gap-2">
                             {heroProject.tags.map((tag) => (
                               <ProjectTagIcon key={tag} tag={tag} />
@@ -1143,7 +1264,7 @@ export default function Page() {
                         variants={fadeUpItem}
                         className="group snap-start shrink-0 w-[88%] sm:w-[calc(50%-1rem)] rounded-3xl overflow-hidden border border-white/10 shadow-2xl flex flex-col hover:border-white/20 hover:-translate-y-1 transition-all duration-300"
                       >
-                        <div className="relative h-40 w-full bg-[#1a1425]">
+                        <div className="relative h-48 w-full bg-[#1a1425]">
                           {project.thumb ? (
                             <>
                               <Image
@@ -1160,16 +1281,14 @@ export default function Page() {
                             <div className="h-full w-full bg-gradient-to-br from-violet-600/35 via-fuchsia-500/20 to-violet-900/40" />
                           )}
                         </div>
-                        <div className={`relative flex-1 flex flex-col p-4 sm:p-5 md:p-6 overflow-hidden ${project.bgClass}`}>
+                        <div className={`relative flex-1 flex flex-col p-3 sm:p-3.5 md:p-4 overflow-hidden ${project.bgClass}`}>
                           <div
                             className={`absolute inset-0 pointer-events-none ${
                               project.scrimClass ?? "bg-gradient-to-t from-black/20 via-transparent to-white/5"
                             }`}
                           />
                           <div className="relative flex-1 flex flex-col">
-                            <span className="inline-block w-fit px-2 py-0.5 rounded-md text-[10px] font-medium bg-white/10 text-violet-200 border border-white/20 mb-2.5">
-                              {t(project.category)}
-                            </span>
+                            <CategoryBadge labels={project.category.map(t)} compact />
                             <h3 className="text-xl font-bold text-white">
                               {project.title}
                             </h3>
@@ -1178,11 +1297,12 @@ export default function Page() {
                                 {t(project.subtitle)}
                               </span>
                             )}
-                            <p className="mt-2.5 text-sm text-zinc-200 leading-relaxed">
+                            <p className="mt-1.5 text-sm text-zinc-200 leading-relaxed">
                               {t(project.blurb)}
                             </p>
+                            <div className="mt-2 border-t border-white/5" />
                             {project.highlights && (
-                              <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2">
+                              <div className="mt-2 flex flex-wrap gap-x-5 gap-y-1.5">
                                 {project.highlights.map((h, i) => {
                                   const Icon = h.icon;
                                   return (
@@ -1199,7 +1319,7 @@ export default function Page() {
                             )}
                             {project.impact && (
                               <div
-                                className={`mt-3 pt-3 border-t border-white/10 grid gap-4 ${
+                                className={`mt-2 pt-2 border-t border-white/5 grid gap-3 ${
                                   project.impact.length === 3 ? "grid-cols-3" : "grid-cols-2 sm:grid-cols-4"
                                 }`}
                               >
@@ -1219,12 +1339,13 @@ export default function Page() {
                                 })}
                               </div>
                             )}
-                            <div className="mt-3 flex flex-wrap gap-2">
+                            <div className="mt-2 border-t border-white/5" />
+                            <div className="mt-2 flex flex-wrap gap-2">
                               {project.tags.map((tag) => (
                                 <ProjectTagIcon key={tag} tag={tag} />
                               ))}
                             </div>
-                            <div className="mt-auto pt-4 flex justify-center sm:justify-start">{cta}</div>
+                            <div className="mt-auto pt-2.5 flex justify-center sm:justify-start">{cta}</div>
                           </div>
                         </div>
                       </motion.article>
@@ -1604,7 +1725,7 @@ export default function Page() {
                     <FaWhatsapp className="h-5 w-5" />
                   </a>
                   <a
-                    href={CV_URL}
+                    href={getCvUrl(lang)}
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={t({ pt: "Baixar currículo", en: "Download résumé" })}

@@ -10,6 +10,11 @@ import {
 
 export type Lang = "pt" | "en";
 
+export const LANG_FLAG: Record<Lang, string> = {
+  pt: "🇧🇷",
+  en: "🇺🇸",
+};
+
 type LanguageContextValue = {
   lang: Lang;
   toggleLang: () => void;
