@@ -557,6 +557,21 @@ function useSectionsData(lang: "pt" | "en") {
         </>
       ),
     },
+    {
+      title: { pt: "Direitos e Propriedade", en: "Rights and Ownership" },
+      children: (
+        <>
+          <div className="mt-2 rounded-2xl bg-white/[0.02] border border-white/[0.06] p-6">
+            <p className="text-sm text-zinc-300 leading-relaxed">
+              {t({
+                pt: "O iMidooh é um produto idealizado e de propriedade da Click Software House. Todos os direitos sobre o projeto, incluindo marca, código-fonte, design e demais materiais, são reservados à Click Software House. Este estudo de caso tem finalidade exclusivamente demonstrativa do trabalho técnico realizado, sendo vedada a reprodução, cópia ou reutilização do projeto sem autorização prévia da empresa idealizadora.",
+                en: "iMidooh is a product conceived and owned by Click Software House. All rights to the project, including brand, source code, design and other materials, are reserved to Click Software House. This case study is presented solely to demonstrate the technical work performed, and any reproduction, copying or reuse of the project without prior authorization from the originating company is prohibited.",
+              })}
+            </p>
+          </div>
+        </>
+      ),
+    },
   ];
 }
 
