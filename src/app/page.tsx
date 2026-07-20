@@ -32,7 +32,6 @@ import {
   Rocket,
   FileText,
   Monitor,
-  Layers,
   Globe,
   RefreshCcw,
   AppWindow,
