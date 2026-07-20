@@ -272,6 +272,55 @@ function OnboardingShot() {
   );
 }
 
+function AppGalleryShot({
+  src,
+  alt,
+  label,
+  rotate,
+}: {
+  src: string;
+  alt: string;
+  label: Bilingual;
+  rotate: string;
+}) {
+  const { lang } = useLanguage();
+  return (
+    <div className="relative w-full max-w-[210px] mx-auto" style={{ transform: `rotate(${rotate})` }}>
+      <div className="relative rounded-[1.75rem] overflow-hidden border border-white/10 shadow-2xl shadow-black/60">
+        <div className="relative aspect-[1320/2868]">
+          <Image src={src} alt={alt} fill sizes="210px" className="object-cover" />
+        </div>
+      </div>
+      <p className="mt-3 text-center text-xs text-zinc-500">{tr(lang, label)}</p>
+    </div>
+  );
+}
+
+function ProductGallery() {
+  return (
+    <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-4">
+      <AppGalleryShot
+        src="/images/ucopiloto-estudo-caso.png"
+        alt="Painel inicial do motorista com resumo financeiro do dia"
+        label={{ pt: "Painel do motorista: lucro, faturamento e km do dia", en: "Driver dashboard: daily profit, revenue and mileage" }}
+        rotate="-1.5deg"
+      />
+      <AppGalleryShot
+        src="/images/ucopiloto-estudo-caso-2.png"
+        alt="Menu de ações do veículo ativo"
+        label={{ pt: "Gestão do veículo: abastecimento, manutenção e despesas", en: "Vehicle management: fueling, maintenance and expenses" }}
+        rotate="1deg"
+      />
+      <AppGalleryShot
+        src="/images/ucopiloto-estudo-de-caso-3.png"
+        alt="Mapa com oficinas próximas ao motorista"
+        label={{ pt: "Busca de oficinas próximas em tempo real", en: "Real-time nearby repair shop search" }}
+        rotate="-1deg"
+      />
+    </div>
+  );
+}
+
 /* ═══════════════════════════════════════════
    SEÇÕES NARRATIVAS (JSX)
    ═══════════════════════════════════════════ */
@@ -462,6 +511,15 @@ function useSectionsData(lang: "pt" | "en") {
                 </ul>
               </div>
             </div>
+          </div>
+
+          <div className="mt-8 rounded-2xl bg-white/[0.02] border border-white/[0.06] p-6 sm:p-8">
+            <div className="flex items-center gap-2 mb-6">
+              <span className="text-[10px] uppercase tracking-[0.2em] text-zinc-500">
+                {t({ pt: "Telas reais em produção", en: "Real screens in production" })}
+              </span>
+            </div>
+            <ProductGallery />
           </div>
         </>
       ),
