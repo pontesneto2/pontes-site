@@ -926,6 +926,7 @@ export default function Page() {
     { href: "/#intro", label: { pt: "Sobre", en: "About" } },
     { href: "/#projects", label: { pt: "Projetos", en: "Projects" } },
     { href: "/#about", label: { pt: "Contato", en: "Contact" } },
+    { href: "/blog", label: { pt: "Blog", en: "Blog" } },
   ];
 
   const searchSections = [
