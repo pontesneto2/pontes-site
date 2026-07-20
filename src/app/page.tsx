@@ -307,6 +307,7 @@ export default function Page() {
       subtitle: { pt: "", en: "" },
       tags: ["React Native", "PostgreSQL", ".NET", "C#", "PHP", "Docker", "Kubernetes", "Grafana", "Prometheus"],
       link: "https://apps.apple.com/br/app/sda-cear%C3%A1/id1465592742",
+      caseStudy: "/case/sda-ceara",
       ctaLabel: { pt: "Confira nas lojas iOS e Android", en: "Get it on iOS and Android" },
       blurb: {
         pt: "Aplicativo móvel para gerenciamento e acompanhamento dos setores da Secretaria do Desenvolvimento Agrário do Ceará, centralizando processos e indicadores administrativos em um só lugar.",

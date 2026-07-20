@@ -141,48 +141,112 @@ function LowFiWireframe() {
   );
 }
 
-/** Diagrama simplificado da arquitetura: App/Web/Admin -> API -> banco, com Docker envolvendo o backend. */
+/** Diagrama detalhado da arquitetura: CI/CD -> reverse proxy -> containers Docker (API, banco, jobs) -> observabilidade. */
 function ArchitectureDiagram({ lang }: { lang: "pt" | "en" }) {
   const t = (v: Bilingual) => tr(lang, v);
   return (
-    <svg viewBox="0 0 640 220" className="w-full h-auto" role="img" aria-label="Diagrama da arquitetura do Ucopiloto">
+    <svg viewBox="0 0 800 460" className="w-full h-auto" role="img" aria-label="Diagrama detalhado da arquitetura do Ucopiloto">
       <defs>
         <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
           <path d="M0 0 L10 5 L0 10 z" fill="#8b5cf6" />
         </marker>
+        <marker id="arrow-dim" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M0 0 L10 5 L0 10 z" fill="#71717a" />
+        </marker>
       </defs>
 
+      {/* CI/CD */}
+      <rect x="430" y="8" width="340" height="42" rx="10" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.14)" />
+      <text x="600" y="26" textAnchor="middle" fontSize="10.5" fill="#e4e4e7" fontWeight="600">
+        {t({ pt: "Deploy automatizado — build de imagem Docker", en: "Automated deploy — Docker image build" })}
+      </text>
+      <text x="600" y="40" textAnchor="middle" fontSize="9" fill="#a1a1aa">
+        {t({ pt: "Rolling restart do stack, sem downtime perceptível", en: "Rolling restart of the stack, no noticeable downtime" })}
+      </text>
+      <line x1="600" y1="50" x2="600" y2="74" stroke="#71717a" strokeWidth="1.4" strokeDasharray="3 3" markerEnd="url(#arrow-dim)" />
+
       {/* Clients */}
-      <rect x="10" y="30" width="140" height="42" rx="10" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.16)" />
-      <text x="80" y="47" textAnchor="middle" fontSize="11" fill="#e4e4e7" fontWeight="600">React Native</text>
-      <text x="80" y="61" textAnchor="middle" fontSize="9" fill="#a1a1aa">{t({ pt: "App do motorista", en: "Driver app" })}</text>
+      <rect x="8" y="94" width="150" height="52" rx="10" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.16)" />
+      <text x="83" y="115" textAnchor="middle" fontSize="11" fill="#e4e4e7" fontWeight="600">React Native</text>
+      <text x="83" y="130" textAnchor="middle" fontSize="9" fill="#a1a1aa">{t({ pt: "App do motorista", en: "Driver app" })}</text>
 
-      <rect x="10" y="148" width="140" height="42" rx="10" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.16)" />
-      <text x="80" y="165" textAnchor="middle" fontSize="11" fill="#e4e4e7" fontWeight="600">Next.js</text>
-      <text x="80" y="179" textAnchor="middle" fontSize="9" fill="#a1a1aa">{t({ pt: "Painel da oficina + admin", en: "Shop + admin panel" })}</text>
+      <rect x="8" y="164" width="150" height="52" rx="10" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.16)" />
+      <text x="83" y="185" textAnchor="middle" fontSize="11" fill="#e4e4e7" fontWeight="600">Next.js</text>
+      <text x="83" y="200" textAnchor="middle" fontSize="9" fill="#a1a1aa">{t({ pt: "Painel da oficina + admin", en: "Shop + admin panel" })}</text>
 
-      <line x1="150" y1="51" x2="248" y2="95" stroke="#8b5cf6" strokeWidth="1.6" markerEnd="url(#arrow)" />
-      <line x1="150" y1="169" x2="248" y2="115" stroke="#8b5cf6" strokeWidth="1.6" markerEnd="url(#arrow)" />
+      <line x1="158" y1="120" x2="192" y2="160" stroke="#8b5cf6" strokeWidth="1.6" markerEnd="url(#arrow)" />
+      <line x1="158" y1="190" x2="192" y2="170" stroke="#8b5cf6" strokeWidth="1.6" markerEnd="url(#arrow)" />
 
-      {/* Docker boundary */}
-      <rect x="256" y="20" width="374" height="180" rx="14" fill="none" stroke="rgba(139,92,246,0.35)" strokeDasharray="5 5" />
-      <text x="272" y="14" fontSize="9" fill="#a78bfa" letterSpacing="0.08em">DOCKER</text>
+      {/* Reverse proxy */}
+      <rect x="198" y="150" width="130" height="46" rx="10" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.16)" />
+      <text x="263" y="169" textAnchor="middle" fontSize="10.5" fill="#e4e4e7" fontWeight="600">
+        {t({ pt: "Reverse Proxy", en: "Reverse Proxy" })}
+      </text>
+      <text x="263" y="183" textAnchor="middle" fontSize="9" fill="#a1a1aa">TLS + routing</text>
+
+      <line x1="328" y1="173" x2="360" y2="173" stroke="#8b5cf6" strokeWidth="1.6" markerEnd="url(#arrow)" />
+
+      {/* Docker host boundary */}
+      <rect x="358" y="76" width="434" height="368" rx="16" fill="none" stroke="rgba(139,92,246,0.35)" strokeDasharray="5 5" />
+      <text x="374" y="70" fontSize="9.5" fill="#a78bfa" letterSpacing="0.08em">
+        {t({ pt: "DOCKER — TODOS OS SERVIÇOS EM CONTAINERS", en: "DOCKER — ALL SERVICES IN CONTAINERS" })}
+      </text>
 
       {/* API */}
-      <rect x="278" y="80" width="150" height="50" rx="10" fill="rgba(139,92,246,0.08)" stroke="rgba(139,92,246,0.4)" />
-      <text x="353" y="100" textAnchor="middle" fontSize="11" fill="#e4e4e7" fontWeight="600">
+      <rect x="374" y="150" width="180" height="66" rx="10" fill="rgba(139,92,246,0.1)" stroke="rgba(139,92,246,0.45)" />
+      <text x="464" y="172" textAnchor="middle" fontSize="10.5" fill="#e4e4e7" fontWeight="600">
         {t({ pt: "API (Node · Express · Nest)", en: "API (Node · Express · Nest)" })}
       </text>
-      <text x="353" y="116" textAnchor="middle" fontSize="9" fill="#a1a1aa">
-        {t({ pt: "Regras de agendamento e orçamento", en: "Booking and quote rules" })}
+      <text x="464" y="187" textAnchor="middle" fontSize="8.5" fill="#a1a1aa">
+        {t({ pt: "Módulos: Agendamento · Orçamento", en: "Modules: Booking · Quoting" })}
+      </text>
+      <text x="464" y="200" textAnchor="middle" fontSize="8.5" fill="#a1a1aa">
+        {t({ pt: "Veículos · Histórico · Notificações", en: "Vehicles · History · Notifications" })}
       </text>
 
-      <line x1="428" y1="105" x2="482" y2="105" stroke="#8b5cf6" strokeWidth="1.6" markerEnd="url(#arrow)" />
+      <text x="464" y="234" textAnchor="middle" fontSize="8.5" fill="#a1a1aa">
+        {t({ pt: "healthcheck + restart automático em falha", en: "healthcheck + automatic restart on failure" })}
+      </text>
+
+      <line x1="464" y1="216" x2="464" y2="228" stroke="#71717a" strokeWidth="1.2" strokeDasharray="2 2" />
+
+      <line x1="554" y1="183" x2="588" y2="183" stroke="#8b5cf6" strokeWidth="1.6" markerEnd="url(#arrow)" />
 
       {/* DB */}
-      <rect x="486" y="80" width="128" height="50" rx="10" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.16)" />
-      <text x="550" y="100" textAnchor="middle" fontSize="11" fill="#e4e4e7" fontWeight="600">PostgreSQL</text>
-      <text x="550" y="116" textAnchor="middle" fontSize="9" fill="#a1a1aa">{t({ pt: "via Prisma", en: "via Prisma" })}</text>
+      <rect x="592" y="150" width="180" height="66" rx="10" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.16)" />
+      <text x="682" y="172" textAnchor="middle" fontSize="10.5" fill="#e4e4e7" fontWeight="600">PostgreSQL</text>
+      <text x="682" y="187" textAnchor="middle" fontSize="8.5" fill="#a1a1aa">
+        {t({ pt: "Modelagem relacional via Prisma", en: "Relational modeling via Prisma" })}
+      </text>
+      <text x="682" y="200" textAnchor="middle" fontSize="8.5" fill="#a1a1aa">
+        {t({ pt: "Backups automatizados e testados", en: "Automated, tested backups" })}
+      </text>
+
+      {/* Jobs / background */}
+      <rect x="374" y="252" width="180" height="56" rx="10" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.14)" />
+      <text x="464" y="272" textAnchor="middle" fontSize="10" fill="#e4e4e7" fontWeight="600">
+        {t({ pt: "Jobs assíncronos", en: "Background jobs" })}
+      </text>
+      <text x="464" y="286" textAnchor="middle" fontSize="8.5" fill="#a1a1aa">
+        {t({ pt: "Notificações e rotinas de backup agendadas", en: "Notifications and scheduled backup routines" })}
+      </text>
+
+      <line x1="464" y1="216" x2="464" y2="252" stroke="#71717a" strokeWidth="1.2" strokeDasharray="2 2" markerEnd="url(#arrow-dim)" />
+
+      {/* Observability */}
+      <rect x="592" y="252" width="180" height="56" rx="10" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.14)" />
+      <text x="682" y="272" textAnchor="middle" fontSize="10" fill="#e4e4e7" fontWeight="600">
+        {t({ pt: "Logs + alertas básicos", en: "Logs + basic alerting" })}
+      </text>
+      <text x="682" y="286" textAnchor="middle" fontSize="8.5" fill="#a1a1aa">
+        {t({ pt: "Observabilidade mínima viável, mantida solo", en: "Minimum viable observability, run solo" })}
+      </text>
+
+      <line x1="682" y1="216" x2="682" y2="252" stroke="#71717a" strokeWidth="1.2" strokeDasharray="2 2" markerEnd="url(#arrow-dim)" />
+
+      <text x="583" y="336" textAnchor="middle" fontSize="9" fill="#a1a1aa">
+        {t({ pt: "Cada container isolado, com restart policy independente — um serviço não derruba os demais", en: "Each container is isolated, with its own restart policy — one service failing doesn't take down the others" })}
+      </text>
     </svg>
   );
 }
@@ -372,8 +436,8 @@ function useSectionsData(lang: "pt" | "en") {
         <>
           <p>
             {t({
-              pt: "Como único engenheiro no projeto, atuei em todas as frentes: modelagem de dados, APIs, aplicativo mobile, painel web e infraestrutura. A estratégia foi priorizar um núcleo sólido de agendamento e orçamento antes de expandir funcionalidades.",
-              en: "As the sole engineer on the project, I worked across every front: data modeling, APIs, the mobile app, the web panel and infrastructure. The strategy was to prioritize a solid booking and quoting core before expanding features.",
+              pt: "Como único engenheiro no projeto, atuei em todas as frentes: modelagem de dados, APIs, aplicativo mobile, painel web, admin e infraestrutura. A estratégia foi tratar agendamento e orçamento como o núcleo transacional do sistema — a parte que não podia falhar — e só então expandir para funcionalidades de suporte, como histórico de veículos e notificações.",
+              en: "As the sole engineer on the project, I worked across every front: data modeling, APIs, the mobile app, the web panel, admin and infrastructure. The strategy was to treat booking and quoting as the system's transactional core — the part that couldn't fail — and only then expand into supporting features like vehicle history and notifications.",
             })}
           </p>
 
@@ -424,24 +488,36 @@ function useSectionsData(lang: "pt" | "en") {
         <>
           <p>
             {t({
-              pt: "A arquitetura foi pensada para um time de um: previsível, fácil de depurar e barata de operar, sem abrir mão de confiabilidade em produção.",
-              en: "The architecture was designed for a team of one: predictable, easy to debug and cheap to operate, without giving up production reliability.",
+              pt: "Mesmo sem uma equipe de infraestrutura, o Ucopiloto precisava se comportar como um sistema de produção sério: múltiplos serviços, cada um isolado em seu próprio container, com contratos de API estáveis entre app, painel web e admin. A arquitetura foi desenhada para que qualquer parte do sistema pudesse falhar, reiniciar e voltar sozinha, sem intervenção manual.",
+              en: "Even without an infrastructure team, Ucopiloto had to behave like a serious production system: multiple services, each isolated in its own container, with stable API contracts across app, web panel and admin. The architecture was designed so that any part of the system could fail, restart and recover on its own, without manual intervention.",
             })}
           </p>
 
           <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-3">
             {[
               {
-                title: { pt: "Dados consistentes", en: "Consistent data" },
-                desc: { pt: "PostgreSQL com modelagem relacional para agendamentos e orçamentos.", en: "PostgreSQL with relational modeling for bookings and quotes." },
+                title: { pt: "Domínio isolado por módulo", en: "Domain isolated by module" },
+                desc: { pt: "NestJS organiza a API em módulos (agendamento, orçamento, veículos, notificações), cada um com suas próprias regras e testabilidade.", en: "NestJS organizes the API into modules (booking, quoting, vehicles, notifications), each with its own rules and testability." },
               },
               {
-                title: { pt: "Produtividade com segurança", en: "Productivity with safety" },
-                desc: { pt: "Prisma para acesso a dados tipado, reduzindo erros em produção.", en: "Prisma for typed data access, reducing production errors." },
+                title: { pt: "Dados consistentes e tipados", en: "Consistent, typed data" },
+                desc: { pt: "PostgreSQL com modelagem relacional para agendamentos e orçamentos, acessado via Prisma para reduzir erros de tipo em produção.", en: "PostgreSQL with relational modeling for bookings and quotes, accessed via Prisma to reduce type errors in production." },
               },
               {
-                title: { pt: "Deploy previsível", en: "Predictable deploy" },
-                desc: { pt: "Docker para padronizar ambientes e simplificar rollback.", en: "Docker to standardize environments and simplify rollback." },
+                title: { pt: "Containers auto-recuperáveis", en: "Self-healing containers" },
+                desc: { pt: "Cada serviço roda em container próprio no Docker, com restart policy e healthcheck: uma falha não derruba o sistema inteiro.", en: "Each service runs in its own Docker container, with a restart policy and healthcheck: one failure doesn't bring down the whole system." },
+              },
+              {
+                title: { pt: "Deploy sem downtime perceptível", en: "No noticeable-downtime deploys" },
+                desc: { pt: "Imagens versionadas e deploy automatizado permitem atualizar a API em produção sem interromper agendamentos em andamento.", en: "Versioned images and automated deploys let the API be updated in production without interrupting in-progress bookings." },
+              },
+              {
+                title: { pt: "Contrato único de API", en: "Single API contract" },
+                desc: { pt: "App mobile, painel web e admin consomem a mesma API REST, eliminando divergência de regras de negócio entre plataformas.", en: "The mobile app, web panel and admin all consume the same REST API, eliminating business-rule drift between platforms." },
+              },
+              {
+                title: { pt: "Backups e jobs assíncronos", en: "Backups and async jobs" },
+                desc: { pt: "Rotinas de backup e tarefas de notificação rodam como jobs separados da API, sem competir por recursos com requisições em tempo real.", en: "Backup routines and notification tasks run as jobs separate from the API, without competing for resources with real-time requests." },
               },
             ].map((card) => (
               <div
@@ -454,7 +530,7 @@ function useSectionsData(lang: "pt" | "en") {
             ))}
           </div>
 
-          <div className="mt-6 rounded-2xl bg-white/[0.02] border border-white/[0.06] p-6 overflow-x-auto">
+          <div className="mt-8 rounded-2xl bg-white/[0.02] border border-white/[0.06] p-6 overflow-x-auto">
             <ArchitectureDiagram lang={lang} />
           </div>
 
@@ -463,14 +539,16 @@ function useSectionsData(lang: "pt" | "en") {
               {lang === "pt" ? (
                 <>
                   Toda a stack foi escolhida para que <span className="font-semibold text-violet-50">um único
-                  engenheiro</span> conseguisse manter os quatro ambientes (app, web, admin e infraestrutura)
-                  em produção com <span className="font-semibold text-violet-50">99,9% de uptime</span>.
+                  engenheiro</span> conseguisse manter API, banco, jobs e observabilidade em produção — todos
+                  containerizados e isolados entre si — com <span className="font-semibold text-violet-50">99,9%
+                  de uptime</span>, mesmo sem uma equipe de infraestrutura dedicada.
                 </>
               ) : (
                 <>
                   The whole stack was chosen so that <span className="font-semibold text-violet-50">a single
-                  engineer</span> could keep all four environments (app, web, admin and infrastructure)
-                  in production with <span className="font-semibold text-violet-50">99.9% uptime</span>.
+                  engineer</span> could keep the API, database, jobs and observability in production — all
+                  containerized and isolated from each other — at <span className="font-semibold text-violet-50">99.9%
+                  uptime</span>, even without a dedicated infrastructure team.
                 </>
               )}
             </p>
@@ -530,17 +608,18 @@ function useSectionsData(lang: "pt" | "en") {
         <>
           <p>
             {t({
-              pt: "Como responsável único por DevOps, containerizei toda a aplicação com Docker para garantir ambientes reprodutíveis e simplificar deploys e rollbacks.",
-              en: "As the sole DevOps owner, I containerized the whole application with Docker to ensure reproducible environments and simplify deploys and rollbacks.",
+              pt: "Como responsável único por DevOps, containerizei toda a aplicação com Docker: API, banco de dados, jobs assíncronos e reverse proxy rodam como serviços independentes, cada um com sua própria política de restart e healthcheck. Isso garante ambientes reprodutíveis e simplifica deploys e rollbacks, sem depender de acesso manual ao servidor em cada atualização.",
+              en: "As the sole DevOps owner, I containerized the whole application with Docker: the API, database, background jobs and reverse proxy run as independent services, each with its own restart policy and healthcheck. That guarantees reproducible environments and simplifies deploys and rollbacks, without relying on manual server access for every update.",
             })}
           </p>
           <p>{t({ pt: "A operação solo exigiu disciplina em:", en: "Solo operation required discipline around:" })}</p>
           <ul className="space-y-2 ml-1">
             {[
-              { pt: "Automação de deploy para reduzir erro humano", en: "Deploy automation to reduce human error" },
-              { pt: "Observabilidade mínima viável desde o início", en: "Minimum viable observability from the start" },
-              { pt: "Rotinas de backup e recuperação testadas", en: "Tested backup and recovery routines" },
-              { pt: "Documentação enxuta para acelerar decisões futuras", en: "Lean documentation to speed up future decisions" },
+              { pt: "Automação de deploy para reduzir erro humano e permitir rollback em minutos", en: "Deploy automation to reduce human error and allow rollback in minutes" },
+              { pt: "Healthcheck e restart automático por container, isolando falhas por serviço", en: "Per-container healthcheck and automatic restart, isolating failures by service" },
+              { pt: "Observabilidade mínima viável desde o início: logs estruturados e alertas básicos", en: "Minimum viable observability from the start: structured logs and basic alerting" },
+              { pt: "Rotinas de backup do PostgreSQL testadas e agendadas como jobs próprios", en: "PostgreSQL backup routines tested and scheduled as their own jobs" },
+              { pt: "Documentação enxuta para acelerar decisões futuras sem depender de memória", en: "Lean documentation to speed up future decisions without relying on memory" },
             ].map((item) => (
               <li key={item.pt} className="flex items-start gap-3">
                 <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-violet-500" />
@@ -550,8 +629,8 @@ function useSectionsData(lang: "pt" | "en") {
           </ul>
           <p>
             {t({
-              pt: "Esse cuidado se traduziu em 99,9% de uptime mesmo sem uma equipe de infraestrutura dedicada.",
-              en: "That care translated into 99.9% uptime even without a dedicated infrastructure team.",
+              pt: "Esse cuidado se traduziu em 99,9% de uptime mesmo sem uma equipe de infraestrutura dedicada — a robustez do sistema vem da isolação entre serviços e da automação, não do tamanho do time.",
+              en: "That care translated into 99.9% uptime even without a dedicated infrastructure team — the system's robustness comes from service isolation and automation, not team size.",
             })}
           </p>
         </>
