@@ -21,6 +21,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 1,
+      alternates: {
+        languages: {
+          en: `${siteUrl}/en`,
+        },
+      },
+    },
+    {
+      url: `${siteUrl}/en`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.9,
+      alternates: {
+        languages: {
+          "pt-BR": siteUrl,
+        },
+      },
     },
     {
       url: `${siteUrl}/case/imidooh`,

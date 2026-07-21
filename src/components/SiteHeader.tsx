@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import LanguageSwitch from "@/components/LanguageSwitch";
 import SearchBox from "@/components/SearchBox";
@@ -22,6 +23,16 @@ export const DEFAULT_NAV_LINKS = [
   { href: "/blog", label: { pt: "Blog", en: "Blog" } },
   { href: "/#about", label: { pt: "Contato", en: "Contact" } },
 ];
+
+// "/" and "/#..." are the only routes that exist in both locales today:
+// on /en, point them at the SSR'd English home page instead of the
+// Portuguese one. Other links (e.g. /blog) aren't localized yet.
+function withLocale(href: string, isEn: boolean) {
+  if (!isEn) return href;
+  if (href === "/") return "/en";
+  if (href.startsWith("/#")) return `/en${href}`;
+  return href;
+}
 
 function goTo(href: string) {
   if (href.startsWith("/#") && window.location.pathname === "/") {
@@ -48,6 +59,8 @@ export default function SiteHeader({
 }) {
   const { lang, setLang } = useLanguage();
   const t = (v: Bilingual) => tr(lang, v);
+  const pathname = usePathname();
+  const isEn = pathname === "/en" || (pathname?.startsWith("/en/") ?? false);
   const effectiveCta = cta ?? { label: DEFAULT_CTA_LABEL, href: getCvUrl(lang) };
   const ctaIsExternal = effectiveCta.href.startsWith("http");
   const secondaryIsExternal = secondaryCta?.href.startsWith("http") ?? false;
@@ -104,7 +117,7 @@ export default function SiteHeader({
     >
       <div className="mx-auto max-w-7xl px-3 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between py-4 md:py-0 md:h-16">
-          <Link href="/" className="flex items-center gap-2 sm:gap-3">
+          <Link href={withLocale("/", isEn)} className="flex items-center gap-2 sm:gap-3">
             <Image
               src="/images/FCO.png"
               alt="FCOPTS — Francisco Pontes"
@@ -118,7 +131,7 @@ export default function SiteHeader({
           <nav className="hidden md:flex items-center gap-8 text-sm">
             <div className="flex items-center gap-8">
               {navLinks.map((link) => (
-                <Link key={link.href} href={link.href} className="hover:text-white/90 text-zinc-300">
+                <Link key={link.href} href={withLocale(link.href, isEn)} className="hover:text-white/90 text-zinc-300">
                   {t(link.label)}
                 </Link>
               ))}
@@ -222,7 +235,7 @@ export default function SiteHeader({
             {navLinks.map((link) => (
               <Link
                 key={link.href}
-                href={link.href}
+                href={withLocale(link.href, isEn)}
                 className="text-zinc-200 text-sm rounded-xl px-3 py-3 hover:bg-gradient-to-r hover:from-violet-600/20 hover:to-fuchsia-500/20 transition-all"
                 onClick={() => setNavOpen(false)}
               >
