@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import CaseJsonLd from "@/components/case/CaseJsonLd";
 
-const title = "Estudo de Caso — iMidooh";
+const title = "Estudo de Caso: iMidooh";
 const description =
   "Construção de uma plataforma SaaS escalável para gerenciamento de mídia DOOH, com arquitetura modular, containerização Docker e preparação multi-tenant.";
 
