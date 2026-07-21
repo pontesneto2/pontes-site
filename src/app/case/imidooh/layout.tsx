@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import CaseJsonLd from "@/components/case/CaseJsonLd";
 
 const title = "Estudo de Caso — iMidooh";
 const description =
@@ -42,5 +43,17 @@ export default function CaseLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <>{children}</>;
+  return (
+    <>
+      <CaseJsonLd
+        slug="imidooh"
+        headline={title}
+        description={description}
+        image="/logo-dooh.png"
+        datePublished="2026-02-20"
+        dateModified="2026-07-20"
+      />
+      {children}
+    </>
+  );
 }

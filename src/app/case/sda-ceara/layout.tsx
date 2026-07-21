@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import CaseJsonLd from "@/components/case/CaseJsonLd";
 
 const title = "Estudo de Caso: SDA Ceará";
 const description =
@@ -42,5 +43,17 @@ export default function CaseLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <>{children}</>;
+  return (
+    <>
+      <CaseJsonLd
+        slug="sda-ceara"
+        headline={title}
+        description={description}
+        image="/images/capa-sda-app.png"
+        datePublished="2026-07-20"
+        dateModified="2026-07-20"
+      />
+      {children}
+    </>
+  );
 }
