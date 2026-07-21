@@ -16,7 +16,7 @@ import SiteFooter from "@/components/SiteFooter";
 import Preloader from "@/components/Preloader";
 import { useLanguage, tr, LANG_FLAG, type Bilingual } from "@/lib/language-context";
 import { getCvUrl } from "@/lib/constants";
-import { EXPERIENCE } from "@/lib/experience-data";
+import { EXPERIENCE, PRIOR_EXPERIENCE } from "@/lib/experience-data";
 import type { BlogPostMeta } from "@/lib/blog";
 import {
   Code,
@@ -202,6 +202,7 @@ export default function Page() {
 
   const [isMobile, setIsMobile] = useState(false);
   const [recentPosts, setRecentPosts] = useState<{ pt: BlogPostMeta[]; en: BlogPostMeta[] } | null>(null);
+  const [showPriorExperience, setShowPriorExperience] = useState(false);
 
   useEffect(() => {
     fetch("/api/recent-posts")
@@ -818,6 +819,7 @@ export default function Page() {
   const visibleSecondaryProjects = secondaryProjects.filter((p) => matchesProjectFilter(p, projectFilter));
 
   const experience = EXPERIENCE;
+  const priorExperience = PRIOR_EXPERIENCE;
 
   const handleSpotlightMove = (event: MouseEvent<HTMLElement>) => {
     const el = event.currentTarget;
@@ -1557,6 +1559,11 @@ export default function Page() {
                             {exp.languages}
                           </span>
                         ) : null}
+                        {exp.contractType ? (
+                          <span className="text-[8px] text-zinc-300 bg-white/5 px-1.5 py-[2px] rounded border border-white/10 whitespace-nowrap font-semibold">
+                            {t(exp.contractType)}
+                          </span>
+                        ) : null}
                       </div>
                     </div>
                     <p className="text-xs text-violet-300 leading-relaxed">
@@ -1578,6 +1585,55 @@ export default function Page() {
                   );
                 })}
               </motion.div>
+
+              <div className="mt-10">
+                <button
+                  type="button"
+                  onClick={() => setShowPriorExperience((prev) => !prev)}
+                  className="flex items-center gap-2 text-xs text-zinc-400 hover:text-zinc-300 transition-colors"
+                  aria-expanded={showPriorExperience}
+                >
+                  <ChevronLeft
+                    className={`h-3.5 w-3.5 transition-transform ${
+                      showPriorExperience ? "-rotate-90" : "rotate-0"
+                    }`}
+                  />
+                  {t({ pt: "Experiência anterior (gestão e operações)", en: "Prior experience (management and operations)" })}
+                </button>
+                {showPriorExperience ? (
+                  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-8 mt-6">
+                    {priorExperience.map((exp) => (
+                      <div key={exp.company} className="relative opacity-70">
+                        <div className="flex items-center gap-2 mb-3">
+                          <ChevronLeft className="h-3 w-3 text-zinc-500 shrink-0 rotate-90 md:rotate-0" />
+                          <div className="h-px flex-1 bg-gradient-to-l from-zinc-600/40 to-transparent" />
+                        </div>
+                        <div className="flex items-start justify-between gap-3 mb-1">
+                          <h4 className="font-medium text-xs text-zinc-300 flex-1 min-w-0 break-words">
+                            {exp.company}
+                          </h4>
+                          <span className="text-[8px] text-zinc-400 bg-white/5 px-1.5 py-[2px] rounded border border-white/10 whitespace-nowrap font-semibold shrink-0">
+                            {exp.period}
+                          </span>
+                        </div>
+                        <p className="text-[11px] text-zinc-400 leading-relaxed">
+                          <Briefcase className="inline h-3 w-3 -mt-0.5 mr-1" />
+                          {t(exp.role)}
+                        </p>
+                        <p className="text-[11px] text-zinc-400 leading-relaxed mt-1">
+                          <MapPin className="inline h-3 w-3 -mt-0.5 mr-1" />
+                          {exp.location}
+                        </p>
+                        {exp.startRole ? (
+                          <div className="text-[10px] text-zinc-500 mt-2">
+                            {t({ pt: "Cargo Inicial", en: "Starting Role" })}: {t(exp.startRole)}
+                          </div>
+                        ) : null}
+                      </div>
+                    ))}
+                  </div>
+                ) : null}
+              </div>
             </div>
           </section>
 
