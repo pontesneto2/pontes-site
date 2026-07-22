@@ -7,6 +7,7 @@ export type ExperienceItem = {
   period: string;
   remote?: boolean;
   languages?: string;
+  contractType?: Bilingual;
   location: string;
 };
 
@@ -23,17 +24,19 @@ export const EXPERIENCE: ExperienceItem[] = [
   {
     company: "FlixBus Tickets",
     role: { pt: "Sênior Desenvolvedor Full Stack", en: "Senior Full Stack Developer" },
-    period: "2024–2025",
+    period: "01/2024–06/2024",
     remote: true,
     languages: "PT/EN",
+    contractType: { pt: "Contrato", en: "Contract" },
     location: "Dublin - Irlanda",
   },
   {
     company: "FedEx Services",
     role: { pt: "Sênior Desenvolvedor Full Stack", en: "Senior Full Stack Developer" },
-    period: "2024–2025",
+    period: "07/2024–02/2025",
     remote: true,
     languages: "PT/EN",
+    contractType: { pt: "Contrato", en: "Contract" },
     location: "Dublin - Irlanda",
   },
   {
@@ -76,6 +79,17 @@ export const EXPERIENCE: ExperienceItem[] = [
     period: "2020–2021",
     location: "Fortaleza - CE",
   },
+];
+
+export type PriorExperienceItem = {
+  company: string;
+  startRole?: Bilingual;
+  role: Bilingual;
+  period: string;
+  location: string;
+};
+
+export const PRIOR_EXPERIENCE: PriorExperienceItem[] = [
   {
     company: "Grupo Laredo Atacadista",
     startRole: { pt: "Auxiliar de gerência", en: "Assistant Manager" },
