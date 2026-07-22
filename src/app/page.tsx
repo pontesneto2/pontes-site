@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState, type MouseEvent } from "react";
 import { motion } from "framer-motion";
+import { track } from "@vercel/analytics";
 import Hero from "@/components/Hero";
 import AnimatedCounter from "@/components/AnimatedCounter";
 import CursorGlow from "@/components/CursorGlow";
@@ -875,6 +876,7 @@ export default function Page() {
     const caseStudyButton = project.caseStudy ? (
       <Link
         href={project.caseStudy}
+        onClick={() => track("case_study_click", { project: project.title })}
         className={`${ctaClass} ${project.link ? outlineClass : solidClass}`}
       >
         {t({ pt: "Ver estudo de caso", en: "View case study" })}
@@ -1169,6 +1171,7 @@ export default function Page() {
                       href={getCvUrl(lang)}
                       target="_blank"
                       rel="noopener noreferrer"
+                      onClick={() => track("cv_download", { href: getCvUrl(lang) })}
                       className="group mt-8 self-start w-[40%] min-w-fit flex items-center justify-center gap-2 rounded-full px-6 py-2.5 bg-white text-violet-700 text-sm font-medium hover:bg-zinc-100 hover:scale-[1.03] hover:shadow-lg hover:shadow-black/20 transition-all duration-300"
                     >
                       {t({ pt: "Veja o currículo completo", en: "See the full résumé" })}
@@ -1763,7 +1766,7 @@ export default function Page() {
                         en: "If you have a project in mind or want to discuss opportunities, I'd be happy to chat. I'm open to new challenges!",
                       })}
                     </motion.p>
-                    <ContactForm />
+                    <ContactForm onSuccess={() => track("home_contact_form_submitted")} />
                   </div>
                 </div>
 
@@ -1796,6 +1799,7 @@ export default function Page() {
                   <a
                     href="mailto:contato@fcopts.com.br"
                     aria-label="E-mail"
+                    onClick={() => track("contact_click", { channel: "email" })}
                     className="h-11 w-11 rounded-full bg-white/5 hover:bg-fuchsia-500/10 border border-white/5 hover:border-fuchsia-400/40 flex items-center justify-center text-zinc-300 hover:text-fuchsia-300 transition-all"
                   >
                     <Mail className="h-5 w-5" />
@@ -1805,6 +1809,7 @@ export default function Page() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="WhatsApp"
+                    onClick={() => track("contact_click", { channel: "whatsapp" })}
                     className="h-11 w-11 rounded-full bg-white/5 hover:bg-fuchsia-500/10 border border-white/5 hover:border-fuchsia-400/40 flex items-center justify-center text-zinc-300 hover:text-fuchsia-300 transition-all"
                   >
                     <FaWhatsapp className="h-5 w-5" />
@@ -1814,6 +1819,7 @@ export default function Page() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={t({ pt: "Baixar currículo", en: "Download résumé" })}
+                    onClick={() => track("cv_download", { href: getCvUrl(lang) })}
                     className="h-11 w-11 rounded-full bg-white/5 hover:bg-fuchsia-500/10 border border-white/5 hover:border-fuchsia-400/40 flex items-center justify-center text-zinc-300 hover:text-fuchsia-300 transition-all"
                   >
                     <FileDown className="h-5 w-5" />
