@@ -17,6 +17,7 @@ import Preloader from "@/components/Preloader";
 import { useLanguage, tr, LANG_FLAG, type Bilingual } from "@/lib/language-context";
 import { getCvUrl } from "@/lib/constants";
 import { EXPERIENCE } from "@/lib/experience-data";
+import type { BlogPostMeta } from "@/lib/blog";
 import {
   Code,
   Mail,
@@ -187,6 +188,14 @@ export default function Page() {
   const t = (v: Bilingual) => tr(lang, v);
 
   const [isMobile, setIsMobile] = useState(false);
+  const [recentPosts, setRecentPosts] = useState<{ pt: BlogPostMeta[]; en: BlogPostMeta[] } | null>(null);
+
+  useEffect(() => {
+    fetch("/api/recent-posts")
+      .then((res) => res.json())
+      .then(setRecentPosts)
+      .catch(() => setRecentPosts({ pt: [], en: [] }));
+  }, []);
 
   const featuredScrollRef = useRef<HTMLDivElement>(null);
   const [featuredScrollProgress, setFeaturedScrollProgress] = useState(0);
@@ -1612,6 +1621,100 @@ export default function Page() {
                   </a>
                 </div>
               </motion.div>
+            </div>
+          </section>
+
+          {/* BLOG - chamada discreta para os posts recentes */}
+          {recentPosts && recentPosts[lang].length > 0 && (
+            <section className="relative py-10 border-t border-white/5">
+              <div className="mx-auto max-w-6xl px-6 sm:px-8 lg:px-12">
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="text-sm font-semibold text-zinc-400 uppercase tracking-wider">
+                    {t({ pt: "Do blog", en: "From the blog" })}
+                  </h3>
+                  <Link
+                    href="/blog"
+                    className="text-xs font-medium text-violet-300 hover:text-violet-200 transition-colors inline-flex items-center gap-1"
+                  >
+                    {t({ pt: "Ver todos os posts", en: "See all posts" })}
+                    <span aria-hidden="true">→</span>
+                  </Link>
+                </div>
+                <div className="grid sm:grid-cols-3 gap-4">
+                  {recentPosts[lang].map((post) => (
+                    <Link
+                      key={post.slug}
+                      href={`/blog/${post.slug}`}
+                      className="group rounded-xl border border-white/8 bg-white/[0.015] p-4 hover:border-white/15 hover:bg-white/[0.03] transition-colors"
+                    >
+                      <div className="flex flex-wrap gap-1.5 mb-2">
+                        {post.tags.slice(0, 2).map((tag) => (
+                          <span
+                            key={tag}
+                            className="text-[10px] px-1.5 py-0.5 rounded border border-white/10 text-zinc-400"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                      <h4 className="text-sm font-semibold text-zinc-100 group-hover:text-white transition-colors line-clamp-2">
+                        {post.title}
+                      </h4>
+                      <p className="mt-1.5 text-[11px] text-zinc-500">
+                        {post.readingMinutes} {t({ pt: "min de leitura", en: "min read" })}
+                      </p>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </section>
+          )}
+
+          {/* NOW - o que estou construindo, estudando e lendo agora */}
+          <section className="relative py-10 border-t border-white/5">
+            <div className="mx-auto max-w-6xl px-6 sm:px-8 lg:px-12">
+              <h3 className="text-sm font-semibold text-zinc-400 uppercase tracking-wider mb-6">
+                {t({ pt: "Agora", en: "Now" })}
+              </h3>
+              <div className="grid sm:grid-cols-3 gap-4">
+                {[
+                  {
+                    label: { pt: "Construindo", en: "Building" },
+                    value: {
+                      pt: "Melhorias no próprio site: versão em inglês indexável, novos estudos de caso e um assistente com IA sobre o portfólio.",
+                      en: "Improvements to this site: an indexable English version, new case studies, and an AI assistant over the portfolio.",
+                    },
+                  },
+                  {
+                    label: { pt: "Estudando", en: "Studying" },
+                    value: {
+                      pt: "Arquitetura de agentes de IA e RAG aplicados a produtos reais, além de práticas de observabilidade em produção.",
+                      en: "AI agent architecture and RAG applied to real products, plus production observability practices.",
+                    },
+                  },
+                  {
+                    label: { pt: "Lendo", en: "Reading" },
+                    value: {
+                      pt: "Livros e papers sobre arquitetura de sistemas distribuídos e engenharia de produto.",
+                      en: "Books and papers on distributed systems architecture and product engineering.",
+                    },
+                  },
+                ].map((item) => (
+                  <div
+                    key={item.label.pt}
+                    className="rounded-xl border border-white/8 bg-white/[0.015] p-4"
+                  >
+                    <h4 className="text-xs font-semibold text-violet-300 mb-1.5">{t(item.label)}</h4>
+                    <p className="text-[13px] text-zinc-400 leading-relaxed">{t(item.value)}</p>
+                  </div>
+                ))}
+              </div>
+              <p className="mt-4 text-[11px] text-zinc-500">
+                {t({
+                  pt: "Fora do código: escrevendo uma autobiografia, aos poucos, nas horas vagas.",
+                  en: "Outside of code: writing an autobiography, slowly, in my spare time.",
+                })}
+              </p>
             </div>
           </section>
 
