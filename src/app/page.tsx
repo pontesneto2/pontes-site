@@ -177,7 +177,7 @@ function CategoryPill({ label }: { label: string }) {
   const className = config?.className ?? "bg-white/10 border-white/20 text-violet-200";
   return (
     <span
-      className={`inline-flex items-center gap-1.5 w-fit px-2.5 py-1 rounded-md text-[10px] font-medium border ${className}`}
+      className={`inline-flex items-center gap-1.5 w-fit px-2 py-0.5 rounded-md text-[10px] font-medium border ${className}`}
     >
       <Icon className="h-3 w-3" />
       {label}
@@ -831,7 +831,7 @@ export default function Page() {
 
   const renderProjectCta = (project: (typeof featuredProjects)[number]) => {
     const ctaClass =
-      "inline-flex items-center gap-2 rounded-full px-6 py-2.5 text-sm font-semibold w-fit transition-all duration-200";
+      "inline-flex items-center gap-2 rounded-full px-5 py-2 text-[13px] font-semibold w-fit transition-all duration-200";
     const solidClass =
       "bg-white text-violet-700 hover:bg-zinc-100 hover:scale-[1.03] hover:shadow-lg hover:shadow-black/20";
     const outlineClass =
@@ -1284,15 +1284,15 @@ export default function Page() {
                         <div className={`relative flex-1 flex flex-col p-3 sm:p-3.5 md:p-4 overflow-hidden ${project.bgClass}`}>
                           <div className="relative flex-1 flex flex-col">
                             <CategoryBadge labels={project.category.map(t)} compact />
-                            <h3 className="text-xl font-bold text-white">
+                            <h3 className="text-lg font-bold text-white">
                               {project.title}
                             </h3>
                             {t(project.subtitle) && (
-                              <span className="inline-block text-xs text-amber-300 font-medium mt-1">
+                              <span className="inline-block text-[11px] text-amber-300 font-medium mt-1">
                                 {t(project.subtitle)}
                               </span>
                             )}
-                            <p className="mt-1.5 text-sm text-zinc-200 leading-relaxed">
+                            <p className="mt-1.5 text-[13px] text-zinc-200 leading-relaxed">
                               {t(project.blurb)}
                             </p>
                             <div className="mt-2 border-t border-white/5" />
@@ -1303,9 +1303,9 @@ export default function Page() {
                                   return (
                                     <div
                                       key={i}
-                                      className="flex items-center gap-1.5 text-xs text-zinc-200"
+                                      className="flex items-center gap-1.5 text-[11px] text-zinc-200"
                                     >
-                                      <Icon className="h-3.5 w-3.5 text-violet-300" />
+                                      <Icon className="h-3 w-3 text-violet-300" />
                                       <span>{t(h.value)}</span>
                                     </div>
                                   );
@@ -1322,11 +1322,11 @@ export default function Page() {
                                   const Icon = stat.icon;
                                   return (
                                     <div key={i} className="flex flex-col gap-1">
-                                      <div className="flex items-center gap-1.5 text-base font-semibold text-white">
-                                        <Icon className="h-3.5 w-3.5 text-violet-300" />
+                                      <div className="flex items-center gap-1.5 text-sm font-semibold text-white">
+                                        <Icon className="h-3 w-3 text-violet-300" />
                                         {t(stat.value)}
                                       </div>
-                                      <span className="text-[11px] text-zinc-400 leading-tight">
+                                      <span className="text-[10px] text-zinc-400 leading-tight">
                                         {t(stat.label)}
                                       </span>
                                     </div>
