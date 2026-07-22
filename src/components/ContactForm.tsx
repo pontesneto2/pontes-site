@@ -151,7 +151,7 @@ export default function ContactForm({
           className={`w-full rounded-xl bg-white/5 border px-4 py-3 text-sm text-white placeholder:text-zinc-500 focus:outline-none transition-colors ${
             touched.name && !nameValid
               ? "border-red-500/60 focus:border-red-500/60"
-              : "border-white/10 focus:border-violet-500/50"
+              : "border-white/10 focus:border-violet-500/50 focus:ring-2 focus:ring-violet-500/25"
           }`}
         />
         {touched.name && !nameValid && (
@@ -178,7 +178,7 @@ export default function ContactForm({
           className={`w-full rounded-xl bg-white/5 border px-4 py-3 text-sm text-white placeholder:text-zinc-500 focus:outline-none transition-colors ${
             touched.email && !emailValid
               ? "border-red-500/60 focus:border-red-500/60"
-              : "border-white/10 focus:border-violet-500/50"
+              : "border-white/10 focus:border-violet-500/50 focus:ring-2 focus:ring-violet-500/25"
           }`}
         />
         {touched.email && !emailValid && (
@@ -201,7 +201,7 @@ export default function ContactForm({
               setCountryCode(event.target.value);
               setPhone((current) => formatPhone(current, event.target.value));
             }}
-            className="w-full appearance-none rounded-xl bg-white/5 border border-white/10 pl-4 pr-9 py-3 text-sm text-white focus:outline-none focus:border-violet-500/50 transition-colors"
+            className="w-full appearance-none rounded-xl bg-white/5 border border-white/10 pl-4 pr-9 py-3 text-sm text-white focus:outline-none focus:border-violet-500/50 focus:ring-2 focus:ring-violet-500/25 transition-colors"
           >
             {COUNTRY_CODES.map(({ code, flag }) => (
               <option key={code} value={code} className="bg-zinc-900">
@@ -229,7 +229,7 @@ export default function ContactForm({
           className={`w-full rounded-xl bg-white/5 border px-4 py-3 text-sm text-white placeholder:text-zinc-500 focus:outline-none transition-colors ${
             touched.phone && !phoneValid
               ? "border-red-500/60 focus:border-red-500/60"
-              : "border-white/10 focus:border-violet-500/50"
+              : "border-white/10 focus:border-violet-500/50 focus:ring-2 focus:ring-violet-500/25"
           }`}
         />
       </div>
@@ -252,7 +252,7 @@ export default function ContactForm({
           value={message}
           onChange={(event) => setMessage(event.target.value)}
           placeholder={t("Conte um pouco sobre o projeto ou oportunidade", "Tell me a bit about the project or opportunity")}
-          className="w-full rounded-xl bg-white/5 border border-white/10 px-4 py-3 text-sm text-white placeholder:text-zinc-500 focus:outline-none focus:border-violet-500/50 transition-colors resize-none"
+          className="w-full rounded-xl bg-white/5 border border-white/10 px-4 py-3 text-sm text-white placeholder:text-zinc-500 focus:outline-none focus:border-violet-500/50 focus:ring-2 focus:ring-violet-500/25 transition-colors resize-none"
         />
         <p
           className={`mt-1 text-right text-xs ${
