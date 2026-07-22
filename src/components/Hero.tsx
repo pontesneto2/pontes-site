@@ -231,7 +231,7 @@ export default function Hero() {
 
       <FloatingTechIcons />
 
-      <div className="relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="magenta-glow relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Conteúdo de texto — celular/tablet: centralizado no topo; desktop: à esquerda, centralizado na vertical */}
         <div className="w-full pt-24 sm:pt-28 lg:pt-0 lg:max-w-[560px] text-center lg:text-left">
           <motion.span

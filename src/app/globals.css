@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+ * Papéis de cor do sistema:
+ *   Magenta (#D040E8 / violet-600→fuchsia-500 gradient): cor primária de
+ *   marca — estados ativos, glows, divisores de seção, gradientes, CTAs
+ *   e visualização de dados.
+ *   Verde (emerald): reservado como cor SEMÂNTICA de status
+ *   ("Disponível", "Em produção") — não é accent visual e não compete
+ *   com o magenta por atenção.
+ */
+
 /* Cor de seleção amarela em todo o site */
 ::selection {
   background-color: #fbbf24;
@@ -21,6 +31,77 @@ body {
     -apple-system,
     sans-serif;
   min-height: 100vh;
+  position: relative;
+}
+
+/* Grain bem sutil sobre o preto do fundo, pra tirar o aspecto chapado
+   sem custar uma imagem: ruído gerado via SVG turbulence, fixo, atrás
+   de todo o conteúdo. Desligado se o usuário pedir menos efeitos. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::before {
+    display: none;
+  }
+}
+
+/* Glow radial reutilizável atrás de elementos de destaque (hero, CTAs
+   principais) — reforça o magenta como cor primária de marca. */
+.magenta-glow {
+  position: relative;
+}
+.magenta-glow::before {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  z-index: -1;
+  background: radial-gradient(closest-side, rgba(208, 64, 232, 0.16), transparent 70%);
+  pointer-events: none;
+}
+
+/*
+ * Sistema de elevação de cards — 3 níveis, um único vocabulário para
+ * substituir a mistura de bg-black/55, bg-black/70, border-white/10,
+ * border-white/15 etc. espalhada pelo código. Papéis:
+ *   .card-surface-1: fundo de seção (mais discreto, quase invisível)
+ *   .card-surface-2: card padrão (a maioria dos cards do site)
+ *   .card-surface-3: card elevado (destaque, hover, itens em foco)
+ * Cada nível sobe levemente em opacidade de fundo, contraste de borda
+ * e sombra — dando profundidade real em vez de "shadow: none". Fica em
+ * @layer components pra classes de estado do Tailwind (hover:, etc.)
+ * aplicadas junto sempre vencerem no cascade.
+ */
+@layer components {
+  .card-surface-1 {
+    background-color: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .card-surface-2 {
+    background-color: rgba(0, 0, 0, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 24px -12px rgba(0, 0, 0, 0.5);
+  }
+
+  .card-surface-3 {
+    background-color: rgba(0, 0, 0, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 16px 40px -16px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(139, 92, 246, 0.04);
+  }
+
+  .card-surface-2,
+  .card-surface-3 {
+    transition: border-color 200ms ease, box-shadow 200ms ease, transform 200ms ease;
+  }
 }
 
 @keyframes blink-caret {
