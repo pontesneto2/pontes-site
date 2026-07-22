@@ -115,56 +115,33 @@ export default function SiteHeader({
             />
           </Link>
 
-          <nav className="hidden md:flex items-center gap-8 text-sm">
-            <div className="flex items-center gap-8">
-              {navLinks.map((link) => (
-                <Link key={link.href} href={link.href} className="hover:text-white/90 text-zinc-300">
-                  {t(link.label)}
-                </Link>
-              ))}
-            </div>
-            <div className="flex items-center gap-3">
-              <LanguageSwitch lang={lang} setLang={setLang} />
-              {secondaryCta && (
-                <a
-                  href={secondaryCta.href}
-                  {...(secondaryIsExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-white/20 text-zinc-200 hover:bg-white/5 hover:text-white transition-colors"
-                >
-                  {t(secondaryCta.label)}
-                  {secondaryCtaFlag && (
-                    <span className="text-[0.85em] leading-none">{secondaryCtaFlag}</span>
-                  )}
-                </a>
-              )}
+          <div className="flex items-center gap-1.5 sm:gap-2.5">
+            <LanguageSwitch lang={lang} setLang={setLang} compact />
+            {secondaryCta && (
               <a
-                href={effectiveCta.href}
-                {...(ctaIsExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                className="relative inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-500 text-white shadow-lg shadow-fuchsia-700/20"
+                href={secondaryCta.href}
+                {...(secondaryIsExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-white/20 text-zinc-200 hover:bg-white/5 hover:text-white transition-colors text-sm"
               >
-                {t(effectiveCta.label)}
-                {ctaFlag && <span className="text-[0.85em] leading-none">{ctaFlag}</span>}
-                {ctaBadge && (
-                  <span className="absolute -right-2 -top-1.5 rotate-12 rounded-full bg-amber-400 px-1 py-px text-[8px] font-bold uppercase leading-none tracking-wide text-zinc-950 shadow-sm shadow-black/30">
-                    {t(ctaBadge)}
-                  </span>
+                {t(secondaryCta.label)}
+                {secondaryCtaFlag && (
+                  <span className="text-[0.85em] leading-none">{secondaryCtaFlag}</span>
                 )}
               </a>
-              <SearchBox
-                searchOpen={searchOpen}
-                setSearchOpen={setSearchOpen}
-                searchQuery={searchQuery}
-                setSearchQuery={setSearchQuery}
-                searchResults={searchResults}
-                onSelect={handleSearchSelect}
-                t={t}
-                align="right"
-              />
-            </div>
-          </nav>
-
-          <div className="flex items-center gap-2 md:hidden">
-            <LanguageSwitch lang={lang} setLang={setLang} compact />
+            )}
+            <a
+              href={effectiveCta.href}
+              {...(ctaIsExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+              className="relative inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-500 text-white shadow-lg shadow-fuchsia-700/20 text-sm"
+            >
+              {t(effectiveCta.label)}
+              {ctaFlag && <span className="text-[0.85em] leading-none">{ctaFlag}</span>}
+              {ctaBadge && (
+                <span className="absolute -right-2 -top-1.5 rotate-12 rounded-full bg-amber-400 px-1 py-px text-[8px] font-bold uppercase leading-none tracking-wide text-zinc-950 shadow-sm shadow-black/30">
+                  {t(ctaBadge)}
+                </span>
+              )}
+            </a>
             <SearchBox
               searchOpen={searchOpen}
               setSearchOpen={setSearchOpen}
@@ -180,7 +157,7 @@ export default function SiteHeader({
               className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-black/25 hover:bg-black/35 p-2.5 transition-colors"
               onClick={() => setNavOpen(!navOpen)}
               aria-expanded={navOpen}
-              aria-controls="mobile-nav"
+              aria-controls="site-nav-menu"
             >
               <span className="sr-only">{t({ pt: "Abrir menu", en: "Open menu" })}</span>
               {navOpen ? <X className="h-5 w-5 text-zinc-200" /> : <Menu className="h-5 w-5 text-zinc-200" />}
@@ -189,49 +166,25 @@ export default function SiteHeader({
         </div>
       </div>
 
-      {navOpen && (
-        <div id="mobile-nav" className="md:hidden border-t border-white/5 bg-[#141418]">
-          <div className="mx-auto max-w-7xl px-3 py-4 flex flex-col gap-2">
-            <a
-              href={effectiveCta.href}
-              {...(ctaIsExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-              className="relative flex items-center justify-center gap-1.5 rounded-xl px-3 py-3 bg-gradient-to-r from-violet-600 to-fuchsia-500 text-white font-medium shadow-lg shadow-fuchsia-700/20"
+      <div
+        id="site-nav-menu"
+        className={`overflow-hidden border-t border-white/5 bg-[#141418] transition-[max-height,opacity] duration-300 ease-out ${
+          navOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0 border-t-0"
+        }`}
+      >
+        <nav className="mx-auto max-w-7xl px-3 py-3 flex flex-col gap-1">
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="text-zinc-200 text-sm rounded-xl px-3 py-3 hover:bg-gradient-to-r hover:from-violet-600/20 hover:to-fuchsia-500/20 transition-all"
               onClick={() => setNavOpen(false)}
             >
-              {t(effectiveCta.label)}
-              {ctaFlag && <span className="text-[0.85em] leading-none">{ctaFlag}</span>}
-              {ctaBadge && (
-                <span className="absolute -top-1.5 right-3 rotate-12 rounded-full bg-amber-400 px-1 py-px text-[8px] font-bold uppercase leading-none tracking-wide text-zinc-950 shadow-sm shadow-black/30">
-                  {t(ctaBadge)}
-                </span>
-              )}
-            </a>
-            {secondaryCta && (
-              <a
-                href={secondaryCta.href}
-                {...(secondaryIsExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                className="flex items-center justify-center gap-1.5 rounded-xl px-3 py-3 border border-white/15 text-zinc-200 hover:bg-white/5 transition-colors"
-                onClick={() => setNavOpen(false)}
-              >
-                {t(secondaryCta.label)}
-                {secondaryCtaFlag && (
-                  <span className="text-[0.85em] leading-none">{secondaryCtaFlag}</span>
-                )}
-              </a>
-            )}
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="text-zinc-200 text-sm rounded-xl px-3 py-3 hover:bg-gradient-to-r hover:from-violet-600/20 hover:to-fuchsia-500/20 transition-all"
-                onClick={() => setNavOpen(false)}
-              >
-                {t(link.label)}
-              </Link>
-            ))}
-          </div>
-        </div>
-      )}
+              {t(link.label)}
+            </Link>
+          ))}
+        </nav>
+      </div>
     </header>
   );
 }
