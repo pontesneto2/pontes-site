@@ -813,7 +813,7 @@ export default function Page() {
     { value: "6+", label: { pt: "Anos entregando em produção", en: "Years shipping to production" } },
   ];
 
-  const secondaryProjects = featuredProjects.slice(1);
+  const secondaryProjects = featuredProjects;
 
   const projectFilters: Array<{ key: string; label: Bilingual }> = [];
   const seenFilterKeys = new Set<string>();
@@ -1220,7 +1220,7 @@ export default function Page() {
                 </p>
               </div>
 
-              {/* Cards de projetos principais - hero + grid */}
+              {/* Cards de projetos - somente carrossel deslizante */}
               <motion.div
                 variants={staggerList}
                 initial="hidden"
@@ -1228,106 +1228,6 @@ export default function Page() {
                 viewport={viewportSettings}
                 className="mb-8 space-y-8"
               >
-                {(() => {
-                  const heroProject = featuredProjects[0];
-                  const heroCta = renderProjectCta(heroProject);
-
-                  return (
-                    <motion.article
-                      custom={0}
-                      variants={fadeUpItem}
-                      onMouseMove={handleSpotlightMove}
-                      className="spotlight-card card-surface-3 relative group rounded-3xl overflow-hidden grid md:grid-cols-2 items-stretch hover:border-violet-400/25 hover:-translate-y-1 transition-all duration-300"
-                    >
-                      {heroProject.productionBadge && (
-                        <span className="absolute top-3 right-3 z-10 rotate-12 whitespace-nowrap rounded-full bg-amber-400 px-2.5 py-1 text-[10px] font-bold uppercase leading-none tracking-wide text-zinc-950 shadow-sm shadow-black/30 pointer-events-none">
-                          {t({ pt: "Em produção", en: "In production" })}
-                        </span>
-                      )}
-                      <div className="relative aspect-video md:aspect-auto min-h-[260px] md:min-h-full bg-[#1a1425] overflow-hidden">
-                        {heroProject.thumb ? (
-                          <>
-                            <Image
-                              src={heroProject.thumb}
-                              alt={`${t({ pt: "Capa do projeto", en: "Project cover" })}: ${heroProject.title}`}
-                              fill
-                              sizes="(max-width: 768px) 100vw, 50vw"
-                              loading="eager"
-                              className="object-contain md:object-cover object-center"
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-br from-violet-950/25 via-black/15 to-black/20 opacity-100 group-hover:opacity-0 transition-opacity duration-300 pointer-events-none" />
-                          </>
-                        ) : (
-                          <div className="h-full min-h-[260px] w-full bg-gradient-to-br from-violet-600/35 via-fuchsia-500/20 to-violet-900/40" />
-                        )}
-                      </div>
-                      <div className={`relative flex flex-col justify-center p-5 sm:p-6 md:p-10 overflow-hidden ${heroProject.bgClass}`}>
-                        <div className="absolute inset-0 bg-black/35 pointer-events-none" />
-                        <div className="relative">
-                          <CategoryBadge labels={heroProject.category.map(t)} />
-                          <h3 className="text-2xl md:text-3xl font-bold text-white">
-                            {heroProject.title}
-                          </h3>
-                          {t(heroProject.subtitle) && (
-                            <span className="inline-block text-xs text-amber-300 font-medium mt-1">
-                              {t(heroProject.subtitle)}
-                            </span>
-                          )}
-                          <p className="mt-4 text-sm md:text-base text-zinc-200 leading-relaxed">
-                            {t(heroProject.blurb)}
-                          </p>
-                          <div className="mt-5 border-t border-white/5" />
-                          {heroProject.highlights && (
-                            <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2">
-                              {heroProject.highlights.map((h, i) => {
-                                const Icon = h.icon;
-                                return (
-                                  <div
-                                    key={i}
-                                    className="flex items-center gap-1.5 text-xs text-zinc-200"
-                                  >
-                                    <Icon className="h-3.5 w-3.5 text-violet-300" />
-                                    <span>{t(h.value)}</span>
-                                  </div>
-                                );
-                              })}
-                            </div>
-                          )}
-                          {heroProject.impact && (
-                            <div
-                              className={`mt-5 pt-5 border-t border-white/5 grid gap-4 ${
-                                heroProject.impact.length === 3 ? "grid-cols-3" : "grid-cols-2 sm:grid-cols-4"
-                              }`}
-                            >
-                              {heroProject.impact.map((stat, i) => {
-                                const Icon = stat.icon;
-                                return (
-                                  <div key={i} className="flex flex-col gap-1">
-                                    <div className="flex items-center gap-1.5 text-base font-semibold text-white">
-                                      <Icon className="h-3.5 w-3.5 text-violet-300" />
-                                      {t(stat.value)}
-                                    </div>
-                                    <span className="text-[11px] text-zinc-400 leading-tight">
-                                      {t(stat.label)}
-                                    </span>
-                                  </div>
-                                );
-                              })}
-                            </div>
-                          )}
-                          <div className="mt-5 border-t border-white/5" />
-                          <div className="mt-5 flex flex-wrap gap-2">
-                            {heroProject.tags.map((tag) => (
-                              <ProjectTagIcon key={tag} tag={tag} />
-                            ))}
-                          </div>
-                          <div className="mt-7">{heroCta}</div>
-                        </div>
-                      </div>
-                    </motion.article>
-                  );
-                })()}
-
                 {projectFilters.length > 1 && (
                   <div className="flex flex-wrap gap-2 mb-6" role="group" aria-label={t({ pt: "Filtrar projetos", en: "Filter projects" })}>
                     <button
@@ -1384,7 +1284,7 @@ export default function Page() {
                     return (
                       <motion.article
                         key={project.title}
-                        custom={index + 1}
+                        custom={index}
                         variants={fadeUpItem}
                         initial="hidden"
                         animate="show"
