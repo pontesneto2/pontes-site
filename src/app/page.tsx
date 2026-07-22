@@ -755,6 +755,28 @@ export default function Page() {
         { icon: Users, value: { pt: "100+", en: "100+" }, label: { pt: "Visitas mensais", en: "Monthly visits" } },
       ],
     },
+    {
+      title: "Landing Page Sarrubbo Advogados",
+      subtitle: { pt: "", en: "" },
+      tags: ["Next.js", "TypeScript", "TailwindCSS", "Git"],
+      link: "https://sarrubboadvogados.com.br/",
+      ctaLabel: { pt: "Visite", en: "Visit" },
+      blurb: {
+        pt: "Landing page institucional do escritório de advocacia, com apresentação das áreas de atuação e canais de contato para captação de clientes.",
+        en: "Institutional landing page for the law firm, presenting its practice areas and contact channels for client acquisition.",
+      },
+      category: [{ pt: "Site Institucional", en: "Institutional Website" }],
+      thumb: "/images/capa-sarrubbo-advogados.png",
+      bgClass: NEUTRAL_BG,
+      highlights: [
+        { icon: Clock, value: { pt: "Desenvolvimento rápido", en: "Fast development" } },
+        { icon: Briefcase, value: { pt: "Full Stack solo", en: "Solo Full Stack" } },
+        { icon: Building2, value: { pt: "Idealizador: Sarrubbo Advogados", en: "Idealized by: Sarrubbo Advogados" } },
+      ],
+      impact: [
+        { icon: Gauge, value: { pt: "99,9%", en: "99.9%" }, label: { pt: "Uptime", en: "Uptime" } },
+      ],
+    },
   ];
 
   // Agregados derivados dos números reais já publicados por projeto acima
