@@ -24,9 +24,9 @@ export const metadata: Metadata = {
     alternateLocale: "pt_BR",
     images: [
       {
-        url: "/images/img-link-site-fcopts.png",
-        width: 1200,
-        height: 675,
+        url: "/images/capa-img-link-public.png",
+        width: 1920,
+        height: 1080,
         alt: "Francisco Pontes: Full Stack Software Engineer",
       },
     ],
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title,
     description,
-    images: ["/images/img-link-site-fcopts.png"],
+    images: ["/images/capa-img-link-public.png"],
   },
 };
 

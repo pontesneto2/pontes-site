@@ -50,9 +50,9 @@ export const metadata: Metadata = {
       "Portfólio de Francisco Pontes, Engenheiro de Software Full Stack em Fortaleza. Experiência em React, Next.js, Node.js, TypeScript e DevOps, da ideia ao lançamento.",
     images: [
       {
-        url: "/images/img-link-site-fcopts.png",
-        width: 1200,
-        height: 675,
+        url: "/images/capa-img-link-public.png",
+        width: 1920,
+        height: 1080,
         alt: "Francisco Pontes — Engenheiro de Software Full Stack",
       },
     ],
@@ -64,7 +64,7 @@ export const metadata: Metadata = {
     title: "Francisco Pontes: Engenheiro de Software Full Stack",
     description:
       "Portfólio de Francisco Pontes, Engenheiro de Software Full Stack em Fortaleza. Experiência em React, Next.js, Node.js, TypeScript e DevOps, da ideia ao lançamento.",
-    images: ["/images/img-link-site-fcopts.png"],
+    images: ["/images/capa-img-link-public.png"],
   },
   robots: {
     index: true,

@@ -6,7 +6,7 @@ import { renderMarkdownToHtml } from "@/lib/mdx";
 import type { Lang } from "@/lib/language-context";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://fcopts.com.br";
-const DEFAULT_OG_IMAGE = "/images/img-link-site-fcopts.png";
+const DEFAULT_OG_IMAGE = "/images/capa-img-link-public.png";
 
 export function generateStaticParams() {
   return getAllSlugs().map((slug) => ({ slug }));

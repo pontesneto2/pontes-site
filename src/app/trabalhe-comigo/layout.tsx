@@ -38,9 +38,9 @@ export const metadata: Metadata = {
       "Sistemas, sites e apps construídos por um engenheiro full stack sênior. Proposta na hora com IA, contrato e código seu na entrega.",
     images: [
       {
-        url: "/images/img-link-site-fcopts.png",
-        width: 1200,
-        height: 675,
+        url: "/images/capa-img-link-public.png",
+        width: 1920,
+        height: 1080,
         alt: "Francisco Pontes — Trabalhe comigo",
       },
     ],
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Software sob medida, da ideia ao lançamento | Francisco Pontes",
     description,
-    images: ["/images/img-link-site-fcopts.png"],
+    images: ["/images/capa-img-link-public.png"],
   },
 };
 
