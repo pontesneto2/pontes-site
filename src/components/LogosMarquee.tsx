@@ -9,7 +9,7 @@ const LOGOS = [
   { src: "/images/logo-idace.png", alt: "Idace", scale: 1.15, href: "https://www.idace.ce.gov.br" },
   { src: "/images/logo-agropolos.webp", alt: "Instituto Agropolos", href: "https://institutoagropolos.org.br" },
   { src: "/images/logo-anjos.png", alt: "Instituto Anjos Digitais", href: "https://anjosdigitais.org" },
-  { src: "/images/logo-ceara-sem-fome.png", alt: "Ceará Sem Fome", href: "https://www.ceara.gov.br/tag/ceara-sem-fome/" },
+  { src: "/images/logo-ceara-sem-fome.png", alt: "Ceará Sem Fome", href: "https://www.ceara.gov.br/tag/ceara-sem-fome/", tone: true },
   { src: "/images/logo-com3.png", alt: "Com3 Brasil", scale: 0.85, href: "https://com3brasil.com.br" },
   { src: "/images/logo-movimenta.png", alt: "Movimenta Filmes", href: "https://2.0.movimentafilmes.com" },
   { src: "/images/logo-msff.webp", alt: "Médicos Sem Fronteiras", href: "https://www.msf.org.br" },
