@@ -98,6 +98,25 @@ function BlogPostingJsonLd({ post, slug }: { post: BlogPostContent; slug: string
   );
 }
 
+function BreadcrumbJsonLd({ post, slug }: { post: BlogPostContent; slug: string }) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Início", item: siteUrl },
+      { "@type": "ListItem", position: 2, name: "Blog", item: `${siteUrl}/blog` },
+      { "@type": "ListItem", position: 3, name: post.title, item: `${siteUrl}/blog/${slug}` },
+    ],
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+    />
+  );
+}
+
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const ptPost = getPostContent(slug, "pt");
@@ -115,6 +134,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   return (
     <>
       <BlogPostingJsonLd post={jsonLdPost} slug={slug} />
+      <BreadcrumbJsonLd post={jsonLdPost} slug={slug} />
       <BlogPostClient pt={pt} en={en} recentPosts={recentPosts} />
     </>
   );
