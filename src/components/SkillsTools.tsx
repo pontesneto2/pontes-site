@@ -263,7 +263,7 @@ function SkillChip({ skill, t }: { skill: Skill; t: (v: Bilingual) => string }) 
 function TierLegend({ t }: { t: (v: Bilingual) => string }) {
   const tiers: SkillTier[] = ["core", "solid"];
   return (
-    <div className="mb-10 flex flex-wrap items-center justify-center gap-x-4 gap-y-3">
+    <div className="mb-4 flex flex-wrap items-center justify-center gap-x-4 gap-y-3">
       {tiers.map((tier) => {
         const s = TIER_STYLE[tier];
         return (
