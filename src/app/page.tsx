@@ -307,8 +307,8 @@ export default function Page() {
     },
   };
 
-  const FEATURED_PROJECT_BG = "bg-gradient-to-br from-violet-600/60 via-purple-800/55 to-purple-950/65";
-  const NEUTRAL_BG = "bg-zinc-700/40";
+  const FEATURED_PROJECT_BG = "bg-[#19191C]";
+  const NEUTRAL_BG = "bg-[#19191C]";
 
   const featuredProjects: Array<{
     title: string;
@@ -326,7 +326,6 @@ export default function Page() {
     highlights?: Array<{ icon: LucideIcon; value: Bilingual }>;
     impact?: Array<{ icon: LucideIcon; value: Bilingual; label: Bilingual }>;
     bgClass: string;
-    scrimClass?: string;
     productionBadge?: boolean;
   }> = [
     {
@@ -1283,11 +1282,6 @@ export default function Page() {
                           )}
                         </div>
                         <div className={`relative flex-1 flex flex-col p-3 sm:p-3.5 md:p-4 overflow-hidden ${project.bgClass}`}>
-                          <div
-                            className={`absolute inset-0 pointer-events-none ${
-                              project.scrimClass ?? "bg-gradient-to-t from-black/20 via-transparent to-white/5"
-                            }`}
-                          />
                           <div className="relative flex-1 flex flex-col">
                             <CategoryBadge labels={project.category.map(t)} compact />
                             <h3 className="text-xl font-bold text-white">
