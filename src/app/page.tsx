@@ -6,7 +6,6 @@ import { useEffect, useRef, useState, type MouseEvent } from "react";
 import { motion } from "framer-motion";
 import { track } from "@vercel/analytics";
 import Hero from "@/components/Hero";
-import AnimatedCounter from "@/components/AnimatedCounter";
 import CursorGlow from "@/components/CursorGlow";
 import Testimonials from "@/components/Testimonials";
 import ContactForm from "@/components/ContactForm";
@@ -14,6 +13,7 @@ import SkillsTools, { SKILL_NAMES } from "@/components/SkillsTools";
 import SiteHeader, { type SearchEntry } from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import Preloader from "@/components/Preloader";
+import LogosMarquee from "@/components/LogosMarquee";
 import { useLanguage, tr, LANG_FLAG, type Bilingual } from "@/lib/language-context";
 import { getCvUrl } from "@/lib/constants";
 import { EXPERIENCE, PRIOR_EXPERIENCE } from "@/lib/experience-data";
@@ -991,36 +991,14 @@ export default function Page() {
         <main id="content">
           <Hero />
 
-          {/* FAIXA DE IMPACTO AGREGADO */}
-          <section className="border-y border-white/5 bg-white/[0.015] py-8">
-            <div className="mx-auto max-w-6xl px-6 sm:px-8 lg:px-12 grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
-              {impactStats.map((stat) => (
-                <div key={stat.label.pt}>
-                  <div
-                    className="text-2xl sm:text-3xl font-bold"
-                    style={{ fontFamily: "var(--font-jetbrains-mono)", color: "#e879f9" }}
-                  >
-                    <AnimatedCounter value={stat.value} lang={lang} />
-                  </div>
-                  <div className="mt-1 text-[11px] sm:text-xs text-zinc-400">{t(stat.label)}</div>
-                </div>
-              ))}
-            </div>
-          </section>
-
           {/* FAIXA DE CREDIBILIDADE */}
-          <section className="border-b border-white/5 py-6">
+          <section className="border-b border-white/5 bg-zinc-900/50 py-10 sm:py-12">
             <div className="mx-auto max-w-6xl px-6 text-center">
-              <span className="mb-3 block font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-500">
+              <span className="mb-9 block font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-500">
                 {t({ pt: "Sistemas em produção para", en: "Systems in production for" })}
               </span>
-              <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-2 text-sm font-semibold text-zinc-400">
-                <span>Governo do Ceará</span>
-                <span>FlixBus</span>
-                <span>FedEx</span>
-                <span>{t({ pt: "Institutos e ONGs", en: "Institutes & NGOs" })}</span>
-              </div>
             </div>
+            <LogosMarquee />
           </section>
 
           {/* SOBRE — bio / formação */}
@@ -2006,7 +1984,7 @@ export default function Page() {
 
         </main>
 
-        <SiteFooter />
+        <SiteFooter impactStats={impactStats} />
       </div>
     </div>
   );

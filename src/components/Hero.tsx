@@ -217,7 +217,7 @@ export default function Hero() {
         style={{
           width: "min(55vw, 820px)",
           background:
-            "radial-gradient(58% 60% at 62% 44%, rgba(75,40,105,.6), rgba(55,28,85,.42) 45%, rgba(35,16,60,.2) 66%, transparent 78%)",
+            "radial-gradient(58% 60% at 62% 44%, rgba(75,40,105,.42), rgba(55,28,85,.3) 45%, rgba(35,16,60,.14) 66%, transparent 78%)",
         }}
       />
       <div
