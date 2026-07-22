@@ -6,7 +6,7 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://fcopts.com.br";
 
 const title = "Blog";
 const description =
-  "Decisões de arquitetura, aprendizados, bastidores dos projetos em que trabalho e curiosidades sobre o mundo Dev/Tech — publicados também no LinkedIn.";
+  "Decisões de arquitetura, aprendizados, bastidores dos projetos em que trabalho e curiosidades sobre o mundo Dev/Tech, publicados também no LinkedIn.";
 
 export const metadata: Metadata = {
   title,
