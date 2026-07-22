@@ -197,7 +197,7 @@ export default function Testimonials() {
 
           <div className="mt-3 mx-auto h-1.5 w-full max-w-xs rounded-full bg-white/10 overflow-hidden">
             <div
-              className="h-full rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500 transition-[margin-left] duration-150"
+              className="h-full rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500"
               style={{
                 width: `${thumbWidth}%`,
                 marginLeft: `${scrollProgress * (100 - thumbWidth)}%`,
