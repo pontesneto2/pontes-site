@@ -1226,7 +1226,7 @@ export default function Page() {
                     <motion.article
                       custom={0}
                       variants={fadeUpItem}
-                      className="relative group rounded-3xl overflow-hidden border border-white/10 shadow-2xl grid md:grid-cols-2 items-stretch hover:border-white/20 hover:-translate-y-1 transition-all duration-300"
+                      className="card-surface-3 relative group rounded-3xl overflow-hidden grid md:grid-cols-2 items-stretch hover:border-violet-400/25 hover:-translate-y-1 transition-all duration-300"
                     >
                       {heroProject.productionBadge && (
                         <span className="absolute top-3 right-3 z-10 rotate-12 whitespace-nowrap rounded-full bg-amber-400 px-2.5 py-1 text-[10px] font-bold uppercase leading-none tracking-wide text-zinc-950 shadow-sm shadow-black/30 pointer-events-none">
@@ -1330,7 +1330,7 @@ export default function Page() {
                         key={project.title}
                         custom={index + 1}
                         variants={fadeUpItem}
-                        className="group snap-start shrink-0 w-[88%] sm:w-[calc(50%-1rem)] rounded-3xl overflow-hidden border border-white/10 shadow-2xl flex flex-col hover:border-white/20 hover:-translate-y-1 transition-all duration-300"
+                        className="card-surface-2 group snap-start shrink-0 w-[88%] sm:w-[calc(50%-1rem)] rounded-3xl overflow-hidden flex flex-col hover:border-violet-400/20 hover:-translate-y-1 transition-all duration-300"
                       >
                         <div className="relative h-48 w-full bg-[#1a1425]">
                           {project.productionBadge && (

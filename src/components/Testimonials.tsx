@@ -21,7 +21,7 @@ function TestimonialCard({ item }: { item: Testimonial }) {
   const isLong = text.length > 130;
 
   return (
-    <div className="relative flex h-full flex-col rounded-3xl border border-white/10 bg-black/55 backdrop-blur-xl p-6 md:p-8 shadow-2xl overflow-hidden">
+    <div className="card-surface-2 relative flex h-full flex-col rounded-3xl backdrop-blur-xl p-6 md:p-8 overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-br from-violet-500/5 via-transparent to-fuchsia-500/5 pointer-events-none" />
       <Quote className="absolute top-6 right-6 h-8 w-8 text-fuchsia-400" />
 
