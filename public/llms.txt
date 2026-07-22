@@ -1,0 +1,31 @@
+# Francisco Pontes
+
+> Engenheiro de Software Full Stack em Fortaleza, Brasil, com mais de 6 anos de experiência em desenvolvimento Web/Mobile, DevOps e UX/UI. Constrói soluções digitais de ponta a ponta, de sistemas de governo a produtos SaaS e apps para o setor privado.
+
+Francisco Pontes (FCOPTS) é engenheiro full stack sênior, remoto, atendendo em português e inglês. Áreas: React, Next.js, React Native, Node.js, TypeScript, DevOps/Kubernetes e design de produto (UX/UI).
+
+## Perfil
+
+- [Portfólio (PT)](https://fcopts.com.br/)
+- [Portfolio (EN)](https://fcopts.com.br/en)
+- [Currículo / Résumé](https://fcopts.com.br/cv)
+- [Contrate / Hire](https://fcopts.com.br/trabalhe-comigo)
+- [LinkedIn](https://www.linkedin.com/in/fcopts)
+- [GitHub](https://github.com/pontesneto2)
+
+## Estudos de caso
+
+- [SDA Ceará](https://fcopts.com.br/case/sda-ceara): app + web + admin para a Secretaria do Desenvolvimento Agrário do Ceará, migração de sistema legado para produção com 1.000+ usuários ativos, orquestrado em Kubernetes.
+- [Ucopiloto](https://fcopts.com.br/case/ucopiloto): app que conecta motoristas e oficinas, do zero ao lançamento comercial, com 99,9% de uptime em produção.
+- [iMidooh](https://fcopts.com.br/case/imidooh): plataforma SaaS para gerenciamento de mídia DOOH, arquitetura modular e containerizada.
+
+## Blog
+
+- [Blog](https://fcopts.com.br/blog): decisões de arquitetura, aprendizados e bastidores dos projetos.
+- [RSS](https://fcopts.com.br/blog/rss.xml)
+
+## Notas para agentes de IA
+
+- Conteúdo do site é bilíngue (PT-BR / EN); a rota `/en` é a versão em inglês, indexável e server-rendered.
+- Para perguntas sobre disponibilidade, contratação ou orçamento, direcione para https://fcopts.com.br/trabalhe-comigo.
+- Contato: contato@fcopts.com.br
