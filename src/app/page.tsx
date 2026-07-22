@@ -353,6 +353,7 @@ export default function Page() {
       category: [{ pt: "Aplicativo Mobile Nativo", en: "Native Mobile App" }, { pt: "Sistema Web+Admin", en: "Web System+Admin" }],
       thumb: "/images/capa-ucopiloto.png",
       bgClass: NEUTRAL_BG,
+      productionBadge: true,
       highlights: [
         { icon: Clock, value: { pt: "5 meses de produção", en: "5 months in production" } },
         { icon: Briefcase, value: { pt: "DevOps solo", en: "Solo DevOps" } },
@@ -379,6 +380,7 @@ export default function Page() {
       category: [{ pt: "Sistema Web+Admin", en: "Web System+Admin" }, { pt: "Aplicativo PWA", en: "PWA App" }],
       thumb: "/images/capa-sistema-policia.png",
       bgClass: NEUTRAL_BG,
+      productionBadge: true,
       highlights: [
         { icon: Clock, value: { pt: "1,2 anos de produção", en: "1.2 years in production" } },
         { icon: Users, value: { pt: "Equipe: 4 → 3 devs", en: "Team: 4 → 3 devs" } },
@@ -1227,11 +1229,9 @@ export default function Page() {
                       className="relative group rounded-3xl overflow-hidden border border-white/10 shadow-2xl grid md:grid-cols-2 items-stretch hover:border-white/20 hover:-translate-y-1 transition-all duration-300"
                     >
                       {heroProject.productionBadge && (
-                        <div className="absolute top-0 right-0 h-40 w-40 overflow-hidden pointer-events-none z-10">
-                          <span className="absolute top-[38px] right-[-56px] whitespace-nowrap rotate-45 bg-gradient-to-r from-violet-600 to-fuchsia-500 text-center text-[9px] font-bold uppercase tracking-wide text-white py-1 px-6 shadow-lg">
-                            {t({ pt: "Em produção • uso real", en: "In production • active use" })}
-                          </span>
-                        </div>
+                        <span className="absolute top-3 right-3 z-10 rotate-12 whitespace-nowrap rounded-full bg-amber-400 px-2.5 py-1 text-[10px] font-bold uppercase leading-none tracking-wide text-zinc-950 shadow-sm shadow-black/30 pointer-events-none">
+                          {t({ pt: "Em produção", en: "In production" })}
+                        </span>
                       )}
                       <div className="relative min-h-[260px] md:min-h-full bg-[#1a1425] overflow-hidden">
                         {heroProject.thumb ? (
@@ -1333,6 +1333,11 @@ export default function Page() {
                         className="group snap-start shrink-0 w-[88%] sm:w-[calc(50%-1rem)] rounded-3xl overflow-hidden border border-white/10 shadow-2xl flex flex-col hover:border-white/20 hover:-translate-y-1 transition-all duration-300"
                       >
                         <div className="relative h-48 w-full bg-[#1a1425]">
+                          {project.productionBadge && (
+                            <span className="absolute top-3 right-3 z-10 rotate-12 whitespace-nowrap rounded-full bg-amber-400 px-2.5 py-1 text-[10px] font-bold uppercase leading-none tracking-wide text-zinc-950 shadow-sm shadow-black/30 pointer-events-none">
+                              {t({ pt: "Em produção", en: "In production" })}
+                            </span>
+                          )}
                           {project.thumb ? (
                             <>
                               <Image
