@@ -34,7 +34,7 @@ export default function SiteFooter({
         </div>
 
         {impactStats && impactStats.length > 0 && (
-          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 sm:gap-x-8">
+          <div className="flex flex-wrap items-start justify-center gap-x-6 gap-y-3 sm:gap-x-8">
             {impactStats.map((stat) => (
               <div key={stat.label.pt} className="text-center">
                 <div
