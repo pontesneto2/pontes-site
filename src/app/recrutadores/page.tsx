@@ -14,6 +14,7 @@ import {
   GraduationCap,
   Languages,
   ArrowUpRight,
+  MessageSquare,
 } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa6";
 import SiteHeader from "@/components/SiteHeader";
@@ -221,6 +222,13 @@ export default function RecrutadoresPage() {
           </div>
 
           <div className="mt-3 flex flex-wrap gap-3">
+            <Link
+              href="/#about"
+              className="inline-flex items-center gap-2 rounded-xl px-4 py-2.5 border border-white/15 text-zinc-200 hover:bg-white/5 text-sm font-medium transition-colors"
+            >
+              <MessageSquare className="h-4 w-4" />
+              {t({ pt: "Formulário de contato", en: "Contact form" })}
+            </Link>
             <a
               href="https://github.com/pontesneto2"
               target="_blank"
