@@ -38,12 +38,14 @@ export default function SiteFooter({
             {impactStats.map((stat) => (
               <div key={stat.label.pt} className="text-center">
                 <div
-                  className="text-sm font-bold"
-                  style={{ fontFamily: "var(--font-jetbrains-mono)", color: "#e879f9" }}
+                  className="text-sm font-bold text-white"
+                  style={{ fontFamily: "var(--font-jetbrains-mono)" }}
                 >
                   <AnimatedCounter value={stat.value} lang={lang} />
                 </div>
-                <div className="mt-0.5 text-[9px] uppercase tracking-wide text-zinc-500">{t(stat.label)}</div>
+                <div className="mt-0.5 max-w-[100px] mx-auto text-[9px] uppercase tracking-wide text-zinc-500">
+                  {t(stat.label)}
+                </div>
               </div>
             ))}
           </div>

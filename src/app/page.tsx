@@ -779,37 +779,10 @@ export default function Page() {
     },
   ];
 
-  // Agregados derivados dos números reais já publicados por projeto acima
-  // (nada inventado aqui: soma o que já está em cada card de impacto).
-  let systemsInProduction = 0;
-  let totalPeopleImpacted = 0;
-  let uptimeSum = 0;
-  let uptimeCount = 0;
-  for (const project of featuredProjects) {
-    if (project.discontinued) continue;
-    systemsInProduction++;
-    for (const imp of project.impact ?? []) {
-      if (imp.label.pt === "Usuários ativos" || imp.label.pt === "Visitas mensais") {
-        const n = parseInt(imp.value.pt.replace(/[^\d]/g, ""), 10);
-        if (!Number.isNaN(n)) totalPeopleImpacted += n;
-      }
-      if (imp.label.pt === "Uptime") {
-        const n = parseFloat(imp.value.pt.replace("%", "").replace(",", "."));
-        if (!Number.isNaN(n)) {
-          uptimeSum += n;
-          uptimeCount++;
-        }
-      }
-    }
-  }
-  const averageUptime = uptimeCount > 0 ? (uptimeSum / uptimeCount).toFixed(1) : null;
-  const formattedPeopleImpacted = totalPeopleImpacted.toLocaleString(lang === "pt" ? "pt-BR" : "en-US");
-
   const impactStats: Array<{ value: string; label: Bilingual }> = [
-    { value: `${systemsInProduction}+`, label: { pt: "Sistemas em produção", en: "Systems in production" } },
-    { value: `${formattedPeopleImpacted}+`, label: { pt: "Pessoas impactadas", en: "People impacted" } },
-    ...(averageUptime ? [{ value: `${averageUptime}%`, label: { pt: "Uptime médio", en: "Average uptime" } }] : []),
-    { value: "6+", label: { pt: "Anos entregando em produção", en: "Years shipping to production" } },
+    { value: "30+", label: { pt: "Plataformas entregues", en: "Platforms delivered" } },
+    { value: "99.7%", label: { pt: "Uptime médio", en: "Average uptime" } },
+    { value: "6+", label: { pt: "Anos de experiência", en: "Years of experience" } },
   ];
 
   const secondaryProjects = featuredProjects;
@@ -1627,54 +1600,6 @@ export default function Page() {
               </div>
             </section>
           )}
-
-          {/* NOW - o que estou construindo, estudando e lendo agora */}
-          <section className="relative py-10 border-t border-white/5">
-            <div className="mx-auto max-w-6xl px-6 sm:px-8 lg:px-12">
-              <h3 className="text-sm font-semibold text-zinc-400 uppercase tracking-wider mb-6">
-                {t({ pt: "Agora", en: "Now" })}
-              </h3>
-              <div className="grid sm:grid-cols-3 gap-4">
-                {[
-                  {
-                    label: { pt: "Construindo", en: "Building" },
-                    value: {
-                      pt: "Melhorias no próprio site: versão em inglês indexável, novos estudos de caso e um assistente com IA sobre o portfólio.",
-                      en: "Improvements to this site: an indexable English version, new case studies, and an AI assistant over the portfolio.",
-                    },
-                  },
-                  {
-                    label: { pt: "Estudando", en: "Studying" },
-                    value: {
-                      pt: "Arquitetura de agentes de IA e RAG aplicados a produtos reais, além de práticas de observabilidade em produção.",
-                      en: "AI agent architecture and RAG applied to real products, plus production observability practices.",
-                    },
-                  },
-                  {
-                    label: { pt: "Lendo", en: "Reading" },
-                    value: {
-                      pt: "Livros e papers sobre arquitetura de sistemas distribuídos e engenharia de produto.",
-                      en: "Books and papers on distributed systems architecture and product engineering.",
-                    },
-                  },
-                ].map((item) => (
-                  <div
-                    key={item.label.pt}
-                    className="rounded-xl border border-white/8 bg-white/[0.015] p-4"
-                  >
-                    <h4 className="text-xs font-semibold text-violet-300 mb-1.5">{t(item.label)}</h4>
-                    <p className="text-[13px] text-zinc-400 leading-relaxed">{t(item.value)}</p>
-                  </div>
-                ))}
-              </div>
-              <p className="mt-4 text-[11px] text-zinc-500">
-                {t({
-                  pt: "Fora do código: escrevendo uma autobiografia, aos poucos, nas horas vagas.",
-                  en: "Outside of code: writing an autobiography, slowly, in my spare time.",
-                })}
-              </p>
-            </div>
-          </section>
 
           {/* SOBRE MIM - Card Unificado Criativo */}
           <section
