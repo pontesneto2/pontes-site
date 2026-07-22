@@ -15,6 +15,8 @@ export const metadata: Metadata = {
     url: "/case/sistema-escolar-policia",
     title,
     description,
+    locale: "pt_BR",
+    alternateLocale: "en_US",
     images: [
       {
         url: "/images/capa-sistema-policia.png",

@@ -21,6 +21,8 @@ export const metadata: Metadata = {
     url: "/case/imidooh",
     title,
     description,
+    locale: "pt_BR",
+    alternateLocale: "en_US",
     images: [
       {
         url: "/logo-dooh.png",

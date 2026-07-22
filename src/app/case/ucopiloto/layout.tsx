@@ -21,6 +21,8 @@ export const metadata: Metadata = {
     url: "/case/ucopiloto",
     title,
     description,
+    locale: "pt_BR",
+    alternateLocale: "en_US",
     images: [
       {
         url: "/images/estudo-de-caso-ucopiloto.png",
