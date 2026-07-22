@@ -47,13 +47,17 @@ export default function TcSectionHeader({
       </div>
       <h2
         ref={ref}
-        className="text-[clamp(1.55rem,3.4vw,2.4rem)] font-bold leading-tight tracking-tight text-white lg:whitespace-nowrap"
+        className="relative text-[clamp(1.55rem,3.4vw,2.4rem)] font-bold leading-tight tracking-tight text-white lg:whitespace-nowrap"
         style={{ fontFamily: "var(--font-space-grotesk)" }}
       >
         {/* Texto real no DOM para SEO e leitores de tela (renderizado no servidor) */}
         <span className="sr-only">{full}</span>
-        {/* Animação de máquina de escrever, apenas visual */}
-        <span aria-hidden="true">
+        {/* Reserva a altura final desde o início, para a animação não "crescer" o container */}
+        <span aria-hidden="true" className="invisible block">
+          {full}
+        </span>
+        {/* Animação de máquina de escrever, sobreposta ao espaço já reservado acima */}
+        <span aria-hidden="true" className="absolute inset-0 block">
           {full.slice(0, count)}
           <span className={done ? "typewriter-cursor" : ""} style={{ color: "#fb923c" }}>
             _

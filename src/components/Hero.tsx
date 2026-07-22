@@ -25,13 +25,20 @@ function TypedName({ onDone }: { onDone: () => void }) {
   }, [count, done]);
 
   const [line1, line2 = ""] = TYPED_NAME.slice(0, count).split("\n");
+  const [fullLine1, fullLine2] = TYPED_NAME.split("\n");
 
   return (
-    <>
+    <span className="relative block">
       {/* Nome real no DOM para SEO/leitores de tela (renderizado no servidor) */}
       <span className="sr-only">{TYPED_NAME.replace("\n", " ")}</span>
-      {/* Animação de máquina de escrever, apenas visual */}
-      <span aria-hidden="true">
+      {/* Reserva a altura final (duas linhas) desde o início, para a animação não "crescer" o container */}
+      <span aria-hidden="true" className="invisible block">
+        {fullLine1}
+        <br />
+        {fullLine2}
+      </span>
+      {/* Animação de máquina de escrever, sobreposta ao espaço já reservado acima */}
+      <span aria-hidden="true" className="absolute inset-0 block">
         {line1}
         <br />
         {line2}
@@ -39,7 +46,7 @@ function TypedName({ onDone }: { onDone: () => void }) {
           _
         </span>
       </span>
-    </>
+    </span>
   );
 }
 
@@ -80,12 +87,28 @@ function TypedParagraph({ segments, start }: { segments: TypedSegment[]; start: 
   });
 
   return (
-    <>
+    <span className="relative block">
       {/* Texto real no DOM para SEO/leitores de tela (renderizado no servidor) */}
       <span className="sr-only">{full}</span>
-      {/* Animação de máquina de escrever, apenas visual */}
-      <span aria-hidden="true">{nodes}</span>
-    </>
+      {/* Reserva a altura final do texto desde o início, para a animação não "crescer" o container */}
+      <span aria-hidden="true" className="invisible block">
+        {segments.map((seg, i) =>
+          seg.text === "\n" ? (
+            <br key={i} />
+          ) : seg.bold ? (
+            <b key={i} className="font-semibold">
+              {seg.text}
+            </b>
+          ) : (
+            <span key={i}>{seg.text}</span>
+          )
+        )}
+      </span>
+      {/* Animação de máquina de escrever, sobreposta ao espaço já reservado acima */}
+      <span aria-hidden="true" className="absolute inset-0 block">
+        {nodes}
+      </span>
+    </span>
   );
 }
 

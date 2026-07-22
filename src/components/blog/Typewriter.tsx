@@ -28,9 +28,15 @@ export default function Typewriter({
   }, [count, done, speed]);
 
   return (
-    <span className={className}>
+    <span className={`relative inline-block align-top ${className ?? ""}`}>
       <span className="sr-only">{text}</span>
-      <span aria-hidden="true">
+      {/* Reserva o espaço final desde o início, para a animação não "crescer" o container */}
+      <span aria-hidden="true" className="invisible">
+        {text}
+        {cursorAfterDone && "_"}
+      </span>
+      {/* Animação de máquina de escrever, sobreposta ao espaço já reservado acima */}
+      <span aria-hidden="true" className="absolute inset-0">
         {text.slice(0, count)}
         {(!done || cursorAfterDone) && (
           <span className={done ? "typewriter-cursor" : ""} style={{ color: "#e879f9" }}>

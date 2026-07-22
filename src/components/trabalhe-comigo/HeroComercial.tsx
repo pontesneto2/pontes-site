@@ -22,11 +22,16 @@ function TypedHeadline({ prefix, suffix }: { prefix: string; suffix: string }) {
   const shownSuffix = count > prefix.length ? suffix.slice(0, count - prefix.length) : "";
 
   return (
-    <>
+    <span className="relative block">
       {/* Texto real do H1 no DOM para SEO/leitores de tela (renderizado no servidor) */}
       <span className="sr-only">{full}</span>
-      {/* Animação de máquina de escrever, apenas visual */}
-      <span aria-hidden="true">
+      {/* Reserva a altura final desde o início, para a animação não "crescer" o container */}
+      <span aria-hidden="true" className="invisible block">
+        {prefix}
+        <span>{suffix}</span>
+      </span>
+      {/* Animação de máquina de escrever, sobreposta ao espaço já reservado acima */}
+      <span aria-hidden="true" className="absolute inset-0 block">
         {shownPrefix}
         <span className="bg-gradient-to-r from-violet-500 to-fuchsia-500 bg-clip-text text-transparent">
           {shownSuffix}
@@ -35,7 +40,7 @@ function TypedHeadline({ prefix, suffix }: { prefix: string; suffix: string }) {
           _
         </span>
       </span>
-    </>
+    </span>
   );
 }
 
