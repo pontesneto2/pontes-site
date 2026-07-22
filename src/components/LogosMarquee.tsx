@@ -5,8 +5,8 @@ import Image from "next/image";
 const LOGOS = [
   { src: "/images/logo-governo.webp", alt: "Governo do Ceará", href: "https://www.ceara.gov.br", tone: true },
   { src: "/images/logo-flixbus.png", alt: "FlixBus", scale: 3.4, href: "https://www.flixbus.com" },
-  { src: "/images/logo-fedex.png", alt: "FedEx", scale: 2.4, href: "https://www.fedex.com" },
-  { src: "/images/logo-idace.png", alt: "Idace", scale: 1.15, href: "https://www.idace.ce.gov.br" },
+  { src: "/images/logo-fedex.png", alt: "FedEx", scale: 2.4, href: "https://www.fedex.com", tone: true },
+  { src: "/images/logo-idace.png", alt: "Idace", scale: 1.15, href: "https://www.idace.ce.gov.br", tone: true },
   { src: "/images/logo-agropolos.webp", alt: "Instituto Agropolos", href: "https://institutoagropolos.org.br" },
   { src: "/images/logo-anjos.png", alt: "Instituto Anjos Digitais", href: "https://anjosdigitais.org" },
   { src: "/images/logo-ceara-sem-fome.png", alt: "Ceará Sem Fome", href: "https://www.ceara.gov.br/tag/ceara-sem-fome/", tone: true },

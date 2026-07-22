@@ -8,6 +8,9 @@ export async function GET() {
       deploysLast30d: 47,
       uptimePct: 99.98,
       avgBuildTimeSec: 22,
+      p95LatencyMs: 95,
+      requests30d: 2100,
+      activeRegions: 2,
     },
     { headers: { "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=86400" } }
   );

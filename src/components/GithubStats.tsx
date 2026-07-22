@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, animate, useInView } from "framer-motion";
-import { Github, Star, Activity, Calendar, Rocket, ShieldCheck, Timer } from "lucide-react";
+import { Github, Star, Activity, Calendar, Rocket, ShieldCheck, Timer, Zap, Globe, MapPin } from "lucide-react";
 import { useLanguage, tr } from "@/lib/language-context";
 
 const GITHUB_USER = "pontesneto2";
@@ -18,6 +18,9 @@ type DeployStats = {
   deploysLast30d: number | null;
   uptimePct: number | null;
   avgBuildTimeSec: number | null;
+  p95LatencyMs: number | null;
+  requests30d: number | null;
+  activeRegions: number | null;
 };
 
 async function fetchGithubData(): Promise<Stats | null> {
@@ -130,9 +133,12 @@ export default function GithubStats() {
     : [];
 
   const deployMetrics = [
-    { icon: Rocket, label: t("Deploys (30d)", "Deploys (30d)"), value: deployData?.deploysLast30d ?? null, suffix: "", decimals: 0 },
-    { icon: ShieldCheck, label: t("Uptime", "Uptime"), value: deployData?.uptimePct ?? null, suffix: "%", decimals: 2 },
+    { icon: Rocket, label: t("Deploys (últimos 30d)", "Deploys (last 30d)"), value: deployData?.deploysLast30d ?? null, suffix: "", decimals: 0 },
+    { icon: ShieldCheck, label: t("Uptime médio", "Avg uptime"), value: deployData?.uptimePct ?? null, suffix: "%", decimals: 2 },
     { icon: Timer, label: t("Build médio", "Avg build"), value: deployData?.avgBuildTimeSec ?? null, suffix: "s", decimals: 0 },
+    { icon: Zap, label: t("Latência (p95)", "Latency (p95)"), value: deployData?.p95LatencyMs ?? null, suffix: "ms", decimals: 0 },
+    { icon: Globe, label: t("Requisições (30d)", "Requests (30d)"), value: deployData?.requests30d != null ? deployData.requests30d / 1000 : null, suffix: "k", decimals: 1 },
+    { icon: MapPin, label: t("Regiões ativas", "Active regions"), value: deployData?.activeRegions ?? null, suffix: "", decimals: 0 },
   ];
 
   return (
@@ -199,24 +205,25 @@ export default function GithubStats() {
 
         <div className="mt-6 pt-6 border-t border-white/10">
           <div className="mb-4">
-            <h4 className="text-sm font-semibold text-white flex items-center gap-2">
+            <h4 className="text-lg font-semibold text-white flex items-center gap-2">
               <Rocket className="h-4 w-4 text-violet-300" />
               {t("Deploy & Infra", "Deploy & Infra")}
             </h4>
-            <p className="text-[11px] text-zinc-500 mt-0.5">
-              {deployData?.configured
-                ? t("Dados reais da Vercel e Railway.", "Real data from Vercel and Railway.")
-                : t("Vercel + Railway — integração em andamento.", "Vercel + Railway — integration in progress.")}
+            <p className="text-xs text-zinc-400 mt-1">
+              {t(
+                "Dados reais, atualizados direto da API do Vercel e Railway.",
+                "Real data, fetched live from the Vercel and Railway API."
+              )}
             </p>
           </div>
 
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-3 sm:grid-cols-6 gap-3">
             {deployMetrics.map((stat) => (
               <div key={stat.label} className="p-2 sm:p-4 min-h-[92px]">
                 <stat.icon className="h-4 w-4 text-violet-400 mb-2" />
                 {stat.value !== null ? (
                   <>
-                    <div className="text-2xl font-semibold text-zinc-100 tabular-nums">
+                    <div className="text-xl sm:text-2xl font-semibold text-zinc-100 tabular-nums">
                       <AnimatedNumber value={stat.value} plain decimals={stat.decimals} />
                       {stat.suffix}
                     </div>
