@@ -6,6 +6,9 @@ const nextConfig: NextConfig = {
     ignoreDuringBuilds: true,
   },
   images: {
+    // AVIF antes de WebP: mesma qualidade percebida com payload menor,
+    // reduzindo o peso de imagem que pesa em LCP.
+    formats: ["image/avif", "image/webp"],
     remotePatterns: [
       {
         protocol: "https",
