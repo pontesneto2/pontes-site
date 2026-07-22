@@ -2,9 +2,11 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type MouseEvent } from "react";
 import { motion } from "framer-motion";
 import Hero from "@/components/Hero";
+import AnimatedCounter from "@/components/AnimatedCounter";
+import CursorGlow from "@/components/CursorGlow";
 import Testimonials from "@/components/Testimonials";
 import ContactForm from "@/components/ContactForm";
 import SkillsTools, { SKILL_NAMES } from "@/components/SkillsTools";
@@ -855,6 +857,13 @@ export default function Page() {
     },
   ];
 
+  const handleSpotlightMove = (event: MouseEvent<HTMLElement>) => {
+    const el = event.currentTarget;
+    const rect = el.getBoundingClientRect();
+    el.style.setProperty("--spotlight-x", `${event.clientX - rect.left}px`);
+    el.style.setProperty("--spotlight-y", `${event.clientY - rect.top}px`);
+  };
+
   const renderProjectCta = (project: (typeof featuredProjects)[number]) => {
     const ctaClass =
       "inline-flex items-center gap-2 rounded-full px-6 py-2.5 text-sm font-semibold w-fit transition-all duration-200";
@@ -996,6 +1005,7 @@ export default function Page() {
   return (
     <div className="min-h-screen font-sans relative isolate">
       <Preloader variant="purple" />
+      <CursorGlow />
       <a
         href="#content"
         className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:rounded-lg focus:bg-violet-600 focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white"
@@ -1025,7 +1035,7 @@ export default function Page() {
                     className="text-2xl sm:text-3xl font-bold"
                     style={{ fontFamily: "var(--font-jetbrains-mono)", color: "#e879f9" }}
                   >
-                    {stat.value}
+                    <AnimatedCounter value={stat.value} lang={lang} />
                   </div>
                   <div className="mt-1 text-[11px] sm:text-xs text-zinc-400">{t(stat.label)}</div>
                 </div>
@@ -1226,7 +1236,8 @@ export default function Page() {
                     <motion.article
                       custom={0}
                       variants={fadeUpItem}
-                      className="card-surface-3 relative group rounded-3xl overflow-hidden grid md:grid-cols-2 items-stretch hover:border-violet-400/25 hover:-translate-y-1 transition-all duration-300"
+                      onMouseMove={handleSpotlightMove}
+                      className="spotlight-card card-surface-3 relative group rounded-3xl overflow-hidden grid md:grid-cols-2 items-stretch hover:border-violet-400/25 hover:-translate-y-1 transition-all duration-300"
                     >
                       {heroProject.productionBadge && (
                         <span className="absolute top-3 right-3 z-10 rotate-12 whitespace-nowrap rounded-full bg-amber-400 px-2.5 py-1 text-[10px] font-bold uppercase leading-none tracking-wide text-zinc-950 shadow-sm shadow-black/30 pointer-events-none">
@@ -1330,7 +1341,8 @@ export default function Page() {
                         key={project.title}
                         custom={index + 1}
                         variants={fadeUpItem}
-                        className="card-surface-2 group snap-start shrink-0 w-[88%] sm:w-[calc(50%-1rem)] rounded-3xl overflow-hidden flex flex-col hover:border-violet-400/20 hover:-translate-y-1 transition-all duration-300"
+                        onMouseMove={handleSpotlightMove}
+                        className="spotlight-card card-surface-2 group snap-start shrink-0 w-[88%] sm:w-[calc(50%-1rem)] rounded-3xl overflow-hidden flex flex-col hover:border-violet-400/20 hover:-translate-y-1 transition-all duration-300"
                       >
                         <div className="relative h-48 w-full bg-[#1a1425]">
                           {project.productionBadge && (
