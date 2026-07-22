@@ -124,17 +124,6 @@ const CATEGORIES: SkillCategory[] = [
       { name: "Acessibilidade (WCAG)", tier: "solid", icon: none },
     ],
   },
-  {
-    index: "07",
-    title: { pt: "Processo & Colaboração", en: "Process & Collaboration" },
-    skills: [
-      { name: "Scrum / Kanban", tier: "solid", icon: none },
-      { name: "Code Review", tier: "solid", icon: none },
-      { name: "LGPD", tier: "solid", icon: none },
-      { name: "Jira", tier: "solid", icon: svg("jira") },
-      { name: "Trello", tier: "solid", icon: svg("trello") },
-    ],
-  },
 ];
 
 export const SKILL_NAMES = CATEGORIES.flatMap((cat) => cat.skills.map((s) => s.name));
