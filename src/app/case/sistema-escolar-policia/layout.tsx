@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import CaseJsonLd from "@/components/case/CaseJsonLd";
 
 const title = "Estudo de Caso: Sistema Escolar 2º CPM-CHMJ";
 const description =
@@ -39,5 +40,17 @@ export default function CaseLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <>{children}</>;
+  return (
+    <>
+      <CaseJsonLd
+        slug="sistema-escolar-policia"
+        headline={title}
+        description={description}
+        image="/images/capa-sistema-policia.png"
+        datePublished="2026-07-22"
+        dateModified="2026-07-22"
+      />
+      {children}
+    </>
+  );
 }
