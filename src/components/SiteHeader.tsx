@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
+import { track } from "@vercel/analytics";
 import LanguageSwitch from "@/components/LanguageSwitch";
 import SearchBox from "@/components/SearchBox";
 import { useLanguage, tr, LANG_FLAG, type Bilingual } from "@/lib/language-context";
@@ -22,6 +23,10 @@ export const DEFAULT_NAV_LINKS = [
   { href: "/blog", label: { pt: "Blog", en: "Blog" } },
   { href: "/#about", label: { pt: "Contato", en: "Contact" } },
 ];
+
+function trackCtaClick(href: string) {
+  if (isCvUrl(href)) track("cv_download", { href });
+}
 
 function goTo(href: string) {
   if (href.startsWith("/#") && window.location.pathname === "/") {
@@ -129,6 +134,7 @@ export default function SiteHeader({
                 <a
                   href={secondaryCta.href}
                   {...(secondaryIsExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                  onClick={() => trackCtaClick(secondaryCta.href)}
                   className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-white/20 text-zinc-200 hover:bg-white/5 hover:text-white transition-colors"
                 >
                   {t(secondaryCta.label)}
@@ -140,6 +146,7 @@ export default function SiteHeader({
               <a
                 href={effectiveCta.href}
                 {...(ctaIsExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                onClick={() => trackCtaClick(effectiveCta.href)}
                 className="relative inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-500 text-white shadow-lg shadow-fuchsia-700/20"
               >
                 {t(effectiveCta.label)}
@@ -196,7 +203,10 @@ export default function SiteHeader({
               href={effectiveCta.href}
               {...(ctaIsExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
               className="relative flex items-center justify-center gap-1.5 rounded-xl px-3 py-3 bg-gradient-to-r from-violet-600 to-fuchsia-500 text-white font-medium shadow-lg shadow-fuchsia-700/20"
-              onClick={() => setNavOpen(false)}
+              onClick={() => {
+                trackCtaClick(effectiveCta.href);
+                setNavOpen(false);
+              }}
             >
               {t(effectiveCta.label)}
               {ctaFlag && <span className="text-[0.85em] leading-none">{ctaFlag}</span>}
@@ -211,7 +221,10 @@ export default function SiteHeader({
                 href={secondaryCta.href}
                 {...(secondaryIsExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                 className="flex items-center justify-center gap-1.5 rounded-xl px-3 py-3 border border-white/15 text-zinc-200 hover:bg-white/5 transition-colors"
-                onClick={() => setNavOpen(false)}
+                onClick={() => {
+                  trackCtaClick(secondaryCta.href);
+                  setNavOpen(false);
+                }}
               >
                 {t(secondaryCta.label)}
                 {secondaryCtaFlag && (
