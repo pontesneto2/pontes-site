@@ -727,6 +727,39 @@ export default function Page() {
     },
   ];
 
+  // Agregados derivados dos números reais já publicados por projeto acima
+  // (nada inventado aqui: soma o que já está em cada card de impacto).
+  let systemsInProduction = 0;
+  let totalPeopleImpacted = 0;
+  let uptimeSum = 0;
+  let uptimeCount = 0;
+  for (const project of featuredProjects) {
+    if (project.discontinued) continue;
+    systemsInProduction++;
+    for (const imp of project.impact ?? []) {
+      if (imp.label.pt === "Usuários ativos" || imp.label.pt === "Visitas mensais") {
+        const n = parseInt(imp.value.pt.replace(/[^\d]/g, ""), 10);
+        if (!Number.isNaN(n)) totalPeopleImpacted += n;
+      }
+      if (imp.label.pt === "Uptime") {
+        const n = parseFloat(imp.value.pt.replace("%", "").replace(",", "."));
+        if (!Number.isNaN(n)) {
+          uptimeSum += n;
+          uptimeCount++;
+        }
+      }
+    }
+  }
+  const averageUptime = uptimeCount > 0 ? (uptimeSum / uptimeCount).toFixed(1) : null;
+  const formattedPeopleImpacted = totalPeopleImpacted.toLocaleString(lang === "pt" ? "pt-BR" : "en-US");
+
+  const impactStats: Array<{ value: string; label: Bilingual }> = [
+    { value: `${systemsInProduction}+`, label: { pt: "Sistemas em produção", en: "Systems in production" } },
+    { value: `${formattedPeopleImpacted}+`, label: { pt: "Pessoas impactadas", en: "People impacted" } },
+    ...(averageUptime ? [{ value: `${averageUptime}%`, label: { pt: "Uptime médio", en: "Average uptime" } }] : []),
+    { value: "6+", label: { pt: "Anos entregando em produção", en: "Years shipping to production" } },
+  ];
+
   const experience: Array<{
     company: string;
     startRole?: Bilingual;
@@ -974,12 +1007,44 @@ export default function Page() {
           navLinks={navLinks}
           searchIndex={searchIndex}
           cta={{ label: { pt: "Peça um orçamento", en: "Get a quote" }, href: "/trabalhe-comigo" }}
-          secondaryCta={{ label: { pt: "Baixar CV", en: "Download CV" }, href: getCvUrl(lang) }}
+          secondaryCta={{ label: { pt: "Para recrutadores", en: "For recruiters" }, href: "/recrutadores" }}
           ctaBadge={{ pt: "Novo", en: "New" }}
         />
 
         <main id="content">
           <Hero />
+
+          {/* FAIXA DE IMPACTO AGREGADO */}
+          <section className="border-y border-white/5 bg-white/[0.015] py-8">
+            <div className="mx-auto max-w-6xl px-6 sm:px-8 lg:px-12 grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
+              {impactStats.map((stat) => (
+                <div key={stat.label.pt}>
+                  <div
+                    className="text-2xl sm:text-3xl font-bold"
+                    style={{ fontFamily: "var(--font-jetbrains-mono)", color: "#e879f9" }}
+                  >
+                    {stat.value}
+                  </div>
+                  <div className="mt-1 text-[11px] sm:text-xs text-zinc-400">{t(stat.label)}</div>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* FAIXA DE CREDIBILIDADE */}
+          <section className="border-b border-white/5 py-6">
+            <div className="mx-auto max-w-6xl px-6 text-center">
+              <span className="mb-3 block font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-500">
+                {t({ pt: "Sistemas em produção para", en: "Systems in production for" })}
+              </span>
+              <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-2 text-sm font-semibold text-zinc-400">
+                <span>Governo do Ceará</span>
+                <span>FlixBus</span>
+                <span>FedEx</span>
+                <span>{t({ pt: "Institutos e ONGs", en: "Institutes & NGOs" })}</span>
+              </div>
+            </div>
+          </section>
 
           {/* SOBRE — bio / formação */}
           <section
