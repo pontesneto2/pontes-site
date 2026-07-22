@@ -21,6 +21,8 @@ async function buildPayload(post: BlogPostContent | null, lang: Lang): Promise<B
     date: post.date,
     tags: post.tags,
     cover: post.cover,
+    coverWidth: post.coverWidth,
+    coverHeight: post.coverHeight,
     linkedin: post.linkedin,
     readingMinutes: post.readingMinutes,
     html: await renderMarkdownToHtml(post.content),

@@ -21,6 +21,8 @@ export const metadata: Metadata = {
     url: "/case/sda-ceara",
     title,
     description,
+    locale: "pt_BR",
+    alternateLocale: "en_US",
     images: [
       {
         url: "/images/capa-sda-app.png",

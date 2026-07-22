@@ -2,9 +2,11 @@ import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
 import getReadingTime from "reading-time";
+import { imageSize } from "image-size";
 import type { Lang } from "@/lib/language-context";
 
 const BLOG_DIR = path.join(process.cwd(), "content", "blog");
+const PUBLIC_DIR = path.join(process.cwd(), "public");
 
 export type BlogPostMeta = {
   slug: string;
@@ -17,7 +19,21 @@ export type BlogPostMeta = {
   readingMinutes: number;
 };
 
-export type BlogPostContent = BlogPostMeta & { content: string };
+export type BlogPostContent = BlogPostMeta & {
+  content: string;
+  coverWidth?: number;
+  coverHeight?: number;
+};
+
+function getLocalImageDimensions(cover?: string): { width?: number; height?: number } {
+  if (!cover || !cover.startsWith("/")) return {};
+  try {
+    const { width, height } = imageSize(fs.readFileSync(path.join(PUBLIC_DIR, cover)));
+    return { width, height };
+  } catch {
+    return {};
+  }
+}
 
 function otherLang(lang: Lang): Lang {
   return lang === "pt" ? "en" : "pt";
@@ -45,6 +61,7 @@ export function getPostContent(slug: string, lang: Lang): BlogPostContent | null
   if (!resolved) return null;
   const raw = fs.readFileSync(resolved.file, "utf8");
   const { data, content } = matter(raw);
+  const { width: coverWidth, height: coverHeight } = getLocalImageDimensions(data.cover);
   return {
     slug,
     title: data.title,
@@ -55,6 +72,8 @@ export function getPostContent(slug: string, lang: Lang): BlogPostContent | null
     linkedin: data.linkedin,
     readingMinutes: Math.max(1, Math.round(getReadingTime(content).minutes)),
     content,
+    coverWidth,
+    coverHeight,
   };
 }
 

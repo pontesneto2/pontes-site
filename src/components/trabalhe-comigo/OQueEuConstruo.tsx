@@ -22,7 +22,7 @@ type Category = "CRIAR" | "EVOLUIR" | "MANTER";
 
 const CATEGORY: Record<Category, { label: Bilingual; ribbon: string }> = {
   CRIAR: { label: { pt: "Criação", en: "Creation" }, ribbon: "from-orange-500 to-amber-400 shadow-orange-500/30" },
-  EVOLUIR: { label: { pt: "Evolução", en: "Evolution" }, ribbon: "from-emerald-500 to-green-400 shadow-emerald-500/30" },
+  EVOLUIR: { label: { pt: "Evolução", en: "Evolution" }, ribbon: "from-sky-500 to-blue-400 shadow-sky-500/30" },
   MANTER: { label: { pt: "Manutenção", en: "Maintenance" }, ribbon: "from-red-500 to-rose-500 shadow-red-500/30" },
 };
 

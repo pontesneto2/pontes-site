@@ -3,7 +3,7 @@ import BlogPage from "../../blog/page";
 
 const title = "Blog";
 const description =
-  "Architecture decisions, lessons learned, behind-the-scenes of the projects I work on, and Dev/Tech curiosities — also published on LinkedIn.";
+  "Architecture decisions, lessons learned, behind-the-scenes of the projects I work on, and Dev/Tech curiosities, also published on LinkedIn.";
 
 export const metadata: Metadata = {
   title,

@@ -148,11 +148,11 @@ const categoryBadgeMap: Record<string, { icon: LucideIcon; className: string }> 
   },
   "Aplicativo Mobile Nativo": {
     icon: Smartphone,
-    className: "bg-emerald-500/10 border-emerald-400/30 text-emerald-300",
+    className: "bg-cyan-500/10 border-cyan-400/30 text-cyan-300",
   },
   "Native Mobile App": {
     icon: Smartphone,
-    className: "bg-emerald-500/10 border-emerald-400/30 text-emerald-300",
+    className: "bg-cyan-500/10 border-cyan-400/30 text-cyan-300",
   },
   "Aplicativo PWA": {
     icon: AppWindow,
