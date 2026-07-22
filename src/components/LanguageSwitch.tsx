@@ -25,7 +25,7 @@ export default function LanguageSwitch({
           aria-pressed={lang === option}
           className={`${base} rounded-md font-bold uppercase tracking-wide transition-colors ${
             lang === option
-              ? "bg-gradient-to-r from-violet-600 to-fuchsia-500 text-white shadow-[0_0_16px_rgba(168,85,247,0.35)]"
+              ? "bg-white/90 text-zinc-950"
               : "text-zinc-400 hover:text-zinc-200"
           }`}
         >

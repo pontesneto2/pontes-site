@@ -141,7 +141,7 @@ export default function SiteHeader({
                 href={secondaryCta.href}
                 {...(secondaryIsExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                 onClick={() => trackCtaClick(secondaryCta.href)}
-                className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-white/20 text-zinc-200 hover:bg-white/5 hover:text-white transition-colors text-sm"
+                className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-violet-400/40 bg-violet-500/10 text-violet-200 hover:bg-violet-500/20 hover:border-violet-400/60 hover:text-white transition-colors text-sm"
               >
                 {t(secondaryCta.label)}
                 {secondaryCtaFlag && (
