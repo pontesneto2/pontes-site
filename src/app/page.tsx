@@ -1497,7 +1497,7 @@ export default function Page() {
                 className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-12"
               >
                 {experience.map((exp, index) => {
-                  const isCurrent = index === 0;
+                  const isLatest = index === 0;
                   return (
                   <motion.div
                     key={exp.company}
@@ -1505,17 +1505,14 @@ export default function Page() {
                     className="relative"
                   >
                     <div className="flex items-center gap-2 mb-3">
-                      {isCurrent ? (
-                        <span className="relative flex h-2.5 w-2.5 shrink-0">
-                          <span className="absolute inline-flex h-full w-full rounded-full bg-violet-400 opacity-75 animate-ping" />
-                          <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-violet-400" />
-                        </span>
+                      {isLatest ? (
+                        <span className="relative inline-flex h-2.5 w-2.5 shrink-0 rounded-full bg-violet-400" />
                       ) : (
                         <ChevronLeft className="h-3.5 w-3.5 text-violet-400/50 shrink-0 rotate-90 md:rotate-0" />
                       )}
                       <div
                         className={`h-px flex-1 bg-gradient-to-l ${
-                          isCurrent ? "from-violet-400/70" : "from-violet-400/30"
+                          isLatest ? "from-violet-400/70" : "from-violet-400/30"
                         } to-transparent`}
                       />
                     </div>
@@ -1527,6 +1524,11 @@ export default function Page() {
                         <span className="text-[8px] text-violet-400 bg-violet-500/10 px-1.5 py-[2px] rounded border border-violet-500/20 whitespace-nowrap font-semibold">
                           {exp.period}
                         </span>
+                        {isLatest ? (
+                          <span className="text-[8px] text-violet-300 bg-violet-500/10 px-1.5 py-[2px] rounded border border-violet-500/20 whitespace-nowrap font-semibold">
+                            {t({ pt: "Mais recente", en: "Most recent" })}
+                          </span>
+                        ) : null}
                         {exp.remote ? (
                           <span className="text-[8px] text-fuchsia-300 bg-fuchsia-500/10 px-1.5 py-[2px] rounded border border-fuchsia-500/20 whitespace-nowrap font-semibold">
                             {t({ pt: "Remoto", en: "Remote" })}
