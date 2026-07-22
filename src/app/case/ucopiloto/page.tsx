@@ -658,6 +658,41 @@ function useSectionsData(lang: "pt" | "en") {
         </>
       ),
     },
+    {
+      title: { pt: "Trade-offs e o que eu faria diferente", en: "Trade-offs and what I'd do differently" },
+      children: (
+        <>
+          <div className="rounded-2xl bg-white/[0.025] border border-white/[0.06] p-6">
+            <h4 className="text-sm font-semibold text-white mb-3">
+              {t({ pt: "O que optei por não fazer", en: "What I chose not to build" })}
+            </h4>
+            <ul className="space-y-2">
+              {[
+                { pt: "Kubernetes: com DevOps solo e um único ambiente de produção, Docker Compose com deploy simples entregava a mesma confiabilidade com muito menos superfície pra operar sozinho.", en: "Kubernetes: with solo DevOps and a single production environment, Docker Compose with a simple deploy delivered the same reliability with far less surface area to operate alone." },
+                { pt: "Dashboard de analytics próprio: usei Grafana sobre as métricas já coletadas em vez de construir uma tela de admin dedicada, pra manter o escopo fechado nos 5 meses até o lançamento.", en: "A custom analytics dashboard: I used Grafana over the metrics already collected instead of building a dedicated admin screen, to keep scope tight for the 5-month launch window." },
+              ].map((item) => (
+                <li key={item.pt} className="flex items-start gap-3 text-sm text-zinc-300">
+                  <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-violet-500" />
+                  {t(item)}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="mt-6 rounded-2xl bg-white/[0.02] border border-white/[0.06] p-6">
+            <h4 className="text-sm font-semibold text-white mb-3">
+              {t({ pt: "O que eu faria diferente hoje", en: "What I'd do differently today" })}
+            </h4>
+            <p className="text-sm text-zinc-300 leading-relaxed">
+              {t({
+                pt: "Introduziria testes E2E automatizados antes do primeiro release em produção, não depois. O prazo de 5 meses e a operação solo empurraram a cobertura de testes pra depois do lançamento, o que funcionou, mas deixou a primeira fase mais dependente de smoke tests manuais do que eu gostaria.",
+                en: "I'd introduce automated E2E tests before the first production release, not after. The 5-month timeline and solo operation pushed test coverage to after launch, which worked, but left the first phase more dependent on manual smoke tests than I'd like.",
+              })}
+            </p>
+          </div>
+        </>
+      ),
+    },
   ];
 }
 

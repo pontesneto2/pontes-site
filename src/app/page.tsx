@@ -192,6 +192,7 @@ export default function Page() {
   const [featuredScrollProgress, setFeaturedScrollProgress] = useState(0);
   const [featuredThumbWidth, setFeaturedThumbWidth] = useState(50);
   const [featuredCurrentIndex, setFeaturedCurrentIndex] = useState(0);
+  const [projectFilter, setProjectFilter] = useState<string | null>(null);
 
   const updateFeaturedScrollProgress = () => {
     const el = featuredScrollRef.current;
@@ -205,7 +206,7 @@ export default function Page() {
       const gap = 32;
       const cardStep = firstCard.offsetWidth + gap;
       const index = Math.round(el.scrollLeft / cardStep);
-      setFeaturedCurrentIndex(Math.max(0, Math.min(featuredProjects.length - 2, index)));
+      setFeaturedCurrentIndex(Math.max(0, Math.min(visibleSecondaryProjects.length - 1, index)));
     }
   };
 
@@ -766,6 +767,34 @@ export default function Page() {
     { value: "6+", label: { pt: "Anos entregando em produção", en: "Years shipping to production" } },
   ];
 
+  const secondaryProjects = featuredProjects.slice(1);
+
+  const projectFilters: Array<{ key: string; label: Bilingual }> = [];
+  const seenFilterKeys = new Set<string>();
+  for (const project of secondaryProjects) {
+    for (const cat of project.category) {
+      if (!seenFilterKeys.has(cat.pt)) {
+        seenFilterKeys.add(cat.pt);
+        projectFilters.push({ key: cat.pt, label: cat });
+      }
+    }
+  }
+  if (secondaryProjects.some((p) => p.discontinued)) {
+    projectFilters.push({ key: "Descontinuado", label: { pt: "Descontinuado", en: "Discontinued" } });
+  }
+  if (secondaryProjects.some((p) => p.private)) {
+    projectFilters.push({ key: "Privado", label: { pt: "Privado", en: "Private" } });
+  }
+
+  const matchesProjectFilter = (project: (typeof featuredProjects)[number], filter: string | null) => {
+    if (!filter) return true;
+    if (filter === "Descontinuado") return !!project.discontinued;
+    if (filter === "Privado") return !!project.private;
+    return project.category.some((cat) => cat.pt === filter);
+  };
+
+  const visibleSecondaryProjects = secondaryProjects.filter((p) => matchesProjectFilter(p, projectFilter));
+
   const experience = EXPERIENCE;
 
   const handleSpotlightMove = (event: MouseEvent<HTMLElement>) => {
@@ -1239,12 +1268,57 @@ export default function Page() {
                   );
                 })()}
 
+                {projectFilters.length > 1 && (
+                  <div className="flex flex-wrap gap-2 mb-6" role="group" aria-label={t({ pt: "Filtrar projetos", en: "Filter projects" })}>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setProjectFilter(null);
+                        setFeaturedCurrentIndex(0);
+                        featuredScrollRef.current?.scrollTo({ left: 0 });
+                      }}
+                      aria-pressed={projectFilter === null}
+                      className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-colors ${
+                        projectFilter === null
+                          ? "bg-gradient-to-r from-violet-600 to-fuchsia-500 border-transparent text-white"
+                          : "border-white/15 text-zinc-400 hover:text-zinc-200 hover:border-white/25"
+                      }`}
+                    >
+                      {t({ pt: "Todos", en: "All" })}
+                    </button>
+                    {projectFilters.map((filter) => (
+                      <button
+                        key={filter.key}
+                        type="button"
+                        onClick={() => {
+                          setProjectFilter((prev) => (prev === filter.key ? null : filter.key));
+                          setFeaturedCurrentIndex(0);
+                          featuredScrollRef.current?.scrollTo({ left: 0 });
+                        }}
+                        aria-pressed={projectFilter === filter.key}
+                        className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-colors ${
+                          projectFilter === filter.key
+                            ? "bg-gradient-to-r from-violet-600 to-fuchsia-500 border-transparent text-white"
+                            : "border-white/15 text-zinc-400 hover:text-zinc-200 hover:border-white/25"
+                        }`}
+                      >
+                        {t(filter.label)}
+                      </button>
+                    ))}
+                  </div>
+                )}
+
                 <div
                   ref={featuredScrollRef}
                   onScroll={updateFeaturedScrollProgress}
                   className="flex gap-8 overflow-x-auto overflow-y-hidden overscroll-x-contain snap-x snap-mandatory scroll-smooth pt-1 pb-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
                 >
-                  {featuredProjects.slice(1).map((project, index) => {
+                  {visibleSecondaryProjects.length === 0 && (
+                    <p className="text-sm text-zinc-400 py-6">
+                      {t({ pt: "Nenhum projeto nessa categoria.", en: "No projects in this category." })}
+                    </p>
+                  )}
+                  {visibleSecondaryProjects.map((project, index) => {
                     const cta = renderProjectCta(project);
 
                     return (
@@ -1363,10 +1437,10 @@ export default function Page() {
                     className="mt-4 text-center text-lg font-semibold leading-none tabular-nums"
                     style={{ fontFamily: "var(--font-space-grotesk)", color: "#e879f9" }}
                   >
-                    {featuredCurrentIndex + 1}/{featuredProjects.length - 1}
+                    {featuredCurrentIndex + 1}/{visibleSecondaryProjects.length}
                   </p>
                   <p className="mt-2.5 text-center text-[11.5px] leading-none text-zinc-400">
-                    {featuredProjects[featuredCurrentIndex + 1]?.title}
+                    {visibleSecondaryProjects[featuredCurrentIndex]?.title}
                   </p>
                 </div>
               </motion.div>
