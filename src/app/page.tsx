@@ -14,6 +14,7 @@ import SkillsTools, { SKILL_NAMES } from "@/components/SkillsTools";
 import SiteHeader, { type SearchEntry } from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import Preloader from "@/components/Preloader";
+import LogosMarquee from "@/components/LogosMarquee";
 import { useLanguage, tr, LANG_FLAG, type Bilingual } from "@/lib/language-context";
 import { getCvUrl } from "@/lib/constants";
 import { EXPERIENCE, PRIOR_EXPERIENCE } from "@/lib/experience-data";
@@ -1009,18 +1010,13 @@ export default function Page() {
           </section>
 
           {/* FAIXA DE CREDIBILIDADE */}
-          <section className="border-b border-white/5 py-6">
+          <section className="border-b border-white/5 bg-zinc-900/50 py-10 sm:py-12">
             <div className="mx-auto max-w-6xl px-6 text-center">
-              <span className="mb-3 block font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-500">
+              <span className="mb-5 block font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-500">
                 {t({ pt: "Sistemas em produção para", en: "Systems in production for" })}
               </span>
-              <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-2 text-sm font-semibold text-zinc-400">
-                <span>Governo do Ceará</span>
-                <span>FlixBus</span>
-                <span>FedEx</span>
-                <span>{t({ pt: "Institutos e ONGs", en: "Institutes & NGOs" })}</span>
-              </div>
             </div>
+            <LogosMarquee />
           </section>
 
           {/* SOBRE — bio / formação */}
