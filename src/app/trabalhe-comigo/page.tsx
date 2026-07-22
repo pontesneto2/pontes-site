@@ -45,7 +45,7 @@ export default function TrabalheComigoPage() {
 
   return (
     <div className="min-h-screen pb-20 md:pb-0">
-      <Preloader variant="orange" />
+      <Preloader />
       <SiteHeader
         navLinks={NAV_LINKS}
         searchIndex={searchIndex}

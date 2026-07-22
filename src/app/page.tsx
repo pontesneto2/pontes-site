@@ -969,7 +969,7 @@ export default function Page() {
 
   return (
     <div className="min-h-screen font-sans relative isolate">
-      <Preloader variant="purple" />
+      <Preloader />
       <CursorGlow />
       <a
         href="#content"
