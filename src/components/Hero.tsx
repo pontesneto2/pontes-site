@@ -198,7 +198,7 @@ export default function Hero() {
           width: "min(120vw, 1100px)",
           height: "min(85vh, 800px)",
           background:
-            "radial-gradient(58% 60% at 50% 100%, rgba(150,90,195,.4), rgba(120,65,175,.24) 45%, rgba(80,42,140,.1) 66%, transparent 78%)",
+            "radial-gradient(58% 60% at 50% 100%, rgba(102,60,132,.28), rgba(80,44,116,.17) 45%, rgba(52,26,90,.07) 66%, transparent 78%)",
         }}
       />
       <div
@@ -207,7 +207,7 @@ export default function Hero() {
           width: "min(95vw, 850px)",
           height: "min(70vh, 650px)",
           background:
-            "radial-gradient(70% 75% at 50% 100%, rgba(255,255,255,.05), transparent 70%)",
+            "radial-gradient(70% 75% at 50% 100%, rgba(255,255,255,.03), transparent 70%)",
         }}
       />
 
@@ -217,7 +217,7 @@ export default function Hero() {
         style={{
           width: "min(55vw, 820px)",
           background:
-            "radial-gradient(58% 60% at 62% 44%, rgba(75,40,105,.42), rgba(55,28,85,.3) 45%, rgba(35,16,60,.14) 66%, transparent 78%)",
+            "radial-gradient(58% 60% at 62% 44%, rgba(50,26,72,.30), rgba(38,19,58,.20) 45%, rgba(22,10,38,.09) 66%, transparent 78%)",
         }}
       />
       <div
@@ -225,7 +225,7 @@ export default function Hero() {
         style={{
           width: "min(44vw, 680px)",
           background:
-            "radial-gradient(70% 75% at 60% 50%, rgba(255,255,255,.05), transparent 70%)",
+            "radial-gradient(70% 75% at 60% 50%, rgba(255,255,255,.03), transparent 70%)",
         }}
       />
 
