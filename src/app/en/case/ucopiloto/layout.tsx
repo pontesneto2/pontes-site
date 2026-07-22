@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 
-const title = "Estudo de Caso: Ucopiloto";
+const title = "Case Study: Ucopiloto";
 const description =
-  "App que conecta motoristas e oficinas, do zero ao lançamento comercial: arquitetura enxuta, operação solo de DevOps e 99,9% de uptime em produção.";
+  "App that connects drivers and repair shops intelligently, from scratch to commercial launch: lean architecture, solo DevOps operation, and 99.9% production uptime.";
 
 export const metadata: Metadata = {
   title,
   description,
   alternates: {
-    canonical: "/case/ucopiloto",
+    canonical: "/en/case/ucopiloto",
     languages: {
       "pt-BR": "/case/ucopiloto",
       en: "/en/case/ucopiloto",
@@ -17,15 +17,17 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: "article",
-    url: "/case/ucopiloto",
+    url: "/en/case/ucopiloto",
     title,
     description,
+    locale: "en_US",
+    alternateLocale: "pt_BR",
     images: [
       {
         url: "/images/estudo-de-caso-ucopiloto.png",
         width: 1920,
         height: 1080,
-        alt: "Ucopiloto: painel do prestador e app do motorista",
+        alt: "Ucopiloto: provider dashboard and driver app",
       },
     ],
   },
@@ -37,10 +39,6 @@ export const metadata: Metadata = {
   },
 };
 
-export default function CaseLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function EnCaseLayout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }

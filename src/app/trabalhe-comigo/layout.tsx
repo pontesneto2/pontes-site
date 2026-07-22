@@ -12,6 +12,11 @@ export const metadata: Metadata = {
   description,
   alternates: {
     canonical: "/trabalhe-comigo",
+    languages: {
+      "pt-BR": "/trabalhe-comigo",
+      en: "/en/trabalhe-comigo",
+      "x-default": "/trabalhe-comigo",
+    },
   },
   keywords: [
     "engenheiro de software",

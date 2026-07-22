@@ -671,7 +671,7 @@ export default function Page() {
         en: "Institutional website for the nonprofit organization, with an overview and contact channels.",
       },
       category: [{ pt: "Site Institucional", en: "Institutional Website" }],
-      thumb: "/images/capa-ujvp.png",
+      thumb: "/images/capa-site-ujvp.png",
       bgClass: NEUTRAL_BG,
       highlights: [
         { icon: Clock, value: { pt: "1 mês de desenvolvimento", en: "1 month of development" } },
@@ -694,7 +694,7 @@ export default function Page() {
         en: "Institutional website for the Ceará State Agrarian Development Department, on which I worked on maintenance only.",
       },
       category: [{ pt: "Site Institucional", en: "Institutional Website" }],
-      thumb: "/images/capa-sda.jpeg",
+      thumb: "/images/capa-site-sda-ceara.png",
       bgClass: NEUTRAL_BG,
       highlights: [
         { icon: Clock, value: { pt: "Manutenção contínua", en: "Ongoing maintenance" } },
@@ -1244,7 +1244,7 @@ export default function Page() {
                           {t({ pt: "Em produção", en: "In production" })}
                         </span>
                       )}
-                      <div className="relative min-h-[260px] md:min-h-full bg-[#1a1425] overflow-hidden">
+                      <div className="relative aspect-video md:aspect-auto min-h-[260px] md:min-h-full bg-[#1a1425] overflow-hidden">
                         {heroProject.thumb ? (
                           <>
                             <Image
@@ -1253,7 +1253,7 @@ export default function Page() {
                               fill
                               sizes="(max-width: 768px) 100vw, 50vw"
                               loading="eager"
-                              className="object-cover object-center"
+                              className="object-contain md:object-cover object-center"
                             />
                             <div className="absolute inset-0 bg-gradient-to-br from-violet-950/25 via-black/15 to-black/20 opacity-100 group-hover:opacity-0 transition-opacity duration-300 pointer-events-none" />
                           </>
@@ -1344,7 +1344,7 @@ export default function Page() {
                         onMouseMove={handleSpotlightMove}
                         className="spotlight-card card-surface-2 group snap-start shrink-0 w-[88%] sm:w-[calc(50%-1rem)] rounded-3xl overflow-hidden flex flex-col hover:border-violet-400/20 hover:-translate-y-1 transition-all duration-300"
                       >
-                        <div className="relative h-48 w-full bg-[#1a1425]">
+                        <div className="relative aspect-video w-full bg-[#1a1425]">
                           {project.productionBadge && (
                             <span className="absolute top-3 right-3 z-10 rotate-12 whitespace-nowrap rounded-full bg-amber-400 px-2.5 py-1 text-[10px] font-bold uppercase leading-none tracking-wide text-zinc-950 shadow-sm shadow-black/30 pointer-events-none">
                               {t({ pt: "Em produção", en: "In production" })}

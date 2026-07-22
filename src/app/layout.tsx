@@ -35,6 +35,11 @@ export const metadata: Metadata = {
   ],
   alternates: {
     canonical: "/",
+    languages: {
+      "pt-BR": "/",
+      en: "/en",
+      "x-default": "/",
+    },
   },
   openGraph: {
     type: "website",
@@ -52,6 +57,7 @@ export const metadata: Metadata = {
       },
     ],
     locale: "pt_BR",
+    alternateLocale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
