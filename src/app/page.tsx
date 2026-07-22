@@ -217,6 +217,8 @@ export default function Page() {
   const [featuredCurrentIndex, setFeaturedCurrentIndex] = useState(0);
   const [projectFilter, setProjectFilter] = useState<string | null>(null);
 
+  const visibleSecondaryProjectsCountRef = useRef(0);
+
   const updateFeaturedScrollProgress = () => {
     const el = featuredScrollRef.current;
     if (!el) return;
@@ -229,7 +231,7 @@ export default function Page() {
       const gap = 32;
       const cardStep = firstCard.offsetWidth + gap;
       const index = Math.round(el.scrollLeft / cardStep);
-      setFeaturedCurrentIndex(Math.max(0, Math.min(visibleSecondaryProjects.length - 1, index)));
+      setFeaturedCurrentIndex(Math.max(0, Math.min(visibleSecondaryProjectsCountRef.current - 1, index)));
     }
   };
 
@@ -238,7 +240,6 @@ export default function Page() {
     window.addEventListener("resize", updateFeaturedScrollProgress);
     return () => window.removeEventListener("resize", updateFeaturedScrollProgress);
     // Só precisa rodar no mount: registra o listener de resize uma vez.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -839,6 +840,15 @@ export default function Page() {
   };
 
   const visibleSecondaryProjects = secondaryProjects.filter((p) => matchesProjectFilter(p, projectFilter));
+  visibleSecondaryProjectsCountRef.current = visibleSecondaryProjects.length;
+
+  useEffect(() => {
+    // Recalcula a barra de progresso e o índice/contagem após trocar de filtro:
+    // scrollTo({left:0}) não dispara o evento "scroll" quando já está em 0,
+    // então sem isso a barra e o "X/Y" ficavam com métricas do filtro anterior.
+    const raf = requestAnimationFrame(updateFeaturedScrollProgress);
+    return () => cancelAnimationFrame(raf);
+  }, [projectFilter]);
 
   const experience = EXPERIENCE;
   const priorExperience = PRIOR_EXPERIENCE;
@@ -1376,6 +1386,8 @@ export default function Page() {
                         key={project.title}
                         custom={index + 1}
                         variants={fadeUpItem}
+                        initial="hidden"
+                        animate="show"
                         onMouseMove={handleSpotlightMove}
                         className="spotlight-card card-surface-2 group snap-start shrink-0 w-[88%] sm:w-[calc(50%-1rem)] rounded-3xl overflow-hidden flex flex-col hover:border-violet-400/20 hover:-translate-y-1 transition-all duration-300"
                       >
