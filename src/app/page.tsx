@@ -1144,13 +1144,39 @@ export default function Page() {
 
           <SkillsTools />
 
+          {/* QUEBRA DE PADRÃO — faixa full-bleed diagonal, sem container centralizado */}
+          <section className="relative overflow-hidden py-16 sm:py-20">
+            <div
+              className="absolute inset-0"
+              style={{
+                background: "linear-gradient(115deg, #1a0f2e 0%, #2a1245 45%, #0a0a0d 100%)",
+                clipPath: "polygon(0 8%, 100% 0, 100% 92%, 0 100%)",
+              }}
+            />
+            <div className="relative mx-auto max-w-4xl px-6 sm:px-8 lg:px-12 text-left">
+              <motion.p
+                initial={{ opacity: 0, x: -24 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={viewportSettings}
+                transition={{ duration: 0.7, ease: "easeOut" }}
+                className="text-2xl sm:text-3xl md:text-4xl font-bold leading-snug text-white max-w-2xl"
+                style={{ fontFamily: "var(--font-space-grotesk)" }}
+              >
+                {t({
+                  pt: "Não construo só telas bonitas. Construo sistemas que continuam de pé depois que o deploy termina.",
+                  en: "I don't just build pretty screens. I build systems that stay standing after the deploy is done.",
+                })}
+              </motion.p>
+            </div>
+          </section>
+
           {/* PROJETOS EM DESTAQUE - REDESENHADO */}
           <section
             id="projects"
             className="relative py-14 overflow-x-hidden"
           >
             <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
-              <div className="text-center mb-12">
+              <div className="mb-12 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
                 <motion.h2
                   variants={fadeInHeading}
                   initial="hidden"
@@ -1161,7 +1187,7 @@ export default function Page() {
                 >
                   {t({ pt: "Projetos em Destaque", en: "Featured Projects" })}
                 </motion.h2>
-                <p className="mt-2 text-[10px] font-light uppercase tracking-[0.2em] text-zinc-500">
+                <p className="text-[10px] font-light uppercase tracking-[0.2em] text-zinc-500 md:text-right md:max-w-[220px]">
                   {t({
                     pt: "Portfólio — projetos públicos, visíveis a qualquer pessoa na web",
                     en: "Portfolio — public projects, visible to anyone on the web",
