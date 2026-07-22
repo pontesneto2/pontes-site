@@ -1162,9 +1162,9 @@ export default function Page() {
                       className="relative group rounded-3xl overflow-hidden border border-white/10 shadow-2xl grid md:grid-cols-2 items-stretch hover:border-white/20 hover:-translate-y-1 transition-all duration-300"
                     >
                       {heroProject.productionBadge && (
-                        <div className="absolute top-0 right-0 h-24 w-24 overflow-hidden pointer-events-none z-10">
-                          <span className="absolute top-[22px] right-[-32px] w-[140px] rotate-45 bg-emerald-500 text-center text-[9px] font-bold uppercase tracking-wide text-white py-1 shadow-lg">
-                            {t({ pt: "Aplicativo em produção", en: "App in production" })}
+                        <div className="absolute top-0 right-0 h-40 w-40 overflow-hidden pointer-events-none z-10">
+                          <span className="absolute top-[38px] right-[-56px] whitespace-nowrap rotate-45 bg-gradient-to-r from-violet-600 to-fuchsia-500 text-center text-[9px] font-bold uppercase tracking-wide text-white py-1 px-6 shadow-lg">
+                            {t({ pt: "Em produção • uso real", en: "In production • active use" })}
                           </span>
                         </div>
                       )}
