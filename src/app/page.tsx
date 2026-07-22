@@ -40,6 +40,19 @@ import {
   Globe,
   RefreshCcw,
   AppWindow,
+  Dumbbell,
+  Trophy,
+  Flag,
+  Car as CarIcon,
+  BookOpen,
+  BrainCircuit,
+  Bot,
+  Gamepad2,
+  Code2,
+  Flame,
+  Swords,
+  TrendingUp,
+  Camera,
   type LucideIcon,
 } from "lucide-react";
 import {
@@ -1104,8 +1117,8 @@ export default function Page() {
                         })}{" "}
                         <span className="italic text-violet-300">
                           {t({
-                            pt: "Uso, automatizo e me especializo cada vez mais em Inteligência Artificial mas ainda sou da geração old school que codificava na mão consultando o Stack Overflow, rs. Seja bem vindo ao meu portfólio.",
-                            en: "I use, automate and keep specializing in Artificial Intelligence — but the old-school generation that used to hand-code while checking Stack Overflow is still alive, ha. Welcome to my portfolio.",
+                            pt: "Uso, automatizo e me especializo cada vez mais em Inteligência Artificial, mas ainda sou da geração old school que codificava na mão consultando o Stack Overflow. Seja bem-vindo ao meu portfólio.",
+                            en: "I use, automate and keep specializing in Artificial Intelligence — but the old-school generation that used to hand-code while checking Stack Overflow is still alive. Welcome to my portfolio.",
                           })}
                         </span>
                       </p>
@@ -1768,7 +1781,7 @@ export default function Page() {
                         </div>
                       </div>
 
-                      {/* Emojis de hobbies seguindo a curva da borda, balançando juntos ao longo da linha */}
+                      {/* Ícones de hobbies seguindo a curva da borda, balançando juntos ao longo da linha */}
                       <motion.div
                         className="absolute inset-0"
                         animate={{ rotate: [0, 5, 0, -5, 0] }}
@@ -1779,33 +1792,28 @@ export default function Page() {
                         }}
                       >
                         {[
-                          { emoji: "🦍", angle: 0 },
-                          { emoji: "🏋️", angle: 18 },
-                          { emoji: "🏃", angle: 36 },
-                          { emoji: "⚽", angle: 54 },
-                          { emoji: "🏁", angle: 72 },
-                          { emoji: "🚗", angle: 90 },
-                          { emoji: "📱", angle: 108 },
-                          { emoji: "📚", angle: 126 },
-                          { emoji: "🧠", angle: 144 },
-                          { emoji: "🚀", angle: 162 },
-                          { emoji: "🤖", angle: 180 },
-                          { emoji: "👾", angle: 198 },
-                          { emoji: "💪🏼", angle: 216 },
-                          { emoji: "👨🏻‍💻", angle: 234 },
-                          { emoji: "🔥", angle: 252 },
-                          { emoji: "🥋", angle: 270 },
-                          { emoji: "🏋🏻", angle: 288 },
-                          { emoji: "📈", angle: 306 },
-                          { emoji: "📸", angle: 324 },
-                          { emoji: "🏇🏻", angle: 342 },
-                        ].map(({ emoji, angle }, index) => {
+                          { Icon: Dumbbell, angle: 0 },
+                          { Icon: Trophy, angle: 24 },
+                          { Icon: Flag, angle: 48 },
+                          { Icon: CarIcon, angle: 72 },
+                          { Icon: Smartphone, angle: 96 },
+                          { Icon: BookOpen, angle: 120 },
+                          { Icon: BrainCircuit, angle: 144 },
+                          { Icon: Rocket, angle: 168 },
+                          { Icon: Bot, angle: 192 },
+                          { Icon: Gamepad2, angle: 216 },
+                          { Icon: Code2, angle: 240 },
+                          { Icon: Flame, angle: 264 },
+                          { Icon: Swords, angle: 288 },
+                          { Icon: TrendingUp, angle: 312 },
+                          { Icon: Camera, angle: 336 },
+                        ].map(({ Icon, angle }, index) => {
                           const rad = (angle * Math.PI) / 180;
                           const x = (50 + 52 * Math.cos(rad)).toFixed(4);
                           const y = (50 + 52 * Math.sin(rad)).toFixed(4);
                           return (
                             <motion.span
-                              key={emoji}
+                              key={angle}
                               style={{
                                 left: `${x}%`,
                                 top: `${y}%`,
@@ -1828,9 +1836,9 @@ export default function Page() {
                                   repeat: Infinity,
                                   ease: "easeInOut",
                                 }}
-                                className="flex items-center justify-center text-4xl drop-shadow-lg cursor-pointer"
+                                className="flex h-10 w-10 items-center justify-center rounded-xl border border-violet-400/20 bg-violet-500/10 text-violet-200 shadow-lg cursor-pointer"
                               >
-                                {emoji}
+                                <Icon className="h-5 w-5" />
                               </motion.span>
                             </motion.span>
                           );
