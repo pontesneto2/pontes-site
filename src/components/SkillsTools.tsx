@@ -536,10 +536,12 @@ function SkillsCarousel({
             dragConstraints={{ left: 0, right: 0 }}
             dragElastic={1}
             onDragEnd={handleDragEnd}
+            whileDrag={{ scale: 0.98, cursor: "grabbing" }}
             role="group"
             aria-roledescription="slide"
             aria-label={`${page + 1}/${slides.length}`}
-            style={{ position: "absolute", top: 0, left: 0, width: "100%" }}
+            className={prefersReducedMotion ? undefined : "cursor-grab"}
+            style={{ position: "absolute", top: 0, left: 0, width: "100%", touchAction: "pan-y" }}
           >
             <SkillsSlide categories={slides[page]} cardsPerSlide={cardsPerSlide} t={t} />
           </motion.div>
