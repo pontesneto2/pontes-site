@@ -8,10 +8,11 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        // Corpo permanece na stack do sistema (globals.css). Aqui só ligamos as
-        // fontes carregadas em src/lib/fonts.ts onde elas são explicitamente pedidas:
-        // `font-mono` passa a renderizar em JetBrains Mono e `font-display` fica
-        // disponível para títulos em Space Grotesk.
+        // Corpo em Space Grotesk (sans humanista), com a stack do sistema como
+        // fallback — troca deliberada de JetBrains Mono para melhorar a
+        // legibilidade de parágrafos longos. `font-mono` fica restrito a hero,
+        // rótulos, métricas, números e trechos de código.
+        sans: ["var(--font-space-grotesk)", ...defaultTheme.fontFamily.sans],
         mono: ["var(--font-jetbrains-mono)", ...defaultTheme.fontFamily.mono],
         display: ["var(--font-space-grotesk)", ...defaultTheme.fontFamily.sans],
       },
