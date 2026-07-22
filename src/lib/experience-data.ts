@@ -79,32 +79,11 @@ export const EXPERIENCE: ExperienceItem[] = [
     period: "2020–2021",
     location: "Fortaleza - CE",
   },
-];
-
-export type PriorExperienceItem = {
-  company: string;
-  startRole?: Bilingual;
-  role: Bilingual;
-  period: string;
-  location: string;
-};
-
-export const PRIOR_EXPERIENCE: PriorExperienceItem[] = [
   {
     company: "Grupo Laredo Atacadista",
     startRole: { pt: "Auxiliar de gerência", en: "Assistant Manager" },
     role: { pt: "Gerente Operacional de Mercado", en: "Store Operations Manager" },
     period: "2017–2020",
-    location: "Fortaleza - CE",
-  },
-  {
-    company: "White Martins Gases Industriais e Medicinais",
-    startRole: { pt: "Encarregado de Operações", en: "Operations Supervisor" },
-    role: {
-      pt: "Gerente de Unidade Capital — URC Fortaleza",
-      en: "Unit Manager — URC Fortaleza",
-    },
-    period: "2015–2017",
     location: "Fortaleza - CE",
   },
 ];

@@ -5,7 +5,7 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
 import { CV_URL_PT, CV_URL_EN } from "@/lib/constants";
-import { EXPERIENCE, PRIOR_EXPERIENCE, EDUCATION, CV_SUMMARY, CV_SKILLS } from "@/lib/experience-data";
+import { EXPERIENCE, EDUCATION, CV_SUMMARY, CV_SKILLS } from "@/lib/experience-data";
 
 export default function CvPage() {
   const { lang } = useLanguage();
@@ -109,23 +109,6 @@ export default function CvPage() {
                       {exp.remote ? ` · ${t({ pt: "Remoto", en: "Remote" })}` : ""}
                       {exp.contractType ? ` · ${t(exp.contractType)}` : ""}
                     </p>
-                    {exp.startRole ? (
-                      <p className="text-xs text-zinc-500 print:text-zinc-600 mt-0.5">
-                        {t({ pt: "Cargo inicial", en: "Starting role" })}: {t(exp.startRole)}
-                      </p>
-                    ) : null}
-                  </div>
-                ))}
-                {PRIOR_EXPERIENCE.map((exp) => (
-                  <div key={exp.company}>
-                    <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-0.5">
-                      <h3 className="text-sm font-semibold text-white print:text-black">
-                        {exp.company}
-                      </h3>
-                      <span className="text-xs text-zinc-400 print:text-zinc-600">{exp.period}</span>
-                    </div>
-                    <p className="text-sm text-violet-300 print:text-zinc-700">{t(exp.role)}</p>
-                    <p className="text-xs text-zinc-500 print:text-zinc-600">{exp.location}</p>
                     {exp.startRole ? (
                       <p className="text-xs text-zinc-500 print:text-zinc-600 mt-0.5">
                         {t({ pt: "Cargo inicial", en: "Starting role" })}: {t(exp.startRole)}
