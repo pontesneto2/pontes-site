@@ -6,6 +6,7 @@ import { spaceGrotesk, jetbrainsMono } from "@/lib/fonts";
 import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
 import { SKILL_ICON_PATHS, SKILL_ICON_VIEWBOX } from "./skills/icons.generated";
 import GithubStats from "@/components/GithubStats";
+import { SKILL_USAGE } from "@/lib/skill-context";
 
 type SkillTier = "core" | "solid";
 type SkillIcon = { kind: "svg"; slug: string } | { kind: "none" };
@@ -208,16 +209,20 @@ function SkillIconSvg({
   );
 }
 
-function SkillChip({ skill }: { skill: Skill }) {
+function SkillChip({ skill, t }: { skill: Skill; t: (v: Bilingual) => string }) {
   const [hover, setHover] = useState(false);
   const s = TIER_STYLE[skill.tier];
   const hasIcon = skill.icon.kind === "svg";
+  const usedIn = SKILL_USAGE[skill.name];
 
   return (
     <div
-      className="inline-flex items-center gap-[9px] rounded-[9px] border outline-none transition-all duration-[220ms] ease-out"
+      tabIndex={usedIn ? 0 : undefined}
+      className="relative inline-flex items-center gap-[9px] rounded-[9px] border outline-none transition-all duration-[220ms] ease-out"
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
+      onFocus={() => setHover(true)}
+      onBlur={() => setHover(false)}
       style={{
         padding: hasIcon ? s.padding : s.paddingNoIcon,
         borderColor: hover ? s.borderColorActive : s.borderColor,
@@ -240,6 +245,17 @@ function SkillChip({ skill }: { skill: Skill }) {
       >
         {skill.name}
       </span>
+      {usedIn && hover && (
+        <div
+          role="tooltip"
+          className="absolute bottom-full left-1/2 z-20 mb-2 w-max max-w-[220px] -translate-x-1/2 rounded-lg border border-white/10 bg-[#141418] px-2.5 py-1.5 text-[10px] leading-snug text-zinc-300 shadow-xl shadow-black/40"
+        >
+          <span className="text-fuchsia-300 font-semibold">
+            {t({ pt: "Usado em: ", en: "Used in: " })}
+          </span>
+          {usedIn.join(", ")}
+        </div>
+      )}
     </div>
   );
 }
@@ -342,7 +358,7 @@ export default function SkillsTools() {
               </div>
               <div className="flex flex-wrap justify-center gap-[6px]">
                 {cat.skills.map((skill, index) => (
-                  <SkillChip key={`${skill.name}-${index}`} skill={skill} />
+                  <SkillChip key={`${skill.name}-${index}`} skill={skill} t={t} />
                 ))}
               </div>
             </div>
