@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 
-const title = "Estudo de Caso: SDA Ceará";
+const title = "Case Study: SDA Ceará";
 const description =
-  "App + Web + Admin para a Secretaria do Desenvolvimento Agrário do Ceará: migração modular de um sistema legado para produção, com 1.000+ usuários ativos e 200+ logins simultâneos orquestrados em Kubernetes.";
+  "App + Web + Admin for the Ceará State Agrarian Development Secretariat: modular migration of a legacy system to production, with 1,000+ active users and 200+ concurrent logins orchestrated on Kubernetes.";
 
 export const metadata: Metadata = {
   title,
   description,
   alternates: {
-    canonical: "/case/sda-ceara",
+    canonical: "/en/case/sda-ceara",
     languages: {
       "pt-BR": "/case/sda-ceara",
       en: "/en/case/sda-ceara",
@@ -17,15 +17,17 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: "article",
-    url: "/case/sda-ceara",
+    url: "/en/case/sda-ceara",
     title,
     description,
+    locale: "en_US",
+    alternateLocale: "pt_BR",
     images: [
       {
         url: "/images/capa-sda-app.png",
         width: 1920,
         height: 1080,
-        alt: "SDA Ceará: aplicativo de gestão agrária do Governo do Estado",
+        alt: "SDA Ceará: State Government agrarian management app",
       },
     ],
   },
@@ -37,10 +39,6 @@ export const metadata: Metadata = {
   },
 };
 
-export default function CaseLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function EnCaseLayout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }

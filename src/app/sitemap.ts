@@ -43,14 +43,47 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.8,
+      alternates: { languages: { en: `${siteUrl}/en/case/imidooh` } },
+    },
+    {
+      url: `${siteUrl}/en/case/imidooh`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.7,
+      alternates: { languages: { "pt-BR": `${siteUrl}/case/imidooh` } },
     },
     {
       url: `${siteUrl}/case/ucopiloto`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.8,
+      alternates: { languages: { en: `${siteUrl}/en/case/ucopiloto` } },
     },
     {
+      url: `${siteUrl}/en/case/ucopiloto`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.7,
+      alternates: { languages: { "pt-BR": `${siteUrl}/case/ucopiloto` } },
+    },
+    {
+      url: `${siteUrl}/case/sda-ceara`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+      alternates: { languages: { en: `${siteUrl}/en/case/sda-ceara` } },
+    },
+    {
+      url: `${siteUrl}/en/case/sda-ceara`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.7,
+      alternates: { languages: { "pt-BR": `${siteUrl}/case/sda-ceara` } },
+    },
+    {
+      // Sem entrada /en/blog no sitemap ainda: os posts não têm tradução
+      // real (lib/blog.ts cai para o .mdx em português), então a rota /en
+      // existe mas fica noindex até esse conteúdo existir de verdade.
       url: `${siteUrl}/blog`,
       lastModified: new Date(),
       changeFrequency: "weekly",
@@ -62,12 +95,28 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(),
       changeFrequency: "yearly",
       priority: 0.3,
+      alternates: { languages: { en: `${siteUrl}/en/privacidade` } },
+    },
+    {
+      url: `${siteUrl}/en/privacidade`,
+      lastModified: new Date(),
+      changeFrequency: "yearly",
+      priority: 0.25,
+      alternates: { languages: { "pt-BR": `${siteUrl}/privacidade` } },
     },
     {
       url: `${siteUrl}/trabalhe-comigo`,
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 0.9,
+      alternates: { languages: { en: `${siteUrl}/en/trabalhe-comigo` } },
+    },
+    {
+      url: `${siteUrl}/en/trabalhe-comigo`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.8,
+      alternates: { languages: { "pt-BR": `${siteUrl}/trabalhe-comigo` } },
     },
   ];
 }

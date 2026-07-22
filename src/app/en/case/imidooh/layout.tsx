@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 
-const title = "Estudo de Caso — iMidooh";
+const title = "Case Study: iMidooh";
 const description =
-  "Construção de uma plataforma SaaS escalável para gerenciamento de mídia DOOH, com arquitetura modular, containerização Docker e preparação multi-tenant.";
+  "Building a scalable SaaS foundation for Digital Out Of Home media operations, focused on solid architecture, modular organization, and readiness for multi-tenant expansion.";
 
 export const metadata: Metadata = {
   title,
   description,
   alternates: {
-    canonical: "/case/imidooh",
+    canonical: "/en/case/imidooh",
     languages: {
       "pt-BR": "/case/imidooh",
       en: "/en/case/imidooh",
@@ -17,15 +17,17 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: "article",
-    url: "/case/imidooh",
+    url: "/en/case/imidooh",
     title,
     description,
+    locale: "en_US",
+    alternateLocale: "pt_BR",
     images: [
       {
         url: "/logo-dooh.png",
         width: 1200,
         height: 630,
-        alt: "iMidooh — Gerenciamento de Mídia DOOH",
+        alt: "iMidooh: DOOH media management",
       },
     ],
   },
@@ -37,10 +39,6 @@ export const metadata: Metadata = {
   },
 };
 
-export default function CaseLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function EnCaseLayout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
