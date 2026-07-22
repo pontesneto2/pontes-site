@@ -3,9 +3,12 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
+import { track } from "@vercel/analytics";
 import LanguageSwitch from "@/components/LanguageSwitch";
 import SearchBox from "@/components/SearchBox";
+import MagneticButton from "@/components/MagneticButton";
 import { useLanguage, tr, LANG_FLAG, type Bilingual } from "@/lib/language-context";
 import { getCvUrl, CV_URL_PT, CV_URL_EN } from "@/lib/constants";
 
@@ -22,6 +25,20 @@ export const DEFAULT_NAV_LINKS = [
   { href: "/blog", label: { pt: "Blog", en: "Blog" } },
   { href: "/#about", label: { pt: "Contato", en: "Contact" } },
 ];
+
+function trackCtaClick(href: string) {
+  if (isCvUrl(href)) track("cv_download", { href });
+}
+
+// "/" and "/#..." are the only routes that exist in both locales today:
+// on /en, point them at the SSR'd English home page instead of the
+// Portuguese one. Other links (e.g. /blog) aren't localized yet.
+function withLocale(href: string, isEn: boolean) {
+  if (!isEn) return href;
+  if (href === "/") return "/en";
+  if (href.startsWith("/#")) return `/en${href}`;
+  return href;
+}
 
 function goTo(href: string) {
   if (href.startsWith("/#") && window.location.pathname === "/") {
@@ -48,6 +65,8 @@ export default function SiteHeader({
 }) {
   const { lang, setLang } = useLanguage();
   const t = (v: Bilingual) => tr(lang, v);
+  const pathname = usePathname();
+  const isEn = pathname === "/en" || (pathname?.startsWith("/en/") ?? false);
   const effectiveCta = cta ?? { label: DEFAULT_CTA_LABEL, href: getCvUrl(lang) };
   const ctaIsExternal = effectiveCta.href.startsWith("http");
   const secondaryIsExternal = secondaryCta?.href.startsWith("http") ?? false;
@@ -104,7 +123,7 @@ export default function SiteHeader({
     >
       <div className="mx-auto max-w-7xl px-3 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between py-4 md:py-0 md:h-16">
-          <Link href="/" className="flex items-center gap-2 sm:gap-3">
+          <Link href={withLocale("/", isEn)} className="flex items-center gap-2 sm:gap-3">
             <Image
               src="/images/FCO.png"
               alt="FCOPTS — Francisco Pontes"
@@ -121,6 +140,7 @@ export default function SiteHeader({
               <a
                 href={secondaryCta.href}
                 {...(secondaryIsExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                onClick={() => trackCtaClick(secondaryCta.href)}
                 className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-white/20 text-zinc-200 hover:bg-white/5 hover:text-white transition-colors text-sm"
               >
                 {t(secondaryCta.label)}
@@ -129,19 +149,22 @@ export default function SiteHeader({
                 )}
               </a>
             )}
-            <a
-              href={effectiveCta.href}
-              {...(ctaIsExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-              className="relative inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-500 text-white shadow-lg shadow-fuchsia-700/20 text-sm"
-            >
-              {t(effectiveCta.label)}
-              {ctaFlag && <span className="text-[0.85em] leading-none">{ctaFlag}</span>}
-              {ctaBadge && (
-                <span className="absolute -right-2 -top-1.5 rotate-12 rounded-full bg-amber-400 px-1 py-px text-[8px] font-bold uppercase leading-none tracking-wide text-zinc-950 shadow-sm shadow-black/30">
-                  {t(ctaBadge)}
-                </span>
-              )}
-            </a>
+            <MagneticButton strength={0.3}>
+              <a
+                href={effectiveCta.href}
+                {...(ctaIsExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                onClick={() => trackCtaClick(effectiveCta.href)}
+                className="relative inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-500 text-white shadow-lg shadow-fuchsia-700/20 text-sm"
+              >
+                {t(effectiveCta.label)}
+                {ctaFlag && <span className="text-[0.85em] leading-none">{ctaFlag}</span>}
+                {ctaBadge && (
+                  <span className="absolute -right-2 -top-1.5 rotate-12 rounded-full bg-amber-400 px-1 py-px text-[8px] font-bold uppercase leading-none tracking-wide text-zinc-950 shadow-sm shadow-black/30">
+                    {t(ctaBadge)}
+                  </span>
+                )}
+              </a>
+            </MagneticButton>
             <SearchBox
               searchOpen={searchOpen}
               setSearchOpen={setSearchOpen}
@@ -176,7 +199,7 @@ export default function SiteHeader({
           {navLinks.map((link) => (
             <Link
               key={link.href}
-              href={link.href}
+              href={withLocale(link.href, isEn)}
               className="text-zinc-200 text-sm rounded-xl px-3 py-3 hover:bg-gradient-to-r hover:from-violet-600/20 hover:to-fuchsia-500/20 transition-all"
               onClick={() => setNavOpen(false)}
             >
