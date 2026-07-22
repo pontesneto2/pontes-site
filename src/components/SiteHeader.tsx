@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import LanguageSwitch from "@/components/LanguageSwitch";
 import SearchBox from "@/components/SearchBox";
+import MagneticButton from "@/components/MagneticButton";
 import { useLanguage, tr, LANG_FLAG, type Bilingual } from "@/lib/language-context";
 import { getCvUrl, CV_URL_PT, CV_URL_EN } from "@/lib/constants";
 
@@ -137,19 +138,21 @@ export default function SiteHeader({
                   )}
                 </a>
               )}
-              <a
-                href={effectiveCta.href}
-                {...(ctaIsExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                className="relative inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-500 text-white shadow-lg shadow-fuchsia-700/20"
-              >
-                {t(effectiveCta.label)}
-                {ctaFlag && <span className="text-[0.85em] leading-none">{ctaFlag}</span>}
-                {ctaBadge && (
-                  <span className="absolute -right-2 -top-1.5 rotate-12 rounded-full bg-amber-400 px-1 py-px text-[8px] font-bold uppercase leading-none tracking-wide text-zinc-950 shadow-sm shadow-black/30">
-                    {t(ctaBadge)}
-                  </span>
-                )}
-              </a>
+              <MagneticButton strength={0.3}>
+                <a
+                  href={effectiveCta.href}
+                  {...(ctaIsExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                  className="relative inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-500 text-white shadow-lg shadow-fuchsia-700/20"
+                >
+                  {t(effectiveCta.label)}
+                  {ctaFlag && <span className="text-[0.85em] leading-none">{ctaFlag}</span>}
+                  {ctaBadge && (
+                    <span className="absolute -right-2 -top-1.5 rotate-12 rounded-full bg-amber-400 px-1 py-px text-[8px] font-bold uppercase leading-none tracking-wide text-zinc-950 shadow-sm shadow-black/30">
+                      {t(ctaBadge)}
+                    </span>
+                  )}
+                </a>
+              </MagneticButton>
               <SearchBox
                 searchOpen={searchOpen}
                 setSearchOpen={setSearchOpen}

@@ -6,6 +6,7 @@ import { Linkedin, Quote } from "lucide-react";
 import { motion } from "framer-motion";
 import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
 import testimonials from "@/data/testimonials.json";
+import SpotlightCard from "@/components/SpotlightCard";
 
 type Testimonial = {
   name: string;
@@ -21,7 +22,7 @@ function TestimonialCard({ item }: { item: Testimonial }) {
   const isLong = text.length > 130;
 
   return (
-    <div className="relative flex h-full flex-col rounded-3xl border border-white/10 bg-black/55 backdrop-blur-xl p-6 md:p-8 shadow-2xl overflow-hidden">
+    <SpotlightCard className="relative flex h-full flex-col rounded-3xl border border-white/10 bg-black/55 backdrop-blur-xl p-6 md:p-8 shadow-2xl overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-br from-violet-500/5 via-transparent to-fuchsia-500/5 pointer-events-none" />
       <Quote className="absolute top-6 right-6 h-8 w-8 text-fuchsia-400" />
 
@@ -70,7 +71,7 @@ function TestimonialCard({ item }: { item: Testimonial }) {
           </div>
         </div>
       </div>
-    </div>
+    </SpotlightCard>
   );
 }
 

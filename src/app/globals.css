@@ -23,6 +23,35 @@ body {
   min-height: 100vh;
 }
 
+/* Spotlight que segue o cursor sobre os cards de projeto no hover
+   (ver components/SpotlightCard.tsx). Some com prefers-reduced-motion. */
+.spotlight-card {
+  position: relative;
+  isolation: isolate;
+}
+.spotlight-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 300ms ease;
+  background: radial-gradient(
+    260px circle at var(--spotlight-x, 50%) var(--spotlight-y, 50%),
+    rgba(208, 64, 232, 0.14),
+    transparent 70%
+  );
+}
+.spotlight-card:hover::after {
+  opacity: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .spotlight-card::after {
+    display: none;
+  }
+}
+
 @keyframes blink-caret {
   0%,
   49% {
