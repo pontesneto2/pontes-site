@@ -455,24 +455,28 @@ function SkillsCarousel({
   const [[page, direction], setPage] = useState<[number, number]>([0, 0]);
   const [height, setHeight] = useState(0);
   const prefersReducedMotion = useReducedMotion();
-  const observerRef = useRef<ResizeObserver | null>(null);
   const measuredElRef = useRef<HTMLDivElement | null>(null);
+  // Lazily created during the first render (not in an effect) so it already
+  // exists by the time the first slide's ref attaches during commit — an
+  // effect-created observer would miss that first attach, leaving the very
+  // first slide's height unobserved until the next remount.
+  const [resizeObserver] = useState<ResizeObserver | null>(() =>
+    typeof ResizeObserver === "undefined"
+      ? null
+      : new ResizeObserver((entries) => {
+          const entry = entries[0];
+          if (entry) setHeight(entry.contentRect.height);
+        })
+  );
 
-  useEffect(() => {
-    observerRef.current = new ResizeObserver((entries) => {
-      const entry = entries[0];
-      if (entry) setHeight(entry.contentRect.height);
-    });
-    return () => observerRef.current?.disconnect();
-  }, []);
+  useEffect(() => () => resizeObserver?.disconnect(), [resizeObserver]);
 
   const attachMeasureRef = (node: HTMLDivElement | null) => {
-    const observer = observerRef.current;
-    if (measuredElRef.current && observer) observer.unobserve(measuredElRef.current);
+    if (measuredElRef.current && resizeObserver) resizeObserver.unobserve(measuredElRef.current);
     measuredElRef.current = node;
     if (node) {
       setHeight(node.getBoundingClientRect().height);
-      observer?.observe(node);
+      resizeObserver?.observe(node);
     }
   };
 
@@ -513,57 +517,53 @@ function SkillsCarousel({
       onKeyDown={handleKeyDown}
       className="outline-none"
     >
-      <div className="flex items-center gap-2 md:gap-4">
+      <motion.div
+        className="relative overflow-hidden"
+        animate={{ height }}
+        transition={heightTransition}
+      >
+        <AnimatePresence initial={false} custom={direction}>
+          <motion.div
+            key={page}
+            ref={attachMeasureRef}
+            custom={direction}
+            variants={slideVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={transition}
+            drag={prefersReducedMotion ? false : "x"}
+            dragConstraints={{ left: 0, right: 0 }}
+            dragElastic={1}
+            onDragEnd={handleDragEnd}
+            role="group"
+            aria-roledescription="slide"
+            aria-label={`${page + 1}/${slides.length}`}
+            style={{ position: "absolute", top: 0, left: 0, width: "100%" }}
+          >
+            <SkillsSlide categories={slides[page]} cardsPerSlide={cardsPerSlide} t={t} />
+          </motion.div>
+        </AnimatePresence>
+      </motion.div>
+
+      <div className="mt-6 flex items-center justify-center gap-4">
         <CarouselArrow
           direction="prev"
           onClick={() => paginate(-1)}
           disabled={slides.length <= 1}
           label={t({ pt: "Slide anterior", en: "Previous slide" })}
         />
-
-        <motion.div
-          className="relative flex-1 overflow-hidden"
-          animate={{ height }}
-          transition={heightTransition}
-        >
-          <AnimatePresence initial={false} custom={direction}>
-            <motion.div
-              key={page}
-              ref={attachMeasureRef}
-              custom={direction}
-              variants={slideVariants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              transition={transition}
-              drag={prefersReducedMotion ? false : "x"}
-              dragConstraints={{ left: 0, right: 0 }}
-              dragElastic={1}
-              onDragEnd={handleDragEnd}
-              role="group"
-              aria-roledescription="slide"
-              aria-label={`${page + 1}/${slides.length}`}
-              style={{ position: "absolute", top: 0, left: 0, width: "100%" }}
-            >
-              <SkillsSlide categories={slides[page]} cardsPerSlide={cardsPerSlide} t={t} />
-            </motion.div>
-          </AnimatePresence>
-        </motion.div>
-
-        <CarouselArrow
-          direction="next"
-          onClick={() => paginate(1)}
-          disabled={slides.length <= 1}
-          label={t({ pt: "Próximo slide", en: "Next slide" })}
-        />
-      </div>
-
-      <div className="mt-6">
         <CarouselDots
           count={slides.length}
           current={page}
           onSelect={(i) => setPage([i, i > page ? 1 : -1])}
           t={t}
+        />
+        <CarouselArrow
+          direction="next"
+          onClick={() => paginate(1)}
+          disabled={slides.length <= 1}
+          label={t({ pt: "Próximo slide", en: "Next slide" })}
         />
       </div>
 
