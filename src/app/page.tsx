@@ -1481,7 +1481,7 @@ export default function Page() {
                 </motion.h2>
               </div>
 
-              <div className="grid md:grid-cols-2 gap-10 items-start">
+              <div className="grid md:grid-cols-2 gap-10 items-stretch">
                 <Testimonials />
 
                 <motion.div
@@ -1662,21 +1662,9 @@ export default function Page() {
                       className="text-2xl font-bold text-white"
                       style={{ fontFamily: "var(--font-space-grotesk)" }}
                     >
-                      {lang === "pt" ? (
-                        <>
-                          Ei, esse formulário funciona de verdade viu?{" "}
-                          <span className="bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent">
-                            Vamos conversar!
-                          </span>
-                        </>
-                      ) : (
-                        <>
-                          Hey, this form actually works.{" "}
-                          <span className="bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent">
-                            Let&apos;s talk!
-                          </span>
-                        </>
-                      )}
+                      <span className="bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent">
+                        {lang === "pt" ? "Vamos conversar!" : "Let's talk!"}
+                      </span>
                     </motion.h2>
                     <motion.p
                       initial={{ opacity: 0 }}
