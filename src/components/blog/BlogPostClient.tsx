@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowLeft } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
@@ -20,6 +21,8 @@ export type BlogPostPayload = {
   date: string;
   tags: string[];
   cover?: string;
+  coverWidth?: number;
+  coverHeight?: number;
   linkedin?: string;
   readingMinutes: number;
   html: string;
@@ -64,10 +67,17 @@ export default function BlogPostClient({
           readingMinutes={post.readingMinutes}
         />
 
-        {post.cover && (
+        {post.cover && post.coverWidth && post.coverHeight && (
           <div className="mx-auto max-w-2xl px-6 sm:px-8 lg:px-12">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={post.cover} alt={post.title} className="w-full h-auto" />
+            <Image
+              src={post.cover}
+              alt={post.title}
+              width={post.coverWidth}
+              height={post.coverHeight}
+              sizes="(max-width: 672px) 100vw, 672px"
+              className="w-full h-auto"
+              priority
+            />
           </div>
         )}
 
