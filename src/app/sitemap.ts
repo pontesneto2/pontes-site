@@ -118,5 +118,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
       alternates: { languages: { "pt-BR": `${siteUrl}/trabalhe-comigo` } },
     },
+    {
+      url: `${siteUrl}/cv`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.6,
+    },
   ];
 }

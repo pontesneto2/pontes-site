@@ -16,6 +16,7 @@ import SiteFooter from "@/components/SiteFooter";
 import Preloader from "@/components/Preloader";
 import { useLanguage, tr, LANG_FLAG, type Bilingual } from "@/lib/language-context";
 import { getCvUrl } from "@/lib/constants";
+import { EXPERIENCE } from "@/lib/experience-data";
 import {
   Code,
   Mail,
@@ -765,98 +766,7 @@ export default function Page() {
     { value: "6+", label: { pt: "Anos entregando em produção", en: "Years shipping to production" } },
   ];
 
-  const experience: Array<{
-    company: string;
-    startRole?: Bilingual;
-    role: Bilingual;
-    period: string;
-    remote?: boolean;
-    languages?: string;
-    location: string;
-  }> = [
-    {
-      company: "Star Capital",
-      role: {
-        pt: "Engenheiro de Software | Gerenciamento de Projeto",
-        en: "Software Engineer | Project Management",
-      },
-      period: "06/2025–07/2026",
-      location: "Fortaleza - CE",
-    },
-    {
-      company: "FlixBus Tickets",
-      role: { pt: "Sênior Desenvolvedor Full Stack", en: "Senior Full Stack Developer" },
-      period: "2024–2025",
-      remote: true,
-      languages: "PT/EN",
-      location: "Dublin - Irlanda",
-    },
-    {
-      company: "FedEx Services",
-      role: { pt: "Sênior Desenvolvedor Full Stack", en: "Senior Full Stack Developer" },
-      period: "2024–2025",
-      remote: true,
-      languages: "PT/EN",
-      location: "Dublin - Irlanda",
-    },
-    {
-      company: "Instituto Anjos Digitais",
-      role: {
-        pt: "Sênior Desenvolvedor Full Stack | Gerenciamento de projetos de Produtos Digitais",
-        en: "Senior Full Stack Developer | Digital Product Project Management",
-      },
-      period: "2023–2024",
-      remote: true,
-      location: "Fortaleza - CE",
-    },
-    {
-      company: "Secretaria do Desenvolvimento Agrário (CE)",
-      startRole: { pt: "Programador Jr", en: "Jr Programmer" },
-      role: {
-        pt: "Analista de Sistemas Pleno | Product Designer",
-        en: "Mid-level Systems Analyst | Product Designer",
-      },
-      period: "2021–2023",
-      location: "Fortaleza - CE",
-    },
-    {
-      company: "Instituto Agropolos do Ceará",
-      startRole: { pt: "Programador Jr", en: "Jr Programmer" },
-      role: {
-        pt: "Analista de Sistemas Pleno | UX/UI Designer",
-        en: "Mid-level Systems Analyst | UX/UI Designer",
-      },
-      period: "2021–2023",
-      remote: true,
-      location: "Fortaleza - CE",
-    },
-    {
-      company: "Com3 Brasil",
-      role: {
-        pt: "Analista de Sistemas Jr",
-        en: "Jr Systems Analyst",
-      },
-      period: "2020–2021",
-      location: "Fortaleza - CE",
-    },
-    {
-      company: "Grupo Laredo Atacadista",
-      startRole: { pt: "Auxiliar de gerência", en: "Assistant Manager" },
-      role: { pt: "Gerente Operacional de Mercado", en: "Store Operations Manager" },
-      period: "2017–2020",
-      location: "Fortaleza - CE",
-    },
-    {
-      company: "White Martins Gases Industriais e Medicinais",
-      startRole: { pt: "Encarregado de Operações", en: "Operations Supervisor" },
-      role: {
-        pt: "Gerente de Unidade Capital — URC Fortaleza",
-        en: "Unit Manager — URC Fortaleza",
-      },
-      period: "2015–2017",
-      location: "Fortaleza - CE",
-    },
-  ];
+  const experience = EXPERIENCE;
 
   const handleSpotlightMove = (event: MouseEvent<HTMLElement>) => {
     const el = event.currentTarget;
@@ -1168,10 +1078,8 @@ export default function Page() {
                       whileInView={{ opacity: 1 }}
                       viewport={viewportSettings}
                       transition={{ duration: 0.7, ease: easeOut, delay: 0.1 }}
-                      href={getCvUrl(lang)}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={() => track("cv_download", { href: getCvUrl(lang) })}
+                      href="/cv"
+                      onClick={() => track("cv_download", { href: "/cv" })}
                       className="group mt-8 self-start w-[40%] min-w-fit flex items-center justify-center gap-2 rounded-full px-6 py-2.5 bg-white text-violet-700 text-sm font-medium hover:bg-zinc-100 hover:scale-[1.03] hover:shadow-lg hover:shadow-black/20 transition-all duration-300"
                     >
                       {t({ pt: "Veja o currículo completo", en: "See the full résumé" })}
