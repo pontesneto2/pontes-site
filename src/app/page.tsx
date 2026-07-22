@@ -6,7 +6,6 @@ import { useEffect, useRef, useState, type MouseEvent } from "react";
 import { motion } from "framer-motion";
 import { track } from "@vercel/analytics";
 import Hero from "@/components/Hero";
-import CursorGlow from "@/components/CursorGlow";
 import Testimonials from "@/components/Testimonials";
 import ContactForm from "@/components/ContactForm";
 import SkillsTools, { SKILL_NAMES } from "@/components/SkillsTools";
@@ -781,8 +780,8 @@ export default function Page() {
 
   const impactStats: Array<{ value: string; label: Bilingual }> = [
     { value: "30+", label: { pt: "Plataformas entregues", en: "Platforms delivered" } },
-    { value: "99.7%", label: { pt: "Uptime médio", en: "Average uptime" } },
-    { value: "6+", label: { pt: "Anos de experiência", en: "Years of experience" } },
+    { value: "99.7%", label: { pt: "Uptime\nmédio", en: "Average\nuptime" } },
+    { value: "6+", label: { pt: "Anos de\nexperiência", en: "Years of\nexperience" } },
   ];
 
   const secondaryProjects = featuredProjects;
@@ -973,7 +972,6 @@ export default function Page() {
   return (
     <div className="min-h-screen font-sans relative isolate">
       <Preloader />
-      <CursorGlow />
       <a
         href="#content"
         className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:rounded-lg focus:bg-violet-600 focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white"
@@ -1473,133 +1471,102 @@ export default function Page() {
             </div>
           </section>
 
-          <Testimonials />
-
-          {/* LINKEDIN - Compartilhando o dia a dia */}
-          <section className="relative py-10">
+          {/* RECOMENDAÇÕES + LINKEDIN - testemunhos e dia a dia lado a lado */}
+          <section id="testimonials" className="relative py-14">
             <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={viewportSettings}
-                transition={{ duration: 0.7, ease: easeOut }}
-                className="relative rounded-3xl border border-white/10 bg-gradient-to-br from-black/60 via-[#0d1b2a]/70 to-black/60 backdrop-blur-xl shadow-2xl overflow-hidden p-8 md:p-12"
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-[#0A66C2]/5 via-transparent to-violet-500/5 pointer-events-none" />
+              <div className="text-center mb-12">
+                <motion.h2
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ duration: 0.7, ease: easeOut }}
+                  className="text-[2.1rem] sm:text-[2.6rem] md:text-[3.30rem] font-black text-white"
+                  style={{ fontFamily: "var(--font-space-grotesk)" }}
+                >
+                  {t({ pt: "Recomendações", en: "Recommendations" })}
+                </motion.h2>
+              </div>
 
-                <div className="relative grid md:grid-cols-[1.05fr_1.35fr] gap-10 items-center">
-                  <div>
-                    <span className="inline-flex items-center justify-center h-9 w-9 rounded-lg bg-[#0A66C2]">
-                      <Linkedin className="h-5 w-5 text-white" />
-                    </span>
-                    <h3
-                      className="mt-3 text-2xl md:text-3xl font-bold text-white"
-                      style={{ fontFamily: "var(--font-space-grotesk)" }}
-                    >
-                      {t({ pt: "Meu dia a dia no LinkedIn", en: "My day-to-day on LinkedIn" })}
-                    </h3>
-                    <p className="mt-3 text-sm text-zinc-400 leading-relaxed">
-                      {t({
-                        pt: "Compartilho bastidores, aprendizados e bastante conteúdo sobre Engenharia de Software, Desenvolvimento, Arquitetura e muito mais... Vamos nos conectar!",
-                        en: "I share behind-the-scenes moments, learnings and lots of content about Software Engineering, Development, Architecture and much more... Let's connect!",
-                      })}
-                    </p>
+              <div className="grid md:grid-cols-2 gap-10 items-start">
+                <Testimonials />
+
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={viewportSettings}
+                  transition={{ duration: 0.7, ease: easeOut }}
+                  className="relative min-w-0 rounded-3xl border border-white/10 bg-gradient-to-br from-black/60 via-[#0d1b2a]/70 to-black/60 backdrop-blur-xl shadow-2xl overflow-hidden p-6 md:p-8"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-[#0A66C2]/5 via-transparent to-violet-500/5 pointer-events-none" />
+
+                  <div className="relative flex flex-col gap-6">
+                    <div>
+                      <span className="inline-flex items-center justify-center h-9 w-9 rounded-lg bg-[#0A66C2]">
+                        <Linkedin className="h-5 w-5 text-white" />
+                      </span>
+                      <h3
+                        className="mt-3 text-2xl font-bold text-white"
+                        style={{ fontFamily: "var(--font-space-grotesk)" }}
+                      >
+                        {t({ pt: "Meu dia a dia no LinkedIn", en: "My day-to-day on LinkedIn" })}
+                      </h3>
+                      <p className="mt-3 text-sm text-zinc-400 leading-relaxed">
+                        {t({
+                          pt: "Compartilho bastidores, aprendizados e bastante conteúdo sobre Engenharia de Software, Desenvolvimento, Arquitetura e muito mais... Vamos nos conectar!",
+                          en: "I share behind-the-scenes moments, learnings and lots of content about Software Engineering, Development, Architecture and much more... Let's connect!",
+                        })}
+                      </p>
+                      <a
+                        href="https://www.linkedin.com/in/fcopts"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-5 inline-flex items-center gap-2 rounded-full px-6 py-2.5 text-sm font-semibold w-fit bg-white text-[#0A66C2] hover:bg-zinc-100 hover:scale-[1.03] transition-all duration-200"
+                      >
+                        <Linkedin className="h-4 w-4" />
+                        {t({ pt: "Me siga no LinkedIn", en: "Follow me on LinkedIn" })}
+                      </a>
+                    </div>
+
                     <a
-                      href="https://www.linkedin.com/in/fcopts"
+                      href="https://www.linkedin.com/posts/fcopts_softwareengineering-devops-mobiledevelopment-activity-7465484728440078336-7OyY"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="mt-5 inline-flex items-center gap-2 rounded-full px-6 py-2.5 text-sm font-semibold w-fit bg-white text-[#0A66C2] hover:bg-zinc-100 hover:scale-[1.03] transition-all duration-200"
+                      className="group relative rounded-2xl border border-white/10 bg-white/[0.04] hover:bg-white/[0.07] hover:border-white/20 p-5 transition-all duration-300"
                     >
-                      <Linkedin className="h-4 w-4" />
-                      {t({ pt: "Me siga no LinkedIn", en: "Follow me on LinkedIn" })}
+                      <div className="flex items-center gap-3">
+                        <div className="relative h-11 w-11 rounded-full overflow-hidden border border-white/10 shrink-0">
+                          <Image
+                            src="/pontes-institucional.png"
+                            alt="Francisco Pontes"
+                            fill
+                            sizes="44px"
+                            className="object-cover"
+                          />
+                        </div>
+                        <div className="min-w-0">
+                          <p className="text-sm font-semibold text-white truncate">Francisco Pontes</p>
+                          <p className="text-[11px] text-zinc-400 truncate">
+                            {t({ pt: "Sr Software Engineer | Mobile Dev · 1 m", en: "Sr Software Engineer | Mobile Dev · 1 mo" })}
+                          </p>
+                        </div>
+                        <Linkedin className="h-5 w-5 text-[#4a9eea] ml-auto shrink-0" />
+                      </div>
+                      <p className="mt-4 text-sm text-zinc-300 leading-relaxed line-clamp-3">
+                        {t({
+                          pt: "Tem uma parte da engenharia de software que quase nunca aparece no print final: os testes que falharam, os debugs de madrugada, as decisões de arquitetura discutidas e refeitas várias vezes antes de chegar no resultado que todo mundo vê pronto...",
+                          en: "There's a part of software engineering that almost never shows up in the final screenshot: the failed tests, the late-night debugging, the architecture decisions discussed and reworked many times before reaching the result everyone sees finished...",
+                        })}
+                      </p>
+                      <span className="mt-4 inline-flex items-center gap-1 text-xs font-semibold text-[#4a9eea] group-hover:text-[#6bb3f0] transition-colors">
+                        {t({ pt: "Ver publicação completa", en: "View full post" })}
+                        <span className="transition-transform duration-200 group-hover:translate-x-0.5">→</span>
+                      </span>
                     </a>
                   </div>
-
-                  <a
-                    href="https://www.linkedin.com/posts/fcopts_softwareengineering-devops-mobiledevelopment-activity-7465484728440078336-7OyY"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group relative rounded-2xl border border-white/10 bg-white/[0.04] hover:bg-white/[0.07] hover:border-white/20 p-5 transition-all duration-300"
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className="relative h-11 w-11 rounded-full overflow-hidden border border-white/10 shrink-0">
-                        <Image
-                          src="/pontes-institucional.png"
-                          alt="Francisco Pontes"
-                          fill
-                          sizes="44px"
-                          className="object-cover"
-                        />
-                      </div>
-                      <div className="min-w-0">
-                        <p className="text-sm font-semibold text-white truncate">Francisco Pontes</p>
-                        <p className="text-[11px] text-zinc-400 truncate">
-                          {t({ pt: "Sr Software Engineer | Mobile Dev · 1 m", en: "Sr Software Engineer | Mobile Dev · 1 mo" })}
-                        </p>
-                      </div>
-                      <Linkedin className="h-5 w-5 text-[#4a9eea] ml-auto shrink-0" />
-                    </div>
-                    <p className="mt-4 text-sm text-zinc-300 leading-relaxed line-clamp-3">
-                      {t({
-                        pt: "Tem uma parte da engenharia de software que quase nunca aparece no print final: os testes que falharam, os debugs de madrugada, as decisões de arquitetura discutidas e refeitas várias vezes antes de chegar no resultado que todo mundo vê pronto...",
-                        en: "There's a part of software engineering that almost never shows up in the final screenshot: the failed tests, the late-night debugging, the architecture decisions discussed and reworked many times before reaching the result everyone sees finished...",
-                      })}
-                    </p>
-                    <span className="mt-4 inline-flex items-center gap-1 text-xs font-semibold text-[#4a9eea] group-hover:text-[#6bb3f0] transition-colors">
-                      {t({ pt: "Ver publicação completa", en: "View full post" })}
-                      <span className="transition-transform duration-200 group-hover:translate-x-0.5">→</span>
-                    </span>
-                  </a>
-                </div>
-              </motion.div>
+                </motion.div>
+              </div>
             </div>
           </section>
-
-          {/* BLOG - chamada discreta para os posts recentes */}
-          {recentPosts && recentPosts[lang].length > 0 && (
-            <section className="relative py-10 border-t border-white/5">
-              <div className="mx-auto max-w-6xl px-6 sm:px-8 lg:px-12">
-                <div className="flex items-center justify-between mb-6">
-                  <h3 className="text-sm font-semibold text-zinc-400 uppercase tracking-wider">
-                    {t({ pt: "Do blog", en: "From the blog" })}
-                  </h3>
-                  <Link
-                    href="/blog"
-                    className="text-xs font-medium text-violet-300 hover:text-violet-200 transition-colors inline-flex items-center gap-1"
-                  >
-                    {t({ pt: "Ver todos os posts", en: "See all posts" })}
-                    <span aria-hidden="true">→</span>
-                  </Link>
-                </div>
-                <div className="grid sm:grid-cols-3 gap-4">
-                  {recentPosts[lang].map((post) => (
-                    <Link
-                      key={post.slug}
-                      href={`/blog/${post.slug}`}
-                      className="group rounded-xl border border-white/8 bg-white/[0.015] p-4 hover:border-white/15 hover:bg-white/[0.03] transition-colors"
-                    >
-                      <div className="flex flex-wrap gap-1.5 mb-2">
-                        {post.tags.slice(0, 2).map((tag) => (
-                          <span
-                            key={tag}
-                            className="text-[10px] px-1.5 py-0.5 rounded border border-white/10 text-zinc-400"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                      <h4 className="text-sm font-semibold text-zinc-100 group-hover:text-white transition-colors line-clamp-2">
-                        {post.title}
-                      </h4>
-                      <p className="mt-1.5 text-[11px] text-zinc-500">
-                        {post.readingMinutes} {t({ pt: "min de leitura", en: "min read" })}
-                      </p>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            </section>
-          )}
 
           {/* SOBRE MIM - Card Unificado Criativo */}
           <section
@@ -1791,6 +1758,52 @@ export default function Page() {
               </div>
             </div>
           </section>
+
+          {/* BLOG - chamada discreta para os posts recentes */}
+          {recentPosts && recentPosts[lang].length > 0 && (
+            <section className="relative py-10 border-t border-white/5">
+              <div className="mx-auto max-w-6xl px-6 sm:px-8 lg:px-12">
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="text-base font-semibold uppercase tracking-wider text-fuchsia-400">
+                    {t({ pt: "Do blog", en: "From the blog" })}
+                  </h3>
+                  <Link
+                    href="/blog"
+                    className="text-xs font-medium text-violet-300 hover:text-violet-200 transition-colors inline-flex items-center gap-1"
+                  >
+                    {t({ pt: "Ver todos os posts", en: "See all posts" })}
+                    <span aria-hidden="true">→</span>
+                  </Link>
+                </div>
+                <div className="grid sm:grid-cols-3 gap-4">
+                  {recentPosts[lang].map((post) => (
+                    <Link
+                      key={post.slug}
+                      href={`/blog/${post.slug}`}
+                      className="group rounded-xl border border-white/8 bg-white/[0.015] p-4 hover:border-white/15 hover:bg-white/[0.03] transition-colors"
+                    >
+                      <div className="flex flex-wrap gap-1.5 mb-2">
+                        {post.tags.slice(0, 2).map((tag) => (
+                          <span
+                            key={tag}
+                            className="text-[10px] px-1.5 py-0.5 rounded border border-white/10 text-zinc-400"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                      <h4 className="text-sm font-semibold text-zinc-100 group-hover:text-white transition-colors line-clamp-2">
+                        {post.title}
+                      </h4>
+                      <p className="mt-1.5 text-[11px] text-zinc-500">
+                        {post.readingMinutes} {t({ pt: "min de leitura", en: "min read" })}
+                      </p>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </section>
+          )}
 
         </main>
 

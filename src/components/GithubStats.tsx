@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, animate, useInView } from "framer-motion";
-import { Github, Star, Activity, Calendar } from "lucide-react";
+import { Github, Star, Activity, Calendar, Rocket, ShieldCheck, Timer } from "lucide-react";
 import { useLanguage, tr } from "@/lib/language-context";
 
 const GITHUB_USER = "pontesneto2";
@@ -13,13 +13,30 @@ type Stats = {
   contributionsThisYear: number;
 };
 
+type DeployStats = {
+  configured: boolean;
+  deploysLast30d: number | null;
+  uptimePct: number | null;
+  avgBuildTimeSec: number | null;
+};
+
 async function fetchGithubData(): Promise<Stats | null> {
   const res = await fetch("/api/github-stats");
   if (!res.ok) return null;
   return (await res.json()) as Stats;
 }
 
-function AnimatedNumber({ value, plain }: { value: number; plain?: boolean }) {
+async function fetchDeployData(): Promise<DeployStats | null> {
+  try {
+    const res = await fetch("/api/deploy-stats");
+    if (!res.ok) return null;
+    return (await res.json()) as DeployStats;
+  } catch {
+    return null;
+  }
+}
+
+function AnimatedNumber({ value, plain, decimals = 0 }: { value: number; plain?: boolean; decimals?: number }) {
   const ref = useRef<HTMLSpanElement>(null);
   const isInView = useInView(ref, { once: true, amount: 0.5 });
   const [display, setDisplay] = useState(0);
@@ -29,12 +46,13 @@ function AnimatedNumber({ value, plain }: { value: number; plain?: boolean }) {
     const controls = animate(0, value, {
       duration: 1.2,
       ease: "easeOut",
-      onUpdate: (v) => setDisplay(Math.round(v)),
+      onUpdate: (v) => setDisplay(decimals ? Number(v.toFixed(decimals)) : Math.round(v)),
     });
     return () => controls.stop();
-  }, [isInView, value]);
+  }, [isInView, value, decimals]);
 
-  return <span ref={ref}>{plain ? display : display.toLocaleString("pt-BR")}</span>;
+  const formatted = decimals ? display.toFixed(decimals) : display.toString();
+  return <span ref={ref}>{plain ? formatted : display.toLocaleString("pt-BR")}</span>;
 }
 
 export default function GithubStats() {
@@ -42,6 +60,7 @@ export default function GithubStats() {
   const t = (pt: string, en: string) => tr(lang, { pt, en });
   const [data, setData] = useState<Stats | null>(null);
   const [error, setError] = useState(false);
+  const [deployData, setDeployData] = useState<DeployStats | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -55,6 +74,16 @@ export default function GithubStats() {
       .catch(() => {
         if (!cancelled) setError(true);
       });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetchDeployData().then((result) => {
+      if (!cancelled && result) setDeployData(result);
+    });
     return () => {
       cancelled = true;
     };
@@ -99,6 +128,12 @@ export default function GithubStats() {
         { icon: Calendar, label: t("GitHub desde", "GitHub since"), value: data.joinYear, plain: true },
       ]
     : [];
+
+  const deployMetrics = [
+    { icon: Rocket, label: t("Deploys (30d)", "Deploys (30d)"), value: deployData?.deploysLast30d ?? null, suffix: "", decimals: 0 },
+    { icon: ShieldCheck, label: t("Uptime", "Uptime"), value: deployData?.uptimePct ?? null, suffix: "%", decimals: 2 },
+    { icon: Timer, label: t("Build médio", "Avg build"), value: deployData?.avgBuildTimeSec ?? null, suffix: "s", decimals: 0 },
+  ];
 
   return (
     <motion.div
@@ -160,6 +195,42 @@ export default function GithubStats() {
               )}
             </div>
           ))}
+        </div>
+
+        <div className="mt-6 pt-6 border-t border-white/10">
+          <div className="mb-4">
+            <h4 className="text-sm font-semibold text-white flex items-center gap-2">
+              <Rocket className="h-4 w-4 text-violet-300" />
+              {t("Deploy & Infra", "Deploy & Infra")}
+            </h4>
+            <p className="text-[11px] text-zinc-500 mt-0.5">
+              {deployData?.configured
+                ? t("Dados reais da Vercel e Railway.", "Real data from Vercel and Railway.")
+                : t("Vercel + Railway — integração em andamento.", "Vercel + Railway — integration in progress.")}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-3 gap-3">
+            {deployMetrics.map((stat) => (
+              <div key={stat.label} className="p-2 sm:p-4 min-h-[92px]">
+                <stat.icon className="h-4 w-4 text-violet-400 mb-2" />
+                {stat.value !== null ? (
+                  <>
+                    <div className="text-2xl font-semibold text-zinc-100 tabular-nums">
+                      <AnimatedNumber value={stat.value} plain decimals={stat.decimals} />
+                      {stat.suffix}
+                    </div>
+                    <div className="text-[11px] text-zinc-400 mt-0.5">{stat.label}</div>
+                  </>
+                ) : (
+                  <>
+                    <div className="text-sm font-medium text-zinc-600 italic">{t("em breve", "soon")}</div>
+                    <div className="text-[11px] text-zinc-500 mt-0.5">{stat.label}</div>
+                  </>
+                )}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </motion.div>

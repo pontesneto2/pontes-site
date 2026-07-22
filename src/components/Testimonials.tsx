@@ -156,74 +156,55 @@ export default function Testimonials() {
   };
 
   return (
-    <section id="testimonials" className="relative py-14">
-      <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
-        <div className="text-center mb-12">
-          <motion.h2
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.7, ease: "easeOut" }}
-            className="text-[2.1rem] sm:text-[2.6rem] md:text-[3.30rem] font-black text-white"
-            style={{ fontFamily: "var(--font-space-grotesk)" }}
-          >
-            {tr(lang, { pt: "Recomendações", en: "Recommendations" })}
-          </motion.h2>
-        </div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.7, ease: "easeOut" }}
-        >
-          <div
-            ref={scrollRef}
-            onScroll={updateScrollProgress}
-            onWheel={handleWheel}
-            onTouchStart={handleTouchStart}
-            onTouchEnd={handleTouchEnd}
-            className="flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth pt-1 pb-4 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
-          >
-            {items.map((item) => (
-              <div
-                key={item.name}
-                className="snap-start shrink-0 w-full sm:w-[calc(50%-0.75rem)]"
-              >
-                <TestimonialCard item={item} />
-              </div>
-            ))}
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.7, ease: "easeOut" }}
+      className="min-w-0"
+    >
+      <div
+        ref={scrollRef}
+        onScroll={updateScrollProgress}
+        onWheel={handleWheel}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+        className="flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth pt-1 pb-4 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+      >
+        {items.map((item) => (
+          <div key={item.name} className="snap-start shrink-0 w-full">
+            <TestimonialCard item={item} />
           </div>
-
-          <div className="mt-3 mx-auto h-1.5 w-full max-w-xs rounded-full bg-white/10 overflow-hidden">
-            <div
-              className="h-full rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500"
-              style={{
-                width: `${thumbWidth}%`,
-                marginLeft: `${scrollProgress * (100 - thumbWidth)}%`,
-              }}
-            />
-          </div>
-          <p
-            className="mt-4 text-center text-lg font-semibold leading-none tabular-nums"
-            style={{ fontFamily: "var(--font-space-grotesk)", color: "#e879f9" }}
-          >
-            {currentIndex + 1}/{items.length}
-          </p>
-
-          <div className="mt-1.5 text-center">
-            <a
-              href="https://www.linkedin.com/in/fcopts/details/recommendations/?detailScreenTabIndex=0"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 text-xs text-zinc-500 hover:text-zinc-300 transition-colors"
-            >
-              <Linkedin className="h-3 w-3" />
-              {tr(lang, { pt: "Veja no LinkedIn", en: "See on LinkedIn" })}
-            </a>
-          </div>
-        </motion.div>
+        ))}
       </div>
-    </section>
+
+      <div className="mt-3 mx-auto h-1.5 w-full max-w-xs rounded-full bg-white/10 overflow-hidden">
+        <div
+          className="h-full rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500"
+          style={{
+            width: `${thumbWidth}%`,
+            marginLeft: `${scrollProgress * (100 - thumbWidth)}%`,
+          }}
+        />
+      </div>
+      <p
+        className="mt-4 text-center text-lg font-semibold leading-none tabular-nums"
+        style={{ fontFamily: "var(--font-space-grotesk)", color: "#e879f9" }}
+      >
+        {currentIndex + 1}/{items.length}
+      </p>
+
+      <div className="mt-1.5 text-center">
+        <a
+          href="https://www.linkedin.com/in/fcopts/details/recommendations/?detailScreenTabIndex=0"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1 text-xs text-zinc-500 hover:text-zinc-300 transition-colors"
+        >
+          <Linkedin className="h-3 w-3" />
+          {tr(lang, { pt: "Veja no LinkedIn", en: "See on LinkedIn" })}
+        </a>
+      </div>
+    </motion.div>
   );
 }

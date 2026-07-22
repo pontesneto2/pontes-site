@@ -20,7 +20,7 @@ export default function SiteFooter({
       <div className="mx-auto flex max-w-6xl flex-col items-center gap-8 px-6 sm:px-8 lg:flex-row lg:items-center lg:justify-between lg:px-12">
         <div className="text-center lg:text-left">
           <div>
-            {t({ pt: "Feito à mão", en: "Handmade" })} | © 2026 Francisco Pontes
+            © 2026 Francisco Pontes
           </div>
           <div className="mt-3 flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5 lg:justify-start">
             <Link href="/privacidade" className="text-zinc-400 hover:text-zinc-200 transition-colors">
@@ -43,7 +43,7 @@ export default function SiteFooter({
                 >
                   <AnimatedCounter value={stat.value} lang={lang} />
                 </div>
-                <div className="mt-0.5 max-w-[100px] mx-auto text-[9px] uppercase tracking-wide text-zinc-500">
+                <div className="mt-0.5 max-w-[100px] mx-auto whitespace-pre-line text-[9px] uppercase tracking-wide text-zinc-500">
                   {t(stat.label)}
                 </div>
               </div>
