@@ -513,6 +513,41 @@ function useSectionsData(lang: "pt" | "en") {
         </>
       ),
     },
+    {
+      title: { pt: "Trade-offs e o que eu faria diferente", en: "Trade-offs and what I'd do differently" },
+      children: (
+        <>
+          <div className="rounded-2xl bg-white/[0.025] border border-white/[0.06] p-6">
+            <h4 className="text-sm font-semibold text-white mb-3">
+              {t({ pt: "O que optei por não fazer", en: "What I chose not to build" })}
+            </h4>
+            <ul className="space-y-2">
+              {[
+                { pt: "Big-bang rewrite: descartei reescrever o sistema legado de uma vez. Com mais de 1.000 usuários já dependendo dele todo dia, migrar módulo por módulo levou mais tempo (1,8 anos), mas nunca interrompeu a operação da Secretaria.", en: "A big-bang rewrite: I ruled out replacing the legacy system all at once. With 1,000+ users already depending on it daily, migrating module by module took longer (1.8 years) but never interrupted the Secretariat's operations." },
+                { pt: "Trocar o banco de dados durante a transição: mantive o PostgreSQL como fonte de verdade em vez de migrar de banco no meio do processo, pra não somar risco de dados a um projeto que já era arriscado por natureza.", en: "Swapping the database mid-transition: I kept PostgreSQL as the source of truth instead of migrating databases partway through, to avoid stacking data risk onto a project that was already inherently risky." },
+              ].map((item) => (
+                <li key={item.pt} className="flex items-start gap-3 text-sm text-zinc-300">
+                  <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-violet-500" />
+                  {t(item)}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="mt-6 rounded-2xl bg-white/[0.02] border border-white/[0.06] p-6">
+            <h4 className="text-sm font-semibold text-white mb-3">
+              {t({ pt: "O que eu faria diferente hoje", en: "What I'd do differently today" })}
+            </h4>
+            <p className="text-sm text-zinc-300 leading-relaxed">
+              {t({
+                pt: "Introduziria feature flags desde o primeiro módulo migrado, não a partir do meio do projeto. Separar deploy de release teria dado mais margem pra testar cada módulo novo com um grupo pequeno de servidores antes de liberar pros 200+ logins simultâneos do Estado inteiro.",
+                en: "I'd introduce feature flags from the first migrated module, not partway through the project. Decoupling deploy from release would have given more room to test each new module with a small group of staff before rolling it out to the state's 200+ concurrent logins.",
+              })}
+            </p>
+          </div>
+        </>
+      ),
+    },
   ];
 }
 

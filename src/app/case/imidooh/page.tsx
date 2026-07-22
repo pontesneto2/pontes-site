@@ -558,6 +558,41 @@ function useSectionsData(lang: "pt" | "en") {
       ),
     },
     {
+      title: { pt: "Trade-offs e o que eu faria diferente", en: "Trade-offs and what I'd do differently" },
+      children: (
+        <>
+          <div className="rounded-2xl bg-white/[0.025] border border-white/[0.06] p-6">
+            <h4 className="text-sm font-semibold text-white mb-3">
+              {t({ pt: "O que optei por não fazer", en: "What I chose not to build" })}
+            </h4>
+            <ul className="space-y-2">
+              {[
+                { pt: "Isolamento por schema por tenant: fiquei num schema único com chaves de tenant, mais simples de operar sozinho, sabendo que teria que revisitar isso antes de qualquer cliente real em produção.", en: "Per-tenant schema isolation: stayed on a single schema with tenant keys, simpler to run solo, knowing it would need revisiting before any real client hit production." },
+                { pt: "Billing e assinaturas: o projeto foi descontinuado antes da fase comercial, então não construí cobrança — priorizei deixar o modelo de dados pronto para isso depois.", en: "Billing and subscriptions: the project was discontinued before the commercial phase, so I didn't build charging — I prioritized leaving the data model ready for it later." },
+              ].map((item) => (
+                <li key={item.pt} className="flex items-start gap-3 text-sm text-zinc-300">
+                  <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-violet-500" />
+                  {t(item)}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="mt-6 rounded-2xl bg-white/[0.02] border border-white/[0.06] p-6">
+            <h4 className="text-sm font-semibold text-white mb-3">
+              {t({ pt: "O que eu faria diferente hoje", en: "What I'd do differently today" })}
+            </h4>
+            <p className="text-sm text-zinc-300 leading-relaxed">
+              {t({
+                pt: "Investiria em testes automatizados de provisionamento de tenant desde o início, em vez de validar isso manualmente a cada módulo novo. Com o projeto parado num ponto de maturidade técnica, essa é a lacuna mais clara entre o que existe hoje e o que precisaria pra receber o primeiro cliente com segurança.",
+                en: "I'd invest in automated tenant-provisioning tests from the start instead of validating it manually with every new module. With the project stopped at a clear point of technical maturity, that's the clearest gap between what exists today and what it would take to safely onboard the first client.",
+              })}
+            </p>
+          </div>
+        </>
+      ),
+    },
+    {
       title: { pt: "Direitos e Propriedade", en: "Rights and Ownership" },
       children: (
         <>
