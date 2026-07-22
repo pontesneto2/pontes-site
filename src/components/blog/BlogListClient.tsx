@@ -44,6 +44,7 @@ export default function BlogListClient({ posts }: { posts: { pt: BlogPostMeta[];
               <Typewriter
                 className="text-white"
                 text={tr(lang, { pt: "Fique por dentro do meu Blog", en: "Stay up to date with my blog" })}
+                speed={55}
               />
             </motion.h1>
 
