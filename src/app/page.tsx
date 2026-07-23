@@ -13,7 +13,7 @@ import SiteHeader, { type SearchEntry } from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import Preloader from "@/components/Preloader";
 import LogosMarquee from "@/components/LogosMarquee";
-import { useLanguage, tr, LANG_FLAG, type Bilingual } from "@/lib/language-context";
+import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
 import { getCvUrl } from "@/lib/constants";
 import { EXPERIENCE } from "@/lib/experience-data";
 import type { BlogPostMeta } from "@/lib/blog";
@@ -1104,21 +1104,28 @@ export default function Page() {
                       </p>
                     </motion.div>
 
-                    <motion.a
+                    <motion.div
                       initial={{ opacity: 0 }}
                       whileInView={{ opacity: 1 }}
                       viewport={viewportSettings}
                       transition={{ duration: 0.7, ease: easeOut, delay: 0.1 }}
-                      href="/cv"
-                      onClick={() => track("cv_download", { href: "/cv" })}
-                      className="group mt-8 self-start w-[40%] min-w-fit flex items-center justify-center gap-2 rounded-full px-6 py-2.5 bg-white text-violet-700 text-sm font-medium hover:bg-zinc-100 hover:scale-[1.03] hover:shadow-lg hover:shadow-black/20 transition-all duration-300"
+                      className="mt-8 flex flex-wrap items-center gap-3"
                     >
-                      {t({ pt: "Veja o currículo completo", en: "See the full résumé" })}
-                      <span aria-hidden="true" className="text-[0.9em] leading-none">
-                        {LANG_FLAG[lang]}
-                      </span>
-                      <FileDown className="h-4 w-4 transition-transform duration-300 group-hover:translate-y-0.5" />
-                    </motion.a>
+                      <a
+                        href="/recrutadores"
+                        onClick={() => track("cta_click", { href: "/recrutadores" })}
+                        className="inline-flex items-center justify-center gap-2 rounded-full px-6 py-2.5 border border-violet-400/40 bg-violet-500/10 text-violet-200 text-sm font-medium hover:bg-violet-500/20 hover:border-violet-400/60 hover:text-white transition-colors duration-300"
+                      >
+                        {t({ pt: "Para recrutadores", en: "For recruiters" })}
+                      </a>
+                      <a
+                        href="/trabalhe-comigo"
+                        onClick={() => track("cta_click", { href: "/trabalhe-comigo" })}
+                        className="inline-flex items-center justify-center gap-2 rounded-full px-6 py-2.5 border border-violet-400/40 bg-violet-500/10 text-violet-200 text-sm font-medium hover:bg-violet-500/20 hover:border-violet-400/60 hover:text-white transition-colors duration-300"
+                      >
+                        {t({ pt: "Peça um orçamento", en: "Get a quote" })}
+                      </a>
+                    </motion.div>
                   </div>
 
                   <div className="relative aspect-square md:aspect-auto md:min-h-full">
