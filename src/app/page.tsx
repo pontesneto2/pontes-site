@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState, type MouseEvent } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { track } from "@vercel/analytics";
 import Hero from "@/components/Hero";
@@ -321,7 +321,8 @@ export default function Page() {
     highlights?: Array<{ icon: LucideIcon; value: Bilingual }>;
     impact?: Array<{ icon: LucideIcon; value: Bilingual; label: Bilingual }>;
     bgClass: string;
-    productionBadge?: boolean;
+    badge?: Bilingual;
+    badgeColor?: "amber" | "sky";
   }> = [
     {
       title: "SDA Ceará - App Mobile",
@@ -337,10 +338,9 @@ export default function Page() {
       category: [{ pt: "Aplicativo Mobile Nativo", en: "Native Mobile App" }, { pt: "Sistema Web+Admin", en: "Web System+Admin" }],
       thumb: "/images/capa-sda-app.png",
       bgClass: FEATURED_PROJECT_BG,
-      productionBadge: true,
+      badge: { pt: "Em produção", en: "In production" },
       highlights: [
-        { icon: Smartphone, value: { pt: "Publicado - iOS e Android", en: "Published - iOS and Android" } },
-        { icon: Briefcase, value: { pt: "Analista de Sistemas", en: "Systems Analyst" } },
+        { icon: Clock, value: { pt: "1,8 anos de produção", en: "1.8 years in production" } },
         { icon: Building2, value: { pt: "Idealizador: Governo do Ceará junto com a Secretaria de Desenvolvimento Agrário", en: "Idealized by: Government of Ceará together with the Secretariat of Agrarian Development" } },
       ],
       impact: [
@@ -374,11 +374,9 @@ export default function Page() {
       category: [{ pt: "Aplicativo Mobile Nativo", en: "Native Mobile App" }, { pt: "Sistema Web+Admin", en: "Web System+Admin" }],
       thumb: "/images/capa-ucopiloto.png",
       bgClass: NEUTRAL_BG,
-      productionBadge: true,
+      badge: { pt: "Em produção", en: "In production" },
       highlights: [
         { icon: Clock, value: { pt: "5 meses de produção", en: "5 months in production" } },
-        { icon: Briefcase, value: { pt: "DevOps solo", en: "Solo DevOps" } },
-        { icon: Smartphone, value: { pt: "iOS + Android + Web + Admin", en: "iOS + Android + Web + Admin" } },
         { icon: Building2, value: { pt: "Idealizadora: Click SF", en: "Idealized by: Click SF" } },
       ],
       impact: [
@@ -401,13 +399,10 @@ export default function Page() {
       category: [{ pt: "Sistema Web+Admin", en: "Web System+Admin" }, { pt: "Aplicativo PWA", en: "PWA App" }],
       thumb: "/images/capa-sistema-policia.png",
       bgClass: NEUTRAL_BG,
-      productionBadge: true,
+      badge: { pt: "Em produção", en: "In production" },
       highlights: [
         { icon: Clock, value: { pt: "1,2 anos de produção", en: "1.2 years in production" } },
-        { icon: Users, value: { pt: "Equipe: 4 → 3 devs", en: "Team: 4 → 3 devs" } },
-        { icon: Smartphone, value: { pt: "PWA + Sistemas Web", en: "PWA + Web Systems" } },
         { icon: Building2, value: { pt: "Idealizadora: Com3 Brasil", en: "Idealized by: Com3 Brasil" } },
-        { icon: Briefcase, value: { pt: "Vínculo: desenvolvido no período em que atuei na Com3 Brasil", en: "Affiliation: built during my time working at Com3 Brasil" } },
       ],
       impact: [
         { icon: Users, value: { pt: "2.350+", en: "2,350+" }, label: { pt: "Usuários ativos", en: "Active users" } },
@@ -429,9 +424,10 @@ export default function Page() {
       category: [{ pt: "Aplicativo Mobile Nativo", en: "Native Mobile App" }, { pt: "Sistema Web+Admin", en: "Web System+Admin" }],
       thumb: "/images/capa-fitvo.png",
       bgClass: NEUTRAL_BG,
+      badge: { pt: "Em desenvolvimento", en: "In development" },
+      badgeColor: "sky",
       highlights: [
         { icon: Clock, value: { pt: "Projeto em desenvolvimento", en: "Project in development" } },
-        { icon: Briefcase, value: { pt: "Engenheiro de Software Senior", en: "Senior Software Engineer" } },
       ],
     },
     {
@@ -447,9 +443,9 @@ export default function Page() {
       category: [{ pt: "Sistema Web+Admin", en: "Web System+Admin" }],
       thumb: "/images/capa-fedaf.png",
       bgClass: NEUTRAL_BG,
+      badge: { pt: "Em produção", en: "In production" },
       highlights: [
         { icon: Clock, value: { pt: "13 meses de produção", en: "13 months in production" } },
-        { icon: Briefcase, value: { pt: "Desenvolvedor Full Stack", en: "Full Stack Developer" } },
         { icon: Building2, value: { pt: "Idealizador: Governo do Ceará", en: "Idealized by: Government of Ceará" } },
       ],
       impact: [
@@ -484,7 +480,6 @@ export default function Page() {
       bgClass: NEUTRAL_BG,
       highlights: [
         { icon: Clock, value: { pt: "6 meses", en: "6 months" } },
-        { icon: Smartphone, value: { pt: "iOS + Android + Web + Admin", en: "iOS + Android + Web + Admin" } },
         { icon: Building2, value: { pt: "Idealizadora: Click SF", en: "Idealized by: Click SF" } },
       ],
     },
@@ -501,9 +496,9 @@ export default function Page() {
       category: [{ pt: "Sistema Web+Admin", en: "Web System+Admin" }, { pt: "Aplicativo PWA", en: "PWA App" }],
       thumb: "/images/capa-secaf.png",
       bgClass: NEUTRAL_BG,
+      badge: { pt: "Em produção", en: "In production" },
       highlights: [
         { icon: Clock, value: { pt: "14 meses de produção", en: "14 months in production" } },
-        { icon: Briefcase, value: { pt: "Desenvolvedor Full Stack", en: "Full Stack Developer" } },
         { icon: Building2, value: { pt: "Idealizador: Governo do Ceará", en: "Idealized by: Government of Ceará" } },
       ],
       impact: [
@@ -524,9 +519,9 @@ export default function Page() {
       category: [{ pt: "Sistema Web+Admin", en: "Web System+Admin" }, { pt: "Aplicativo PWA", en: "PWA App" }],
       thumb: "/images/capa-sigma.png",
       bgClass: NEUTRAL_BG,
+      badge: { pt: "Em produção", en: "In production" },
       highlights: [
         { icon: Clock, value: { pt: "12 meses de produção", en: "12 months in production" } },
-        { icon: Users, value: { pt: "Equipe: 4 devs", en: "Team: 4 devs" } },
         { icon: Building2, value: { pt: "Idealizador: Instituto Agropolos", en: "Idealized by: Instituto Agropolos" } },
       ],
       impact: [
@@ -548,9 +543,9 @@ export default function Page() {
       category: [{ pt: "Sistema Web+Admin", en: "Web System+Admin" }],
       thumb: "/images/capa-idace.png",
       bgClass: NEUTRAL_BG,
+      badge: { pt: "Em produção", en: "In production" },
       highlights: [
         { icon: Clock, value: { pt: "14 meses de produção", en: "14 months in production" } },
-        { icon: Briefcase, value: { pt: "Desenvolvedor Full Stack", en: "Full Stack Developer" } },
         { icon: Building2, value: { pt: "Idealizador: SDA Ceará", en: "Idealized by: SDA Ceará" } },
       ],
       impact: [
@@ -572,9 +567,9 @@ export default function Page() {
       category: [{ pt: "Sistema Web+Admin", en: "Web System+Admin" }, { pt: "Aplicativo PWA", en: "PWA App" }],
       thumb: "/images/capa-indicadores.png",
       bgClass: NEUTRAL_BG,
+      badge: { pt: "Em produção", en: "In production" },
       highlights: [
         { icon: Clock, value: { pt: "6 meses de produção", en: "6 months in production" } },
-        { icon: Briefcase, value: { pt: "Desenvolvedor Full Stack", en: "Full Stack Developer" } },
         { icon: Building2, value: { pt: "Idealizador: SDA Ceará", en: "Idealized by: SDA Ceará" } },
       ],
       impact: [
@@ -596,9 +591,9 @@ export default function Page() {
       category: [{ pt: "Sistema Web+Admin", en: "Web System+Admin" }, { pt: "Aplicativo PWA", en: "PWA App" }],
       thumb: "/images/capa-psjiv.png",
       bgClass: NEUTRAL_BG,
+      badge: { pt: "Em produção", en: "In production" },
       highlights: [
         { icon: Clock, value: { pt: "1 ano de produção", en: "1 year in production" } },
-        { icon: Briefcase, value: { pt: "Desenvolvedor Full Stack", en: "Full Stack Developer" } },
         { icon: Building2, value: { pt: "Idealizador: Governo do Ceará", en: "Idealized by: Government of Ceará" } },
       ],
       impact: [
@@ -620,9 +615,9 @@ export default function Page() {
       category: [{ pt: "Sistema Web+Admin", en: "Web System+Admin" }, { pt: "Aplicativo PWA", en: "PWA App" }],
       thumb: "/images/capa-diario.png",
       bgClass: NEUTRAL_BG,
+      badge: { pt: "Em produção", en: "In production" },
       highlights: [
         { icon: Clock, value: { pt: "4 meses de produção", en: "4 months in production" } },
-        { icon: Briefcase, value: { pt: "Full Stack solo", en: "Solo Full Stack" } },
         { icon: Building2, value: { pt: "Idealizador: Alfa Construções", en: "Idealized by: Alfa Construções" } },
       ],
       impact: [
@@ -644,9 +639,9 @@ export default function Page() {
       category: [{ pt: "Site Institucional", en: "Institutional Website" }],
       thumb: "/images/capa-anjos.png",
       bgClass: NEUTRAL_BG,
+      badge: { pt: "Em produção", en: "In production" },
       highlights: [
         { icon: Clock, value: { pt: "2 meses de desenvolvimento", en: "2 months of development" } },
-        { icon: Briefcase, value: { pt: "Frontend solo", en: "Solo frontend" } },
         { icon: Building2, value: { pt: "Idealizador: Anjos Digitais", en: "Idealized by: Anjos Digitais" } },
       ],
       impact: [
@@ -668,9 +663,9 @@ export default function Page() {
       category: [{ pt: "Site Institucional", en: "Institutional Website" }],
       thumb: "/images/capa-agropolos.png",
       bgClass: NEUTRAL_BG,
+      badge: { pt: "Em produção", en: "In production" },
       highlights: [
         { icon: Clock, value: { pt: "2 meses de desenvolvimento", en: "2 months of development" } },
-        { icon: Briefcase, value: { pt: "Frontend + CMS solo", en: "Solo frontend + CMS" } },
         { icon: Building2, value: { pt: "Idealizador: Instituto Agropolos", en: "Idealized by: Instituto Agropolos" } },
       ],
       impact: [
@@ -692,9 +687,9 @@ export default function Page() {
       category: [{ pt: "Site Institucional", en: "Institutional Website" }],
       thumb: "/images/capa-site-ujvp.png",
       bgClass: NEUTRAL_BG,
+      badge: { pt: "Em produção", en: "In production" },
       highlights: [
         { icon: Clock, value: { pt: "1 mês de desenvolvimento", en: "1 month of development" } },
-        { icon: Briefcase, value: { pt: "Frontend solo", en: "Solo frontend" } },
         { icon: Building2, value: { pt: "Idealizador: UJVP CE", en: "Idealized by: UJVP CE" } },
       ],
       impact: [
@@ -715,9 +710,9 @@ export default function Page() {
       category: [{ pt: "Site Institucional", en: "Institutional Website" }],
       thumb: "/images/capa-site-sda-ceara.png",
       bgClass: NEUTRAL_BG,
+      badge: { pt: "Em produção", en: "In production" },
       highlights: [
         { icon: Clock, value: { pt: "Manutenção contínua", en: "Ongoing maintenance" } },
-        { icon: Briefcase, value: { pt: "Manutenção e suporte", en: "Maintenance & support" } },
         { icon: Building2, value: { pt: "Idealizador: Governo do Ceará", en: "Idealized by: Government of Ceará" } },
       ],
       impact: [
@@ -738,9 +733,9 @@ export default function Page() {
       category: [{ pt: "Site Institucional", en: "Institutional Website" }],
       thumb: "/images/capa-silva-duarte.png",
       bgClass: NEUTRAL_BG,
+      badge: { pt: "Em produção", en: "In production" },
       highlights: [
         { icon: Clock, value: { pt: "1 mês de desenvolvimento", en: "1 month of development" } },
-        { icon: Briefcase, value: { pt: "Full Stack solo", en: "Solo Full Stack" } },
         { icon: Building2, value: { pt: "Idealizador: Silva & Duarte", en: "Idealized by: Silva & Duarte" } },
       ],
       impact: [
@@ -761,9 +756,9 @@ export default function Page() {
       category: [{ pt: "Site Institucional", en: "Institutional Website" }],
       thumb: "/images/capa-sarrubbo-advogados.png",
       bgClass: NEUTRAL_BG,
+      badge: { pt: "Em produção", en: "In production" },
       highlights: [
         { icon: Clock, value: { pt: "Desenvolvimento rápido", en: "Fast development" } },
-        { icon: Briefcase, value: { pt: "Full Stack solo", en: "Solo Full Stack" } },
         { icon: Building2, value: { pt: "Idealizador: Sarrubbo Advogados", en: "Idealized by: Sarrubbo Advogados" } },
       ],
       impact: [
@@ -816,13 +811,6 @@ export default function Page() {
   }, [projectFilter]);
 
   const experience = EXPERIENCE;
-
-  const handleSpotlightMove = (event: MouseEvent<HTMLElement>) => {
-    const el = event.currentTarget;
-    const rect = el.getBoundingClientRect();
-    el.style.setProperty("--spotlight-x", `${event.clientX - rect.left}px`);
-    el.style.setProperty("--spotlight-y", `${event.clientY - rect.top}px`);
-  };
 
   const renderProjectCta = (project: (typeof featuredProjects)[number]) => {
     const ctaClass =
@@ -1262,14 +1250,17 @@ export default function Page() {
                         variants={fadeUpItem}
                         initial="hidden"
                         animate="show"
-                        onMouseMove={handleSpotlightMove}
-                        className="spotlight-card card-surface-2 group snap-start shrink-0 w-[88%] sm:w-[calc(50%-1rem)] rounded-3xl overflow-hidden flex flex-col hover:border-violet-400/20 hover:-translate-y-1 transition-all duration-300"
+                        className="card-surface-2 group snap-start shrink-0 w-[88%] sm:w-[calc(50%-1rem)] rounded-3xl overflow-hidden flex flex-col hover:border-violet-400/20 hover:-translate-y-1 transition-all duration-300"
                       >
                         <div className="relative aspect-video w-full overflow-hidden bg-[#1a1425]">
-                          {project.productionBadge && (
+                          {project.badge && (
                             <div className="absolute -right-11 top-5 z-20 w-40 rotate-45 overflow-hidden pointer-events-none">
-                              <span className="block bg-amber-400 py-1 text-center text-[10px] font-bold uppercase leading-none tracking-wide text-zinc-950 shadow-sm shadow-black/30">
-                                {t({ pt: "Em produção", en: "In production" })}
+                              <span
+                                className={`block py-1 text-center text-[10px] font-bold uppercase leading-none tracking-wide text-zinc-950 shadow-sm shadow-black/30 ${
+                                  project.badgeColor === "sky" ? "bg-sky-400" : "bg-amber-400"
+                                }`}
+                              >
+                                {t(project.badge)}
                               </span>
                             </div>
                           )}
@@ -1298,7 +1289,7 @@ export default function Page() {
                                 {project.impact.map((stat, i) => {
                                   const Icon = stat.icon;
                                   return (
-                                    <div key={i} className="flex flex-col gap-0">
+                                    <div key={i} className="flex flex-col items-center gap-0.5 text-center">
                                       <div className="flex items-center gap-1.5 text-lg font-bold text-white">
                                         <Icon className="h-4 w-4 text-fuchsia-300" />
                                         {t(stat.value)}
@@ -1324,7 +1315,7 @@ export default function Page() {
                                 {t(project.subtitle)}
                               </span>
                             )}
-                            <p className="mt-1.5 text-[13px] text-zinc-200 leading-relaxed">
+                            <p className="mt-1.5 text-[13px] text-zinc-400 leading-relaxed">
                               {t(project.blurb)}
                             </p>
                             <div className="mt-2 border-t border-white/5" />
@@ -1335,7 +1326,7 @@ export default function Page() {
                                   return (
                                     <div
                                       key={i}
-                                      className="flex items-center gap-1.5 text-[11px] text-zinc-200"
+                                      className="flex items-center gap-1.5 text-[11px] text-zinc-400"
                                     >
                                       <Icon className="h-3 w-3 text-violet-300" />
                                       <span>{t(h.value)}</span>
