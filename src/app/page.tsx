@@ -7,8 +7,10 @@ import { motion } from "framer-motion";
 import { track } from "@vercel/analytics";
 import Hero from "@/components/Hero";
 import Testimonials from "@/components/Testimonials";
+import GoogleReviews from "@/components/GoogleReviews";
 import ContactForm from "@/components/ContactForm";
 import SkillsTools, { SKILL_NAMES } from "@/components/SkillsTools";
+import EngineeringDashboard from "@/components/EngineeringDashboard";
 import SiteHeader, { type SearchEntry } from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import Preloader from "@/components/Preloader";
@@ -1144,6 +1146,8 @@ export default function Page() {
 
           <SkillsTools />
 
+          <EngineeringDashboard />
+
           {/* QUEBRA DE PADRÃO — faixa full-bleed diagonal, sem container centralizado */}
           <section className="relative overflow-hidden py-16 sm:py-20">
             <div
@@ -1569,6 +1573,8 @@ export default function Page() {
             </div>
           </section>
 
+          <GoogleReviews />
+
           {/* SOBRE MIM - Card Unificado Criativo */}
           <section
             id="about"
@@ -1793,54 +1799,6 @@ export default function Page() {
               </div>
             </section>
           )}
-
-          {/* NOW - o que estou construindo, estudando e lendo agora */}
-          <section className="relative py-10 border-t border-white/5">
-            <div className="mx-auto max-w-6xl px-6 sm:px-8 lg:px-12">
-              <h3 className="text-sm font-semibold text-zinc-400 uppercase tracking-wider mb-6">
-                {t({ pt: "Agora", en: "Now" })}
-              </h3>
-              <div className="grid sm:grid-cols-3 gap-4">
-                {[
-                  {
-                    label: { pt: "Construindo", en: "Building" },
-                    value: {
-                      pt: "Melhorias no próprio site: versão em inglês indexável, novos estudos de caso e um assistente com IA sobre o portfólio.",
-                      en: "Improvements to this site: an indexable English version, new case studies, and an AI assistant over the portfolio.",
-                    },
-                  },
-                  {
-                    label: { pt: "Estudando", en: "Studying" },
-                    value: {
-                      pt: "Arquitetura de agentes de IA e RAG aplicados a produtos reais, além de práticas de observabilidade em produção.",
-                      en: "AI agent architecture and RAG applied to real products, plus production observability practices.",
-                    },
-                  },
-                  {
-                    label: { pt: "Lendo", en: "Reading" },
-                    value: {
-                      pt: "Livros e papers sobre arquitetura de sistemas distribuídos e engenharia de produto.",
-                      en: "Books and papers on distributed systems architecture and product engineering.",
-                    },
-                  },
-                ].map((item) => (
-                  <div
-                    key={item.label.pt}
-                    className="rounded-xl border border-white/8 bg-white/[0.015] p-4"
-                  >
-                    <h4 className="text-xs font-semibold text-violet-300 mb-1.5">{t(item.label)}</h4>
-                    <p className="text-[13px] text-zinc-400 leading-relaxed">{t(item.value)}</p>
-                  </div>
-                ))}
-              </div>
-              <p className="mt-4 text-[11px] text-zinc-500">
-                {t({
-                  pt: "Fora do código: escrevendo uma autobiografia, aos poucos, nas horas vagas.",
-                  en: "Outside of code: writing an autobiography, slowly, in my spare time.",
-                })}
-              </p>
-            </div>
-          </section>
 
         </main>
 
