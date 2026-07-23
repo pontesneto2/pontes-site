@@ -377,7 +377,7 @@ export default function Page() {
         en: "School management system for the 2nd Military Police School, with role-based access for academic and administrative tracking. COM3 system for academic management and the SEDUC Aluno Online portal for tracking student progress.",
       },
       category: [{ pt: "Sistema Web+Admin", en: "Web System+Admin" }, { pt: "Aplicativo PWA", en: "PWA App" }],
-      thumb: "/images/capa-sistema-policia.png",
+      thumb: "/images/capa-sistema-policia-v2.png",
       bgClass: NEUTRAL_BG,
       badge: { pt: "Em produção", en: "In production" },
       highlights: [
