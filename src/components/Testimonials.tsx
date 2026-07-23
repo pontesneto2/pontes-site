@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
 import testimonials from "@/data/testimonials.json";
 import SpotlightCard from "@/components/SpotlightCard";
+import SegmentedProgress from "@/components/SegmentedProgress";
 
 type Testimonial = {
   name: string;
@@ -61,8 +62,6 @@ const LOOP_LOCK_MS = 600;
 export default function Testimonials() {
   const { lang } = useLanguage();
   const scrollRef = useRef<HTMLDivElement>(null);
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const [thumbWidth, setThumbWidth] = useState(50);
   const [currentIndex, setCurrentIndex] = useState(0);
   const items = testimonials as Testimonial[];
   const wheelAccumRef = useRef(0);
@@ -73,9 +72,6 @@ export default function Testimonials() {
   const updateScrollProgress = () => {
     const el = scrollRef.current;
     if (!el) return;
-    const maxScroll = el.scrollWidth - el.clientWidth;
-    setScrollProgress(maxScroll > 0 ? el.scrollLeft / maxScroll : 0);
-    setThumbWidth(Math.min(100, (el.clientWidth / el.scrollWidth) * 100));
 
     const firstCard = el.children[0] as HTMLElement | undefined;
     if (firstCard) {
@@ -143,8 +139,11 @@ export default function Testimonials() {
       transition={{ duration: 0.7, ease: "easeOut" }}
       className="h-full min-w-0"
     >
-      <SpotlightCard className="card-surface-2 relative flex h-full flex-col rounded-3xl backdrop-blur-xl p-6 md:p-8 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-violet-500/5 via-transparent to-fuchsia-500/5 pointer-events-none" />
+      <SpotlightCard className="relative flex h-full flex-col min-w-0 rounded-3xl border border-white/10 bg-gradient-to-br from-black/60 via-[#0d1b2a]/70 to-black/60 backdrop-blur-xl shadow-2xl overflow-hidden p-6 md:p-8">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#0A66C2]/5 via-transparent to-violet-500/5 pointer-events-none" />
+        <span className="absolute top-6 left-6 inline-flex items-center justify-center h-9 w-9 rounded-lg bg-[#0A66C2]">
+          <Linkedin className="h-5 w-5 text-white" />
+        </span>
         <Quote className="absolute top-6 right-6 h-8 w-8 text-fuchsia-400" />
 
         <div
@@ -163,15 +162,7 @@ export default function Testimonials() {
         </div>
 
         <div className="relative mt-6">
-          <div className="mx-auto h-1.5 w-full max-w-xs rounded-full bg-white/10 overflow-hidden">
-            <div
-              className="h-full rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500 transition-[margin-left] duration-150"
-              style={{
-                width: `${thumbWidth}%`,
-                marginLeft: `${scrollProgress * (100 - thumbWidth)}%`,
-              }}
-            />
-          </div>
+          <SegmentedProgress total={items.length} current={currentIndex} />
 
           <div className="mt-3 flex items-center justify-center gap-2">
             <p

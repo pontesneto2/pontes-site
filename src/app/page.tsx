@@ -13,6 +13,7 @@ import SkillsTools, { SKILL_NAMES } from "@/components/SkillsTools";
 import EngineeringDashboard from "@/components/EngineeringDashboard";
 import SiteHeader, { type SearchEntry } from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
+import SegmentedProgress from "@/components/SegmentedProgress";
 import Preloader from "@/components/Preloader";
 import LogosMarquee from "@/components/LogosMarquee";
 import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
@@ -209,8 +210,6 @@ export default function Page() {
   }, []);
 
   const featuredScrollRef = useRef<HTMLDivElement>(null);
-  const [featuredScrollProgress, setFeaturedScrollProgress] = useState(0);
-  const [featuredThumbWidth, setFeaturedThumbWidth] = useState(50);
   const [featuredCurrentIndex, setFeaturedCurrentIndex] = useState(0);
   const [projectFilter, setProjectFilter] = useState<string | null>(null);
 
@@ -219,9 +218,6 @@ export default function Page() {
   const updateFeaturedScrollProgress = () => {
     const el = featuredScrollRef.current;
     if (!el) return;
-    const maxScroll = el.scrollWidth - el.clientWidth;
-    setFeaturedScrollProgress(maxScroll > 0 ? el.scrollLeft / maxScroll : 0);
-    setFeaturedThumbWidth(Math.min(100, (el.clientWidth / el.scrollWidth) * 100));
 
     const firstCard = el.children[0] as HTMLElement | undefined;
     if (firstCard) {
@@ -1081,7 +1077,7 @@ export default function Page() {
                       whileInView={{ opacity: 1 }}
                       viewport={viewportSettings}
                       transition={{ duration: 0.7, ease: easeOut }}
-                      className="mt-12 space-y-4 text-zinc-300 text-[17px] sm:text-[16px] leading-relaxed"
+                      className="mt-5 space-y-4 text-zinc-300 text-[17px] sm:text-[16px] leading-relaxed"
                     >
                       <p>
                         {t({
@@ -1115,6 +1111,7 @@ export default function Page() {
                         onClick={() => track("cta_click", { href: "/recrutadores" })}
                         className="inline-flex items-center justify-center gap-2 rounded-full px-6 py-2.5 border border-violet-400/40 bg-violet-500/10 text-violet-200 text-sm font-medium hover:bg-violet-500/20 hover:border-violet-400/60 hover:text-white transition-colors duration-300"
                       >
+                        <Briefcase className="h-4 w-4" />
                         {t({ pt: "Para recrutadores", en: "For recruiters" })}
                       </a>
                       <a
@@ -1122,6 +1119,7 @@ export default function Page() {
                         onClick={() => track("cta_click", { href: "/trabalhe-comigo" })}
                         className="inline-flex items-center justify-center gap-2 rounded-full px-6 py-2.5 border border-violet-400/40 bg-violet-500/10 text-violet-200 text-sm font-medium hover:bg-violet-500/20 hover:border-violet-400/60 hover:text-white transition-colors duration-300"
                       >
+                        <FileText className="h-4 w-4" />
                         {t({ pt: "Peça um orçamento", en: "Get a quote" })}
                       </a>
                     </motion.div>
@@ -1267,11 +1265,13 @@ export default function Page() {
                         onMouseMove={handleSpotlightMove}
                         className="spotlight-card card-surface-2 group snap-start shrink-0 w-[88%] sm:w-[calc(50%-1rem)] rounded-3xl overflow-hidden flex flex-col hover:border-violet-400/20 hover:-translate-y-1 transition-all duration-300"
                       >
-                        <div className="relative aspect-video w-full bg-[#1a1425]">
+                        <div className="relative aspect-video w-full overflow-hidden bg-[#1a1425]">
                           {project.productionBadge && (
-                            <span className="absolute top-3 right-3 z-10 rotate-12 whitespace-nowrap rounded-full bg-amber-400 px-2.5 py-1 text-[10px] font-bold uppercase leading-none tracking-wide text-zinc-950 shadow-sm shadow-black/30 pointer-events-none">
-                              {t({ pt: "Em produção", en: "In production" })}
-                            </span>
+                            <div className="absolute -right-11 top-5 z-20 w-40 rotate-45 overflow-hidden pointer-events-none">
+                              <span className="block bg-amber-400 py-1 text-center text-[10px] font-bold uppercase leading-none tracking-wide text-zinc-950 shadow-sm shadow-black/30">
+                                {t({ pt: "Em produção", en: "In production" })}
+                              </span>
+                            </div>
                           )}
                           {project.thumb ? (
                             <>
@@ -1287,6 +1287,30 @@ export default function Page() {
                             </>
                           ) : (
                             <div className="h-full w-full bg-gradient-to-br from-violet-600/35 via-fuchsia-500/20 to-violet-900/40" />
+                          )}
+                          {project.impact && (
+                            <div className="absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-black via-black/85 to-transparent px-3 pb-3 pt-10">
+                              <div
+                                className={`grid gap-3 ${
+                                  project.impact.length === 3 ? "grid-cols-3" : "grid-cols-2 sm:grid-cols-4"
+                                }`}
+                              >
+                                {project.impact.map((stat, i) => {
+                                  const Icon = stat.icon;
+                                  return (
+                                    <div key={i} className="flex flex-col gap-1">
+                                      <div className="flex items-center gap-1.5 text-lg font-bold text-white">
+                                        <Icon className="h-4 w-4 text-fuchsia-300" />
+                                        {t(stat.value)}
+                                      </div>
+                                      <span className="text-[11px] text-zinc-300 leading-tight">
+                                        {t(stat.label)}
+                                      </span>
+                                    </div>
+                                  );
+                                })}
+                              </div>
+                            </div>
                           )}
                         </div>
                         <div className={`relative flex-1 flex flex-col p-3 sm:p-3.5 md:p-4 overflow-hidden ${project.bgClass}`}>
@@ -1320,28 +1344,6 @@ export default function Page() {
                                 })}
                               </div>
                             )}
-                            {project.impact && (
-                              <div
-                                className={`mt-2 pt-2 border-t border-white/5 grid gap-3 ${
-                                  project.impact.length === 3 ? "grid-cols-3" : "grid-cols-2 sm:grid-cols-4"
-                                }`}
-                              >
-                                {project.impact.map((stat, i) => {
-                                  const Icon = stat.icon;
-                                  return (
-                                    <div key={i} className="flex flex-col gap-1">
-                                      <div className="flex items-center gap-1.5 text-sm font-semibold text-white">
-                                        <Icon className="h-3 w-3 text-violet-300" />
-                                        {t(stat.value)}
-                                      </div>
-                                      <span className="text-[10px] text-zinc-400 leading-tight">
-                                        {t(stat.label)}
-                                      </span>
-                                    </div>
-                                  );
-                                })}
-                              </div>
-                            )}
                             <div className="mt-2 border-t border-white/5" />
                             <div className="mt-2 flex flex-wrap gap-2">
                               {project.tags.map((tag) => (
@@ -1357,15 +1359,7 @@ export default function Page() {
                 </div>
 
                 <div className="mt-3">
-                  <div className="mx-auto h-1.5 w-full max-w-xs rounded-full bg-white/10 overflow-hidden">
-                    <div
-                      className="h-full rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500 transition-[margin-left] duration-150"
-                      style={{
-                        width: `${featuredThumbWidth}%`,
-                        marginLeft: `${featuredScrollProgress * (100 - featuredThumbWidth)}%`,
-                      }}
-                    />
-                  </div>
+                  <SegmentedProgress total={visibleSecondaryProjects.length} current={featuredCurrentIndex} />
                   <p
                     className="mt-4 text-center text-lg font-semibold leading-none tabular-nums"
                     style={{ fontFamily: "var(--font-space-grotesk)", color: "#e879f9" }}
@@ -1476,19 +1470,6 @@ export default function Page() {
           {/* RECOMENDAÇÕES + LINKEDIN - testemunhos e dia a dia lado a lado */}
           <section id="testimonials" className="relative py-14">
             <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
-              <div className="text-center mb-12">
-                <motion.h2
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ once: true, amount: 0.2 }}
-                  transition={{ duration: 0.7, ease: easeOut }}
-                  className="text-[2.1rem] sm:text-[2.6rem] md:text-[3.30rem] font-black text-white"
-                  style={{ fontFamily: "var(--font-space-grotesk)" }}
-                >
-                  {t({ pt: "Recomendações", en: "Recommendations" })}
-                </motion.h2>
-              </div>
-
               <div className="grid md:grid-cols-2 gap-10 items-stretch">
                 <Testimonials />
 
@@ -1754,7 +1735,7 @@ export default function Page() {
                     <Link
                       key={post.slug}
                       href={`/blog/${post.slug}`}
-                      className="group rounded-xl border border-white/8 bg-white/[0.015] p-4 hover:border-white/15 hover:bg-white/[0.03] transition-colors"
+                      className="group rounded-xl border border-transparent bg-white/[0.015] p-4 hover:border-white/15 hover:bg-white/[0.03] transition-colors"
                     >
                       <div className="flex flex-wrap gap-1.5 mb-2">
                         {post.tags.slice(0, 2).map((tag) => (
