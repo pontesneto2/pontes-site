@@ -16,19 +16,16 @@ import SiteFooter from "@/components/SiteFooter";
 import Preloader from "@/components/Preloader";
 import LogosMarquee from "@/components/LogosMarquee";
 import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
-import { getCvUrl } from "@/lib/constants";
 import { EXPERIENCE } from "@/lib/experience-data";
 import type { BlogPostMeta } from "@/lib/blog";
 import {
   Code,
-  Mail,
   Github,
   Linkedin,
   Lock,
   Building2,
   Briefcase,
   MapPin,
-  FileDown,
   ChevronLeft,
   Clock,
   Smartphone,
@@ -1722,14 +1719,6 @@ export default function Page() {
                     <Linkedin className="h-5 w-5" />
                   </a>
                   <a
-                    href="mailto:contato@fcopts.com.br"
-                    aria-label="E-mail"
-                    onClick={() => track("contact_click", { channel: "email" })}
-                    className="h-11 w-11 rounded-full bg-white/5 hover:bg-fuchsia-500/10 border border-white/5 hover:border-fuchsia-400/40 flex items-center justify-center text-zinc-300 hover:text-fuchsia-300 transition-all"
-                  >
-                    <Mail className="h-5 w-5" />
-                  </a>
-                  <a
                     href="https://wa.me/5585981888896"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -1738,16 +1727,6 @@ export default function Page() {
                     className="h-11 w-11 rounded-full bg-white/5 hover:bg-fuchsia-500/10 border border-white/5 hover:border-fuchsia-400/40 flex items-center justify-center text-zinc-300 hover:text-fuchsia-300 transition-all"
                   >
                     <FaWhatsapp className="h-5 w-5" />
-                  </a>
-                  <a
-                    href={getCvUrl(lang)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={t({ pt: "Baixar currículo", en: "Download résumé" })}
-                    onClick={() => track("cv_download", { href: getCvUrl(lang) })}
-                    className="h-11 w-11 rounded-full bg-white/5 hover:bg-fuchsia-500/10 border border-white/5 hover:border-fuchsia-400/40 flex items-center justify-center text-zinc-300 hover:text-fuchsia-300 transition-all"
-                  >
-                    <FileDown className="h-5 w-5" />
                   </a>
                 </motion.div>
               </div>
