@@ -9,13 +9,13 @@ export default function LanguageSwitch({
   setLang: (lang: "pt" | "en") => void;
   compact?: boolean;
 }) {
-  const base = compact ? "px-4 py-3.5 text-[13px]" : "px-2.5 py-1 text-xs";
+  const base = compact ? "px-2.5 py-1.5 text-xs" : "px-2.5 py-1 text-xs";
 
   return (
     <div
       role="group"
       aria-label="Language"
-      className="inline-flex items-center rounded-lg border border-white/10 bg-white/5 p-0.5"
+      className="inline-flex items-center rounded-xl border border-white/10 bg-black/25 p-0.5"
     >
       {(["pt", "en"] as const).map((option) => (
         <button
