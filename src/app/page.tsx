@@ -956,7 +956,7 @@ export default function Page() {
           {/* FAIXA DE CREDIBILIDADE */}
           <section className="border-b border-white/5 bg-zinc-900/50 py-10 sm:py-12">
             <div className="mx-auto max-w-6xl px-6 xs:px-7 sm:px-8 text-center">
-              <span className="mb-9 block font-mono text-[13px] xs:text-[13px] font-medium uppercase tracking-[0.2em] text-zinc-500">
+              <span className="mb-9 block font-mono text-[13px] font-medium uppercase tracking-[0.2em] text-zinc-500">
                 {t({ pt: "Sistemas em produção para", en: "Systems in production for" })}
               </span>
             </div>
