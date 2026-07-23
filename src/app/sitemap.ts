@@ -81,6 +81,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
       alternates: { languages: { "pt-BR": `${siteUrl}/case/sda-ceara` } },
     },
     {
+      url: `${siteUrl}/case/sistema-escolar-policia`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+      alternates: { languages: { en: `${siteUrl}/en/case/sistema-escolar-policia` } },
+    },
+    {
+      url: `${siteUrl}/en/case/sistema-escolar-policia`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.7,
+      alternates: { languages: { "pt-BR": `${siteUrl}/case/sistema-escolar-policia` } },
+    },
+    {
       // Sem entrada /en/blog no sitemap ainda: os posts não têm tradução
       // real (lib/blog.ts cai para o .mdx em português), então a rota /en
       // existe mas fica noindex até esse conteúdo existir de verdade.

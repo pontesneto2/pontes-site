@@ -10,6 +10,11 @@ export const metadata: Metadata = {
   description,
   alternates: {
     canonical: "/case/sistema-escolar-policia",
+    languages: {
+      "pt-BR": "/case/sistema-escolar-policia",
+      en: "/en/case/sistema-escolar-policia",
+      "x-default": "/case/sistema-escolar-policia",
+    },
   },
   openGraph: {
     type: "article",
