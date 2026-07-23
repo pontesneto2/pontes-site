@@ -377,7 +377,7 @@ export default function PropostaModal({ proposal, description, numero, open, onC
                     <ol className="relative ml-3 border-l border-zinc-200">
                       {proposal.fases.map((f, i) => (
                         <li key={i} className="relative pb-4 pl-6 last:pb-0">
-                          <span className="absolute -left-[9px] top-0.5 flex h-[18px] w-[18px] items-center justify-center rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-500 font-mono text-[13px] font-semibold text-white">
+                          <span className="absolute -left-[9px] top-0.5 flex h-[18px] w-[18px] items-center justify-center rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-500 font-mono text-[13px] leading-none font-semibold text-white">
                             {i + 1}
                           </span>
                           <span className="block text-sm font-semibold text-zinc-900">{f.titulo}</span>

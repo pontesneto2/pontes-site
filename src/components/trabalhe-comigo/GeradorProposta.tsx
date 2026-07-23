@@ -83,7 +83,7 @@ function SelectField({
     <label className="block">
       <span className="mb-2 flex items-center gap-1.5 font-mono text-[13px] uppercase tracking-wide text-zinc-400">
         {step !== undefined && (
-          <span className="flex h-[18px] w-[18px] items-center justify-center rounded-[5px] bg-gradient-to-br from-violet-500 to-fuchsia-500 text-[13px] font-semibold text-white">
+          <span className="flex h-[18px] w-[18px] items-center justify-center rounded-[5px] bg-gradient-to-br from-violet-500 to-fuchsia-500 text-[13px] leading-none font-semibold text-white">
             {step}
           </span>
         )}
@@ -262,7 +262,7 @@ export default function GeradorProposta() {
 
             <div className="mt-6">
               <span className="mb-2 flex items-center gap-1.5 font-mono text-[13px] uppercase tracking-wide text-zinc-400">
-                <span className="flex h-[18px] w-[18px] items-center justify-center rounded-[5px] bg-gradient-to-br from-violet-500 to-fuchsia-500 text-[13px] font-semibold text-white">
+                <span className="flex h-[18px] w-[18px] items-center justify-center rounded-[5px] bg-gradient-to-br from-violet-500 to-fuchsia-500 text-[13px] leading-none font-semibold text-white">
                   4
                 </span>
                 {t({ pt: "Descreva seu projeto", en: "Describe your project" })}
