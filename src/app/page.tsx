@@ -1293,7 +1293,7 @@ export default function Page() {
                                 {t(project.subtitle)}
                               </span>
                             )}
-                            <p className="mt-3 sm:mt-1.5 text-[13px] text-zinc-400 leading-relaxed">
+                            <p className="mt-3 sm:mt-1.5 text-sm text-zinc-400 leading-relaxed">
                               {t(project.blurb)}
                             </p>
                             <div className="mt-4 sm:mt-2 border-t border-white/5" />
