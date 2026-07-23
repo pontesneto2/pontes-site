@@ -7,7 +7,6 @@ import { motion } from "framer-motion";
 import { track } from "@vercel/analytics";
 import Hero from "@/components/Hero";
 import Testimonials from "@/components/Testimonials";
-import GoogleReviews from "@/components/GoogleReviews";
 import ContactForm from "@/components/ContactForm";
 import SkillsTools, { SKILL_NAMES } from "@/components/SkillsTools";
 import EngineeringDashboard from "@/components/EngineeringDashboard";
@@ -84,6 +83,7 @@ import {
   SiFigma,
 } from "react-icons/si";
 import { FaWhatsapp } from "react-icons/fa6";
+import { FcGoogle } from "react-icons/fc";
 import type { IconType } from "react-icons";
 
 const projectTagIconMap: Record<string, IconType> = {
@@ -1289,7 +1289,7 @@ export default function Page() {
                             <div className="h-full w-full bg-gradient-to-br from-violet-600/35 via-fuchsia-500/20 to-violet-900/40" />
                           )}
                           {project.impact && (
-                            <div className="absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-black via-black/85 to-transparent px-3 pb-3 pt-10">
+                            <div className="absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-black via-black/85 to-transparent px-3 pb-1.5 pt-10">
                               <div
                                 className={`grid gap-3 ${
                                   project.impact.length === 3 ? "grid-cols-3" : "grid-cols-2 sm:grid-cols-4"
@@ -1298,7 +1298,7 @@ export default function Page() {
                                 {project.impact.map((stat, i) => {
                                   const Icon = stat.icon;
                                   return (
-                                    <div key={i} className="flex flex-col gap-1">
+                                    <div key={i} className="flex flex-col gap-0">
                                       <div className="flex items-center gap-1.5 text-lg font-bold text-white">
                                         <Icon className="h-4 w-4 text-fuchsia-300" />
                                         {t(stat.value)}
@@ -1548,10 +1548,18 @@ export default function Page() {
                   </div>
                 </motion.div>
               </div>
+
+              <div className="mt-6 flex justify-center">
+                <Link
+                  href="/trabalhe-comigo#avaliacoes"
+                  className="inline-flex items-center gap-1.5 text-xs text-zinc-500 hover:text-zinc-300 transition-colors"
+                >
+                  <FcGoogle className="h-3.5 w-3.5" />
+                  {t({ pt: "Veja minhas avaliações do Google", en: "See my Google reviews" })}
+                </Link>
+              </div>
             </div>
           </section>
-
-          <GoogleReviews />
 
           {/* SOBRE MIM - Card Unificado Criativo */}
           <section
