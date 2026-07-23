@@ -12,6 +12,7 @@ export default function SearchBox({
   onSelect,
   t,
   align = "right",
+  variant = "icon",
 }: {
   searchOpen: boolean;
   setSearchOpen: (open: boolean) => void;
@@ -21,6 +22,7 @@ export default function SearchBox({
   onSelect: (href: string) => void;
   t: (v: Bilingual) => string;
   align?: "left" | "right";
+  variant?: "icon" | "full";
 }) {
   return (
     <div className="relative" data-search-box>
@@ -29,15 +31,20 @@ export default function SearchBox({
         onClick={() => setSearchOpen(!searchOpen)}
         aria-expanded={searchOpen}
         aria-label={t({ pt: "Buscar", en: "Search" })}
-        className="inline-flex items-center justify-center p-1.5 text-zinc-300 hover:text-white transition-colors"
+        className={
+          variant === "full"
+            ? "flex w-full items-center gap-2 rounded-2xl border border-white/10 bg-white/[0.02] px-4 py-3 text-sm text-zinc-200 hover:border-violet-400/25 hover:bg-white/[0.05] transition-colors"
+            : "inline-flex items-center justify-center p-1.5 text-zinc-300 hover:text-white transition-colors"
+        }
       >
         <Search className="h-[18px] w-[18px]" />
+        {variant === "full" && t({ pt: "Buscar no site", en: "Search the site" })}
       </button>
       {searchOpen && (
         <div
           className={`absolute top-full mt-2 ${
             align === "right" ? "right-0" : "left-0"
-          } w-64 rounded-xl border border-white/10 bg-[#141418] shadow-2xl p-2 z-50`}
+          } ${variant === "full" ? "w-full" : "w-64"} rounded-xl border border-white/10 bg-[#141418] shadow-2xl p-2 z-50`}
         >
           <input
             autoFocus

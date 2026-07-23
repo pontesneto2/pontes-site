@@ -15,7 +15,7 @@ export default function SiteFooter({
   return (
     <footer
       className="py-10 border-t border-white/5 text-[11px] text-zinc-400"
-      style={{ backgroundColor: "#141418" }}
+      style={{ backgroundColor: "#0a0a0d" }}
     >
       <div className="mx-auto flex max-w-6xl flex-col items-center gap-8 px-6 sm:px-8 lg:flex-row lg:items-center lg:justify-between lg:px-12">
         <div className="text-center lg:text-left">

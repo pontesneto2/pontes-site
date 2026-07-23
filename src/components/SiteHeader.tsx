@@ -117,7 +117,7 @@ export default function SiteHeader({
     <header
       className={`sticky top-0 z-50 border-b transition-all duration-300 ${
         headerBlurred
-          ? "border-white/10 bg-white/10 backdrop-blur-xl shadow-lg shadow-black/30"
+          ? "border-white/10 bg-[#0a0a0d]/95 backdrop-blur-xl shadow-lg shadow-black/30"
           : "border-white/5 bg-black/80"
       }`}
     >
@@ -154,7 +154,7 @@ export default function SiteHeader({
                 href={effectiveCta.href}
                 {...(ctaIsExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                 onClick={() => trackCtaClick(effectiveCta.href)}
-                className="relative inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-500 text-white shadow-lg shadow-fuchsia-700/20 text-sm"
+                className="relative inline-flex items-center gap-1 sm:gap-1.5 whitespace-nowrap px-2.5 sm:px-3 py-1.5 rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-500 text-white shadow-lg shadow-fuchsia-700/20 text-xs sm:text-sm"
               >
                 {t(effectiveCta.label)}
                 {ctaFlag && <span className="text-[0.85em] leading-none">{ctaFlag}</span>}
@@ -165,16 +165,18 @@ export default function SiteHeader({
                 )}
               </a>
             </MagneticButton>
-            <SearchBox
-              searchOpen={searchOpen}
-              setSearchOpen={setSearchOpen}
-              searchQuery={searchQuery}
-              setSearchQuery={setSearchQuery}
-              searchResults={searchResults}
-              onSelect={handleSearchSelect}
-              t={t}
-              align="right"
-            />
+            <div className="hidden sm:block">
+              <SearchBox
+                searchOpen={searchOpen}
+                setSearchOpen={setSearchOpen}
+                searchQuery={searchQuery}
+                setSearchQuery={setSearchQuery}
+                searchResults={searchResults}
+                onSelect={handleSearchSelect}
+                t={t}
+                align="right"
+              />
+            </div>
             <button
               type="button"
               className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-black/25 hover:bg-black/35 p-2.5 transition-colors"
@@ -196,6 +198,19 @@ export default function SiteHeader({
         }`}
       >
         <nav className="mx-auto max-w-7xl px-3 sm:px-6 lg:px-8 py-5">
+          <div className="sm:hidden mb-2.5">
+            <SearchBox
+              searchOpen={searchOpen}
+              setSearchOpen={setSearchOpen}
+              searchQuery={searchQuery}
+              setSearchQuery={setSearchQuery}
+              searchResults={searchResults}
+              onSelect={handleSearchSelect}
+              t={t}
+              align="left"
+              variant="full"
+            />
+          </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5">
             {navLinks.map((link, i) => {
               const href = withLocale(link.href, isEn);
