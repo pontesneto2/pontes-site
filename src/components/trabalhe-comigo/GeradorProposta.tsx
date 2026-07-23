@@ -93,7 +93,7 @@ function SelectField({
         <select
           value={value}
           onChange={(event) => onChange(event.target.value)}
-          className={`w-full appearance-none rounded-xl border bg-white/[0.03] px-4 py-2.5 pr-9 text-sm text-white transition-colors hover:border-white/30 focus:border-violet-400/60 focus:outline-none focus:ring-2 focus:ring-violet-500/25 ${
+          className={`w-full appearance-none rounded-xl border bg-white/[0.03] px-4 py-2.5 pr-9 text-base text-white transition-colors hover:border-white/30 focus:border-violet-400/60 focus:outline-none focus:ring-2 focus:ring-violet-500/25 ${
             filled ? "border-violet-400/40" : "border-white/15"
           }`}
         >
@@ -277,7 +277,7 @@ export default function GeradorProposta() {
                   pt: "Ex.: Preciso de um app de delivery com painel do lojista, pagamento no cartão e rastreamento do pedido em tempo real...",
                   en: "E.g.: I need a delivery app with a merchant dashboard, card payment and real-time order tracking...",
                 })}
-                className={`min-h-[92px] w-full resize-y rounded-2xl border bg-white/[0.03] p-3.5 text-[15px] text-white placeholder:text-zinc-500 transition-colors hover:border-white/30 focus:border-violet-400/60 focus:outline-none focus:ring-2 focus:ring-violet-500/25 ${
+                className={`min-h-[92px] w-full resize-y rounded-2xl border bg-white/[0.03] p-3.5 text-base text-white placeholder:text-zinc-500 transition-colors hover:border-white/30 focus:border-violet-400/60 focus:outline-none focus:ring-2 focus:ring-violet-500/25 ${
                   description.trim().length >= 20 ? "border-violet-400/40" : "border-white/15"
                 }`}
               />
