@@ -268,7 +268,7 @@ export default function Page() {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.9,
+        duration: 1.3,
         ease: easeOut,
         delay: i * (isMobile ? 0.08 : 0.06),
       },
@@ -289,7 +289,7 @@ export default function Page() {
     hidden: { opacity: 0 },
     show: {
       opacity: 1,
-      transition: { duration: 0.5, ease: easeOut },
+      transition: { duration: 0.9, ease: easeOut },
     },
   };
 
@@ -297,7 +297,7 @@ export default function Page() {
     hidden: { opacity: 0 },
     show: {
       opacity: 1,
-      transition: { duration: 0.7, ease: easeOut },
+      transition: { duration: 1.1, ease: easeOut },
     },
   };
 
@@ -993,7 +993,7 @@ export default function Page() {
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 viewport={viewportSettings}
-                transition={{ duration: 0.7, ease: easeOut }}
+                transition={{ duration: 1.1, ease: easeOut }}
                 className="text-white text-base sm:text-lg leading-relaxed"
               >
                 {t({
@@ -1006,7 +1006,7 @@ export default function Page() {
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 viewport={viewportSettings}
-                transition={{ duration: 0.7, ease: easeOut, delay: 0.1 }}
+                transition={{ duration: 1.1, ease: easeOut, delay: 0.15 }}
                 className="mt-8 flex items-center justify-center gap-6"
               >
                 <a
@@ -1036,7 +1036,7 @@ export default function Page() {
             id="tech-engineering-design"
             className="relative py-14"
           >
-            <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
+            <div className="mx-auto max-w-7xl px-6 xs:px-7 sm:px-8 lg:px-12 2xl:max-w-8xl">
               <div className="relative rounded-3xl border-2 border-white/15 bg-black/70 backdrop-blur-xl overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-violet-500/5 via-transparent to-fuchsia-500/5" />
                 <div className="relative grid md:grid-cols-2 gap-6 items-stretch">
@@ -1063,7 +1063,7 @@ export default function Page() {
                       initial={{ opacity: 0 }}
                       whileInView={{ opacity: 1 }}
                       viewport={viewportSettings}
-                      transition={{ duration: 0.7, ease: easeOut }}
+                      transition={{ duration: 1.1, ease: easeOut }}
                       className="mt-5 space-y-4 text-zinc-300 text-[17px] sm:text-[16px] leading-relaxed"
                     >
                       <p>
@@ -1079,8 +1079,14 @@ export default function Page() {
                         })}{" "}
                         <span className="italic text-violet-300">
                           {t({
-                            pt: "Uso, automatizo e me especializo cada vez mais em Inteligência Artificial, mas ainda sou da geração old school que codificava na mão consultando o Stack Overflow. Seja bem-vindo ao meu portfólio.",
-                            en: "I use, automate and keep specializing in Artificial Intelligence — but the old-school generation that used to hand-code while checking Stack Overflow is still alive. Welcome to my portfolio.",
+                            pt: "Uso, automatizo e me especializo cada vez mais em Inteligência Artificial, mas ainda sou da geração old school que codificava na mão consultando o Stack Overflow.",
+                            en: "I use, automate and keep specializing in Artificial Intelligence — but the old-school generation that used to hand-code while checking Stack Overflow is still alive.",
+                          })}
+                        </span>{" "}
+                        <span className="italic text-white">
+                          {t({
+                            pt: "Seja bem-vindo ao meu portfólio.",
+                            en: "Welcome to my portfolio.",
                           })}
                         </span>
                       </p>
@@ -1090,7 +1096,7 @@ export default function Page() {
                       initial={{ opacity: 0 }}
                       whileInView={{ opacity: 1 }}
                       viewport={viewportSettings}
-                      transition={{ duration: 0.7, ease: easeOut, delay: 0.1 }}
+                      transition={{ duration: 1.1, ease: easeOut, delay: 0.15 }}
                       className="mt-8 flex flex-wrap items-center gap-3"
                     >
                       <a
@@ -1107,7 +1113,7 @@ export default function Page() {
                       <a
                         href="/trabalhe-comigo"
                         onClick={() => track("cta_click", { href: "/trabalhe-comigo" })}
-                        className="inline-flex items-center justify-center gap-2 rounded-full px-6 py-2.5 border border-violet-400/40 bg-violet-500/10 text-violet-200 text-sm font-medium hover:bg-violet-500/20 hover:border-violet-400/60 hover:text-white transition-colors duration-300"
+                        className="inline-flex items-center justify-center gap-2 rounded-full px-6 py-2.5 border border-fuchsia-400/40 bg-fuchsia-500/10 text-fuchsia-200 text-sm font-medium hover:bg-fuchsia-500/20 hover:border-fuchsia-400/60 hover:text-white transition-colors duration-300"
                       >
                         <FileText className="h-4 w-4" />
                         {t({ pt: "Você precisa de um serviço?", en: "Do you need a service?" })}
@@ -1136,7 +1142,7 @@ export default function Page() {
             id="projects"
             className="relative py-14 overflow-x-hidden"
           >
-            <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
+            <div className="mx-auto max-w-7xl px-6 xs:px-7 sm:px-8 lg:px-12 2xl:max-w-8xl">
               <div className="mb-12 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
                 <motion.h2
                   variants={fadeInHeading}
@@ -1346,7 +1352,7 @@ export default function Page() {
 
           {/* TRAJETÓRIA PROFISSIONAL - Discreto e Elegante */}
           <section id="experience" className="relative py-14">
-            <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
+            <div className="mx-auto max-w-7xl px-6 xs:px-7 sm:px-8 lg:px-12 2xl:max-w-8xl">
               <motion.h2
                 variants={fadeInHeading}
                 initial="hidden"
@@ -1438,7 +1444,7 @@ export default function Page() {
 
           {/* RECOMENDAÇÕES + LINKEDIN - testemunhos e dia a dia lado a lado */}
           <section id="testimonials" className="relative py-14">
-            <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
+            <div className="mx-auto max-w-7xl px-6 xs:px-7 sm:px-8 lg:px-12 2xl:max-w-8xl">
               <div className="grid md:grid-cols-2 gap-10 items-stretch">
                 <Testimonials />
 
@@ -1446,7 +1452,7 @@ export default function Page() {
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={viewportSettings}
-                  transition={{ duration: 0.7, ease: easeOut }}
+                  transition={{ duration: 1.1, ease: easeOut }}
                   className="relative min-w-0 rounded-3xl border border-white/10 bg-gradient-to-br from-black/60 via-[#0d1b2a]/70 to-black/60 backdrop-blur-xl shadow-2xl overflow-hidden p-6 md:p-8"
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-[#0A66C2]/5 via-transparent to-violet-500/5 pointer-events-none" />
@@ -1638,7 +1644,7 @@ export default function Page() {
                       initial={{ opacity: 0 }}
                       whileInView={{ opacity: 1 }}
                       viewport={viewportSettings}
-                      transition={{ duration: 0.7, ease: easeOut, delay: 0.1 }}
+                      transition={{ duration: 1.1, ease: easeOut, delay: 0.15 }}
                       className="mt-0.5 mb-6 text-sm text-zinc-400"
                     >
                       {t({
@@ -1655,7 +1661,7 @@ export default function Page() {
                   initial={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}
                   viewport={viewportSettings}
-                  transition={{ duration: 0.7, ease: easeOut }}
+                  transition={{ duration: 1.1, ease: easeOut }}
                   className="relative z-10 flex flex-wrap items-center justify-center gap-4 px-8 md:px-12 pb-8 md:pb-12"
                 >
                   <a

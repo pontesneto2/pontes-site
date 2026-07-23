@@ -39,7 +39,17 @@ async function fetchDeployData(): Promise<DeployStats | null> {
   }
 }
 
-function AnimatedNumber({ value, plain, decimals = 0 }: { value: number; plain?: boolean; decimals?: number }) {
+function AnimatedNumber({
+  value,
+  plain,
+  decimals = 0,
+  delay = 0,
+}: {
+  value: number;
+  plain?: boolean;
+  decimals?: number;
+  delay?: number;
+}) {
   const ref = useRef<HTMLSpanElement>(null);
   const isInView = useInView(ref, { once: true, amount: 0.5 });
   const [display, setDisplay] = useState(0);
@@ -48,11 +58,12 @@ function AnimatedNumber({ value, plain, decimals = 0 }: { value: number; plain?:
     if (!isInView) return;
     const controls = animate(0, value, {
       duration: 1.2,
+      delay,
       ease: "easeOut",
       onUpdate: (v) => setDisplay(decimals ? Number(v.toFixed(decimals)) : Math.round(v)),
     });
     return () => controls.stop();
-  }, [isInView, value, decimals]);
+  }, [isInView, value, decimals, delay]);
 
   const formatted = decimals ? display.toFixed(decimals) : display.toString();
   return <span ref={ref}>{plain ? formatted : display.toLocaleString("pt-BR")}</span>;
@@ -147,17 +158,17 @@ export default function GithubStats() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.7, ease: "easeOut" }}
-      className="relative rounded-3xl border border-white/10 bg-black/55 backdrop-blur-xl p-4 sm:p-6 md:p-8 shadow-2xl overflow-hidden"
+      className="relative rounded-2xl border border-white/10 bg-black/55 backdrop-blur-xl p-3 sm:p-4 md:p-6 shadow-2xl overflow-hidden"
     >
       <div className="absolute inset-0 bg-gradient-to-br from-violet-500/5 via-transparent to-fuchsia-500/5" />
       <div className="relative">
-        <div className="flex items-center justify-between gap-4 mb-6">
+        <div className="flex items-center justify-between gap-4 mb-4">
           <div>
-            <h3 className="text-lg font-semibold text-white flex items-center gap-2">
-              <Github className="h-5 w-5 text-violet-300" />
+            <h3 className="text-sm font-semibold text-white flex items-center gap-1.5">
+              <Github className="h-4 w-4 text-violet-300" />
               {t("GitHub ao vivo", "GitHub live")}
             </h3>
-            <p className="text-xs text-zinc-400 mt-1">
+            <p className="text-[11px] text-zinc-400 mt-0.5">
               {t("Dados atualizados em tempo real", "Data updated in real time")}
             </p>
           </div>
@@ -171,66 +182,81 @@ export default function GithubStats() {
           </a>
         </div>
 
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-3 gap-2">
           {(data ? stats : Array.from({ length: 3 })).map((stat, index) => (
-            <div
+            <motion.div
               key={stat ? (stat as { label: string }).label : index}
-              className="p-2 sm:p-4 min-h-[92px]"
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.5 }}
+              transition={{ duration: 0.5, ease: "easeOut", delay: index * 0.1 }}
+              className="p-1.5 sm:p-3 min-h-[76px]"
             >
               {stat ? (
                 <>
                   {(() => {
                     const Icon = (stat as { icon: typeof Github }).icon;
-                    return <Icon className="h-4 w-4 text-violet-400 mb-2" />;
+                    return <Icon className="h-3.5 w-3.5 text-violet-400 mb-1.5" />;
                   })()}
-                  <div className="text-2xl font-semibold text-zinc-100 tabular-nums">
+                  <div className="text-lg sm:text-xl font-semibold text-zinc-100 tabular-nums">
                     <AnimatedNumber
                       value={(stat as { value: number }).value}
                       plain={(stat as { plain: boolean }).plain}
+                      delay={index * 0.1}
                     />
                   </div>
-                  <div className="text-[11px] text-zinc-400 mt-0.5">
+                  <div className="text-[10px] text-zinc-400 mt-0.5">
                     {(stat as { label: string }).label}
                   </div>
                 </>
               ) : (
                 <div className="h-full w-full animate-pulse rounded-lg bg-white/5" />
               )}
-            </div>
+            </motion.div>
           ))}
         </div>
 
-        <div className="mt-6 pt-6 border-t border-white/10">
-          <div className="mb-4">
-            <h4 className="text-lg font-semibold text-white flex items-center gap-2">
-              <Rocket className="h-4 w-4 text-violet-300" />
+        <div className="mt-4 pt-4 border-t border-white/10">
+          <div className="mb-3">
+            <h4 className="text-sm font-semibold text-white flex items-center gap-1.5">
+              <Rocket className="h-3.5 w-3.5 text-violet-300" />
               {t("Vercel e Railway ao vivo", "Vercel and Railway live")}
             </h4>
-            <p className="text-xs text-zinc-400 mt-1">
+            <p className="text-[11px] text-zinc-400 mt-0.5">
               {t("Dados atualizados em tempo real", "Data updated in real time")}
             </p>
           </div>
 
-          <div className="grid grid-cols-3 sm:grid-cols-6 gap-3">
-            {deployMetrics.map((stat) => (
-              <div key={stat.label} className="p-2 sm:p-4 min-h-[92px]">
-                <stat.icon className="h-4 w-4 text-violet-400 mb-2" />
-                {stat.value !== null ? (
-                  <>
-                    <div className="text-xl sm:text-2xl font-semibold text-zinc-100 tabular-nums">
-                      <AnimatedNumber value={stat.value} plain decimals={stat.decimals} />
-                      {stat.suffix}
-                    </div>
-                    <div className="text-[11px] text-zinc-400 mt-0.5">{stat.label}</div>
-                  </>
-                ) : (
-                  <>
-                    <div className="text-sm font-medium text-zinc-600 italic">{t("em breve", "soon")}</div>
-                    <div className="text-[11px] text-zinc-500 mt-0.5">{stat.label}</div>
-                  </>
-                )}
-              </div>
-            ))}
+          <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
+            {deployMetrics.map((stat, index) => {
+              const delay = 0.35 + index * 0.08;
+              return (
+                <motion.div
+                  key={stat.label}
+                  initial={{ opacity: 0, y: 12 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.5 }}
+                  transition={{ duration: 0.5, ease: "easeOut", delay }}
+                  className="p-1.5 sm:p-3 min-h-[76px]"
+                >
+                  <stat.icon className="h-3.5 w-3.5 text-violet-400 mb-1.5" />
+                  {stat.value !== null ? (
+                    <>
+                      <div className="text-base sm:text-xl font-semibold text-zinc-100 tabular-nums">
+                        <AnimatedNumber value={stat.value} plain decimals={stat.decimals} delay={delay} />
+                        {stat.suffix}
+                      </div>
+                      <div className="text-[10px] text-zinc-400 mt-0.5">{stat.label}</div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="text-sm font-medium text-zinc-600 italic">{t("em breve", "soon")}</div>
+                      <div className="text-[10px] text-zinc-500 mt-0.5">{stat.label}</div>
+                    </>
+                  )}
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </div>

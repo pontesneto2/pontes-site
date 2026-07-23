@@ -135,9 +135,6 @@ export default function SiteHeader({
           </Link>
 
           <div className="flex items-center gap-1.5 sm:gap-2.5">
-            <div className="scale-90 sm:scale-100">
-              <LanguageSwitch lang={lang} setLang={setLang} compact />
-            </div>
             {secondaryCta && (
               <a
                 href={secondaryCta.href}
@@ -167,7 +164,7 @@ export default function SiteHeader({
                 )}
               </a>
             </MagneticButton>
-            <div className="hidden sm:block">
+            <div className="hidden sm:flex items-center gap-2.5">
               <SearchBox
                 searchOpen={searchOpen}
                 setSearchOpen={setSearchOpen}
@@ -178,6 +175,10 @@ export default function SiteHeader({
                 t={t}
                 align="right"
               />
+              <LanguageSwitch lang={lang} setLang={setLang} compact />
+            </div>
+            <div className="sm:hidden scale-90">
+              <LanguageSwitch lang={lang} setLang={setLang} compact />
             </div>
             <button
               type="button"
