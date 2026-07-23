@@ -158,10 +158,7 @@ export default function GithubStats() {
               {t("GitHub ao vivo", "GitHub live")}
             </h3>
             <p className="text-xs text-zinc-400 mt-1">
-              {t(
-                "Dados reais, atualizados direto da API do GitHub.",
-                "Real data, fetched live from the GitHub API."
-              )}
+              {t("Dados atualizados em tempo real", "Data updated in real time")}
             </p>
           </div>
           <a
@@ -207,13 +204,10 @@ export default function GithubStats() {
           <div className="mb-4">
             <h4 className="text-lg font-semibold text-white flex items-center gap-2">
               <Rocket className="h-4 w-4 text-violet-300" />
-              {t("Deploy & Infra", "Deploy & Infra")}
+              {t("Vercel e Railway ao vivo", "Vercel and Railway live")}
             </h4>
             <p className="text-xs text-zinc-400 mt-1">
-              {t(
-                "Dados reais, atualizados direto da API do Vercel e Railway.",
-                "Real data, fetched live from the Vercel and Railway API."
-              )}
+              {t("Dados atualizados em tempo real", "Data updated in real time")}
             </p>
           </div>
 
