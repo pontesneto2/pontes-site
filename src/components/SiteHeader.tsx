@@ -177,7 +177,7 @@ export default function SiteHeader({
               />
               <LanguageSwitch lang={lang} setLang={setLang} compact />
             </div>
-            <div className="sm:hidden scale-90">
+            <div className="sm:hidden">
               <LanguageSwitch lang={lang} setLang={setLang} compact />
             </div>
             <button

@@ -207,11 +207,11 @@ export default function PropostaModal({ proposal, description, numero, open, onC
                 type="button"
                 onClick={onClose}
                 aria-label={t("Fechar", "Close")}
-                className="absolute right-3 top-3 inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-zinc-300 transition-colors hover:bg-white/20 hover:text-white"
+                className="absolute right-2 top-2 inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-zinc-300 transition-colors hover:bg-white/20 hover:text-white"
               >
                 <X className="h-4 w-4" />
               </button>
-              <div className="flex items-start justify-between gap-4 pr-8">
+              <div className="flex items-start justify-between gap-4 pr-11">
                 <Image src={BRAND.logoUrl} alt="FCOPTS" width={2500} height={544} className="h-7 w-auto" />
                 <div className="text-right">
                   <div className="text-sm font-bold text-white" style={{ fontFamily: "var(--font-space-grotesk)" }}>

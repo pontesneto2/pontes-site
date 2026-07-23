@@ -176,7 +176,7 @@ export default function Testimonials() {
               rel="noopener noreferrer"
               title={tr(lang, { pt: "Ver recomendação completa no LinkedIn", en: "View full recommendation on LinkedIn" })}
               aria-label={tr(lang, { pt: "Ver recomendação completa no LinkedIn", en: "View full recommendation on LinkedIn" })}
-              className="inline-flex h-6 w-6 items-center justify-center rounded-full border border-white/10 bg-white/5 text-zinc-400 hover:border-[#0A66C2]/50 hover:bg-[#0A66C2]/10 hover:text-[#4a9eea] transition-colors"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-zinc-400 hover:border-[#0A66C2]/50 hover:bg-[#0A66C2]/10 hover:text-[#4a9eea] transition-colors"
             >
               <ExternalLink className="h-3 w-3" />
             </a>

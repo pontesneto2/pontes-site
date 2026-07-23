@@ -357,7 +357,7 @@ function CarouselArrow({
       disabled={disabled}
       aria-label={label}
       whileTap={disabled ? undefined : { scale: 0.9 }}
-      className="flex h-10 w-10 shrink-0 items-center justify-center text-zinc-200 transition-colors hover:text-violet-300 disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:text-zinc-200"
+      className="flex h-11 w-11 shrink-0 items-center justify-center text-zinc-200 transition-colors hover:text-violet-300 disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:text-zinc-200"
     >
       {direction === "prev" ? <ChevronLeft className="h-5 w-5" /> : <ChevronRight className="h-5 w-5" />}
     </motion.button>
@@ -384,7 +384,7 @@ function CarouselDots({
           aria-label={`${t({ pt: "Ir para slide", en: "Go to slide" })} ${i + 1}`}
           aria-current={i === current ? "true" : undefined}
           onClick={() => onSelect(i)}
-          className="p-1.5"
+          className="flex h-11 w-11 items-center justify-center"
         >
           <motion.span
             layout

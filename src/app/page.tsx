@@ -1014,7 +1014,7 @@ export default function Page() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="GitHub"
-                  className="text-zinc-400 hover:text-white hover:scale-110 transition-all duration-300"
+                  className="inline-flex h-11 w-11 items-center justify-center text-zinc-400 hover:text-white hover:scale-110 transition-all duration-300"
                 >
                   <Github className="h-6 w-6" />
                 </a>
@@ -1023,7 +1023,7 @@ export default function Page() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="LinkedIn"
-                  className="text-zinc-400 hover:text-violet-300 hover:scale-110 transition-all duration-300"
+                  className="inline-flex h-11 w-11 items-center justify-center text-zinc-400 hover:text-violet-300 hover:scale-110 transition-all duration-300"
                 >
                   <Linkedin className="h-6 w-6" />
                 </a>
@@ -1180,7 +1180,7 @@ export default function Page() {
                         featuredScrollRef.current?.scrollTo({ left: 0 });
                       }}
                       aria-pressed={projectFilter === null}
-                      className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-colors ${
+                      className={`min-h-[44px] px-4 py-2.5 rounded-full text-xs font-medium border transition-colors ${
                         projectFilter === null
                           ? "bg-gradient-to-r from-violet-600 to-fuchsia-500 border-transparent text-white"
                           : "border-white/15 text-zinc-400 hover:text-zinc-200 hover:border-white/25"
