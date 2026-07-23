@@ -300,7 +300,7 @@ export default function Hero() {
             style={{
               fontFamily: "var(--font-jetbrains-mono)",
               fontWeight: 800,
-              fontSize: "clamp(3.4rem, 7vw + 1rem, 6.5rem)",
+              fontSize: "clamp(4rem, 7vw + 1rem, 6.5rem)",
               lineHeight: 0.88,
               letterSpacing: "-0.045em",
               color: "#ffffff",
