@@ -1208,6 +1208,10 @@ export default function Page() {
                   ref={featuredScrollRef}
                   onScroll={updateFeaturedScrollProgress}
                   className="flex gap-8 overflow-x-auto overflow-y-hidden overscroll-x-contain snap-x snap-mandatory scroll-smooth pt-1 pb-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+                  style={{
+                    maskImage: "linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent)",
+                    WebkitMaskImage: "linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent)",
+                  }}
                 >
                   {visibleSecondaryProjects.length === 0 && (
                     <p className="text-sm text-zinc-400 py-6">
