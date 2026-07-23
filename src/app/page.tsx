@@ -1205,8 +1205,8 @@ export default function Page() {
                   onScroll={updateFeaturedScrollProgress}
                   className="flex gap-8 overflow-x-auto overflow-y-hidden overscroll-x-contain snap-x snap-mandatory scroll-smooth pt-1 pb-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
                   style={{
-                    maskImage: "linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent)",
-                    WebkitMaskImage: "linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent)",
+                    maskImage: "linear-gradient(90deg, transparent, #000 1.5%, #000 98.5%, transparent)",
+                    WebkitMaskImage: "linear-gradient(90deg, transparent, #000 1.5%, #000 98.5%, transparent)",
                   }}
                 >
                   {visibleSecondaryProjects.length === 0 && (
@@ -1224,7 +1224,7 @@ export default function Page() {
                         variants={fadeUpItem}
                         initial="hidden"
                         animate="show"
-                        className="card-surface-2 group snap-start shrink-0 w-[88%] sm:w-[calc(50%-1rem)] rounded-3xl overflow-hidden flex flex-col hover:border-violet-400/20 hover:-translate-y-1 transition-all duration-300"
+                        className="card-surface-2 group snap-start shrink-0 w-[85%] sm:w-[calc(48%-1rem)] rounded-3xl overflow-hidden flex flex-col hover:border-violet-400/20 hover:-translate-y-1 transition-all duration-300"
                       >
                         <div className="relative aspect-video w-full overflow-hidden bg-[#1a1425]">
                           {project.badge && (
@@ -1254,16 +1254,16 @@ export default function Page() {
                             <div className="h-full w-full bg-gradient-to-br from-violet-600/35 via-fuchsia-500/20 to-violet-900/40" />
                           )}
                           {project.impact && (
-                            <div className="absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-black via-black/85 to-transparent px-3 pb-1.5 pt-10">
+                            <div className="absolute inset-x-3 bottom-3 z-10 rounded-2xl bg-black px-2 py-3 shadow-lg shadow-black/40">
                               <div
-                                className={`grid gap-3 ${
+                                className={`grid gap-3 divide-x divide-white/10 ${
                                   project.impact.length === 3 ? "grid-cols-3" : "grid-cols-2 sm:grid-cols-4"
                                 }`}
                               >
                                 {project.impact.map((stat, i) => {
                                   const Icon = stat.icon;
                                   return (
-                                    <div key={i} className="flex flex-col items-center gap-0.5 text-center">
+                                    <div key={i} className="flex flex-col items-center gap-0.5 px-1 text-center">
                                       <div className="flex items-center gap-1.5 text-lg font-bold text-white">
                                         <Icon className="h-4 w-4 text-fuchsia-300" />
                                         {t(stat.value)}
