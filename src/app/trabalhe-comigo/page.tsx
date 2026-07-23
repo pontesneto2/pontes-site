@@ -2,7 +2,7 @@
 
 import SiteHeader, { type SearchEntry } from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
-import { useLanguage, tr } from "@/lib/language-context";
+import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
 import { PropostaPrefillProvider } from "@/lib/proposta/prefill-context";
 import HeroComercial from "@/components/trabalhe-comigo/HeroComercial";
 import MarqueeIdealizadores from "@/components/trabalhe-comigo/MarqueeIdealizadores";
@@ -10,6 +10,7 @@ import OQueEuConstruo from "@/components/trabalhe-comigo/OQueEuConstruo";
 import ComoEuTrabalho from "@/components/trabalhe-comigo/ComoEuTrabalho";
 import GeradorProposta from "@/components/trabalhe-comigo/GeradorProposta";
 import CasosReais from "@/components/trabalhe-comigo/CasosReais";
+import GoogleReviews from "@/components/trabalhe-comigo/GoogleReviews";
 import ComoFuncionaInvestimento from "@/components/trabalhe-comigo/ComoFuncionaInvestimento";
 import SegurancaJuridica from "@/components/trabalhe-comigo/SegurancaJuridica";
 import FaqAccordion from "@/components/trabalhe-comigo/FaqAccordion";
@@ -24,6 +25,12 @@ const NAV_LINKS = [
   { href: "/trabalhe-comigo#casos", label: { pt: "Portfólio", en: "Portfolio" } },
   { href: "/trabalhe-comigo#investimento", label: { pt: "Investimento", en: "Investment" } },
   { href: "/trabalhe-comigo#contato", label: { pt: "Contato", en: "Contact" } },
+];
+
+const IMPACT_STATS: Array<{ value: string; label: Bilingual }> = [
+  { value: "30+", label: { pt: "Plataformas entregues", en: "Platforms delivered" } },
+  { value: "99.7%", label: { pt: "Uptime\nmédio", en: "Average\nuptime" } },
+  { value: "6+", label: { pt: "Anos de\nexperiência", en: "Years of\nexperience" } },
 ];
 
 export default function TrabalheComigoPage() {
@@ -62,6 +69,7 @@ export default function TrabalheComigoPage() {
       <SegurancaJuridica />
       <CasosReais />
       <FaqAccordion />
+      <GoogleReviews />
       <section
         id="contato"
         className="scroll-mt-20 border-t border-white/10 py-20"
@@ -69,12 +77,16 @@ export default function TrabalheComigoPage() {
       >
         <div className="mx-auto max-w-7xl px-6">
           <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
-            <SobreMim />
-            <ContatoSection />
+            <div className="order-2 lg:order-1">
+              <SobreMim />
+            </div>
+            <div className="order-1 lg:order-2">
+              <ContatoSection />
+            </div>
           </div>
         </div>
       </section>
-      <SiteFooter />
+      <SiteFooter impactStats={IMPACT_STATS} />
       <FloatingMobileCTA />
     </div>
   );

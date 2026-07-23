@@ -193,7 +193,7 @@ export default function OQueEuConstruo() {
         />
 
         {/* Grid de serviços (estático) */}
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
           {SERVICES.map((service, i) => {
             const Icon = service.icon;
             const cat = CATEGORY[service.category];
