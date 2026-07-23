@@ -181,7 +181,7 @@ export default function SiteHeader({
             </div>
             <button
               type="button"
-              className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-black/25 hover:bg-black/35 p-2.5 transition-colors"
+              className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-black/25 hover:bg-black/35 p-[11px] transition-colors"
               onClick={() => setNavOpen(!navOpen)}
               aria-expanded={navOpen}
               aria-controls="site-nav-menu"
