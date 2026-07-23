@@ -38,7 +38,7 @@ export default function SiteFooter({
             {impactStats.map((stat) => (
               <div key={stat.label.pt} className="text-center">
                 <div
-                  className="text-sm font-bold text-white"
+                  className="text-lg font-bold text-fuchsia-400"
                   style={{ fontFamily: "var(--font-jetbrains-mono)" }}
                 >
                   <AnimatedCounter value={stat.value} lang={lang} />
