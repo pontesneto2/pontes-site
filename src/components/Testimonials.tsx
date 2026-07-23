@@ -19,30 +19,13 @@ const RECOMMENDATIONS_URL = "https://www.linkedin.com/in/fcopts/details/recommen
 
 function TestimonialContent({ item }: { item: Testimonial }) {
   const { lang } = useLanguage();
-  const [expanded, setExpanded] = useState(false);
   const text = tr(lang, item.text);
-  const isLong = text.length > 130;
 
   return (
     <div className="flex h-full flex-col justify-center">
-      <p
-        className={`text-sm text-zinc-300 leading-relaxed ${
-          expanded ? "" : "line-clamp-2"
-        }`}
-      >
+      <p className="text-sm text-zinc-300 leading-relaxed">
         &ldquo;{text}&rdquo;
       </p>
-      <button
-        type="button"
-        onClick={() => setExpanded((v) => !v)}
-        className={`mt-2 w-fit text-xs font-semibold text-violet-300 hover:text-violet-200 transition-colors ${
-          isLong ? "" : "invisible"
-        }`}
-      >
-        {expanded
-          ? tr(lang, { pt: "Mostrar menos", en: "Show less" })
-          : tr(lang, { pt: "Mostrar mais", en: "Show more" })}
-      </button>
 
       <div className="mt-6 flex items-start gap-3">
         <div className="relative h-10 w-10 rounded-full bg-gradient-to-br from-violet-500/30 to-fuchsia-500/30 border border-white/10 flex items-center justify-center text-sm font-bold text-white shrink-0 overflow-hidden">
