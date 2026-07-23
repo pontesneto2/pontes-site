@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     alternateLocale: "pt_BR",
     images: [
       {
-        url: "/images/capa-sistema-policia.png",
+        url: "/images/sistema-escolar-policia-redesign-hero.png",
         width: 1920,
         height: 1080,
         alt: "2nd Military Police School Coronel Hervano Macêdo Júnior school system",
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title,
     description,
-    images: ["/images/capa-sistema-policia.png"],
+    images: ["/images/sistema-escolar-policia-redesign-hero.png"],
   },
 };
 

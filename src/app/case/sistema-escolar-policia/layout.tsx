@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     alternateLocale: "en_US",
     images: [
       {
-        url: "/images/capa-sistema-policia.png",
+        url: "/images/sistema-escolar-policia-redesign-hero.png",
         width: 1920,
         height: 1080,
         alt: "Sistema Escolar do 2º Colégio da Polícia Militar Coronel Hervano Macêdo Júnior",
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title,
     description,
-    images: ["/images/capa-sistema-policia.png"],
+    images: ["/images/sistema-escolar-policia-redesign-hero.png"],
   },
 };
 
@@ -51,7 +51,7 @@ export default function CaseLayout({
         slug="sistema-escolar-policia"
         headline={title}
         description={description}
-        image="/images/capa-sistema-policia.png"
+        image="/images/sistema-escolar-policia-redesign-hero.png"
         datePublished="2026-07-22"
         dateModified="2026-07-22"
       />

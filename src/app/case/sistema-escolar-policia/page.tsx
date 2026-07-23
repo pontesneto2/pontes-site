@@ -221,7 +221,7 @@ function ShowcaseHero() {
       <div className="relative rounded-[28px] overflow-hidden border border-white/10 shadow-[0_40px_100px_-20px_rgba(88,28,155,0.45)]">
         <div className="relative aspect-[16/9]">
           <Image
-            src="/images/capa-sistema-policia.png"
+            src="/images/sistema-escolar-policia-redesign-hero.png"
             alt="Portal de sistemas do 2º CPM-CHMJ (Com3 Brasil)"
             fill
             sizes="(max-width: 1024px) 100vw, 1024px"
@@ -254,6 +254,46 @@ function useSectionsData(lang: "pt" | "en") {
   );
 
   return [
+    {
+      title: { pt: "Antes e Depois: Evolução da Tela Inicial", en: "Before and After: Home Screen Evolution" },
+      children: (
+        <>
+          <p>
+            {t({
+              pt: "Ao entrar no sistema, o usuário caía direto num menu azul sem nenhuma visão geral — só as abas de módulos, tela em branco até escolher o que abrir. Como protótipo para a próxima evolução do produto, desenhei uma tela inicial orientada a dados: indicadores-chave (alunos ativos, inadimplência, média geral, ocorrências da semana), gráfico de desempenho por série, status financeiro do mês, últimas ocorrências, próximos eventos e acesso rápido aos módulos — tudo visível sem precisar navegar.",
+              en: "On login, the user landed directly on a blank blue menu bar — no overview at all, just module tabs and an empty screen until you picked something to open. As a prototype for the product's next evolution, I designed a data-first home screen: key indicators (active students, delinquency, overall average, occurrences this week), a performance-by-grade chart, the month's financial status, latest occurrences, upcoming events and quick access to every module — all visible without navigating anywhere.",
+            })}
+          </p>
+
+          <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {shot(
+              "/images/sistema-escolar-policia-antes.png",
+              "Tela inicial original do sistema: menu azul sem nenhuma visão geral",
+              { pt: "Antes — login cai direto no menu, sem visão geral nenhuma.", en: "Before — login drops straight into the menu, with no overview at all." }
+            )}
+            {shot(
+              "/images/sistema-escolar-policia-depois.png",
+              "Protótipo da nova tela inicial: dashboard com indicadores, gráficos, ocorrências e agenda",
+              { pt: "Depois — dashboard com indicadores, desempenho por série, financeiro, ocorrências e agenda.", en: "After — a dashboard with KPIs, performance by grade, finance, occurrences and agenda." }
+            )}
+          </div>
+
+          <p className="mt-6">
+            {t({
+              pt: "Também explorei uma variante com navegação lateral fixa, mantendo os mesmos indicadores e o mesmo acesso rápido aos módulos — útil para telas mais altas e para reduzir a distância entre menu e conteúdo em sessões longas de trabalho.",
+              en: "I also explored a variant with a fixed side navigation, keeping the same indicators and the same quick access to modules — useful for taller screens and for shortening the distance between menu and content during long work sessions.",
+            })}
+          </p>
+          <div className="mt-4">
+            {shot(
+              "/images/sistema-escolar-policia-depois-menu-lateral.png",
+              "Variante do protótipo com menu de navegação lateral fixo",
+              { pt: "Variante explorada com menu lateral fixo, mesmos indicadores e acessos rápidos.", en: "Explored variant with a fixed side menu, same indicators and quick access." }
+            )}
+          </div>
+        </>
+      ),
+    },
     {
       title: { pt: "Contexto e Escopo", en: "Context and Scope" },
       children: (
