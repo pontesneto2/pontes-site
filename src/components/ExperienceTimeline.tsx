@@ -66,11 +66,11 @@ export default function ExperienceTimeline() {
                     <span className="block font-semibold text-sm text-white truncate">{exp.company}</span>
                   </span>
                   <span className="flex items-center gap-1.5 sm:gap-2 shrink-0">
-                    <span className="text-[9.5px] sm:text-[10px] text-violet-300 bg-violet-500/10 px-2 py-1 rounded-full border border-violet-500/20 font-semibold whitespace-nowrap">
+                    <span className="text-[13px] text-violet-300 bg-violet-500/10 px-2 py-1 rounded-full border border-violet-500/20 font-semibold whitespace-nowrap">
                       {exp.period}
                     </span>
                     {isLatest ? (
-                      <span className="hidden xs:inline text-[10px] text-violet-200 bg-violet-500/15 px-2 py-1 rounded-full border border-violet-500/25 font-semibold whitespace-nowrap">
+                      <span className="hidden xs:inline text-[13px] text-violet-200 bg-violet-500/15 px-2 py-1 rounded-full border border-violet-500/25 font-semibold whitespace-nowrap">
                         {t({ pt: "Mais recente", en: "Most recent" })}
                       </span>
                     ) : null}
@@ -109,17 +109,17 @@ export default function ExperienceTimeline() {
                         {hasExtras ? (
                           <div className="flex flex-wrap items-center gap-1.5 mt-3">
                             {exp.remote ? (
-                              <span className="text-[10px] text-fuchsia-300 bg-fuchsia-500/10 px-2 py-1 rounded-full border border-fuchsia-500/20 font-semibold">
+                              <span className="text-[13px] text-fuchsia-300 bg-fuchsia-500/10 px-2 py-1 rounded-full border border-fuchsia-500/20 font-semibold">
                                 {t({ pt: "Remoto", en: "Remote" })}
                               </span>
                             ) : null}
                             {exp.languages ? (
-                              <span className="text-[10px] text-zinc-300 bg-white/5 px-2 py-1 rounded-full border border-white/10 font-semibold">
+                              <span className="text-[13px] text-zinc-300 bg-white/5 px-2 py-1 rounded-full border border-white/10 font-semibold">
                                 {exp.languages}
                               </span>
                             ) : null}
                             {exp.contractType ? (
-                              <span className="text-[10px] text-zinc-300 bg-white/5 px-2 py-1 rounded-full border border-white/10 font-semibold">
+                              <span className="text-[13px] text-zinc-300 bg-white/5 px-2 py-1 rounded-full border border-white/10 font-semibold">
                                 {t(exp.contractType)}
                               </span>
                             ) : null}
@@ -140,7 +140,7 @@ export default function ExperienceTimeline() {
           <button
             type="button"
             onClick={() => setVisibleCount((c) => Math.min(c + BATCH_SIZE, EXPERIENCE.length))}
-            className="text-xs font-medium text-violet-400 hover:text-violet-300 transition-colors"
+            className="min-h-[44px] px-4 text-xs font-medium text-violet-400 hover:text-violet-300 transition-colors"
           >
             {t({ pt: "Ver mais experiências", en: "Show more experience" })}
           </button>
