@@ -996,7 +996,7 @@ export default function Page() {
                 whileInView={{ opacity: 1 }}
                 viewport={viewportSettings}
                 transition={{ duration: 1.1, ease: easeOut }}
-                className="text-white text-base sm:text-lg leading-relaxed"
+                className="mx-auto max-w-[68ch] text-white text-base sm:text-lg leading-relaxed"
               >
                 {t({
                   pt: "Graduado em Análise e Desenvolvimento de Sistemas pela Universidade Farias Brito, em Fortaleza. Pós Graduado em Engenharia de Software com ênfase em DevOps. Especializado em Desenvolvimento Full Stack pela Digital College. Especializado em UX/UI e design de Produtos Digitais pela EBAC.",
@@ -1066,7 +1066,7 @@ export default function Page() {
                       whileInView={{ opacity: 1 }}
                       viewport={viewportSettings}
                       transition={{ duration: 1.1, ease: easeOut }}
-                      className="mt-5 space-y-4 text-zinc-300 text-[17px] sm:text-[16px] leading-relaxed"
+                      className="mt-5 max-w-[68ch] space-y-4 text-zinc-300 text-[17px] sm:text-[16px] leading-relaxed"
                     >
                       <p>
                         {t({
