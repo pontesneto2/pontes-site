@@ -123,7 +123,7 @@ export default function SiteHeader({
     >
       <div className="mx-auto max-w-7xl px-3 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between py-3 md:py-0 md:h-16">
-          <Link href={withLocale("/", isEn)} className="flex items-center gap-2 sm:gap-3">
+          <Link href={withLocale("/", isEn)} className="flex items-center gap-2 sm:gap-3 py-2 sm:py-0">
             <Image
               src="/images/FCO.png"
               alt="FCOPTS — Francisco Pontes"
@@ -153,7 +153,7 @@ export default function SiteHeader({
                 href={effectiveCta.href}
                 {...(ctaIsExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                 onClick={() => trackCtaClick(effectiveCta.href)}
-                className="relative inline-flex items-center gap-1 sm:gap-1.5 whitespace-nowrap px-2 py-1 sm:px-3 sm:py-1.5 rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-500 text-white shadow-lg shadow-fuchsia-700/20 text-xs sm:text-sm"
+                className="relative inline-flex min-h-[44px] sm:min-h-0 items-center gap-1 sm:gap-1.5 whitespace-nowrap px-3 py-2.5 sm:px-3 sm:py-1.5 rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-500 text-white shadow-lg shadow-fuchsia-700/20 text-xs sm:text-sm"
               >
                 {t(effectiveCta.label)}
                 {ctaFlag && <span className="text-[0.85em] leading-none">{ctaFlag}</span>}

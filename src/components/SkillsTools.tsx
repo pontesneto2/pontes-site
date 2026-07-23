@@ -150,7 +150,7 @@ const TIER_STYLE: Record<
   }
 > = {
   core: {
-    fontSize: "11.5px",
+    fontSize: "13px",
     fontWeight: 600,
     padding: "6px 10px",
     paddingNoIcon: "6px 11px",
@@ -163,7 +163,7 @@ const TIER_STYLE: Record<
     iconOpacity: 1,
   },
   solid: {
-    fontSize: "11px",
+    fontSize: "13px",
     fontWeight: 500,
     padding: "5px 9px",
     paddingNoIcon: "5px 10px",
@@ -284,7 +284,7 @@ function CategoryCard({ category, t }: { category: SkillCategory; t: (v: Bilingu
       <div>
         <span
           className="font-[family-name:var(--font-jetbrains-mono)]"
-          style={{ fontWeight: 700, fontSize: "11px", color: "#a855f7" }}
+          style={{ fontWeight: 700, fontSize: "13px", color: "#a855f7" }}
         >
           {category.index}
         </span>

@@ -9,7 +9,7 @@ export default function LanguageSwitch({
   setLang: (lang: "pt" | "en") => void;
   compact?: boolean;
 }) {
-  const base = compact ? "px-3 py-3.5 text-[13px]" : "px-2.5 py-1 text-xs";
+  const base = compact ? "px-4 py-3.5 text-[13px]" : "px-2.5 py-1 text-xs";
 
   return (
     <div
