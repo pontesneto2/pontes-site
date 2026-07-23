@@ -1254,7 +1254,7 @@ export default function Page() {
                             <div className="h-full w-full bg-gradient-to-br from-violet-600/35 via-fuchsia-500/20 to-violet-900/40" />
                           )}
                           {project.impact && (
-                            <div className="absolute inset-x-3 bottom-3 z-10 flex flex-wrap gap-1.5">
+                            <div className="absolute inset-x-3 bottom-3 z-10 flex flex-wrap justify-center gap-1.5">
                               {project.impact.map((stat, i) => {
                                 const Icon = stat.icon;
                                 return (
