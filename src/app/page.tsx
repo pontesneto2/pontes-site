@@ -1162,7 +1162,7 @@ export default function Page() {
                 className="mb-8 space-y-8"
               >
                 {projectFilters.length > 1 && (
-                  <div className="flex flex-wrap gap-2 mb-6" role="group" aria-label={t({ pt: "Filtrar projetos", en: "Filter projects" })}>
+                  <div className="flex flex-wrap justify-center gap-2 mb-6 sm:justify-start" role="group" aria-label={t({ pt: "Filtrar projetos", en: "Filter projects" })}>
                     <button
                       type="button"
                       onClick={() => {
@@ -1275,23 +1275,23 @@ export default function Page() {
                             </div>
                           )}
                         </div>
-                        <div className={`relative flex-1 flex flex-col p-3 sm:p-3.5 md:p-4 overflow-hidden ${project.bgClass}`}>
+                        <div className={`relative flex-1 flex flex-col p-5 sm:p-3.5 md:p-4 overflow-hidden ${project.bgClass}`}>
                           <div className="relative flex-1 flex flex-col">
                             <CategoryBadge labels={project.category.map(t)} compact />
-                            <h3 className="text-lg font-bold text-white">
+                            <h3 className="mt-2 sm:mt-0 text-lg font-bold text-white">
                               {project.title}
                             </h3>
                             {t(project.subtitle) && (
-                              <span className="inline-block text-[11px] text-amber-300 font-medium mt-1">
+                              <span className="inline-block text-[11px] text-amber-300 font-medium mt-1.5 sm:mt-1">
                                 {t(project.subtitle)}
                               </span>
                             )}
-                            <p className="mt-1.5 text-[13px] text-zinc-400 leading-relaxed">
+                            <p className="mt-3 sm:mt-1.5 text-[13px] text-zinc-400 leading-relaxed">
                               {t(project.blurb)}
                             </p>
-                            <div className="mt-2 border-t border-white/5" />
+                            <div className="mt-4 sm:mt-2 border-t border-white/5" />
                             {project.highlights && (
-                              <div className="mt-2 flex flex-wrap gap-x-5 gap-y-1.5">
+                              <div className="mt-4 sm:mt-2 flex flex-wrap gap-x-5 gap-y-2 sm:gap-y-1.5">
                                 {project.highlights.map((h, i) => {
                                   const Icon = h.icon;
                                   return (
@@ -1306,13 +1306,13 @@ export default function Page() {
                                 })}
                               </div>
                             )}
-                            <div className="mt-2 border-t border-white/5" />
-                            <div className="mt-2 flex flex-wrap gap-2">
+                            <div className="mt-4 sm:mt-2 border-t border-white/5" />
+                            <div className="mt-4 sm:mt-2 flex flex-wrap gap-2">
                               {project.tags.map((tag) => (
                                 <ProjectTagIcon key={tag} tag={tag} />
                               ))}
                             </div>
-                            <div className="mt-auto pt-2.5 flex justify-center sm:justify-start">{cta}</div>
+                            <div className="mt-auto pt-4 sm:pt-2.5 flex justify-center sm:justify-start">{cta}</div>
                           </div>
                         </div>
                       </motion.article>
@@ -1694,7 +1694,7 @@ export default function Page() {
                   </h3>
                   <Link
                     href="/blog"
-                    className="text-xs font-medium text-violet-300 hover:text-violet-200 transition-colors inline-flex items-center gap-1"
+                    className="hidden sm:inline-flex text-xs font-medium text-violet-300 hover:text-violet-200 transition-colors items-center gap-1"
                   >
                     {t({ pt: "Ver todos os posts", en: "See all posts" })}
                     <span aria-hidden="true">→</span>
@@ -1725,6 +1725,15 @@ export default function Page() {
                       </p>
                     </Link>
                   ))}
+                </div>
+                <div className="mt-5 flex justify-center sm:hidden">
+                  <Link
+                    href="/blog"
+                    className="text-xs font-medium text-violet-300 hover:text-violet-200 transition-colors inline-flex items-center gap-1"
+                  >
+                    {t({ pt: "Ver todos os posts", en: "See all posts" })}
+                    <span aria-hidden="true">→</span>
+                  </Link>
                 </div>
               </div>
             </section>
