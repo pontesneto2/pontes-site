@@ -384,15 +384,20 @@ function useSectionsData(lang: "pt" | "en") {
           </h4>
           <p className="mt-2">
             {t({
-              pt: "Sendo um colégio militarizado, o módulo Comportamento trata a disciplina como uma nota: cada ocorrência tem tipo, classificação, professor que encaminhou, pontuação, fase e situação — e um campo de \"Data para Entrega ao Comandante\", que embute a hierarquia militar diretamente no fluxo de aprovação. O ciclo é fechado por rotinas de geração e recálculo automático da nota de comportamento (CAD).",
-              en: "Being a militarized school, the Behavior module treats discipline as a grade: each occurrence has a type, classification, referring teacher, score, phase and status — plus a \"Date for Delivery to the Commander\" field, which embeds the military chain of command directly into the approval flow. The cycle is closed by automatic behavior-grade (CAD) generation and recalculation routines.",
+              pt: "Sendo um colégio militarizado, o módulo Comportamento trata a disciplina como uma nota: cada ocorrência tem tipo, classificação, professor que encaminhou, pontuação, fase e situação — e um campo de \"Data para Entrega ao Comandante\", que embute a hierarquia militar diretamente no fluxo de aprovação. Um monitor acompanha reincidência e justificativas por aluno, e o ciclo é fechado por rotinas de geração e recálculo automático da nota de comportamento (CAD).",
+              en: "Being a militarized school, the Behavior module treats discipline as a grade: each occurrence has a type, classification, referring teacher, score, phase and status — plus a \"Date for Delivery to the Commander\" field, which embeds the military chain of command directly into the approval flow. A monitor tracks recurrence and justifications per student, and the cycle is closed by automatic behavior-grade (CAD) generation and recalculation routines.",
             })}
           </p>
-          <div className="mt-4">
+          <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
             {shot(
               "/images/sistema-escolar-policia-ocorrencia-cad.png",
               "Tela de Cadastro de Ocorrência do módulo Comportamento (CAD)",
               { pt: "Cadastro de Ocorrência: pontuação, fase e a \"Data p/ Entrega ao Comandante\" que reflete a hierarquia militar do colégio.", en: "Occurrence registration: score, phase, and the \"Date for Delivery to the Commander\" field reflecting the school's military chain of command." }
+            )}
+            {shot(
+              "/images/sistema-escolar-policia-justificativa.png",
+              "Tela de Consulta de Justificativa, com reincidência e situação por aluno",
+              { pt: "Consulta de Justificativa: reincidência, monitor responsável e status de justificativa por ocorrência.", en: "Justification Query: recurrence, responsible monitor and justification status per occurrence." }
             )}
           </div>
 
