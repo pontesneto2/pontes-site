@@ -1,0 +1,60 @@
+{
+  "rating": 5.0,
+  "reviewCount": 6,
+  "profileUrl": "",
+  "reviews": [
+    {
+      "name": "Caio Alcoforado",
+      "rating": 5,
+      "reviewerReviewCount": 3,
+      "text": {
+        "pt": "Fez o site da minha empresa com um design bonito e muito rápido.",
+        "en": "Built my company's website with a beautiful design, and very fast."
+      }
+    },
+    {
+      "name": "João Alfredo Gadelha",
+      "rating": 5,
+      "reviewerReviewCount": 2,
+      "text": {
+        "pt": "Excelente profissional, fez o sistema da minha empresa de forma magnífica.",
+        "en": "Excellent professional, built my company's system beautifully."
+      }
+    },
+    {
+      "name": "Karol Queiroz",
+      "rating": 5,
+      "reviewerReviewCount": 2,
+      "text": {
+        "pt": "Excelente, prestativo e atencioso. Atendeu todas as expectativas, recomendo!",
+        "en": "Excellent, helpful and attentive. Met all expectations, I recommend it!"
+      }
+    },
+    {
+      "name": "Júnior Lopes",
+      "rating": 5,
+      "reviewerReviewCount": 13,
+      "text": {
+        "pt": "Tive a oportunidade de acompanhar seu trabalho e ao longo desse período, ele demonstrou forte capacidade de resolver...",
+        "en": "I had the opportunity to follow his work, and throughout that period he showed a strong ability to solve..."
+      }
+    },
+    {
+      "name": "Matheus Forte",
+      "rating": 5,
+      "reviewerReviewCount": 3,
+      "text": {
+        "pt": "Bom profissional.",
+        "en": "Good professional."
+      }
+    },
+    {
+      "name": "Juliana Falcão",
+      "rating": 5,
+      "text": {
+        "pt": "Excelente profissional, atendimento rápido e humanizado. Desenvolveu uma solução digital em tempo recorde.",
+        "en": "Excellent professional, fast and personable service. Developed a digital solution in record time."
+      }
+    }
+  ]
+}

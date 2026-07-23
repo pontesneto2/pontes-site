@@ -3,6 +3,7 @@ import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
 import { LanguageProvider } from "@/lib/language-context";
 import { spaceGrotesk, jetbrainsMono } from "@/lib/fonts";
+import WebVitalsReporter from "@/components/WebVitalsReporter";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://fcopts.com.br";
 
@@ -141,6 +142,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body suppressHydrationWarning className={`min-h-screen overflow-x-clip text-zinc-200 bg-[#0a0a0d] ${spaceGrotesk.variable} ${jetbrainsMono.variable}`}>
         <LanguageProvider>{children}</LanguageProvider>
         <Analytics />
+        <WebVitalsReporter />
       </body>
     </html>
   );
