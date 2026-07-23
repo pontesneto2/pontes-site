@@ -9,7 +9,6 @@ import Hero from "@/components/Hero";
 import Testimonials from "@/components/Testimonials";
 import ContactForm from "@/components/ContactForm";
 import SkillsTools, { SKILL_NAMES } from "@/components/SkillsTools";
-import EngineeringDashboard from "@/components/EngineeringDashboard";
 import SiteHeader, { type SearchEntry } from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import SegmentedProgress from "@/components/SegmentedProgress";
@@ -1129,34 +1128,6 @@ export default function Page() {
 
           <SkillsTools />
 
-          <EngineeringDashboard />
-
-          {/* QUEBRA DE PADRÃO — faixa full-bleed diagonal, sem container centralizado */}
-          <section className="relative overflow-hidden py-16 sm:py-20">
-            <div
-              className="absolute inset-0"
-              style={{
-                background: "linear-gradient(115deg, #1a0f2e 0%, #2a1245 45%, #0a0a0d 100%)",
-                clipPath: "polygon(0 8%, 100% 0, 100% 92%, 0 100%)",
-              }}
-            />
-            <div className="relative mx-auto max-w-4xl px-6 sm:px-8 lg:px-12 text-left">
-              <motion.p
-                initial={{ opacity: 0, x: -24 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={viewportSettings}
-                transition={{ duration: 0.7, ease: "easeOut" }}
-                className="text-2xl sm:text-3xl md:text-4xl font-bold leading-snug text-white max-w-2xl"
-                style={{ fontFamily: "var(--font-space-grotesk)" }}
-              >
-                {t({
-                  pt: "Não construo só telas bonitas. Construo sistemas que continuam de pé depois que o deploy termina.",
-                  en: "I don't just build pretty screens. I build systems that stay standing after the deploy is done.",
-                })}
-              </motion.p>
-            </div>
-          </section>
-
           {/* PROJETOS EM DESTAQUE - REDESENHADO */}
           <section
             id="projects"
@@ -1254,9 +1225,9 @@ export default function Page() {
                       >
                         <div className="relative aspect-video w-full overflow-hidden bg-[#1a1425]">
                           {project.badge && (
-                            <div className="absolute -right-11 top-5 z-20 w-40 rotate-45 overflow-hidden pointer-events-none">
+                            <div className="absolute -right-16 top-8 z-20 w-56 rotate-45 pointer-events-none">
                               <span
-                                className={`block py-1 text-center text-[10px] font-bold uppercase leading-none tracking-wide text-zinc-950 shadow-sm shadow-black/30 ${
+                                className={`block py-1 text-center whitespace-nowrap text-[10px] font-bold uppercase leading-none tracking-wide text-zinc-950 shadow-sm shadow-black/30 ${
                                   project.badgeColor === "sky" ? "bg-sky-400" : "bg-amber-400"
                                 }`}
                               >
