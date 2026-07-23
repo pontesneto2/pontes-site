@@ -114,12 +114,12 @@ export default function ComoFuncionaInvestimento() {
           {/* Etiqueta diagonal */}
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute right-[-62px] top-[30px] w-[240px] rotate-45 bg-orange-400 py-1.5 text-center font-mono text-[10px] font-bold uppercase tracking-wider text-orange-950 shadow-lg"
+            className="pointer-events-none absolute right-[-62px] top-[30px] w-[240px] rotate-45 bg-orange-400 py-1.5 text-center font-mono text-[13px] font-bold uppercase tracking-wider text-orange-950 shadow-lg"
           >
             {t({ pt: "Oferta por tempo limitado", en: "Limited time offer" })}
           </div>
 
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-fuchsia-300/50 bg-fuchsia-400/15 px-3.5 py-1.5 font-mono text-[11px] font-bold uppercase tracking-wide text-fuchsia-50 shadow-[0_0_14px_-6px_rgba(251,191,36,0.4)]">
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-fuchsia-300/50 bg-fuchsia-400/15 px-3.5 py-1.5 font-mono text-[13px] font-bold uppercase tracking-wide text-fuchsia-50 shadow-[0_0_14px_-6px_rgba(251,191,36,0.4)]">
             <FlameGradient className="h-3.5 w-3.5 drop-shadow-[0_0_6px_rgba(251,146,60,0.8)]" />
             {t({ pt: "Condição de lançamento", en: "Launch pricing" })}
           </span>
@@ -200,7 +200,7 @@ export default function ComoFuncionaInvestimento() {
         </motion.div>
 
         {/* Modelos de contratação */}
-        <Reveal className="mb-3.5 mt-10 text-center font-mono text-[11px] uppercase tracking-wide text-violet-300">
+        <Reveal className="mb-3.5 mt-10 text-center font-mono text-[13px] uppercase tracking-wide text-violet-300">
           {t({ pt: "Modelos de contratação", en: "Engagement models" })}
         </Reveal>
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
@@ -214,7 +214,7 @@ export default function ComoFuncionaInvestimento() {
               }`}
             >
               {plan.flag && (
-                <span className="absolute -top-3 right-4 inline-flex items-center gap-1 rounded-full bg-gradient-to-r from-orange-500 to-amber-400 px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-wide text-orange-950 shadow-[0_0_20px_-2px_rgba(245,158,11,0.9)] ring-1 ring-white/40">
+                <span className="absolute -top-3 right-4 inline-flex items-center gap-1 rounded-full bg-gradient-to-r from-orange-500 to-amber-400 px-3 py-1 font-mono text-[13px] font-bold uppercase tracking-wide text-orange-950 shadow-[0_0_20px_-2px_rgba(245,158,11,0.9)] ring-1 ring-white/40">
                   <Star className="h-3 w-3 fill-orange-950 text-orange-950" />
                   {t(plan.flag)}
                 </span>
@@ -237,7 +237,7 @@ export default function ComoFuncionaInvestimento() {
                 </small>
               </div>
               <div
-                className={`mt-1 font-mono text-[11px] ${
+                className={`mt-1 font-mono text-[13px] ${
                   plan.featured ? "text-violet-200" : "text-violet-300"
                 }`}
               >

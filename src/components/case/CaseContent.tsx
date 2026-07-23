@@ -113,7 +113,7 @@ export default function CaseContent({
             key={item.label.pt}
             className="rounded-2xl bg-white/[0.03] border border-white/[0.06] px-5 py-4"
           >
-            <span className="block text-[10px] uppercase tracking-[0.18em] text-zinc-400 mb-1">
+            <span className="block text-[13px] uppercase tracking-[0.18em] text-zinc-400 mb-1">
               {tr(lang, item.label)}
             </span>
             <span className="text-sm font-semibold text-zinc-200">
@@ -168,7 +168,7 @@ export default function CaseContent({
                 <span className="inline-flex items-center justify-center h-7 w-7 rounded-xl bg-violet-500/15 border border-violet-500/25 text-violet-200 text-xs font-bold">
                   {idx + 1}
                 </span>
-                <span className="text-[11px] uppercase tracking-[0.22em] text-zinc-400">
+                <span className="text-[13px] uppercase tracking-[0.22em] text-zinc-400">
                   {tr(lang, { pt: "Desafio", en: "Challenge" })}
                 </span>
               </div>
@@ -235,7 +235,7 @@ export default function CaseContent({
           {stack.map((tech) => (
             <span
               key={tech}
-              className="inline-flex items-center gap-2 text-[11px] pl-2.5 pr-3 py-1.5 rounded-full bg-white/[0.05] text-zinc-100 border border-white/[0.10] font-semibold hover:bg-white/[0.07] hover:border-violet-500/25 transition-colors"
+              className="inline-flex items-center gap-2 text-[13px] pl-2.5 pr-3 py-1.5 rounded-full bg-white/[0.05] text-zinc-100 border border-white/[0.10] font-semibold hover:bg-white/[0.07] hover:border-violet-500/25 transition-colors"
             >
               <TechGlyph tag={tech} />
               {tech}

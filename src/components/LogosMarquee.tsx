@@ -35,7 +35,7 @@ export default function LogosMarquee() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={logo.alt}
-            className="relative h-10 w-32 shrink-0 sm:h-12 sm:w-36"
+            className="relative h-11 w-32 shrink-0 sm:h-12 sm:w-36"
           >
             <div
               className="lm-logo absolute inset-0"

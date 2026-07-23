@@ -26,7 +26,7 @@ export default function TechIcon({ tag }: { tag: string }) {
       </div>
       <span
         role="tooltip"
-        className="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-md border border-white/10 bg-black/90 px-2 py-1 text-[10px] text-zinc-200 opacity-0 shadow-lg transition-opacity duration-150 group-hover:opacity-100"
+        className="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-md border border-white/10 bg-black/90 px-2 py-1 text-[13px] text-zinc-200 opacity-0 shadow-lg transition-opacity duration-150 group-hover:opacity-100"
       >
         {tag}
       </span>

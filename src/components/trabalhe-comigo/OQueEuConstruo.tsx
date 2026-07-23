@@ -203,7 +203,7 @@ export default function OQueEuConstruo() {
                 delay={(i % 3) * 0.08}
                 className="relative flex flex-col items-center overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.02] p-6 text-center transition-all hover:border-white/20 hover:bg-white/[0.04]"
               >
-                <span className={`absolute right-[-30px] top-[18px] inline-flex rotate-45 items-center bg-gradient-to-r ${cat.ribbon} px-9 py-[3px] font-mono text-[10px] font-bold uppercase tracking-wide text-white shadow-sm`}>
+                <span className={`absolute right-[-30px] top-[18px] inline-flex rotate-45 items-center bg-gradient-to-r ${cat.ribbon} px-9 py-[3px] font-mono text-[13px] font-bold uppercase tracking-wide text-white shadow-sm`}>
                   {t(cat.label).toUpperCase()}
                 </span>
 

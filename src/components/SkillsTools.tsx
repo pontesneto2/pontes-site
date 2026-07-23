@@ -150,7 +150,7 @@ const TIER_STYLE: Record<
   }
 > = {
   core: {
-    fontSize: "11.5px",
+    fontSize: "13px",
     fontWeight: 600,
     padding: "6px 10px",
     paddingNoIcon: "6px 11px",
@@ -163,7 +163,7 @@ const TIER_STYLE: Record<
     iconOpacity: 1,
   },
   solid: {
-    fontSize: "11px",
+    fontSize: "13px",
     fontWeight: 500,
     padding: "5px 9px",
     paddingNoIcon: "5px 10px",
@@ -238,7 +238,7 @@ function SkillChip({ skill, t }: { skill: Skill; t: (v: Bilingual) => string }) 
       {usedIn && hover && (
         <div
           role="tooltip"
-          className="absolute bottom-full left-1/2 z-20 mb-2 w-max max-w-[220px] -translate-x-1/2 rounded-lg border border-white/10 bg-[#141418] px-2.5 py-1.5 text-[10px] leading-snug text-zinc-300 shadow-xl shadow-black/40"
+          className="absolute bottom-full left-1/2 z-20 mb-2 w-max max-w-[220px] -translate-x-1/2 rounded-lg border border-white/10 bg-[#141418] px-2.5 py-1.5 text-[13px] leading-snug text-zinc-300 shadow-xl shadow-black/40"
         >
           <span className="text-fuchsia-300 font-semibold">
             {t({ pt: "Usado em: ", en: "Used in: " })}
@@ -284,7 +284,7 @@ function CategoryCard({ category, t }: { category: SkillCategory; t: (v: Bilingu
       <div>
         <span
           className="font-[family-name:var(--font-jetbrains-mono)]"
-          style={{ fontWeight: 700, fontSize: "11px", color: "#a855f7" }}
+          style={{ fontWeight: 700, fontSize: "13px", color: "#a855f7" }}
         >
           {category.index}
         </span>
@@ -357,7 +357,7 @@ function CarouselArrow({
       disabled={disabled}
       aria-label={label}
       whileTap={disabled ? undefined : { scale: 0.9 }}
-      className="flex h-10 w-10 shrink-0 items-center justify-center text-zinc-200 transition-colors hover:text-violet-300 disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:text-zinc-200"
+      className="flex h-11 w-11 shrink-0 items-center justify-center text-zinc-200 transition-colors hover:text-violet-300 disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:text-zinc-200"
     >
       {direction === "prev" ? <ChevronLeft className="h-5 w-5" /> : <ChevronRight className="h-5 w-5" />}
     </motion.button>
@@ -384,7 +384,7 @@ function CarouselDots({
           aria-label={`${t({ pt: "Ir para slide", en: "Go to slide" })} ${i + 1}`}
           aria-current={i === current ? "true" : undefined}
           onClick={() => onSelect(i)}
-          className="p-1.5"
+          className="flex h-11 w-11 items-center justify-center"
         >
           <motion.span
             layout

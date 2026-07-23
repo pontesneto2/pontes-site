@@ -30,7 +30,7 @@ export default function MarqueeIdealizadores() {
   return (
     <section className="border-t border-white/10 py-6">
       <div className="mx-auto max-w-7xl px-6 text-center">
-        <span className="mb-3 block font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-500">
+        <span className="mb-3 block font-mono text-[13px] uppercase tracking-[0.2em] text-zinc-500">
           {tr(lang, { pt: "Já entreguei projetos para", en: "I've already delivered projects for" })}
         </span>
       </div>

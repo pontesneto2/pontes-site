@@ -14,8 +14,8 @@ import SiteFooter from "@/components/SiteFooter";
 import SegmentedProgress from "@/components/SegmentedProgress";
 import Preloader from "@/components/Preloader";
 import LogosMarquee from "@/components/LogosMarquee";
+import ExperienceTimeline from "@/components/ExperienceTimeline";
 import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
-import { EXPERIENCE } from "@/lib/experience-data";
 import type { BlogPostMeta } from "@/lib/blog";
 import {
   Code,
@@ -24,8 +24,6 @@ import {
   Lock,
   Building2,
   Briefcase,
-  MapPin,
-  ChevronLeft,
   Clock,
   Smartphone,
   Users,
@@ -176,7 +174,7 @@ function CategoryPill({ label }: { label: string }) {
   const className = config?.className ?? "bg-white/10 border-white/20 text-violet-200";
   return (
     <span
-      className={`inline-flex items-center gap-1.5 w-fit px-2 py-0.5 rounded-md text-[10px] font-medium border ${className}`}
+      className={`inline-flex items-center gap-1.5 w-fit px-2 py-0.5 rounded-md text-[13px] font-medium border ${className}`}
     >
       <Icon className="h-3 w-3" />
       {label}
@@ -199,6 +197,7 @@ export default function Page() {
   const t = (v: Bilingual) => tr(lang, v);
 
   const [isMobile, setIsMobile] = useState(false);
+  const [techBioExpanded, setTechBioExpanded] = useState(false);
   const [recentPosts, setRecentPosts] = useState<{ pt: BlogPostMeta[]; en: BlogPostMeta[] } | null>(null);
 
   useEffect(() => {
@@ -273,24 +272,6 @@ export default function Page() {
         delay: i * (isMobile ? 0.08 : 0.06),
       },
     }),
-  };
-
-  const staggerSequential = {
-    hidden: {},
-    show: {
-      transition: {
-        staggerChildren: isMobile ? 0.16 : 0.18,
-        delayChildren: 0.05,
-      },
-    },
-  };
-
-  const fadeInItem = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: { duration: 0.9, ease: easeOut },
-    },
   };
 
   const fadeInHeading = {
@@ -809,7 +790,6 @@ export default function Page() {
     return () => cancelAnimationFrame(raf);
   }, [projectFilter]);
 
-  const experience = EXPERIENCE;
 
   const renderProjectCta = (project: (typeof featuredProjects)[number]) => {
     const ctaClass =
@@ -975,8 +955,8 @@ export default function Page() {
 
           {/* FAIXA DE CREDIBILIDADE */}
           <section className="border-b border-white/5 bg-zinc-900/50 py-10 sm:py-12">
-            <div className="mx-auto max-w-6xl px-6 text-center">
-              <span className="mb-9 block font-mono text-[10px] font-medium uppercase tracking-[0.2em] text-zinc-500">
+            <div className="mx-auto max-w-6xl px-6 xs:px-7 sm:px-8 text-center">
+              <span className="mb-9 block font-mono text-[13px] font-medium uppercase tracking-[0.2em] text-zinc-500">
                 {t({ pt: "Sistemas em produção para", en: "Systems in production for" })}
               </span>
             </div>
@@ -988,13 +968,13 @@ export default function Page() {
             id="intro"
             className="relative py-14 border-t border-white/5"
           >
-            <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center">
+            <div className="mx-auto max-w-3xl px-4 xs:px-5 sm:px-6 lg:px-8 text-center">
               <motion.p
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 viewport={viewportSettings}
                 transition={{ duration: 1.1, ease: easeOut }}
-                className="text-white text-base sm:text-lg leading-relaxed"
+                className="mx-auto max-w-[68ch] text-white text-base sm:text-lg leading-relaxed"
               >
                 {t({
                   pt: "Graduado em Análise e Desenvolvimento de Sistemas pela Universidade Farias Brito, em Fortaleza. Pós Graduado em Engenharia de Software com ênfase em DevOps. Especializado em Desenvolvimento Full Stack pela Digital College. Especializado em UX/UI e design de Produtos Digitais pela EBAC.",
@@ -1014,7 +994,7 @@ export default function Page() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="GitHub"
-                  className="text-zinc-400 hover:text-white hover:scale-110 transition-all duration-300"
+                  className="inline-flex h-11 w-11 items-center justify-center text-zinc-400 hover:text-white hover:scale-110 transition-all duration-300"
                 >
                   <Github className="h-6 w-6" />
                 </a>
@@ -1023,7 +1003,7 @@ export default function Page() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="LinkedIn"
-                  className="text-zinc-400 hover:text-violet-300 hover:scale-110 transition-all duration-300"
+                  className="inline-flex h-11 w-11 items-center justify-center text-zinc-400 hover:text-violet-300 hover:scale-110 transition-all duration-300"
                 >
                   <Linkedin className="h-6 w-6" />
                 </a>
@@ -1046,7 +1026,7 @@ export default function Page() {
                       initial="hidden"
                       whileInView="show"
                       viewport={viewportSettings}
-                      className="text-[2.1rem] sm:text-[2.6rem] md:text-[3.30rem] font-black leading-tight text-white"
+                      className="text-[2.1rem] xs:text-[2.3rem] sm:text-[2.6rem] md:text-[3.30rem] font-black leading-tight text-white"
                       style={{ fontFamily: "var(--font-space-grotesk)" }}
                     >
                       <span className="lg:whitespace-nowrap">
@@ -1064,7 +1044,7 @@ export default function Page() {
                       whileInView={{ opacity: 1 }}
                       viewport={viewportSettings}
                       transition={{ duration: 1.1, ease: easeOut }}
-                      className="mt-5 space-y-4 text-zinc-300 text-[17px] sm:text-[16px] leading-relaxed"
+                      className="mt-5 max-w-[68ch] space-y-4 text-zinc-300 text-[17px] sm:text-[16px] leading-relaxed"
                     >
                       <p>
                         {t({
@@ -1072,7 +1052,7 @@ export default function Page() {
                           en: "I work as a Software Engineer with over 6 years of experience in Web/Mobile development, DevOps, and I'm an enthusiast of UX/UI operations. I have a multidisciplinary profile and work on building end-to-end digital solutions.",
                         })}
                       </p>
-                      <p>
+                      <p className={techBioExpanded ? undefined : "hidden md:block"}>
                         {t({
                           pt: "Ao longo da minha trajetória, participei de projetos em sistemas legado para o setor público, construções de soluções digitais do zero no setor privado e experiência internacional. Toda essa trajetória me permitiu atuar em distintos produtos digitais de diferentes complexidades.",
                           en: "Throughout my career, I've worked on legacy system projects in the public sector, built digital solutions from scratch in the private sector, and gained international experience. That journey let me work on distinct digital products of different complexities.",
@@ -1090,6 +1070,16 @@ export default function Page() {
                           })}
                         </span>
                       </p>
+                      <button
+                        type="button"
+                        onClick={() => setTechBioExpanded((v) => !v)}
+                        aria-expanded={techBioExpanded}
+                        className="min-h-[44px] flex items-center text-sm font-medium text-violet-300 hover:text-violet-200 transition-colors md:hidden"
+                      >
+                        {techBioExpanded
+                          ? t({ pt: "Ler menos", en: "Read less" })
+                          : t({ pt: "Ler mais", en: "Read more" })}
+                      </button>
                     </motion.div>
 
                     <motion.div
@@ -1149,12 +1139,12 @@ export default function Page() {
                   initial="hidden"
                   whileInView="show"
                   viewport={viewportSettings}
-                  className="text-[2.1rem] sm:text-[2.6rem] md:text-[3.30rem] font-black text-white"
+                  className="text-[2.1rem] xs:text-[2.3rem] sm:text-[2.6rem] md:text-[3.30rem] font-black text-white"
                   style={{ fontFamily: "var(--font-space-grotesk)" }}
                 >
                   {t({ pt: "Projetos em Destaque", en: "Featured Projects" })}
                 </motion.h2>
-                <p className="text-[10px] font-light uppercase tracking-[0.2em] text-zinc-500 md:text-right md:max-w-[220px]">
+                <p className="text-[13px] font-light uppercase tracking-[0.2em] text-zinc-500 md:text-right md:max-w-[220px]">
                   {t({
                     pt: "Portfólio — projetos públicos, visíveis a qualquer pessoa na web",
                     en: "Portfolio — public projects, visible to anyone on the web",
@@ -1180,7 +1170,7 @@ export default function Page() {
                         featuredScrollRef.current?.scrollTo({ left: 0 });
                       }}
                       aria-pressed={projectFilter === null}
-                      className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-colors ${
+                      className={`min-h-[44px] px-4 py-2.5 rounded-full text-xs font-medium border transition-colors ${
                         projectFilter === null
                           ? "bg-gradient-to-r from-violet-600 to-fuchsia-500 border-transparent text-white"
                           : "border-white/15 text-zinc-400 hover:text-zinc-200 hover:border-white/25"
@@ -1240,7 +1230,7 @@ export default function Page() {
                           {project.badge && (
                             <div className="absolute -right-16 top-8 z-20 w-56 rotate-45 pointer-events-none">
                               <span
-                                className={`block py-1 text-center whitespace-nowrap text-[10px] font-bold uppercase leading-none tracking-wide text-zinc-950 shadow-sm shadow-black/30 ${
+                                className={`block py-1 text-center whitespace-nowrap text-[13px] font-bold uppercase leading-none tracking-wide text-zinc-950 shadow-sm shadow-black/30 ${
                                   project.badgeColor === "sky" ? "bg-sky-400" : "bg-amber-400"
                                 }`}
                               >
@@ -1278,7 +1268,7 @@ export default function Page() {
                                         <Icon className="h-4 w-4 text-fuchsia-300" />
                                         {t(stat.value)}
                                       </div>
-                                      <span className="text-[11px] text-zinc-300 leading-tight">
+                                      <span className="text-[13px] text-zinc-300 leading-tight">
                                         {t(stat.label)}
                                       </span>
                                     </div>
@@ -1295,7 +1285,7 @@ export default function Page() {
                               {project.title}
                             </h3>
                             {t(project.subtitle) && (
-                              <span className="inline-block text-[11px] text-amber-300 font-medium mt-1.5 sm:mt-1">
+                              <span className="inline-block text-[13px] text-amber-300 font-medium mt-1.5 sm:mt-1">
                                 {t(project.subtitle)}
                               </span>
                             )}
@@ -1310,7 +1300,7 @@ export default function Page() {
                                   return (
                                     <div
                                       key={i}
-                                      className="flex items-center gap-1.5 text-[11px] text-zinc-400"
+                                      className="flex items-center gap-1.5 text-[13px] text-zinc-400"
                                     >
                                       <Icon className="h-3 w-3 text-violet-300" />
                                       <span>{t(h.value)}</span>
@@ -1358,87 +1348,12 @@ export default function Page() {
                 initial="hidden"
                 whileInView="show"
                 viewport={viewportSettings}
-                className="text-[2.1rem] sm:text-[2.6rem] md:text-[3.30rem] font-black text-white mb-12 text-center"
+                className="text-[2.1rem] xs:text-[2.3rem] sm:text-[2.6rem] md:text-[3.30rem] font-black text-white mb-12 text-center"
                 style={{ fontFamily: "var(--font-space-grotesk)" }}
               >
                 {t({ pt: "Trajetória Profissional", en: "Professional Journey" })}
               </motion.h2>
-              <motion.div
-                variants={staggerSequential}
-                initial="hidden"
-                whileInView="show"
-                viewport={viewportSettings}
-                className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-12"
-              >
-                {experience.map((exp, index) => {
-                  const isLatest = index === 0;
-                  return (
-                  <motion.div
-                    key={exp.company}
-                    variants={fadeInItem}
-                    className="relative"
-                  >
-                    <div className="flex items-center gap-2 mb-3">
-                      {isLatest ? (
-                        <span className="relative inline-flex h-2.5 w-2.5 shrink-0 rounded-full bg-violet-400" />
-                      ) : (
-                        <ChevronLeft className="h-3.5 w-3.5 text-violet-400/50 shrink-0 rotate-90 md:rotate-0" />
-                      )}
-                      <div
-                        className={`h-px flex-1 bg-gradient-to-l ${
-                          isLatest ? "from-violet-400/70" : "from-violet-400/30"
-                        } to-transparent`}
-                      />
-                    </div>
-                    <div className="flex items-start justify-between gap-3 mb-1">
-                      <h4 className="font-semibold text-sm text-white flex-1 min-w-0 break-words">
-                        {exp.company}
-                      </h4>
-                      <div className="flex items-center gap-2 shrink-0">
-                        <span className="text-[8px] text-violet-400 bg-violet-500/10 px-1.5 py-[2px] rounded border border-violet-500/20 whitespace-nowrap font-semibold">
-                          {exp.period}
-                        </span>
-                        {isLatest ? (
-                          <span className="text-[8px] text-violet-300 bg-violet-500/10 px-1.5 py-[2px] rounded border border-violet-500/20 whitespace-nowrap font-semibold">
-                            {t({ pt: "Mais recente", en: "Most recent" })}
-                          </span>
-                        ) : null}
-                        {exp.remote ? (
-                          <span className="text-[8px] text-fuchsia-300 bg-fuchsia-500/10 px-1.5 py-[2px] rounded border border-fuchsia-500/20 whitespace-nowrap font-semibold">
-                            {t({ pt: "Remoto", en: "Remote" })}
-                          </span>
-                        ) : null}
-                        {exp.languages ? (
-                          <span className="text-[8px] text-zinc-300 bg-white/5 px-1.5 py-[2px] rounded border border-white/10 whitespace-nowrap font-semibold">
-                            {exp.languages}
-                          </span>
-                        ) : null}
-                        {exp.contractType ? (
-                          <span className="text-[8px] text-zinc-300 bg-white/5 px-1.5 py-[2px] rounded border border-white/10 whitespace-nowrap font-semibold">
-                            {t(exp.contractType)}
-                          </span>
-                        ) : null}
-                      </div>
-                    </div>
-                    <p className="text-xs text-violet-300 leading-relaxed">
-                      <Briefcase className="inline h-3 w-3 -mt-0.5 mr-1" />
-                      {t(exp.role)}
-                    </p>
-                    <p className="text-xs text-violet-300 leading-relaxed mt-1">
-                      <MapPin className="inline h-3 w-3 -mt-0.5 mr-1" />
-                      {exp.location}
-                    </p>
-                    {exp.startRole ? (
-                      <div className="text-[10px] text-zinc-400 mt-2 flex items-center gap-2">
-                        <span className="truncate">
-                          {t({ pt: "Cargo Inicial", en: "Starting Role" })}: {t(exp.startRole)}
-                        </span>
-                      </div>
-                    ) : null}
-                  </motion.div>
-                  );
-                })}
-              </motion.div>
+              <ExperienceTimeline />
             </div>
           </section>
 
@@ -1503,7 +1418,7 @@ export default function Page() {
                         </div>
                         <div className="min-w-0">
                           <p className="text-sm font-semibold text-white truncate">Francisco Pontes</p>
-                          <p className="text-[11px] text-zinc-400 truncate">
+                          <p className="text-[13px] text-zinc-400 truncate">
                             {t({ pt: "Sr Software Engineer | Mobile Dev · 1 m", en: "Sr Software Engineer | Mobile Dev · 1 mo" })}
                           </p>
                         </div>
@@ -1541,7 +1456,7 @@ export default function Page() {
             id="about"
             className="relative py-14"
           >
-            <div className="mx-auto max-w-6xl px-6 sm:px-8 lg:px-12">
+            <div className="mx-auto max-w-6xl px-6 xs:px-7 sm:px-8 lg:px-12 2xl:max-w-8xl">
               <div className="relative">
                 <div className="relative z-10 grid md:grid-cols-2 gap-10 p-8 md:p-12 items-center">
                   {/* Coluna da imagem */}
@@ -1700,7 +1615,7 @@ export default function Page() {
           {/* BLOG - chamada discreta para os posts recentes */}
           {recentPosts && recentPosts[lang].length > 0 && (
             <section className="relative py-10 border-t border-white/5">
-              <div className="mx-auto max-w-6xl px-6 sm:px-8 lg:px-12">
+              <div className="mx-auto max-w-6xl px-6 xs:px-7 sm:px-8 lg:px-12 2xl:max-w-8xl">
                 <div className="flex items-center justify-between mb-6">
                   <h3 className="text-base font-semibold uppercase tracking-wider text-fuchsia-400">
                     {t({ pt: "Últimos posts do meu Blog", en: "Latest posts from my blog" })}
@@ -1724,7 +1639,7 @@ export default function Page() {
                         {post.tags.slice(0, 2).map((tag) => (
                           <span
                             key={tag}
-                            className="text-[10px] px-1.5 py-0.5 rounded border border-white/10 text-zinc-400"
+                            className="text-[13px] px-1.5 py-0.5 rounded border border-white/10 text-zinc-400"
                           >
                             {tag}
                           </span>
@@ -1733,7 +1648,7 @@ export default function Page() {
                       <h4 className="text-sm font-semibold text-zinc-100 group-hover:text-white transition-colors line-clamp-2">
                         {post.title}
                       </h4>
-                      <p className="mt-1.5 text-[11px] text-zinc-500">
+                      <p className="mt-1.5 text-[13px] text-zinc-500">
                         {post.readingMinutes} {t({ pt: "min de leitura", en: "min read" })}
                       </p>
                     </Link>

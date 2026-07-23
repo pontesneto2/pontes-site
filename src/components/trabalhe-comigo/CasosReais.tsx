@@ -111,7 +111,7 @@ export default function CasosReais() {
                       <div className="bg-gradient-to-r from-violet-500 to-fuchsia-500 bg-clip-text text-lg font-semibold text-transparent">
                         {metric.value}
                       </div>
-                      <div className="font-mono text-[11px] text-zinc-400">{t(metric.label)}</div>
+                      <div className="font-mono text-[13px] text-zinc-400">{t(metric.label)}</div>
                     </div>
                   ))}
                 </div>

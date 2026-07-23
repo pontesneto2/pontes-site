@@ -289,7 +289,7 @@ function PosterShot() {
           />
         </div>
       </div>
-      <div className="absolute -bottom-4 -left-4 rounded-2xl bg-white text-violet-700 text-[11px] font-semibold px-3 py-2 shadow-xl">
+      <div className="absolute -bottom-4 -left-4 rounded-2xl bg-white text-violet-700 text-[13px] font-semibold px-3 py-2 shadow-xl">
         Luiz Mendez · Ucopiloto
       </div>
     </div>
@@ -329,7 +329,7 @@ function OnboardingShot() {
         </div>
         <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/60 to-transparent pointer-events-none" />
       </div>
-      <div className="absolute -top-3 -right-3 rounded-full bg-violet-500/15 border border-violet-400/30 text-violet-200 text-[10px] font-semibold px-3 py-1.5 backdrop-blur">
+      <div className="absolute -top-3 -right-3 rounded-full bg-violet-500/15 border border-violet-400/30 text-violet-200 text-[13px] font-semibold px-3 py-1.5 backdrop-blur">
         1/3 · Cadastro
       </div>
     </div>
@@ -465,7 +465,7 @@ function useSectionsData(lang: "pt" | "en") {
 
           <div className="mt-8 rounded-2xl bg-white/[0.02] border border-white/[0.06] p-6 sm:p-8">
             <div className="flex items-center gap-2 mb-6">
-              <span className="text-[10px] uppercase tracking-[0.2em] text-zinc-500">
+              <span className="text-[13px] uppercase tracking-[0.2em] text-zinc-500">
                 {t({ pt: "Do rascunho ao produto", en: "From sketch to product" })}
               </span>
             </div>
@@ -593,7 +593,7 @@ function useSectionsData(lang: "pt" | "en") {
 
           <div className="mt-8 rounded-2xl bg-white/[0.02] border border-white/[0.06] p-6 sm:p-8">
             <div className="flex items-center gap-2 mb-6">
-              <span className="text-[10px] uppercase tracking-[0.2em] text-zinc-500">
+              <span className="text-[13px] uppercase tracking-[0.2em] text-zinc-500">
                 {t({ pt: "Telas reais em produção", en: "Real screens in production" })}
               </span>
             </div>

@@ -81,9 +81,9 @@ function SelectField({
   const filled = value !== "";
   return (
     <label className="block">
-      <span className="mb-2 flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-wide text-zinc-400">
+      <span className="mb-2 flex items-center gap-1.5 font-mono text-[13px] uppercase tracking-wide text-zinc-400">
         {step !== undefined && (
-          <span className="flex h-[18px] w-[18px] items-center justify-center rounded-[5px] bg-gradient-to-br from-violet-500 to-fuchsia-500 text-[10px] font-semibold text-white">
+          <span className="flex h-[18px] w-[18px] items-center justify-center rounded-[5px] bg-gradient-to-br from-violet-500 to-fuchsia-500 text-[13px] leading-none font-semibold text-white">
             {step}
           </span>
         )}
@@ -261,8 +261,8 @@ export default function GeradorProposta() {
             </div>
 
             <div className="mt-6">
-              <span className="mb-2 flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-wide text-zinc-400">
-                <span className="flex h-[18px] w-[18px] items-center justify-center rounded-[5px] bg-gradient-to-br from-violet-500 to-fuchsia-500 text-[10px] font-semibold text-white">
+              <span className="mb-2 flex items-center gap-1.5 font-mono text-[13px] uppercase tracking-wide text-zinc-400">
+                <span className="flex h-[18px] w-[18px] items-center justify-center rounded-[5px] bg-gradient-to-br from-violet-500 to-fuchsia-500 text-[13px] leading-none font-semibold text-white">
                   4
                 </span>
                 {t({ pt: "Descreva seu projeto", en: "Describe your project" })}
@@ -282,7 +282,7 @@ export default function GeradorProposta() {
                 }`}
               />
               {description.length > 0 && description.trim().length < 20 && (
-                <span className="mt-1.5 block text-right font-mono text-[11px] text-fuchsia-400/80">
+                <span className="mt-1.5 block text-right font-mono text-[13px] text-fuchsia-400/80">
                   {t({
                     pt: `Faltam ${20 - description.trim().length} caracteres`,
                     en: `${20 - description.trim().length} characters to go`,
@@ -313,7 +313,7 @@ export default function GeradorProposta() {
               {status === "loading" && <LoadingEtapas />}
             </div>
 
-            <p className="mt-5 font-mono text-[11px] text-zinc-400">
+            <p className="mt-5 font-mono text-[13px] text-zinc-400">
               {t({
                 pt: "* Estimativa preliminar gerada por IA. Os valores são uma faixa de referência, não uma cotação fechada. Cada projeto vira uma proposta personalizada depois de eu entender o contexto.",
                 en: "* Preliminary AI-generated estimate. The figures are a reference range, not a closed quote. Every project becomes a personalized proposal once I understand the context.",

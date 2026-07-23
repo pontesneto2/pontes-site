@@ -254,7 +254,7 @@ export default function Hero() {
 
       <FloatingTechIcons />
 
-      <div className="magenta-glow relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="magenta-glow relative z-10 mx-auto w-full max-w-7xl px-4 xs:px-5 sm:px-6 lg:px-8">
         {/* Conteúdo de texto — alinhado à esquerda em todas as larguras; desktop centraliza na vertical */}
         <div className="w-full pt-24 sm:pt-28 lg:pt-0 lg:max-w-[560px] text-left">
           <motion.span
@@ -296,11 +296,10 @@ export default function Hero() {
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.26, ease: easeOut }}
-            className="mt-3 whitespace-normal lowercase"
+            className="mt-3 whitespace-normal lowercase text-[4rem] xs:text-[4.3rem] sm:text-[clamp(4rem,7vw+1rem,6.5rem)]"
             style={{
               fontFamily: "var(--font-jetbrains-mono)",
               fontWeight: 800,
-              fontSize: "clamp(4rem, 7vw + 1rem, 6.5rem)",
               lineHeight: 0.88,
               letterSpacing: "-0.045em",
               color: "#ffffff",
@@ -326,7 +325,7 @@ export default function Hero() {
         initial={{ opacity: 0, scale: 0.96 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.9, delay: 0.15, ease: easeOut }}
-        className="relative z-10 mt-6 lg:mt-0 flex-1 lg:flex-none min-h-[260px] w-full lg:absolute lg:inset-y-0 lg:right-0 lg:w-[min(46vw,640px)]"
+        className="relative z-10 mt-6 lg:mt-0 flex-1 lg:flex-none min-h-[260px] w-full lg:absolute lg:bottom-0 lg:right-0 lg:top-auto lg:aspect-[866/1152] lg:h-auto lg:max-h-[88vh] lg:w-[min(46vw,640px)]"
       >
         <div className="absolute inset-0 mx-auto w-full max-w-[420px] sm:max-w-[480px] lg:mx-0 lg:max-w-none">
           <Image

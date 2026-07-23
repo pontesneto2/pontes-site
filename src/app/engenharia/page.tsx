@@ -75,7 +75,7 @@ export default function EngenhariaPage() {
     <>
       <SiteHeader />
       <main className="min-h-screen bg-[#0a0a0d] text-zinc-200">
-        <div className="mx-auto max-w-3xl px-4 sm:px-6 py-14">
+        <div className="mx-auto max-w-3xl px-4 xs:px-5 sm:px-6 py-14">
           <h1 className="text-3xl font-bold text-white">{t({ pt: "Engenharia deste site", en: "Engineering behind this site" })}</h1>
           <p className="mt-3 text-zinc-400 leading-relaxed">
             {t({
@@ -118,7 +118,7 @@ export default function EngenhariaPage() {
                       >
                         {row.value ?? "–"}
                       </div>
-                      <div className="mt-1 text-[11px] text-zinc-500">{t(row.label)}</div>
+                      <div className="mt-1 text-[13px] text-zinc-500">{t(row.label)}</div>
                     </div>
                   ))}
                 </div>

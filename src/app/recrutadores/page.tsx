@@ -223,7 +223,7 @@ export default function RecrutadoresPage() {
       />
       <main className="min-h-screen bg-[#0a0a0d] text-zinc-200">
         <motion.div
-          className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12 py-14"
+          className="mx-auto max-w-7xl px-6 xs:px-7 sm:px-8 lg:px-12 2xl:max-w-8xl py-14"
           variants={staggerContainer}
           initial="hidden"
           animate="show"
@@ -295,7 +295,7 @@ export default function RecrutadoresPage() {
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {SKILL_GROUPS.map((group) => (
                 <div key={group.label.pt}>
-                  <div className="text-[11px] uppercase tracking-wide text-zinc-500 mb-1">{t(group.label)}</div>
+                  <div className="text-[13px] uppercase tracking-wide text-zinc-500 mb-1">{t(group.label)}</div>
                   <p className="text-sm text-zinc-300 leading-relaxed">{group.items.join(" · ")}</p>
                 </div>
               ))}
@@ -319,7 +319,7 @@ export default function RecrutadoresPage() {
                       <ArrowUpRight className="h-3.5 w-3.5 text-zinc-500 transition-colors group-hover:text-violet-300" />
                     </div>
                     <p className="mt-1.5 text-xs text-zinc-400 leading-relaxed">{t(project.blurb)}</p>
-                    <p className="mt-2 text-[11px] text-zinc-500">{project.tags.join(" · ")}</p>
+                    <p className="mt-2 text-[13px] text-zinc-500">{project.tags.join(" · ")}</p>
                   </Link>
                 </motion.div>
               ))}
@@ -352,7 +352,7 @@ export default function RecrutadoresPage() {
                     <span className="text-xs font-semibold text-zinc-100 truncate">{FEATURED_TESTIMONIAL.name}</span>
                     <Linkedin className="h-3 w-3 text-[#0A66C2] shrink-0" />
                   </div>
-                  <p className="text-[11px] text-zinc-500 truncate">{FEATURED_TESTIMONIAL.role}</p>
+                  <p className="text-[13px] text-zinc-500 truncate">{FEATURED_TESTIMONIAL.role}</p>
                 </div>
               </div>
             </motion.div>

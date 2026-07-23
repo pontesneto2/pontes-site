@@ -78,7 +78,7 @@ export default function BlogHero({ title, description, date, tags, readingMinute
             {tags.map((tag) => (
               <span
                 key={tag}
-                className="rounded-full border border-violet-500/25 bg-violet-500/[0.08] px-3 py-1 text-[11px] font-medium text-violet-300"
+                className="rounded-full border border-violet-500/25 bg-violet-500/[0.08] px-3 py-1 text-[13px] font-medium text-violet-300"
               >
                 {tag}
               </span>

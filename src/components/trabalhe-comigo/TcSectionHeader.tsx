@@ -41,7 +41,7 @@ export default function TcSectionHeader({
     <div className="mx-auto mb-12 max-w-6xl px-4 text-center">
       <div className="mb-4 inline-flex items-center gap-2">
         <span className="h-2.5 w-2.5 rounded-[3px] bg-gradient-to-br from-orange-500 to-amber-400" />
-        <span className="bg-gradient-to-r from-orange-500 to-amber-400 bg-clip-text font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-transparent">
+        <span className="bg-gradient-to-r from-orange-500 to-amber-400 bg-clip-text font-mono text-[13px] font-medium uppercase tracking-[0.18em] text-transparent">
           {t(label)}
         </span>
       </div>
