@@ -1,7 +1,9 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { motion } from "framer-motion";
 import {
   Download,
   Mail,
@@ -15,17 +17,61 @@ import {
   Languages,
   ArrowUpRight,
   MessageSquare,
+  Sparkles,
+  Check,
+  Quote,
 } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa6";
-import SiteHeader from "@/components/SiteHeader";
+import SiteHeader, { type SearchEntry } from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
 import { CV_URL_PT, CV_URL_EN } from "@/lib/constants";
+import { SKILL_NAMES } from "@/components/SkillsTools";
+import testimonials from "@/data/testimonials.json";
+
+const NAV_LINKS = [
+  { href: "/#intro", label: { pt: "Sobre", en: "About" } },
+  { href: "/#projects", label: { pt: "Projetos", en: "Projects" } },
+  { href: "/#about", label: { pt: "Contato", en: "Contact" } },
+  { href: "/blog", label: { pt: "Blog", en: "Blog" } },
+];
+
+const SEARCH_SECTIONS = [
+  { href: "/", label: { pt: "Início", en: "Home" } },
+  { href: "/#intro", label: { pt: "Sobre", en: "About" } },
+  { href: "/#skills-tools", label: { pt: "Skills & Tools", en: "Skills & Tools" } },
+  { href: "/#projects", label: { pt: "Projetos", en: "Projects" } },
+  { href: "/#experience", label: { pt: "Trajetória", en: "Journey" } },
+  { href: "/#about", label: { pt: "Contato", en: "Contact" } },
+];
+
+const IMPACT_STATS: Array<{ value: string; label: Bilingual }> = [
+  { value: "30+", label: { pt: "Plataformas entregues", en: "Platforms delivered" } },
+  { value: "99.7%", label: { pt: "Uptime\nmédio", en: "Average\nuptime" } },
+  { value: "6+", label: { pt: "Anos de\nexperiência", en: "Years of\nexperience" } },
+];
+
+const SERVICES: Bilingual[] = [
+  { pt: "Aplicativos mobile", en: "Mobile apps" },
+  { pt: "ERP", en: "ERP" },
+  { pt: "SaaS", en: "SaaS" },
+  { pt: "CRM", en: "CRM" },
+  { pt: "Soluções digitais", en: "Digital solutions" },
+  { pt: "Websites", en: "Websites" },
+  { pt: "Landing pages", en: "Landing pages" },
+  { pt: "Integrações", en: "Integrations" },
+  { pt: "Monitoramento", en: "Monitoring" },
+  { pt: "Engenharia de infra", en: "Infra engineering" },
+  { pt: "E muito mais", en: "And much more" },
+];
 
 const SKILL_GROUPS: Array<{ label: Bilingual; items: string[] }> = [
-  { label: { pt: "Frontend", en: "Frontend" }, items: ["React", "Next.js", "TypeScript", "UX/UI"] },
+  { label: { pt: "Frontend", en: "Frontend" }, items: ["React", "Next.js", "Angular", "TypeScript", "UX/UI"] },
   { label: { pt: "Mobile", en: "Mobile" }, items: ["React Native", "Expo"] },
-  { label: { pt: "Backend", en: "Backend" }, items: ["Node.js", "NestJS", "PostgreSQL", "Prisma"] },
+  {
+    label: { pt: "Backend", en: "Backend" },
+    items: ["Node.js", "NestJS", "Java (Spring Boot)", "C# (.NET)", "PHP (Laravel)", "PostgreSQL"],
+  },
   { label: { pt: "DevOps & Infra", en: "DevOps & Infra" }, items: ["Docker", "Kubernetes", "Grafana", "Prometheus"] },
 ];
 
@@ -65,8 +111,6 @@ const FACTS: Array<{ icon: typeof Briefcase; label: Bilingual; value: Bilingual 
   },
 ];
 
-const CLIENTS = ["Governo do Ceará", "FlixBus", "FedEx"];
-
 const FLAGSHIP_PROJECTS: Array<{
   title: string;
   caseStudy: string;
@@ -92,34 +136,110 @@ const FLAGSHIP_PROJECTS: Array<{
     tags: ["React Native", "Next.js", "NestJS", "Docker"],
   },
   {
-    title: "iMidooh",
-    caseStudy: "/case/imidooh",
+    title: "Sistema Escolar",
+    caseStudy: "/case/sistema-escolar-policia",
     blurb: {
-      pt: "Produto próprio com arquitetura aprofundada de mídia e conteúdo, em produção.",
-      en: "In-house product with a deep media and content architecture, in production.",
+      pt: "Sistema de gestão escolar para o 2º Colégio da Polícia Militar do Ceará, com 2.350+ usuários ativos.",
+      en: "School management system for the 2nd Military Police School of Ceará, with 2,350+ active users.",
     },
-    tags: ["Next.js", "Node.js", "PostgreSQL"],
+    tags: ["PHP", "Laravel", ".NET", "Angular"],
   },
 ];
+
+const FEATURED_TESTIMONIAL = testimonials.find((item) => item.name === "Everton Araújo") ?? testimonials[0];
+
+const EASE_OUT = [0.16, 1, 0.3, 1] as const;
+
+const staggerContainer = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.08, delayChildren: 0.05 } },
+};
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 16 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE_OUT } },
+};
+
+function IconLinkButton({
+  href,
+  external,
+  label,
+  onClick,
+  children,
+}: {
+  href: string;
+  external?: boolean;
+  label: string;
+  onClick?: () => void;
+  children: React.ReactNode;
+}) {
+  return (
+    <a
+      href={href}
+      onClick={onClick}
+      target={external ? "_blank" : undefined}
+      rel={external ? "noopener noreferrer" : undefined}
+      aria-label={label}
+      title={label}
+      className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-zinc-300 transition-all hover:border-violet-400/40 hover:bg-violet-500/10 hover:text-violet-300"
+    >
+      {children}
+    </a>
+  );
+}
 
 export default function RecrutadoresPage() {
   const { lang } = useLanguage();
   const t = (v: Bilingual) => tr(lang, v);
+  const [emailCopied, setEmailCopied] = useState(false);
+
+  const searchIndex: SearchEntry[] = [
+    ...SEARCH_SECTIONS.map((link) => ({
+      label: t(link.label),
+      href: link.href,
+      group: { pt: "Seção", en: "Section" },
+    })),
+    ...SKILL_NAMES.map((name) => ({
+      label: name,
+      href: "/#skills-tools",
+      group: { pt: "Skill", en: "Skill" },
+    })),
+  ];
+
+  const copyEmail = () => {
+    navigator.clipboard.writeText("contato@fcopts.com.br").then(() => {
+      setEmailCopied(true);
+      setTimeout(() => setEmailCopied(false), 2000);
+    });
+  };
 
   return (
     <>
-      <SiteHeader />
+      <SiteHeader
+        navLinks={NAV_LINKS}
+        searchIndex={searchIndex}
+        cta={{ label: { pt: "Peça um orçamento", en: "Get a quote" }, href: "/trabalhe-comigo" }}
+        ctaBadge={{ pt: "Novo", en: "New" }}
+      />
       <main className="min-h-screen bg-[#0a0a0d] text-zinc-200">
-        <div className="mx-auto max-w-3xl px-4 sm:px-6 py-14">
-          <span className="inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs border border-emerald-400/30 bg-emerald-500/10 text-emerald-300">
+        <motion.div
+          className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12 py-14"
+          variants={staggerContainer}
+          initial="hidden"
+          animate="show"
+        >
+          <motion.span
+            variants={fadeUp}
+            className="inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs border border-emerald-400/30 bg-emerald-500/10 text-emerald-300"
+          >
             <span className="relative flex h-1.5 w-1.5">
               <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75 animate-ping" />
               <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
             </span>
             {t({ pt: "Painel para recrutadores", en: "Recruiter panel" })}
-          </span>
+          </motion.span>
 
-          <div className="mt-5 flex items-center gap-4">
+          <motion.div variants={fadeUp} className="mt-5 flex items-center gap-4">
             <div className="relative h-16 w-16 flex-none rounded-full bg-gradient-to-br from-fuchsia-500 via-violet-600 to-violet-800 p-[3px] shadow-[0_0_24px_rgba(147,51,234,0.25)]">
               <div className="relative h-full w-full overflow-hidden rounded-full">
                 <Image src="/pontes-institucional.png" alt="Francisco Pontes" fill sizes="64px" className="object-cover" />
@@ -128,36 +248,51 @@ export default function RecrutadoresPage() {
             <div>
               <h1 className="text-3xl font-bold text-white">Francisco Pontes</h1>
               <p className="text-sm text-violet-300 font-mono">
-                {t({ pt: "Engenheiro de Software Full Stack Sênior", en: "Senior Full Stack Software Engineer" })}
+                {t({ pt: "Engenheiro de Software Senior", en: "Senior Software Engineer" })}
               </p>
             </div>
-          </div>
+          </motion.div>
 
-          <p className="mt-4 text-zinc-400">
-            {t({
-              pt: "Resumo direto do que costuma importar numa triagem inicial: disponibilidade, stack, senioridade e como falar comigo.",
-              en: "A direct summary of what usually matters in an initial screen: availability, stack, seniority and how to reach me.",
-            })}
-          </p>
-
-          <div className="mt-8 grid sm:grid-cols-2 gap-4">
+          <motion.div variants={staggerContainer} className="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {FACTS.map((fact) => (
-              <div key={fact.label.pt} className="rounded-xl border border-white/10 bg-white/[0.02] p-4">
+              <motion.div
+                key={fact.label.pt}
+                variants={fadeUp}
+                whileHover={{ y: -2 }}
+                className="rounded-xl border border-white/10 bg-white/[0.02] p-4 transition-colors hover:border-violet-400/30"
+              >
                 <div className="flex items-center gap-2 text-xs text-zinc-500 mb-1.5">
                   <fact.icon className="h-3.5 w-3.5" />
                   {t(fact.label)}
                 </div>
                 <p className="text-sm text-zinc-100 font-medium">{t(fact.value)}</p>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
 
-          <div className="mt-6 rounded-xl border border-white/10 bg-white/[0.02] p-4">
+          <motion.div variants={fadeUp} className="mt-6 rounded-xl border border-white/10 bg-white/[0.02] p-4">
+            <div className="flex items-center gap-2 text-xs text-zinc-500 mb-3">
+              <Sparkles className="h-3.5 w-3.5" />
+              {t({ pt: "O que eu construo", en: "What I build" })}
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {SERVICES.map((service) => (
+                <span
+                  key={service.pt}
+                  className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-xs text-zinc-300"
+                >
+                  {t(service)}
+                </span>
+              ))}
+            </div>
+          </motion.div>
+
+          <motion.div variants={fadeUp} className="mt-6 rounded-xl border border-white/10 bg-white/[0.02] p-4">
             <div className="flex items-center gap-2 text-xs text-zinc-500 mb-3">
               <Code2 className="h-3.5 w-3.5" />
               {t({ pt: "Skills técnicas", en: "Technical skills" })}
             </div>
-            <div className="grid sm:grid-cols-2 gap-3">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {SKILL_GROUPS.map((group) => (
                 <div key={group.label.pt}>
                   <div className="text-[11px] uppercase tracking-wide text-zinc-500 mb-1">{t(group.label)}</div>
@@ -165,115 +300,136 @@ export default function RecrutadoresPage() {
                 </div>
               ))}
             </div>
-          </div>
+          </motion.div>
 
-          <div className="mt-10">
-            <span className="mb-3 block font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-500 text-center">
-              {t({ pt: "Sistemas em produção para", en: "Systems in production for" })}
-            </span>
-            <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-2 text-sm font-semibold text-zinc-400">
-              {CLIENTS.map((client) => (
-                <span key={client}>{client}</span>
-              ))}
-              <span>{t({ pt: "Institutos e ONGs", en: "Institutes & NGOs" })}</span>
-            </div>
-          </div>
-
-          <div className="mt-10">
+          <motion.div variants={fadeUp} className="mt-10">
             <div className="flex items-center gap-2 text-xs text-zinc-500 mb-3">
               <Briefcase className="h-3.5 w-3.5" />
               {t({ pt: "Projetos em destaque", en: "Flagship projects" })}
             </div>
-            <div className="grid sm:grid-cols-3 gap-3">
+            <motion.div variants={staggerContainer} className="grid sm:grid-cols-3 gap-3">
               {FLAGSHIP_PROJECTS.map((project) => (
-                <Link
-                  key={project.title}
-                  href={project.caseStudy}
-                  className="group rounded-xl border border-white/10 bg-white/[0.02] p-4 transition-colors hover:border-violet-400/40 hover:bg-violet-500/[0.06]"
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm font-semibold text-white">{project.title}</span>
-                    <ArrowUpRight className="h-3.5 w-3.5 text-zinc-500 transition-colors group-hover:text-violet-300" />
-                  </div>
-                  <p className="mt-1.5 text-xs text-zinc-400 leading-relaxed">{t(project.blurb)}</p>
-                  <p className="mt-2 text-[11px] text-zinc-500">{project.tags.join(" · ")}</p>
-                </Link>
+                <motion.div key={project.title} variants={fadeUp} whileHover={{ y: -3 }}>
+                  <Link
+                    href={project.caseStudy}
+                    className="group block h-full rounded-xl border border-white/10 bg-white/[0.02] p-4 transition-colors hover:border-violet-400/40 hover:bg-violet-500/[0.06]"
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-semibold text-white">{project.title}</span>
+                      <ArrowUpRight className="h-3.5 w-3.5 text-zinc-500 transition-colors group-hover:text-violet-300" />
+                    </div>
+                    <p className="mt-1.5 text-xs text-zinc-400 leading-relaxed">{t(project.blurb)}</p>
+                    <p className="mt-2 text-[11px] text-zinc-500">{project.tags.join(" · ")}</p>
+                  </Link>
+                </motion.div>
               ))}
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
-          <div className="mt-10 flex flex-wrap gap-3">
-            <a
+          {FEATURED_TESTIMONIAL && (
+            <motion.div
+              variants={fadeUp}
+              className="relative mt-8 rounded-xl border border-white/10 bg-white/[0.02] p-5"
+            >
+              <Quote className="absolute top-4 right-4 h-5 w-5 text-fuchsia-400/30" />
+              <p className="text-sm text-zinc-200 leading-relaxed max-w-2xl">
+                &ldquo;{t(FEATURED_TESTIMONIAL.text)}&rdquo;
+              </p>
+              <div className="mt-3 flex items-center gap-2.5">
+                <div className="relative h-8 w-8 shrink-0 overflow-hidden rounded-full border border-white/10">
+                  {FEATURED_TESTIMONIAL.photo && (
+                    <Image
+                      src={FEATURED_TESTIMONIAL.photo}
+                      alt={FEATURED_TESTIMONIAL.name}
+                      fill
+                      sizes="32px"
+                      className="object-cover"
+                    />
+                  )}
+                </div>
+                <div className="min-w-0">
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-xs font-semibold text-zinc-100 truncate">{FEATURED_TESTIMONIAL.name}</span>
+                    <Linkedin className="h-3 w-3 text-[#0A66C2] shrink-0" />
+                  </div>
+                  <p className="text-[11px] text-zinc-500 truncate">{FEATURED_TESTIMONIAL.role}</p>
+                </div>
+              </div>
+            </motion.div>
+          )}
+
+          <motion.div variants={fadeUp} className="mt-10 flex flex-wrap justify-center gap-3">
+            <motion.a
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
               href={CV_URL_PT}
               download
               className="inline-flex items-center gap-2 rounded-xl px-4 py-2.5 bg-gradient-to-r from-violet-600 to-fuchsia-500 text-white text-sm font-semibold shadow-lg shadow-fuchsia-700/20"
             >
               <Download className="h-4 w-4" />
               {t({ pt: "Baixar CV (português)", en: "Download résumé (Portuguese)" })}
-            </a>
-            <a
+            </motion.a>
+            <motion.a
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
               href={CV_URL_EN}
               download
               className="inline-flex items-center gap-2 rounded-xl px-4 py-2.5 bg-gradient-to-r from-violet-600 to-fuchsia-500 text-white text-sm font-semibold shadow-lg shadow-fuchsia-700/20"
             >
               <Download className="h-4 w-4" />
               {t({ pt: "Baixar CV (inglês)", en: "Download résumé (English)" })}
-            </a>
-          </div>
+            </motion.a>
+          </motion.div>
 
-          <div className="mt-3 flex flex-wrap gap-3">
-            <Link
-              href="/#about"
-              className="inline-flex items-center gap-2 rounded-xl px-4 py-2.5 border border-white/15 text-zinc-200 hover:bg-white/5 text-sm font-medium transition-colors"
-            >
+          <motion.div variants={fadeUp} className="mt-3 flex flex-wrap justify-center gap-3">
+            <IconLinkButton href="/#about" label={t({ pt: "Formulário de contato", en: "Contact form" })}>
               <MessageSquare className="h-4 w-4" />
-              {t({ pt: "Formulário de contato", en: "Contact form" })}
-            </Link>
-            <a
+            </IconLinkButton>
+            <IconLinkButton
               href="https://github.com/pontesneto2"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-xl px-4 py-2.5 border border-white/15 text-zinc-200 hover:bg-white/5 text-sm font-medium transition-colors"
+              external
+              label={t({ pt: "GitHub", en: "GitHub" })}
             >
               <Github className="h-4 w-4" />
-              GitHub
-            </a>
-            <a
+            </IconLinkButton>
+            <IconLinkButton
               href="https://www.linkedin.com/in/fcopts"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-xl px-4 py-2.5 border border-white/15 text-zinc-200 hover:bg-white/5 text-sm font-medium transition-colors"
+              external
+              label={t({ pt: "LinkedIn", en: "LinkedIn" })}
             >
               <Linkedin className="h-4 w-4" />
-              LinkedIn
-            </a>
-            <a
+            </IconLinkButton>
+            <IconLinkButton
               href="https://wa.me/5585981888896"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-xl px-4 py-2.5 border border-white/15 text-zinc-200 hover:bg-white/5 text-sm font-medium transition-colors"
+              external
+              label={t({ pt: "WhatsApp", en: "WhatsApp" })}
             >
               <FaWhatsapp className="h-4 w-4" />
-              WhatsApp
-            </a>
-            <a
-              href="mailto:contato@fcopts.com.br"
-              className="inline-flex items-center gap-2 rounded-xl px-4 py-2.5 border border-white/15 text-zinc-200 hover:bg-white/5 text-sm font-medium transition-colors"
+            </IconLinkButton>
+            <button
+              type="button"
+              onClick={copyEmail}
+              aria-label={t({ pt: "Copiar e-mail", en: "Copy email" })}
+              title={
+                emailCopied
+                  ? t({ pt: "E-mail copiado!", en: "Email copied!" })
+                  : t({ pt: "Copiar e-mail", en: "Copy email" })
+              }
+              className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-zinc-300 transition-all hover:border-violet-400/40 hover:bg-violet-500/10 hover:text-violet-300"
             >
-              <Mail className="h-4 w-4" />
-              contato@fcopts.com.br
-            </a>
-          </div>
+              {emailCopied ? <Check className="h-4 w-4 text-emerald-400" /> : <Mail className="h-4 w-4" />}
+            </button>
+          </motion.div>
 
-          <p className="mt-8 text-xs text-zinc-500">
+          <motion.p variants={fadeUp} className="mt-8 text-xs text-zinc-500 text-center">
             {t({ pt: "Prefere ver o currículo completo? ", en: "Prefer the full résumé? " })}
             <Link href="/cv" className="text-violet-300 hover:text-violet-200 underline underline-offset-2">
               {t({ pt: "Acessar /cv", en: "Go to /cv" })}
             </Link>
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
       </main>
-      <SiteFooter />
+      <SiteFooter impactStats={IMPACT_STATS} />
     </>
   );
 }
