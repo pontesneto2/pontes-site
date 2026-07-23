@@ -14,8 +14,8 @@ import SiteFooter from "@/components/SiteFooter";
 import SegmentedProgress from "@/components/SegmentedProgress";
 import Preloader from "@/components/Preloader";
 import LogosMarquee from "@/components/LogosMarquee";
+import ExperienceTimeline from "@/components/ExperienceTimeline";
 import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
-import { EXPERIENCE } from "@/lib/experience-data";
 import type { BlogPostMeta } from "@/lib/blog";
 import {
   Code,
@@ -24,8 +24,6 @@ import {
   Lock,
   Building2,
   Briefcase,
-  MapPin,
-  ChevronLeft,
   Clock,
   Smartphone,
   Users,
@@ -199,7 +197,6 @@ export default function Page() {
   const t = (v: Bilingual) => tr(lang, v);
 
   const [isMobile, setIsMobile] = useState(false);
-  const [experienceExpanded, setExperienceExpanded] = useState(false);
   const [techBioExpanded, setTechBioExpanded] = useState(false);
   const [recentPosts, setRecentPosts] = useState<{ pt: BlogPostMeta[]; en: BlogPostMeta[] } | null>(null);
 
@@ -275,24 +272,6 @@ export default function Page() {
         delay: i * (isMobile ? 0.08 : 0.06),
       },
     }),
-  };
-
-  const staggerSequential = {
-    hidden: {},
-    show: {
-      transition: {
-        staggerChildren: isMobile ? 0.16 : 0.18,
-        delayChildren: 0.05,
-      },
-    },
-  };
-
-  const fadeInItem = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: { duration: 0.9, ease: easeOut },
-    },
   };
 
   const fadeInHeading = {
@@ -811,7 +790,6 @@ export default function Page() {
     return () => cancelAnimationFrame(raf);
   }, [projectFilter]);
 
-  const experience = EXPERIENCE;
 
   const renderProjectCta = (project: (typeof featuredProjects)[number]) => {
     const ctaClass =
@@ -1375,97 +1353,7 @@ export default function Page() {
               >
                 {t({ pt: "Trajetória Profissional", en: "Professional Journey" })}
               </motion.h2>
-              <motion.div
-                variants={staggerSequential}
-                initial="hidden"
-                whileInView="show"
-                viewport={viewportSettings}
-                className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-12"
-              >
-                {experience.map((exp, index) => {
-                  const isLatest = index === 0;
-                  const collapsedOnMobile = index >= 4 && !experienceExpanded;
-                  return (
-                  <motion.div
-                    key={exp.company}
-                    variants={fadeInItem}
-                    className={`relative ${collapsedOnMobile ? "hidden md:block" : ""}`}
-                  >
-                    <div className="flex items-center gap-2 mb-3">
-                      {isLatest ? (
-                        <span className="relative inline-flex h-2.5 w-2.5 shrink-0 rounded-full bg-violet-400" />
-                      ) : (
-                        <ChevronLeft className="h-3.5 w-3.5 text-violet-400/50 shrink-0 rotate-90 md:rotate-0" />
-                      )}
-                      <div
-                        className={`h-px flex-1 bg-gradient-to-l ${
-                          isLatest ? "from-violet-400/70" : "from-violet-400/30"
-                        } to-transparent`}
-                      />
-                    </div>
-                    <div className="flex items-start justify-between gap-3 mb-1">
-                      <h4 className="font-semibold text-sm text-white flex-1 min-w-0 break-words">
-                        {exp.company}
-                      </h4>
-                      <div className="flex items-center gap-2 shrink-0">
-                        <span className="text-[8px] text-violet-400 bg-violet-500/10 px-1.5 py-[2px] rounded border border-violet-500/20 whitespace-nowrap font-semibold">
-                          {exp.period}
-                        </span>
-                        {isLatest ? (
-                          <span className="text-[8px] text-violet-300 bg-violet-500/10 px-1.5 py-[2px] rounded border border-violet-500/20 whitespace-nowrap font-semibold">
-                            {t({ pt: "Mais recente", en: "Most recent" })}
-                          </span>
-                        ) : null}
-                        {exp.remote ? (
-                          <span className="text-[8px] text-fuchsia-300 bg-fuchsia-500/10 px-1.5 py-[2px] rounded border border-fuchsia-500/20 whitespace-nowrap font-semibold">
-                            {t({ pt: "Remoto", en: "Remote" })}
-                          </span>
-                        ) : null}
-                        {exp.languages ? (
-                          <span className="text-[8px] text-zinc-300 bg-white/5 px-1.5 py-[2px] rounded border border-white/10 whitespace-nowrap font-semibold">
-                            {exp.languages}
-                          </span>
-                        ) : null}
-                        {exp.contractType ? (
-                          <span className="text-[8px] text-zinc-300 bg-white/5 px-1.5 py-[2px] rounded border border-white/10 whitespace-nowrap font-semibold">
-                            {t(exp.contractType)}
-                          </span>
-                        ) : null}
-                      </div>
-                    </div>
-                    <p className="text-xs text-violet-300 leading-relaxed">
-                      <Briefcase className="inline h-3 w-3 -mt-0.5 mr-1" />
-                      {t(exp.role)}
-                    </p>
-                    <p className="text-xs text-violet-300 leading-relaxed mt-1">
-                      <MapPin className="inline h-3 w-3 -mt-0.5 mr-1" />
-                      {exp.location}
-                    </p>
-                    {exp.startRole ? (
-                      <div className="text-[13px] text-zinc-400 mt-2 flex items-center gap-2">
-                        <span className="truncate">
-                          {t({ pt: "Cargo Inicial", en: "Starting Role" })}: {t(exp.startRole)}
-                        </span>
-                      </div>
-                    ) : null}
-                  </motion.div>
-                  );
-                })}
-              </motion.div>
-              {experience.length > 4 && (
-                <div className="mt-8 flex justify-center md:hidden">
-                  <button
-                    type="button"
-                    onClick={() => setExperienceExpanded((v) => !v)}
-                    aria-expanded={experienceExpanded}
-                    className="min-h-[44px] px-5 py-2.5 rounded-full border border-white/15 text-sm font-medium text-zinc-300 hover:text-white hover:border-white/25 transition-colors"
-                  >
-                    {experienceExpanded
-                      ? t({ pt: "Ver menos", en: "Show less" })
-                      : t({ pt: "Ver toda a trajetória", en: "See full journey" })}
-                  </button>
-                </div>
-              )}
+              <ExperienceTimeline />
             </div>
           </section>
 
