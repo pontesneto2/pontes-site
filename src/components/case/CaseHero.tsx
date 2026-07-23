@@ -41,9 +41,7 @@ export default function CaseHero({
           transition={{ duration: 0.7, delay: 0.1 }}
           className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight leading-[1.1]"
         >
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-200 via-fuchsia-200 to-violet-200">
-            {tr(lang, title)}
-          </span>
+          <span className="text-white">{tr(lang, title)}</span>
         </motion.h1>
 
         <motion.p
