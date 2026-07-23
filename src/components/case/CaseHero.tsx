@@ -39,7 +39,7 @@ export default function CaseHero({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.1 }}
-          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight leading-[1.1]"
+          className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black tracking-tight leading-[1.1]"
         >
           <span className="text-white">{tr(lang, title)}</span>
         </motion.h1>
@@ -48,7 +48,7 @@ export default function CaseHero({
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.2 }}
-          className="mt-3 text-lg sm:text-xl text-zinc-200 font-medium"
+          className="mt-3 text-base sm:text-lg text-zinc-200 font-medium"
         >
           {tr(lang, subtitle)}
         </motion.p>
