@@ -229,7 +229,7 @@ export default function SiteHeader({
                       : "border-white/5 bg-white/[0.02] hover:border-violet-400/25 hover:bg-white/[0.05]"
                   }`}
                 >
-                  <span className="font-mono text-[10px] tracking-widest text-zinc-500">
+                  <span className="font-mono text-[13px] tracking-widest text-zinc-500">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <span className="flex items-center justify-between gap-2">

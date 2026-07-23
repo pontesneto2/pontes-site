@@ -238,7 +238,7 @@ function SkillChip({ skill, t }: { skill: Skill; t: (v: Bilingual) => string }) 
       {usedIn && hover && (
         <div
           role="tooltip"
-          className="absolute bottom-full left-1/2 z-20 mb-2 w-max max-w-[220px] -translate-x-1/2 rounded-lg border border-white/10 bg-[#141418] px-2.5 py-1.5 text-[10px] leading-snug text-zinc-300 shadow-xl shadow-black/40"
+          className="absolute bottom-full left-1/2 z-20 mb-2 w-max max-w-[220px] -translate-x-1/2 rounded-lg border border-white/10 bg-[#141418] px-2.5 py-1.5 text-[13px] leading-snug text-zinc-300 shadow-xl shadow-black/40"
         >
           <span className="text-fuchsia-300 font-semibold">
             {t({ pt: "Usado em: ", en: "Used in: " })}

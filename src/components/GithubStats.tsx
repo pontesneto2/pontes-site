@@ -168,7 +168,7 @@ export default function GithubStats() {
               <Github className="h-4 w-4 text-violet-300" />
               {t("GitHub ao vivo", "GitHub live")}
             </h3>
-            <p className="text-[11px] text-zinc-400 mt-0.5">
+            <p className="text-[13px] text-zinc-400 mt-0.5">
               {t("Dados atualizados em tempo real", "Data updated in real time")}
             </p>
           </div>
@@ -205,7 +205,7 @@ export default function GithubStats() {
                       delay={index * 0.1}
                     />
                   </div>
-                  <div className="text-[10px] text-zinc-400 mt-0.5">
+                  <div className="text-[13px] text-zinc-400 mt-0.5">
                     {(stat as { label: string }).label}
                   </div>
                 </>
@@ -222,7 +222,7 @@ export default function GithubStats() {
               <Rocket className="h-3.5 w-3.5 text-violet-300" />
               {t("Vercel e Railway ao vivo", "Vercel and Railway live")}
             </h4>
-            <p className="text-[11px] text-zinc-400 mt-0.5">
+            <p className="text-[13px] text-zinc-400 mt-0.5">
               {t("Dados atualizados em tempo real", "Data updated in real time")}
             </p>
           </div>
@@ -246,12 +246,12 @@ export default function GithubStats() {
                         <AnimatedNumber value={stat.value} plain decimals={stat.decimals} delay={delay} />
                         {stat.suffix}
                       </div>
-                      <div className="text-[10px] text-zinc-400 mt-0.5">{stat.label}</div>
+                      <div className="text-[13px] text-zinc-400 mt-0.5">{stat.label}</div>
                     </>
                   ) : (
                     <>
                       <div className="text-sm font-medium text-zinc-600 italic">{t("em breve", "soon")}</div>
-                      <div className="text-[10px] text-zinc-500 mt-0.5">{stat.label}</div>
+                      <div className="text-[13px] text-zinc-500 mt-0.5">{stat.label}</div>
                     </>
                   )}
                 </motion.div>

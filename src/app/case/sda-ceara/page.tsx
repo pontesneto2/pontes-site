@@ -350,7 +350,7 @@ function useSectionsData(lang: "pt" | "en") {
 
           <div className="mt-8 rounded-2xl bg-white/[0.02] border border-white/[0.06] p-6 sm:p-8">
             <div className="flex items-center gap-2 mb-6">
-              <span className="text-[10px] uppercase tracking-[0.2em] text-zinc-500">
+              <span className="text-[13px] uppercase tracking-[0.2em] text-zinc-500">
                 {t({ pt: "Módulo migrado em produção", en: "Module migrated in production" })}
               </span>
             </div>

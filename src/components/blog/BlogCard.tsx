@@ -50,7 +50,7 @@ export default function BlogCard({ post }: { post: BlogPostMeta }) {
             {post.tags.map((tag) => (
               <span
                 key={tag}
-                className="inline-block rounded-full border border-violet-500/25 bg-violet-500/[0.08] px-2.5 py-0.5 text-[10px] font-medium uppercase tracking-wide text-violet-300"
+                className="inline-block rounded-full border border-violet-500/25 bg-violet-500/[0.08] px-2.5 py-0.5 text-[13px] font-medium uppercase tracking-wide text-violet-300"
               >
                 {tag}
               </span>

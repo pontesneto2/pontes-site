@@ -36,7 +36,7 @@ export default function ContatoSection() {
           </Reveal>
 
           <Reveal delay={0.24} className="mt-5">
-            <p className="font-mono text-[11px] text-zinc-500">
+            <p className="font-mono text-[13px] text-zinc-500">
               {t({
                 pt: "Respondo rapidinho, geralmente no mesmo dia. Seus dados ficam só comigo, sem spam.",
                 en: "I reply fast, usually the same day. Your data stays with me only, no spam.",

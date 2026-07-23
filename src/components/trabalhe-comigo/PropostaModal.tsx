@@ -217,10 +217,10 @@ export default function PropostaModal({ proposal, description, numero, open, onC
                   <div className="text-sm font-bold text-white" style={{ fontFamily: "var(--font-space-grotesk)" }}>
                     {L.documento}
                   </div>
-                  <div className="font-mono text-[10px] text-zinc-400">
+                  <div className="font-mono text-[13px] text-zinc-400">
                     {L.numero}: {numero}
                   </div>
-                  <div className="font-mono text-[10px] text-zinc-500">
+                  <div className="font-mono text-[13px] text-zinc-500">
                     {L.emissao}: {dataEmissaoFmt} · {L.validade}: {validadeFmt}
                   </div>
                 </div>
@@ -336,7 +336,7 @@ export default function PropostaModal({ proposal, description, numero, open, onC
                       )}
                       {t("Abrir minha proposta", "Open my proposal")}
                     </button>
-                    <p className="mt-3 inline-flex items-center gap-1.5 font-mono text-[11px] text-zinc-400">
+                    <p className="mt-3 inline-flex items-center gap-1.5 font-mono text-[13px] text-zinc-400">
                       <ShieldCheck className="h-3.5 w-3.5" />
                       {t("Seus dados são usados só para este retorno.", "Your data is only used for this follow-up.")}
                     </p>
@@ -377,7 +377,7 @@ export default function PropostaModal({ proposal, description, numero, open, onC
                     <ol className="relative ml-3 border-l border-zinc-200">
                       {proposal.fases.map((f, i) => (
                         <li key={i} className="relative pb-4 pl-6 last:pb-0">
-                          <span className="absolute -left-[9px] top-0.5 flex h-[18px] w-[18px] items-center justify-center rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-500 font-mono text-[10px] font-semibold text-white">
+                          <span className="absolute -left-[9px] top-0.5 flex h-[18px] w-[18px] items-center justify-center rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-500 font-mono text-[13px] font-semibold text-white">
                             {i + 1}
                           </span>
                           <span className="block text-sm font-semibold text-zinc-900">{f.titulo}</span>
@@ -399,18 +399,18 @@ export default function PropostaModal({ proposal, description, numero, open, onC
 
                   <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
                     <div className="rounded-xl border border-zinc-200 p-4">
-                      <div className="font-mono text-[10px] uppercase tracking-wide text-zinc-400">{L.prazo}</div>
+                      <div className="font-mono text-[13px] uppercase tracking-wide text-zinc-400">{L.prazo}</div>
                       <div className="mt-1 text-lg font-semibold text-zinc-900" style={{ fontFamily: "var(--font-space-grotesk)" }}>
                         {proposal.prazoEstimado}
                       </div>
                     </div>
                     <div className="rounded-xl border border-zinc-200 p-4">
-                      <div className="font-mono text-[10px] uppercase tracking-wide text-zinc-400">{L.investimento}</div>
+                      <div className="font-mono text-[13px] uppercase tracking-wide text-zinc-400">{L.investimento}</div>
                       <div className="mt-1 bg-gradient-to-r from-violet-600 to-fuchsia-500 bg-clip-text text-lg font-semibold text-transparent">
                         {investLinha}
                       </div>
                       {proposal.investimento.horaBRL !== null && (
-                        <div className="mt-0.5 font-mono text-[11px] text-zinc-500">
+                        <div className="mt-0.5 font-mono text-[13px] text-zinc-500">
                           {t("ou", "or")} {formatBRL(proposal.investimento.horaBRL)}/h
                         </div>
                       )}
@@ -494,7 +494,7 @@ export default function PropostaModal({ proposal, description, numero, open, onC
 function Section({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div className="mt-5">
-      <div className="mb-2 font-mono text-[10px] font-semibold uppercase tracking-wider text-violet-700">{label}</div>
+      <div className="mb-2 font-mono text-[13px] font-semibold uppercase tracking-wider text-violet-700">{label}</div>
       {children}
     </div>
   );

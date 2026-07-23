@@ -39,7 +39,7 @@ export default function SobreMim() {
               en: "Senior Full Stack Software Engineer · Fortaleza, BR",
             })}
           </div>
-          <span className="mt-2 inline-flex items-center gap-1.5 rounded-full border border-violet-400/35 bg-black/40 px-2.5 py-1 font-mono text-[10px] text-violet-200">
+          <span className="mt-2 inline-flex items-center gap-1.5 rounded-full border border-violet-400/35 bg-black/40 px-2.5 py-1 font-mono text-[13px] text-violet-200">
             <i className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
             {tr(lang, { pt: "Disponível · Remoto", en: "Available · Remote" })}
           </span>

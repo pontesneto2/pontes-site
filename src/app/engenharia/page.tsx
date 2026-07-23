@@ -118,7 +118,7 @@ export default function EngenhariaPage() {
                       >
                         {row.value ?? "–"}
                       </div>
-                      <div className="mt-1 text-[11px] text-zinc-500">{t(row.label)}</div>
+                      <div className="mt-1 text-[13px] text-zinc-500">{t(row.label)}</div>
                     </div>
                   ))}
                 </div>

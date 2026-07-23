@@ -65,7 +65,7 @@ export default function SearchBox({
                     className="flex items-center justify-between gap-2 rounded-lg px-3 py-2 text-left text-sm text-zinc-200 hover:bg-white/5 transition-colors"
                   >
                     <span className="truncate">{r.label}</span>
-                    <span className="text-[10px] uppercase tracking-wide text-zinc-500 shrink-0">
+                    <span className="text-[13px] uppercase tracking-wide text-zinc-500 shrink-0">
                       {t(r.group)}
                     </span>
                   </button>

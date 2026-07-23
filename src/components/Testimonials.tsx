@@ -46,7 +46,7 @@ function TestimonialContent({ item }: { item: Testimonial }) {
             </span>
             <Linkedin className="h-3.5 w-3.5 text-[#0A66C2] shrink-0" />
           </div>
-          <p className="text-[11px] text-zinc-400 mt-0.5 leading-snug">
+          <p className="text-[13px] text-zinc-400 mt-0.5 leading-snug">
             {item.role}
           </p>
         </div>
