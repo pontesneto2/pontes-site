@@ -142,7 +142,7 @@ const FLAGSHIP_PROJECTS: Array<{
       pt: "Sistema de gestão escolar para o 2º Colégio da Polícia Militar do Ceará, com 2.350+ usuários ativos.",
       en: "School management system for the 2nd Military Police School of Ceará, with 2,350+ active users.",
     },
-    tags: ["PHP", "Laravel", ".NET", "Angular"],
+    tags: ["PHP", "Laravel", "C#", ".NET", "Angular", "PostgreSQL", "Docker", "Git", "Jira", "Grafana"],
   },
 ];
 
