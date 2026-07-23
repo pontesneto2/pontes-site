@@ -994,7 +994,7 @@ export default function Page() {
           {/* FAIXA DE CREDIBILIDADE */}
           <section className="border-b border-white/5 bg-zinc-900/50 py-10 sm:py-12">
             <div className="mx-auto max-w-6xl px-6 text-center">
-              <span className="mb-9 block font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-500">
+              <span className="mb-9 block font-mono text-[10px] font-medium uppercase tracking-[0.2em] text-zinc-500">
                 {t({ pt: "Sistemas em produção para", en: "Systems in production for" })}
               </span>
             </div>
@@ -1025,25 +1025,25 @@ export default function Page() {
                 whileInView={{ opacity: 1 }}
                 viewport={viewportSettings}
                 transition={{ duration: 0.7, ease: easeOut, delay: 0.1 }}
-                className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4"
+                className="mt-8 flex items-center justify-center gap-6"
               >
                 <a
                   href="https://github.com/pontesneto2"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 rounded-full px-6 py-2.5 border border-white/30 text-white text-sm font-medium hover:bg-white/5 hover:border-white/50 transition-all duration-300"
+                  aria-label="GitHub"
+                  className="text-zinc-400 hover:text-white hover:scale-110 transition-all duration-300"
                 >
-                  {t({ pt: "Confira meu Github", en: "Check out my GitHub" })}
-                  <Github className="h-4 w-4 text-white" />
+                  <Github className="h-6 w-6" />
                 </a>
                 <a
                   href="https://www.linkedin.com/in/fcopts"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group inline-flex items-center gap-1 text-violet-300 text-sm font-medium hover:text-violet-200 transition-colors"
+                  aria-label="LinkedIn"
+                  className="text-zinc-400 hover:text-violet-300 hover:scale-110 transition-all duration-300"
                 >
-                  {t({ pt: "Visite-me no LinkedIn", en: "Visit me on LinkedIn" })}
-                  <Linkedin className="h-4 w-4 text-violet-300 transition-transform duration-200 group-hover:translate-x-0.5" />
+                  <Linkedin className="h-6 w-6" />
                 </a>
               </motion.div>
             </div>
