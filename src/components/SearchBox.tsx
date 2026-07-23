@@ -52,7 +52,7 @@ export default function SearchBox({
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder={t({ pt: "Buscar no site...", en: "Search the site..." })}
-            className="w-full rounded-lg bg-white/5 border border-white/10 px-3 py-2 text-sm text-zinc-200 placeholder:text-zinc-500 outline-none focus:border-violet-400/50"
+            className="w-full rounded-lg bg-white/5 border border-white/10 px-3 py-2 text-base text-zinc-200 placeholder:text-zinc-500 outline-none focus:border-violet-400/50"
           />
           {searchQuery.trim().length > 0 && (
             <div className="mt-2 max-h-64 overflow-y-auto flex flex-col gap-0.5">

@@ -1099,15 +1099,18 @@ export default function Page() {
                         className="inline-flex items-center justify-center gap-2 rounded-full px-6 py-2.5 border border-violet-400/40 bg-violet-500/10 text-violet-200 text-sm font-medium hover:bg-violet-500/20 hover:border-violet-400/60 hover:text-white transition-colors duration-300"
                       >
                         <Briefcase className="h-4 w-4" />
-                        {t({ pt: "Recrutador? Fale comigo aqui!", en: "Recruiter? Talk to me here!" })}
+                        {t({ pt: "Recrutador? Fale comigo aqui", en: "Recruiter? Talk to me here" })}
                       </a>
+                      <span className="text-xs text-zinc-500 select-none">
+                        {t({ pt: "ou", en: "or" })}
+                      </span>
                       <a
                         href="/trabalhe-comigo"
                         onClick={() => track("cta_click", { href: "/trabalhe-comigo" })}
                         className="inline-flex items-center justify-center gap-2 rounded-full px-6 py-2.5 border border-violet-400/40 bg-violet-500/10 text-violet-200 text-sm font-medium hover:bg-violet-500/20 hover:border-violet-400/60 hover:text-white transition-colors duration-300"
                       >
                         <FileText className="h-4 w-4" />
-                        {t({ pt: "Quer contratar um serviço?", en: "Want to hire a service?" })}
+                        {t({ pt: "Você precisa de um serviço?", en: "Do you need a service?" })}
                       </a>
                     </motion.div>
                   </div>
@@ -1205,6 +1208,10 @@ export default function Page() {
                   ref={featuredScrollRef}
                   onScroll={updateFeaturedScrollProgress}
                   className="flex gap-8 overflow-x-auto overflow-y-hidden overscroll-x-contain snap-x snap-mandatory scroll-smooth pt-1 pb-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+                  style={{
+                    maskImage: "linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent)",
+                    WebkitMaskImage: "linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent)",
+                  }}
                 >
                   {visibleSecondaryProjects.length === 0 && (
                     <p className="text-sm text-zinc-400 py-6">
@@ -1286,7 +1293,7 @@ export default function Page() {
                                 {t(project.subtitle)}
                               </span>
                             )}
-                            <p className="mt-3 sm:mt-1.5 text-[13px] text-zinc-400 leading-relaxed">
+                            <p className="mt-3 sm:mt-1.5 text-sm text-zinc-400 leading-relaxed">
                               {t(project.blurb)}
                             </p>
                             <div className="mt-4 sm:mt-2 border-t border-white/5" />

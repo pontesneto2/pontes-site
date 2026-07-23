@@ -255,20 +255,20 @@ export default function PropostaModal({ proposal, description, numero, open, onC
                     value={nome}
                     onChange={(e) => setNome(e.target.value)}
                     placeholder={t("Seu nome", "Your name")}
-                    className="rounded-xl border border-zinc-300 px-4 py-3 text-sm text-zinc-900 placeholder:text-zinc-400 focus:border-violet-400 focus:outline-none focus:ring-2 focus:ring-violet-500/20"
+                    className="rounded-xl border border-zinc-300 px-4 py-3 text-base text-zinc-900 placeholder:text-zinc-400 focus:border-violet-400 focus:outline-none focus:ring-2 focus:ring-violet-500/20"
                   />
                   <input
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     type="email"
                     placeholder={t("Seu melhor e-mail", "Your best email")}
-                    className="rounded-xl border border-zinc-300 px-4 py-3 text-sm text-zinc-900 placeholder:text-zinc-400 focus:border-violet-400 focus:outline-none focus:ring-2 focus:ring-violet-500/20"
+                    className="rounded-xl border border-zinc-300 px-4 py-3 text-base text-zinc-900 placeholder:text-zinc-400 focus:border-violet-400 focus:outline-none focus:ring-2 focus:ring-violet-500/20"
                   />
                   <input
                     value={whatsapp}
                     onChange={(e) => setWhatsapp(e.target.value)}
                     placeholder={t("WhatsApp (opcional)", "WhatsApp (optional)")}
-                    className="rounded-xl border border-zinc-300 px-4 py-3 text-sm text-zinc-900 placeholder:text-zinc-400 focus:border-violet-400 focus:outline-none focus:ring-2 focus:ring-violet-500/20 sm:col-span-2"
+                    className="rounded-xl border border-zinc-300 px-4 py-3 text-base text-zinc-900 placeholder:text-zinc-400 focus:border-violet-400 focus:outline-none focus:ring-2 focus:ring-violet-500/20 sm:col-span-2"
                   />
                 </div>
 
