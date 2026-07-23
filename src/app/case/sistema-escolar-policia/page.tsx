@@ -291,6 +291,20 @@ function useSectionsData(lang: "pt" | "en") {
               { pt: "Variante explorada com menu lateral fixo, mesmos indicadores e acessos rápidos.", en: "Explored variant with a fixed side menu, same indicators and quick access." }
             )}
           </div>
+
+          <p className="mt-6">
+            {t({
+              pt: "O mesmo cuidado de redesenho se estendeu ao lançamento de notas: turma, disciplina e bimestre ficam sempre visíveis no topo, e a situação de cada aluno (aprovado, em recuperação, reprovado) é calculada e destacada por cor assim que as notas são digitadas — sem precisar salvar e abrir outra tela para conferir o resultado.",
+              en: "The same redesign care extended to grade entry: class, subject and bimester stay visible at the top, and each student's status (passed, in remediation, failed) is calculated and color-highlighted as soon as grades are typed in — no need to save and open another screen just to check the result.",
+            })}
+          </p>
+          <div className="mt-4">
+            {shot(
+              "/images/sistema-escolar-policia-lancamento-notas.png",
+              "Protótipo redesenhado da tela de Inserir/Atualizar Notas, com situação calculada em tempo real",
+              { pt: "Protótipo do lançamento de notas: situação (aprovado/recuperação/reprovado) calculada e destacada por cor.", en: "Grade-entry prototype: status (passed/remediation/failed) calculated and color-highlighted live." }
+            )}
+          </div>
         </>
       ),
     },
@@ -488,6 +502,20 @@ function useSectionsData(lang: "pt" | "en") {
               "/images/sistema-escolar-policia-relatorios-menu.png",
               "Menu de Relatórios expandido, incluindo o submenu Pedagógico e o Log de Alteração de Notas",
               { pt: "Menu de Relatórios: submenu Pedagógico e o Log de Alteração de Notas usado para auditoria.", en: "Reports menu: the Pedagogical submenu and the Grade Change Log used for auditing." }
+            )}
+          </div>
+
+          <p className="mt-6">
+            {t({
+              pt: "Como protótipo de evolução desse módulo, também desenhei um modelo de boletim individual pronto para impressão/PDF — com dados de matrícula e responsável, notas por disciplina e bimestre, frequência e comportamento consolidados, e um código de autenticidade para validação do documento emitido eletronicamente.",
+              en: "As a prototype evolution of this module, I also designed an individual report-card template ready for print/PDF — with enrollment and guardian data, per-subject/per-bimester grades, consolidated attendance and behavior, and an authenticity code to validate the electronically issued document.",
+            })}
+          </p>
+          <div className="mt-4">
+            {shot(
+              "/images/sistema-escolar-policia-boletim-personalizado.png",
+              "Protótipo de boletim individual para impressão, com código de autenticidade",
+              { pt: "Protótipo de boletim individual para impressão, com código de autenticidade do documento.", en: "Individual print-ready report card prototype, with a document authenticity code." }
             )}
           </div>
         </>
