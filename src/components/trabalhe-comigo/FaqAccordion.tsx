@@ -27,7 +27,7 @@ export default function FaqAccordion() {
 
   return (
     <section id="faq" className="scroll-mt-20 border-t border-white/10 py-20" style={{ backgroundColor: "#08080b" }}>
-      <div className="mx-auto max-w-7xl px-6">
+      <div className="mx-auto max-w-7xl px-6 xs:px-7 sm:px-8 lg:px-12 2xl:max-w-8xl">
         <TcSectionHeader
           label={{ pt: "FAQ", en: "FAQ" }}
           title={{ pt: "Tudo que você precisa saber antes de conversar", en: "Everything you need to know before we talk" }}

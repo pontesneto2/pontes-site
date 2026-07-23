@@ -254,7 +254,7 @@ export default function Hero() {
 
       <FloatingTechIcons />
 
-      <div className="magenta-glow relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="magenta-glow relative z-10 mx-auto w-full max-w-7xl px-4 xs:px-5 sm:px-6 lg:px-8">
         {/* Conteúdo de texto — alinhado à esquerda em todas as larguras; desktop centraliza na vertical */}
         <div className="w-full pt-24 sm:pt-28 lg:pt-0 lg:max-w-[560px] text-left">
           <motion.span
@@ -296,11 +296,10 @@ export default function Hero() {
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.26, ease: easeOut }}
-            className="mt-3 whitespace-normal lowercase"
+            className="mt-3 whitespace-normal lowercase text-[4rem] xs:text-[4.3rem] sm:text-[clamp(4rem,7vw+1rem,6.5rem)]"
             style={{
               fontFamily: "var(--font-jetbrains-mono)",
               fontWeight: 800,
-              fontSize: "clamp(4rem, 7vw + 1rem, 6.5rem)",
               lineHeight: 0.88,
               letterSpacing: "-0.045em",
               color: "#ffffff",

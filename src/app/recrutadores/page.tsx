@@ -223,7 +223,7 @@ export default function RecrutadoresPage() {
       />
       <main className="min-h-screen bg-[#0a0a0d] text-zinc-200">
         <motion.div
-          className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12 py-14"
+          className="mx-auto max-w-7xl px-6 xs:px-7 sm:px-8 lg:px-12 2xl:max-w-8xl py-14"
           variants={staggerContainer}
           initial="hidden"
           animate="show"

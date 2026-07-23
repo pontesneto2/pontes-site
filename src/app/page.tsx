@@ -975,8 +975,8 @@ export default function Page() {
 
           {/* FAIXA DE CREDIBILIDADE */}
           <section className="border-b border-white/5 bg-zinc-900/50 py-10 sm:py-12">
-            <div className="mx-auto max-w-6xl px-6 text-center">
-              <span className="mb-9 block font-mono text-[10px] font-medium uppercase tracking-[0.2em] text-zinc-500">
+            <div className="mx-auto max-w-6xl px-6 xs:px-7 sm:px-8 text-center">
+              <span className="mb-9 block font-mono text-[10px] xs:text-[11px] font-medium uppercase tracking-[0.2em] text-zinc-500">
                 {t({ pt: "Sistemas em produção para", en: "Systems in production for" })}
               </span>
             </div>
@@ -988,7 +988,7 @@ export default function Page() {
             id="intro"
             className="relative py-14 border-t border-white/5"
           >
-            <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center">
+            <div className="mx-auto max-w-3xl px-4 xs:px-5 sm:px-6 lg:px-8 text-center">
               <motion.p
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
@@ -1046,7 +1046,7 @@ export default function Page() {
                       initial="hidden"
                       whileInView="show"
                       viewport={viewportSettings}
-                      className="text-[2.1rem] sm:text-[2.6rem] md:text-[3.30rem] font-black leading-tight text-white"
+                      className="text-[2.1rem] xs:text-[2.3rem] sm:text-[2.6rem] md:text-[3.30rem] font-black leading-tight text-white"
                       style={{ fontFamily: "var(--font-space-grotesk)" }}
                     >
                       <span className="lg:whitespace-nowrap">
@@ -1149,7 +1149,7 @@ export default function Page() {
                   initial="hidden"
                   whileInView="show"
                   viewport={viewportSettings}
-                  className="text-[2.1rem] sm:text-[2.6rem] md:text-[3.30rem] font-black text-white"
+                  className="text-[2.1rem] xs:text-[2.3rem] sm:text-[2.6rem] md:text-[3.30rem] font-black text-white"
                   style={{ fontFamily: "var(--font-space-grotesk)" }}
                 >
                   {t({ pt: "Projetos em Destaque", en: "Featured Projects" })}
@@ -1358,7 +1358,7 @@ export default function Page() {
                 initial="hidden"
                 whileInView="show"
                 viewport={viewportSettings}
-                className="text-[2.1rem] sm:text-[2.6rem] md:text-[3.30rem] font-black text-white mb-12 text-center"
+                className="text-[2.1rem] xs:text-[2.3rem] sm:text-[2.6rem] md:text-[3.30rem] font-black text-white mb-12 text-center"
                 style={{ fontFamily: "var(--font-space-grotesk)" }}
               >
                 {t({ pt: "Trajetória Profissional", en: "Professional Journey" })}
@@ -1541,7 +1541,7 @@ export default function Page() {
             id="about"
             className="relative py-14"
           >
-            <div className="mx-auto max-w-6xl px-6 sm:px-8 lg:px-12">
+            <div className="mx-auto max-w-6xl px-6 xs:px-7 sm:px-8 lg:px-12 2xl:max-w-8xl">
               <div className="relative">
                 <div className="relative z-10 grid md:grid-cols-2 gap-10 p-8 md:p-12 items-center">
                   {/* Coluna da imagem */}
@@ -1700,7 +1700,7 @@ export default function Page() {
           {/* BLOG - chamada discreta para os posts recentes */}
           {recentPosts && recentPosts[lang].length > 0 && (
             <section className="relative py-10 border-t border-white/5">
-              <div className="mx-auto max-w-6xl px-6 sm:px-8 lg:px-12">
+              <div className="mx-auto max-w-6xl px-6 xs:px-7 sm:px-8 lg:px-12 2xl:max-w-8xl">
                 <div className="flex items-center justify-between mb-6">
                   <h3 className="text-base font-semibold uppercase tracking-wider text-fuchsia-400">
                     {t({ pt: "Últimos posts do meu Blog", en: "Latest posts from my blog" })}
