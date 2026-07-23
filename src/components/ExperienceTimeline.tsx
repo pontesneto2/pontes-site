@@ -18,7 +18,7 @@ export default function ExperienceTimeline() {
   const hasMore = visibleCount < EXPERIENCE.length;
 
   return (
-    <div className="relative mx-auto max-w-3xl">
+    <div className="relative mx-auto max-w-2xl">
       <div className="absolute left-[9px] top-4 bottom-4 w-px bg-gradient-to-b from-violet-400/50 via-violet-400/15 to-transparent" />
 
       <div className="space-y-4">
@@ -64,6 +64,16 @@ export default function ExperienceTimeline() {
                 >
                   <span className="flex-1 min-w-0">
                     <span className="block font-semibold text-sm text-white truncate">{exp.company}</span>
+                    <span className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-xs text-violet-300/80">
+                      <span className="inline-flex items-center gap-1 truncate">
+                        <Briefcase className="h-3 w-3 shrink-0" />
+                        <span className="truncate">{t(exp.role)}</span>
+                      </span>
+                      <span className="inline-flex items-center gap-1 truncate">
+                        <MapPin className="h-3 w-3 shrink-0" />
+                        <span className="truncate">{exp.location}</span>
+                      </span>
+                    </span>
                   </span>
                   <span className="flex items-center gap-1.5 sm:gap-2 shrink-0">
                     <span className="text-[13px] text-violet-300 bg-violet-500/10 px-2 py-1 rounded-full border border-violet-500/20 font-semibold whitespace-nowrap">
@@ -93,16 +103,8 @@ export default function ExperienceTimeline() {
                       className="overflow-hidden"
                     >
                       <div className="px-4 sm:px-5 pb-4 pt-3 border-t border-white/[0.06]">
-                        <p className="text-xs text-violet-300 leading-relaxed">
-                          <Briefcase className="inline h-3 w-3 -mt-0.5 mr-1.5" />
-                          {t(exp.role)}
-                        </p>
-                        <p className="text-xs text-violet-300 leading-relaxed mt-1.5">
-                          <MapPin className="inline h-3 w-3 -mt-0.5 mr-1.5" />
-                          {exp.location}
-                        </p>
                         {exp.startRole ? (
-                          <p className="text-[13px] text-zinc-400 mt-2">
+                          <p className="text-[13px] text-zinc-400">
                             {t({ pt: "Cargo Inicial", en: "Starting Role" })}: {t(exp.startRole)}
                           </p>
                         ) : null}
@@ -124,6 +126,11 @@ export default function ExperienceTimeline() {
                               </span>
                             ) : null}
                           </div>
+                        ) : null}
+                        {exp.description ? (
+                          <p className="text-[13px] text-zinc-400 leading-relaxed mt-3 pt-3 border-t border-white/[0.06]">
+                            {t(exp.description)}
+                          </p>
                         ) : null}
                       </div>
                     </motion.div>
