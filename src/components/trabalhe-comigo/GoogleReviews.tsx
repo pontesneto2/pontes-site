@@ -183,7 +183,7 @@ export default function GoogleReviews() {
                 type="button"
                 onClick={() => goTo(index - 1)}
                 aria-label={t({ pt: "Avaliação anterior", en: "Previous review" })}
-                className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/10 bg-white/5 text-zinc-400 hover:border-amber-400/40 hover:text-amber-300 transition-colors"
+                className="inline-flex h-8 w-8 items-center justify-center text-zinc-400 hover:text-amber-300 transition-colors"
               >
                 <ChevronLeft className="h-4 w-4" />
               </button>
@@ -206,7 +206,7 @@ export default function GoogleReviews() {
                 type="button"
                 onClick={() => goTo(index + 1)}
                 aria-label={t({ pt: "Próxima avaliação", en: "Next review" })}
-                className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/10 bg-white/5 text-zinc-400 hover:border-amber-400/40 hover:text-amber-300 transition-colors"
+                className="inline-flex h-8 w-8 items-center justify-center text-zinc-400 hover:text-amber-300 transition-colors"
               >
                 <ChevronRight className="h-4 w-4" />
               </button>

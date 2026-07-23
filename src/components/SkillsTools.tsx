@@ -357,7 +357,7 @@ function CarouselArrow({
       disabled={disabled}
       aria-label={label}
       whileTap={disabled ? undefined : { scale: 0.9 }}
-      className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] text-zinc-200 transition-colors hover:border-violet-400/40 hover:bg-violet-500/10 disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:border-white/10 disabled:hover:bg-white/[0.03]"
+      className="flex h-10 w-10 shrink-0 items-center justify-center text-zinc-200 transition-colors hover:text-violet-300 disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:text-zinc-200"
     >
       {direction === "prev" ? <ChevronLeft className="h-5 w-5" /> : <ChevronRight className="h-5 w-5" />}
     </motion.button>
