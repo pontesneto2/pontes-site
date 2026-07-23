@@ -1254,27 +1254,24 @@ export default function Page() {
                             <div className="h-full w-full bg-gradient-to-br from-violet-600/35 via-fuchsia-500/20 to-violet-900/40" />
                           )}
                           {project.impact && (
-                            <div className="absolute inset-x-3 bottom-3 z-10 rounded-2xl bg-black px-2 py-3 shadow-lg shadow-black/40">
-                              <div
-                                className={`grid gap-3 divide-x divide-white/10 ${
-                                  project.impact.length === 3 ? "grid-cols-3" : "grid-cols-2 sm:grid-cols-4"
-                                }`}
-                              >
-                                {project.impact.map((stat, i) => {
-                                  const Icon = stat.icon;
-                                  return (
-                                    <div key={i} className="flex flex-col items-center gap-0.5 px-1 text-center">
-                                      <div className="flex items-center gap-1.5 text-lg font-bold text-white">
-                                        <Icon className="h-4 w-4 text-fuchsia-300" />
-                                        {t(stat.value)}
-                                      </div>
-                                      <span className="text-[13px] text-zinc-300 leading-tight">
-                                        {t(stat.label)}
-                                      </span>
-                                    </div>
-                                  );
-                                })}
-                              </div>
+                            <div className="absolute inset-x-3 bottom-3 z-10 flex flex-wrap gap-1.5">
+                              {project.impact.map((stat, i) => {
+                                const Icon = stat.icon;
+                                return (
+                                  <div
+                                    key={i}
+                                    className="flex items-center gap-1.5 rounded-full bg-black/50 backdrop-blur-md px-2.5 py-1 shadow-sm shadow-black/30 ring-1 ring-white/5"
+                                  >
+                                    <Icon className="h-3 w-3 text-fuchsia-300/80 shrink-0" />
+                                    <span className="text-[11px] font-semibold text-white leading-none">
+                                      {t(stat.value)}
+                                    </span>
+                                    <span className="text-[10px] text-zinc-400 leading-none whitespace-nowrap">
+                                      {t(stat.label)}
+                                    </span>
+                                  </div>
+                                );
+                              })}
                             </div>
                           )}
                         </div>

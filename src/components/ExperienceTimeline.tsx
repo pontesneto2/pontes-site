@@ -18,7 +18,7 @@ export default function ExperienceTimeline() {
   const hasMore = visibleCount < EXPERIENCE.length;
 
   return (
-    <div className="relative mx-auto max-w-2xl">
+    <div className="relative mx-auto max-w-3xl">
       <div className="absolute left-[9px] top-4 bottom-4 w-px bg-gradient-to-b from-violet-400/50 via-violet-400/15 to-transparent" />
 
       <div className="space-y-4">
@@ -31,9 +31,8 @@ export default function ExperienceTimeline() {
             <motion.div
               key={exp.company}
               initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.7, ease: easeOut, delay: (index % BATCH_SIZE) * 0.12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: easeOut, delay: 0.15 + (index % BATCH_SIZE) * 0.25 }}
               className={`relative pl-8 ${index >= visibleCount ? "hidden" : ""}`}
             >
               <span className="absolute left-0 top-5 flex h-[19px] w-[19px] items-center justify-center">
@@ -76,11 +75,11 @@ export default function ExperienceTimeline() {
                     </span>
                   </span>
                   <span className="flex items-center gap-1.5 sm:gap-2 shrink-0">
-                    <span className="text-[13px] text-violet-300 bg-violet-500/10 px-2 py-1 rounded-full border border-violet-500/20 font-semibold whitespace-nowrap">
+                    <span className="text-[10px] tracking-wide text-zinc-400 bg-white/[0.03] px-1.5 py-0.5 rounded-full border border-white/[0.06] font-medium whitespace-nowrap">
                       {exp.period}
                     </span>
                     {isLatest ? (
-                      <span className="hidden xs:inline text-[13px] text-violet-200 bg-violet-500/15 px-2 py-1 rounded-full border border-violet-500/25 font-semibold whitespace-nowrap">
+                      <span className="hidden xs:inline text-[10px] tracking-wide text-violet-300/70 bg-violet-500/[0.06] px-1.5 py-0.5 rounded-full border border-violet-500/10 font-medium whitespace-nowrap">
                         {t({ pt: "Mais recente", en: "Most recent" })}
                       </span>
                     ) : null}
@@ -111,17 +110,17 @@ export default function ExperienceTimeline() {
                         {hasExtras ? (
                           <div className="flex flex-wrap items-center gap-1.5 mt-3">
                             {exp.remote ? (
-                              <span className="text-[13px] text-fuchsia-300 bg-fuchsia-500/10 px-2 py-1 rounded-full border border-fuchsia-500/20 font-semibold">
+                              <span className="text-[10px] tracking-wide text-fuchsia-300/70 bg-fuchsia-500/[0.05] px-1.5 py-0.5 rounded-full border border-fuchsia-500/10 font-medium">
                                 {t({ pt: "Remoto", en: "Remote" })}
                               </span>
                             ) : null}
                             {exp.languages ? (
-                              <span className="text-[13px] text-zinc-300 bg-white/5 px-2 py-1 rounded-full border border-white/10 font-semibold">
+                              <span className="text-[10px] tracking-wide text-zinc-400 bg-white/[0.03] px-1.5 py-0.5 rounded-full border border-white/[0.06] font-medium">
                                 {exp.languages}
                               </span>
                             ) : null}
                             {exp.contractType ? (
-                              <span className="text-[13px] text-zinc-300 bg-white/5 px-2 py-1 rounded-full border border-white/10 font-semibold">
+                              <span className="text-[10px] tracking-wide text-zinc-400 bg-white/[0.03] px-1.5 py-0.5 rounded-full border border-white/[0.06] font-medium">
                                 {t(exp.contractType)}
                               </span>
                             ) : null}
