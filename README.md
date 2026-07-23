@@ -22,9 +22,7 @@ Portfólio construído em Next.js (App Router), sem CMS e sem libs de i18n/UI de
 
 **Landing comercial com gerador de proposta por IA.** A página `/trabalhe-comigo` (redirect 308 de `/work-with-me`) tem um gerador de proposta: o Route Handler `src/app/api/proposta/route.ts` valida um captcha Cloudflare Turnstile, aplica rate limit e honeypot, chama a Anthropic API (`claude-haiku-4-5`) e devolve uma proposta estruturada com preço/prazo determinísticos (`src/lib/proposta/pricing.server.ts`) — com fallback pro WhatsApp se algo falhar. A proposta gerada vira PDF (`@react-pdf/renderer` + QR code) e pode ser enviada por e-mail via `src/app/api/proposta-send/route.ts`.
 
-**Avaliações reais do Google, curadas manualmente.** `GoogleReviews.tsx` lê `src/data/google-reviews.json` (nota geral, total de avaliações e a lista curada), no mesmo espírito de `testimonials.json`. A Google Places API foi avaliada e descartada: qualquer API do Google Maps Platform exige conta de faturamento (cartão) vinculada ao projeto mesmo dentro da cota gratuita, e a Business Profile API (que dispensa cartão) exige OAuth como dono do perfil + aprovação manual do Google para acesso a reviews — inviável para atualização simples. Com `reviews: []`, a seção fica oculta (sem dado fake).
-
-**Engineering Dashboard com dados reais da Vercel.** `EngineeringDashboard.tsx` consome três Route Handlers (`src/app/api/vercel/{metrics,deployments,projects}`) que passam por `src/lib/vercel/service.server.ts` — um cliente com cache em memória (TTL 60s) e retry com backoff exponencial no 429. Deriva taxa de sucesso, build médio, frequência de deploy e tempo estável em produção a partir do histórico real de deploys do time na Vercel. Core Web Vitals (LCP/CLS/INP/FCP/TTFB) são coletados do próprio site via `useReportWebVitals` (nativo do Next.js, sem lib extra) e agregados em p75 por `src/lib/vitals.server.ts`, persistidos no Neon com fallback em memória. Sem `VERCEL_API_TOKEN`, a seção fica oculta.
+**Avaliações reais do Google, curadas manualmente.** `trabalhe-comigo/GoogleReviews.tsx` (seção "O que dizem no Google", na landing comercial) lê `src/data/google-reviews.json` (nota geral, total de avaliações e a lista curada), no mesmo espírito de `testimonials.json`. A Google Places API foi avaliada e descartada: qualquer API do Google Maps Platform exige conta de faturamento (cartão) vinculada ao projeto mesmo dentro da cota gratuita, e a Business Profile API (que dispensa cartão) exige OAuth como dono do perfil + aprovação manual do Google para acesso a reviews — inviável para atualização simples. Com `reviews: []`, a seção fica oculta (sem dado fake).
 
 ## Stack
 
@@ -50,8 +48,6 @@ src/
 │   ├── api/
 │   │   ├── contact/      # Route Handler: validação + Resend
 │   │   ├── github-stats/ # proxy cacheado da API pública do GitHub
-│   │   ├── vercel/       # metrics/deployments/projects — Engineering Dashboard
-│   │   ├── vitals/       # ingestão + agregação (p75) de Core Web Vitals
 │   │   ├── proposta/     # Turnstile + rate limit + Anthropic → proposta
 │   │   └── proposta-send/# envia o PDF da proposta por e-mail (Resend)
 │   ├── sitemap.ts        # MetadataRoute.Sitemap
@@ -60,20 +56,16 @@ src/
 │   ├── Hero.tsx, SiteHeader.tsx, SiteFooter.tsx, Preloader.tsx
 │   ├── ContactForm.tsx
 │   ├── GithubStats.tsx   # estatísticas do GitHub (via /api/github-stats)
-│   ├── GoogleReviews.tsx # avaliações reais do Google (curadas em data/google-reviews.json)
-│   ├── EngineeringDashboard.tsx # deploys/CWV reais da Vercel (via /api/vercel/*, /api/vitals)
-│   ├── WebVitalsReporter.tsx    # reporta Core Web Vitals do client pro /api/vitals
 │   ├── SkillsTools.tsx
 │   ├── Testimonials.tsx
 │   ├── case/             # blocos reutilizados nas páginas de case study
 │   └── trabalhe-comigo/  # seções da landing + gerador/PDF de proposta
+│       └── GoogleReviews.tsx # avaliações reais do Google (curadas em data/google-reviews.json)
 ├── data/testimonials.json, google-reviews.json
 └── lib/
     ├── language-context.tsx  # provider de i18n + helper tr()
     ├── constants.ts
     ├── fonts.ts
-    ├── vitals.server.ts      # agregação p75 de Core Web Vitals (Neon + fallback)
-    ├── vercel/               # cliente da REST API da Vercel (cache, retry/backoff)
     └── proposta/             # pricing, rate limit e Turnstile (server-side)
 ```
 
@@ -97,12 +89,6 @@ NEXT_PUBLIC_SITE_URL=            # opcional, default https://fcopts.com.br
 #   site 1x00000000000000000000AA / secret 1x0000000000000000000000000000000AA
 NEXT_PUBLIC_TURNSTILE_SITE_KEY=
 TURNSTILE_SECRET_KEY=
-
-# Vercel REST API — sem VERCEL_API_TOKEN, o Engineering Dashboard fica oculto
-VERCEL_API_TOKEN=
-VERCEL_TEAM_ID=
-VERCEL_PROJECT_PORTFOLIO=
-VERCEL_PROJECT_SITE=
 ```
 
 ```bash

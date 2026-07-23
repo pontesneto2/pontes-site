@@ -6,7 +6,6 @@ import { ExternalLink, Linkedin, Quote } from "lucide-react";
 import { motion } from "framer-motion";
 import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
 import testimonials from "@/data/testimonials.json";
-import SpotlightCard from "@/components/SpotlightCard";
 import SegmentedProgress from "@/components/SegmentedProgress";
 
 type Testimonial = {
@@ -139,7 +138,7 @@ export default function Testimonials() {
       transition={{ duration: 0.7, ease: "easeOut" }}
       className="h-full min-w-0"
     >
-      <SpotlightCard className="relative flex h-full flex-col min-w-0 rounded-3xl border border-white/10 bg-gradient-to-br from-black/60 via-[#0d1b2a]/70 to-black/60 backdrop-blur-xl shadow-2xl overflow-hidden p-6 md:p-8">
+      <div className="relative flex h-full flex-col min-w-0 rounded-3xl border border-white/10 bg-gradient-to-br from-black/60 via-[#0d1b2a]/70 to-black/60 backdrop-blur-xl shadow-2xl overflow-hidden p-6 md:p-8">
         <div className="absolute inset-0 bg-gradient-to-br from-[#0A66C2]/5 via-transparent to-violet-500/5 pointer-events-none" />
         <span className="absolute top-6 left-6 inline-flex items-center justify-center h-9 w-9 rounded-lg bg-[#0A66C2]">
           <Linkedin className="h-5 w-5 text-white" />
@@ -183,7 +182,7 @@ export default function Testimonials() {
             </a>
           </div>
         </div>
-      </SpotlightCard>
+      </div>
     </motion.div>
   );
 }
