@@ -199,6 +199,8 @@ export default function Page() {
   const t = (v: Bilingual) => tr(lang, v);
 
   const [isMobile, setIsMobile] = useState(false);
+  const [experienceExpanded, setExperienceExpanded] = useState(false);
+  const [techBioExpanded, setTechBioExpanded] = useState(false);
   const [recentPosts, setRecentPosts] = useState<{ pt: BlogPostMeta[]; en: BlogPostMeta[] } | null>(null);
 
   useEffect(() => {
@@ -1072,7 +1074,7 @@ export default function Page() {
                           en: "I work as a Software Engineer with over 6 years of experience in Web/Mobile development, DevOps, and I'm an enthusiast of UX/UI operations. I have a multidisciplinary profile and work on building end-to-end digital solutions.",
                         })}
                       </p>
-                      <p>
+                      <p className={techBioExpanded ? undefined : "hidden md:block"}>
                         {t({
                           pt: "Ao longo da minha trajetória, participei de projetos em sistemas legado para o setor público, construções de soluções digitais do zero no setor privado e experiência internacional. Toda essa trajetória me permitiu atuar em distintos produtos digitais de diferentes complexidades.",
                           en: "Throughout my career, I've worked on legacy system projects in the public sector, built digital solutions from scratch in the private sector, and gained international experience. That journey let me work on distinct digital products of different complexities.",
@@ -1090,6 +1092,16 @@ export default function Page() {
                           })}
                         </span>
                       </p>
+                      <button
+                        type="button"
+                        onClick={() => setTechBioExpanded((v) => !v)}
+                        aria-expanded={techBioExpanded}
+                        className="min-h-[44px] flex items-center text-sm font-medium text-violet-300 hover:text-violet-200 transition-colors md:hidden"
+                      >
+                        {techBioExpanded
+                          ? t({ pt: "Ler menos", en: "Read less" })
+                          : t({ pt: "Ler mais", en: "Read more" })}
+                      </button>
                     </motion.div>
 
                     <motion.div
@@ -1372,11 +1384,12 @@ export default function Page() {
               >
                 {experience.map((exp, index) => {
                   const isLatest = index === 0;
+                  const collapsedOnMobile = index >= 4 && !experienceExpanded;
                   return (
                   <motion.div
                     key={exp.company}
                     variants={fadeInItem}
-                    className="relative"
+                    className={`relative ${collapsedOnMobile ? "hidden md:block" : ""}`}
                   >
                     <div className="flex items-center gap-2 mb-3">
                       {isLatest ? (
@@ -1439,6 +1452,20 @@ export default function Page() {
                   );
                 })}
               </motion.div>
+              {experience.length > 4 && (
+                <div className="mt-8 flex justify-center md:hidden">
+                  <button
+                    type="button"
+                    onClick={() => setExperienceExpanded((v) => !v)}
+                    aria-expanded={experienceExpanded}
+                    className="min-h-[44px] px-5 py-2.5 rounded-full border border-white/15 text-sm font-medium text-zinc-300 hover:text-white hover:border-white/25 transition-colors"
+                  >
+                    {experienceExpanded
+                      ? t({ pt: "Ver menos", en: "Show less" })
+                      : t({ pt: "Ver toda a trajetória", en: "See full journey" })}
+                  </button>
+                </div>
+              )}
             </div>
           </section>
 
