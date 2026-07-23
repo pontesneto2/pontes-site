@@ -75,7 +75,7 @@ function Section({ title, children }: SectionProps) {
       variants={fadeUp}
       initial="hidden"
       whileInView="show"
-      viewport={{ once: true, amount: 0.2 }}
+      viewport={{ once: true, amount: 0 }}
       className="mb-16"
     >
       <h3 className="text-xl sm:text-2xl font-bold text-white mb-1">{tr(lang, title)}</h3>
@@ -105,7 +105,7 @@ export default function CaseContent({
         variants={fadeUp}
         initial="hidden"
         whileInView="show"
-        viewport={{ once: true, amount: 0.25 }}
+        viewport={{ once: true, amount: 0 }}
         className="mb-14 grid grid-cols-2 sm:grid-cols-3 gap-4"
       >
         {summary.map((item) => (
@@ -128,7 +128,7 @@ export default function CaseContent({
         variants={fadeUp}
         initial="hidden"
         whileInView="show"
-        viewport={{ once: true, amount: 0.3 }}
+        viewport={{ once: true, amount: 0 }}
         className="mb-14 text-base sm:text-lg text-zinc-400 leading-relaxed border-l-2 border-violet-500/40 pl-5 italic"
       >
         {tr(lang, intro)}
@@ -146,7 +146,7 @@ export default function CaseContent({
         variants={fadeUp}
         initial="hidden"
         whileInView="show"
-        viewport={{ once: true, amount: 0.2 }}
+        viewport={{ once: true, amount: 0 }}
         className="mb-16"
       >
         <h3 className="text-xl sm:text-2xl font-bold text-white mb-1">
@@ -185,7 +185,7 @@ export default function CaseContent({
         variants={fadeUp}
         initial="hidden"
         whileInView="show"
-        viewport={{ once: true, amount: 0.2 }}
+        viewport={{ once: true, amount: 0 }}
         className="mb-16"
       >
         <h3 className="text-xl sm:text-2xl font-bold text-white mb-1">
@@ -224,7 +224,7 @@ export default function CaseContent({
         variants={fadeUp}
         initial="hidden"
         whileInView="show"
-        viewport={{ once: true, amount: 0.2 }}
+        viewport={{ once: true, amount: 0 }}
         className="mb-10"
       >
         <h3 className="text-xl sm:text-2xl font-bold text-white mb-1">
