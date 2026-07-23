@@ -1760,7 +1760,7 @@ export default function Page() {
               <div className="mx-auto max-w-6xl px-6 sm:px-8 lg:px-12">
                 <div className="flex items-center justify-between mb-6">
                   <h3 className="text-base font-semibold uppercase tracking-wider text-fuchsia-400">
-                    {t({ pt: "Do blog", en: "From the blog" })}
+                    {t({ pt: "Últimos posts do meu Blog", en: "Latest posts from my blog" })}
                   </h3>
                   <Link
                     href="/blog"
