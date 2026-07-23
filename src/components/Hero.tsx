@@ -255,8 +255,8 @@ export default function Hero() {
       <FloatingTechIcons />
 
       <div className="magenta-glow relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Conteúdo de texto — celular/tablet: centralizado no topo; desktop: à esquerda, centralizado na vertical */}
-        <div className="w-full pt-24 sm:pt-28 lg:pt-0 lg:max-w-[560px] text-center lg:text-left">
+        {/* Conteúdo de texto — alinhado à esquerda em todas as larguras; desktop centraliza na vertical */}
+        <div className="w-full pt-24 sm:pt-28 lg:pt-0 lg:max-w-[560px] text-left">
           <motion.span
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -300,7 +300,7 @@ export default function Hero() {
             style={{
               fontFamily: "var(--font-jetbrains-mono)",
               fontWeight: 800,
-              fontSize: "clamp(2.6rem, 6vw + 1.2rem, 6.5rem)",
+              fontSize: "clamp(3.4rem, 7vw + 1rem, 6.5rem)",
               lineHeight: 0.88,
               letterSpacing: "-0.045em",
               color: "#ffffff",
@@ -313,7 +313,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.34, ease: easeOut }}
-            className="mt-6 max-w-[490px] mx-auto lg:mx-0 text-lg leading-relaxed"
+            className="mt-6 max-w-[490px] text-lg leading-relaxed"
             style={{ color: "#a9a6b4", fontFamily: "var(--font-space-grotesk)" }}
           >
             <TypedParagraph segments={descriptionSegments} start={nameDone} />
