@@ -325,7 +325,7 @@ export default function Hero() {
         initial={{ opacity: 0, scale: 0.96 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.9, delay: 0.15, ease: easeOut }}
-        className="relative z-10 mt-6 lg:mt-0 flex-1 lg:flex-none min-h-[260px] w-full lg:absolute lg:inset-y-0 lg:right-0 lg:w-[min(46vw,640px)]"
+        className="relative z-10 mt-6 lg:mt-0 flex-1 lg:flex-none min-h-[260px] w-full lg:absolute lg:bottom-0 lg:right-0 lg:top-auto lg:aspect-[866/1152] lg:h-auto lg:max-h-[88vh] lg:w-[min(46vw,640px)]"
       >
         <div className="absolute inset-0 mx-auto w-full max-w-[420px] sm:max-w-[480px] lg:mx-0 lg:max-w-none">
           <Image
