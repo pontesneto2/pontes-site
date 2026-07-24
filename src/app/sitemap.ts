@@ -81,6 +81,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
       alternates: { languages: { "pt-BR": `${siteUrl}/case/sda-ceara` } },
     },
     {
+      url: `${siteUrl}/case/sda-indicadores`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+      alternates: { languages: { en: `${siteUrl}/en/case/sda-indicadores` } },
+    },
+    {
+      url: `${siteUrl}/en/case/sda-indicadores`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.7,
+      alternates: { languages: { "pt-BR": `${siteUrl}/case/sda-indicadores` } },
+    },
+    {
       url: `${siteUrl}/case/sistema-escolar-policia`,
       lastModified: new Date(),
       changeFrequency: "monthly",

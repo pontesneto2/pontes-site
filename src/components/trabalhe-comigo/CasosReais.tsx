@@ -89,8 +89,8 @@ export default function CasosReais() {
         <div
           className="tc-cases overflow-hidden"
           style={{
-            maskImage: "linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent)",
-            WebkitMaskImage: "linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent)",
+            maskImage: "linear-gradient(90deg, transparent, #000 16px, #000 calc(100% - 16px), transparent)",
+            WebkitMaskImage: "linear-gradient(90deg, transparent, #000 16px, #000 calc(100% - 16px), transparent)",
           }}
         >
           <div className="tc-cases-track flex w-max gap-4">

@@ -392,6 +392,60 @@ export default function Page() {
       ],
     },
     {
+      title: "Sistema de Indicadores de Demandas e Ações - SDA CE",
+      subtitle: { pt: "", en: "" },
+      tags: ["PHP", "Laravel", "PostgreSQL", "SQL", "Power BI", "Docker", "Git"],
+      link: "https://www.com3brasil.com.br/v9/app/demanda/login/",
+      caseStudy: "/case/sda-indicadores",
+      ctaLabel: { pt: "Visite", en: "Visit" },
+      blurb: {
+        pt: "Painel de acompanhamento de demandas e ações estratégicas da secretaria, com indicadores em tempo real.",
+        en: "Dashboard to track the department's demands and strategic actions, with real-time indicators.",
+      },
+      category: [{ pt: "Sistema Web+Admin", en: "Web System+Admin" }, { pt: "Aplicativo PWA", en: "PWA App" }],
+      thumb: "/images/capa-id.png",
+      bgClass: NEUTRAL_BG,
+      badge: { pt: "Em produção", en: "In production" },
+      highlights: [
+        { icon: Clock, value: { pt: "6 meses de produção", en: "6 months in production" } },
+        { icon: Building2, value: { pt: "Idealizador: SDA Ceará", en: "Idealized by: SDA Ceará" } },
+      ],
+      impact: [
+        { icon: Users, value: { pt: "100+", en: "100+" }, label: { pt: "Demandas monitoradas/mês", en: "Demands tracked/month" } },
+        { icon: Gauge, value: { pt: "99,5%", en: "99.5%" }, label: { pt: "Uptime", en: "Uptime" } },
+        { icon: Rocket, value: { pt: "-25%", en: "-25%" }, label: { pt: "Tempo de resposta a demandas", en: "Demand response time" } },
+      ],
+    },
+    {
+      title: "iMidooh - App",
+      subtitle: { pt: "", en: "" },
+      tags: [
+        "React Native",
+        "TypeScript",
+        "NextJS",
+        "NodeJS",
+        "ExpressJS",
+        "NestJS",
+        "PostgreSQL",
+        "Prisma",
+        "Docker",
+      ],
+      link: "",
+      caseStudy: "/case/imidooh",
+      discontinued: true,
+      blurb: {
+        pt: "Plataforma mobile para operar mídia Digital Out Of Home em recursos visuais dos mais diversos tipos.",
+        en: "Mobile platform to operate Digital Out Of Home media across all kinds of visual resources.",
+      },
+      category: [{ pt: "Aplicativo Mobile Nativo", en: "Native Mobile App" }, { pt: "Sistema Web+Admin", en: "Web System+Admin" }],
+      thumb: "/images/capa-imidooh.png",
+      bgClass: NEUTRAL_BG,
+      highlights: [
+        { icon: Clock, value: { pt: "6 meses", en: "6 months" } },
+        { icon: Building2, value: { pt: "Idealizadora: Click SF", en: "Idealized by: Click SF" } },
+      ],
+    },
+    {
       title: "Fitvo App Mobile",
       subtitle: { pt: "", en: "" },
       tags: ["React Native", "PostgreSQL", "NodeJS", "Docker"],
@@ -432,35 +486,6 @@ export default function Page() {
         { icon: Users, value: { pt: "15.000+", en: "15,000+" }, label: { pt: "Produtores cadastrados", en: "Registered producers" } },
         { icon: Gauge, value: { pt: "99,6%", en: "99.6%" }, label: { pt: "Uptime", en: "Uptime" } },
         { icon: Rocket, value: { pt: "-35%", en: "-35%" }, label: { pt: "Tempo de análise de processos", en: "Process review time" } },
-      ],
-    },
-    {
-      title: "iMidooh - App",
-      subtitle: { pt: "", en: "" },
-      tags: [
-        "React Native",
-        "TypeScript",
-        "NextJS",
-        "NodeJS",
-        "ExpressJS",
-        "NestJS",
-        "PostgreSQL",
-        "Prisma",
-        "Docker",
-      ],
-      link: "",
-      caseStudy: "/case/imidooh",
-      discontinued: true,
-      blurb: {
-        pt: "Plataforma mobile para operar mídia Digital Out Of Home em recursos visuais dos mais diversos tipos.",
-        en: "Mobile platform to operate Digital Out Of Home media across all kinds of visual resources.",
-      },
-      category: [{ pt: "Aplicativo Mobile Nativo", en: "Native Mobile App" }, { pt: "Sistema Web+Admin", en: "Web System+Admin" }],
-      thumb: "/images/capa-imidooh.png",
-      bgClass: NEUTRAL_BG,
-      highlights: [
-        { icon: Clock, value: { pt: "6 meses", en: "6 months" } },
-        { icon: Building2, value: { pt: "Idealizadora: Click SF", en: "Idealized by: Click SF" } },
       ],
     },
     {
@@ -532,30 +557,6 @@ export default function Page() {
         { icon: Users, value: { pt: "5.000+", en: "5,000+" }, label: { pt: "Imóveis regularizados", en: "Regularized properties" } },
         { icon: Gauge, value: { pt: "99,6%", en: "99.6%" }, label: { pt: "Uptime", en: "Uptime" } },
         { icon: TrendingDown, value: { pt: "-45%", en: "-45%" }, label: { pt: "Tempo de regularização", en: "Regularization time" } },
-      ],
-    },
-    {
-      title: "Sistema de Indicadores de Demandas e Ações - SDA CE",
-      subtitle: { pt: "", en: "" },
-      tags: ["PHP", "Laravel", "PostgreSQL", "Docker", "Git"],
-      link: "https://www.com3brasil.com.br/v9/app/demanda/login/",
-      ctaLabel: { pt: "Visite", en: "Visit" },
-      blurb: {
-        pt: "Painel de acompanhamento de demandas e ações estratégicas da secretaria, com indicadores em tempo real.",
-        en: "Dashboard to track the department's demands and strategic actions, with real-time indicators.",
-      },
-      category: [{ pt: "Sistema Web+Admin", en: "Web System+Admin" }, { pt: "Aplicativo PWA", en: "PWA App" }],
-      thumb: "/images/capa-indicadores.png",
-      bgClass: NEUTRAL_BG,
-      badge: { pt: "Em produção", en: "In production" },
-      highlights: [
-        { icon: Clock, value: { pt: "6 meses de produção", en: "6 months in production" } },
-        { icon: Building2, value: { pt: "Idealizador: SDA Ceará", en: "Idealized by: SDA Ceará" } },
-      ],
-      impact: [
-        { icon: Users, value: { pt: "100+", en: "100+" }, label: { pt: "Demandas monitoradas/mês", en: "Demands tracked/month" } },
-        { icon: Gauge, value: { pt: "99,5%", en: "99.5%" }, label: { pt: "Uptime", en: "Uptime" } },
-        { icon: Rocket, value: { pt: "-25%", en: "-25%" }, label: { pt: "Tempo de resposta a demandas", en: "Demand response time" } },
       ],
     },
     {
@@ -1205,8 +1206,8 @@ export default function Page() {
                   onScroll={updateFeaturedScrollProgress}
                   className="flex gap-8 overflow-x-auto overflow-y-hidden overscroll-x-contain snap-x snap-mandatory scroll-smooth pt-1 pb-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
                   style={{
-                    maskImage: "linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent)",
-                    WebkitMaskImage: "linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent)",
+                    maskImage: "linear-gradient(90deg, transparent, #000 16px, #000 calc(100% - 16px), transparent)",
+                    WebkitMaskImage: "linear-gradient(90deg, transparent, #000 16px, #000 calc(100% - 16px), transparent)",
                   }}
                 >
                   {visibleSecondaryProjects.length === 0 && (
