@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, animate, useInView } from "framer-motion";
-import { Github, Star, Activity, Calendar, Rocket, ShieldCheck, Timer, Zap, Globe, MapPin } from "lucide-react";
+import { Github, Activity, Calendar, Rocket, ShieldCheck, Timer, Zap } from "lucide-react";
 import { useLanguage, tr } from "@/lib/language-context";
 
 const GITHUB_USER = "pontesneto2";
@@ -138,7 +138,6 @@ export default function GithubStats() {
   const stats = data
     ? [
         { icon: Activity, label: t(`Contribuições ${currentYear}`, `Contributions ${currentYear}`), value: data.contributionsThisYear, plain: false },
-        { icon: Star, label: t("Stars recebidas", "Stars earned"), value: data.totalStars, plain: false },
         { icon: Calendar, label: t("GitHub desde", "GitHub since"), value: data.joinYear, plain: true },
       ]
     : [];
@@ -148,8 +147,6 @@ export default function GithubStats() {
     { icon: ShieldCheck, label: t("Uptime médio", "Avg uptime"), value: deployData?.uptimePct ?? null, suffix: "%", decimals: 2 },
     { icon: Timer, label: t("Build médio", "Avg build"), value: deployData?.avgBuildTimeSec ?? null, suffix: "s", decimals: 0 },
     { icon: Zap, label: t("Latência (p95)", "Latency (p95)"), value: deployData?.p95LatencyMs ?? null, suffix: "ms", decimals: 0 },
-    { icon: Globe, label: t("Requisições (30d)", "Requests (30d)"), value: deployData?.requests30d != null ? deployData.requests30d / 1000 : null, suffix: "k", decimals: 1 },
-    { icon: MapPin, label: t("Regiões ativas", "Active regions"), value: deployData?.activeRegions ?? null, suffix: "", decimals: 0 },
   ];
 
   return (
@@ -161,73 +158,77 @@ export default function GithubStats() {
       className="relative rounded-2xl border border-white/10 bg-black/55 backdrop-blur-xl p-3 sm:p-4 md:p-6 shadow-2xl overflow-hidden"
     >
       <div className="absolute inset-0 bg-gradient-to-br from-violet-500/5 via-transparent to-fuchsia-500/5" />
-      <div className="relative">
-        <div className="flex items-center justify-between gap-4 mb-4">
-          <div>
+      <div className="relative grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 divide-y md:divide-y-0 md:divide-x divide-white/10">
+        {/* Coluna 1 — GitHub ao vivo */}
+        <div className="md:pr-6 lg:pr-8">
+          <div className="flex items-center justify-between gap-4 mb-4">
+            <div>
+              <h3 className="text-sm font-semibold text-white flex items-center gap-1.5">
+                <Github className="h-4 w-4 text-violet-300" />
+                {t("GitHub ao vivo", "GitHub live")}
+              </h3>
+              <p className="text-[13px] text-zinc-400 mt-0.5">
+                {t("Dados atualizados em tempo real", "Data updated in real time")}
+              </p>
+            </div>
+            <a
+              href={`https://github.com/${GITHUB_USER}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs font-medium text-violet-300 hover:text-violet-200 transition-colors whitespace-nowrap"
+            >
+              @{GITHUB_USER}
+            </a>
+          </div>
+
+          <div className="grid grid-cols-2 gap-2">
+            {(data ? stats : Array.from({ length: 2 })).map((stat, index) => (
+              <motion.div
+                key={stat ? (stat as { label: string }).label : index}
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.5 }}
+                transition={{ duration: 0.5, ease: "easeOut", delay: index * 0.1 }}
+                className="p-1.5 sm:p-3 min-h-[76px]"
+              >
+                {stat ? (
+                  <>
+                    {(() => {
+                      const Icon = (stat as { icon: typeof Github }).icon;
+                      return <Icon className="h-3.5 w-3.5 text-violet-400 mb-1.5" />;
+                    })()}
+                    <div className="text-lg sm:text-xl font-semibold text-zinc-100 tabular-nums">
+                      <AnimatedNumber
+                        value={(stat as { value: number }).value}
+                        plain={(stat as { plain: boolean }).plain}
+                        delay={index * 0.1}
+                      />
+                    </div>
+                    <div className="text-[13px] text-zinc-400 mt-0.5">
+                      {(stat as { label: string }).label}
+                    </div>
+                  </>
+                ) : (
+                  <div className="h-full w-full animate-pulse rounded-lg bg-white/5" />
+                )}
+              </motion.div>
+            ))}
+          </div>
+        </div>
+
+        {/* Coluna 2 — Engenharia ao vivo */}
+        <div className="pt-6 md:pt-0 md:pl-6 lg:pl-8">
+          <div className="mb-4">
             <h3 className="text-sm font-semibold text-white flex items-center gap-1.5">
-              <Github className="h-4 w-4 text-violet-300" />
-              {t("GitHub ao vivo", "GitHub live")}
+              <Rocket className="h-4 w-4 text-violet-300" />
+              {t("Engenharia ao vivo", "Engineering live")}
             </h3>
             <p className="text-[13px] text-zinc-400 mt-0.5">
               {t("Dados atualizados em tempo real", "Data updated in real time")}
             </p>
           </div>
-          <a
-            href={`https://github.com/${GITHUB_USER}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-xs font-medium text-violet-300 hover:text-violet-200 transition-colors whitespace-nowrap"
-          >
-            @{GITHUB_USER}
-          </a>
-        </div>
 
-        <div className="grid grid-cols-3 gap-2">
-          {(data ? stats : Array.from({ length: 3 })).map((stat, index) => (
-            <motion.div
-              key={stat ? (stat as { label: string }).label : index}
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.5 }}
-              transition={{ duration: 0.5, ease: "easeOut", delay: index * 0.1 }}
-              className="p-1.5 sm:p-3 min-h-[76px]"
-            >
-              {stat ? (
-                <>
-                  {(() => {
-                    const Icon = (stat as { icon: typeof Github }).icon;
-                    return <Icon className="h-3.5 w-3.5 text-violet-400 mb-1.5" />;
-                  })()}
-                  <div className="text-lg sm:text-xl font-semibold text-zinc-100 tabular-nums">
-                    <AnimatedNumber
-                      value={(stat as { value: number }).value}
-                      plain={(stat as { plain: boolean }).plain}
-                      delay={index * 0.1}
-                    />
-                  </div>
-                  <div className="text-[13px] text-zinc-400 mt-0.5">
-                    {(stat as { label: string }).label}
-                  </div>
-                </>
-              ) : (
-                <div className="h-full w-full animate-pulse rounded-lg bg-white/5" />
-              )}
-            </motion.div>
-          ))}
-        </div>
-
-        <div className="mt-4 pt-4 border-t border-white/10">
-          <div className="mb-3">
-            <h4 className="text-sm font-semibold text-white flex items-center gap-1.5">
-              <Rocket className="h-3.5 w-3.5 text-violet-300" />
-              {t("Vercel e Railway ao vivo", "Vercel and Railway live")}
-            </h4>
-            <p className="text-[13px] text-zinc-400 mt-0.5">
-              {t("Dados atualizados em tempo real", "Data updated in real time")}
-            </p>
-          </div>
-
-          <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
+          <div className="grid grid-cols-2 gap-2">
             {deployMetrics.map((stat, index) => {
               const delay = 0.35 + index * 0.08;
               return (

@@ -107,6 +107,7 @@ const CATEGORIES: SkillCategory[] = [
       { name: "Jest", tier: "core", icon: svg("jest") },
       { name: "Playwright", tier: "core", icon: svg("playwright") },
       { name: "Cypress", tier: "core", icon: svg("cypress") },
+      { name: "Selenium", tier: "solid", icon: svg("selenium") },
       { name: "Testes E2E", tier: "core", icon: none },
       { name: "cURL", tier: "solid", icon: svg("curl") },
       { name: "Smoke Tests", tier: "solid", icon: none },
