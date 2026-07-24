@@ -122,6 +122,7 @@ const CATEGORIES: SkillCategory[] = [
       { name: "Prototipagem", tier: "solid", icon: none },
       { name: "Usabilidade", tier: "solid", icon: none },
       { name: "Acessibilidade (WCAG)", tier: "solid", icon: none },
+      { name: "E-commerce VTEX", tier: "solid", icon: none },
     ],
   },
 ];
