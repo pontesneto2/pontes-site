@@ -779,7 +779,7 @@ export default function Page() {
       <Link
         href={project.caseStudy}
         onClick={() => track("case_study_click", { project: project.title })}
-        className={`${ctaClass} ${project.link ? outlineClass : solidClass}`}
+        className={`${ctaClass} ${project.link || project.discontinued || project.private ? outlineClass : solidClass}`}
       >
         {t({ pt: "Ver estudo de caso", en: "View case study" })}
         <FileText className="h-3.5 w-3.5" />
