@@ -617,7 +617,7 @@ export default function Page() {
         en: "Institutional website to promote social projects and attract supporters.",
       },
       category: [{ pt: "Site Institucional", en: "Institutional Website" }],
-      thumb: "/images/capa-anjos.png",
+      thumb: "/images/capa-anjo.png",
       bgClass: NEUTRAL_BG,
       badge: { pt: "Em produção", en: "In production" },
       highlights: [
