@@ -321,13 +321,6 @@ export default function RecrutadoresPage() {
                 </div>
               ))}
             </div>
-
-            <p className="text-xs text-zinc-500">
-              {t({ pt: "Prefere ver o currículo completo? ", en: "Prefer the full résumé? " })}
-              <Link href="/cv" className="text-violet-300 hover:text-violet-200 underline underline-offset-2">
-                {t({ pt: "Acessar /cv", en: "Go to /cv" })}
-              </Link>
-            </p>
           </motion.aside>
 
           {/* Main: at-a-glance numbers, services, skills, projects */}
