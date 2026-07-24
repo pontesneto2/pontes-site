@@ -22,7 +22,7 @@ export default function CaseCTA({ description }: CaseCTAProps) {
       variants={fadeUp}
       initial="hidden"
       whileInView="show"
-      viewport={{ once: true, amount: 0.3 }}
+      viewport={{ once: true, amount: 0 }}
       className="mx-auto max-w-4xl px-6 sm:px-8 pt-6 pb-20"
     >
       <div className="relative rounded-3xl overflow-hidden">
