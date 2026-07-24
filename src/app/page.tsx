@@ -1109,7 +1109,7 @@ export default function Page() {
             className="relative py-14 overflow-x-hidden"
           >
             <div className="mx-auto max-w-7xl px-6 xs:px-7 sm:px-8 lg:px-12 2xl:max-w-8xl">
-              <div className="mb-12 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+              <div className="mb-12">
                 <motion.h2
                   variants={fadeInHeading}
                   initial="hidden"
@@ -1120,10 +1120,10 @@ export default function Page() {
                 >
                   {t({ pt: "Projetos em Destaque", en: "Featured Projects" })}
                 </motion.h2>
-                <p className="text-[13px] font-light uppercase tracking-[0.2em] text-zinc-500 md:text-right md:max-w-[220px]">
+                <p className="mt-3 max-w-2xl text-[12px] leading-relaxed text-zinc-500">
                   {t({
-                    pt: "Portfólio — projetos públicos, visíveis a qualquer pessoa na web",
-                    en: "Portfolio — public projects, visible to anyone on the web",
+                    pt: "Portfólio composto exclusivamente por projetos públicos e autorizados. Não exponho dados sensíveis, informações confidenciais ou materiais sob sigilo — projetos privados ou protegidos por acordo de confidencialidade não são listados nesta página.",
+                    en: "A portfolio made up exclusively of public, authorized projects. No sensitive data, confidential information or material under NDA is exposed — private projects or those protected by a confidentiality agreement are not listed on this page.",
                   })}
                 </p>
               </div>
@@ -1146,7 +1146,7 @@ export default function Page() {
                         featuredScrollRef.current?.scrollTo({ left: 0 });
                       }}
                       aria-pressed={projectFilter === null}
-                      className={`min-h-[44px] px-4 py-2.5 rounded-full text-xs font-medium border transition-colors ${
+                      className={`px-3 py-1 rounded-full text-xs font-medium border transition-colors ${
                         projectFilter === null
                           ? "bg-gradient-to-r from-violet-600 to-fuchsia-500 border-transparent text-white"
                           : "border-white/15 text-zinc-400 hover:text-zinc-200 hover:border-white/25"
@@ -1164,7 +1164,7 @@ export default function Page() {
                           featuredScrollRef.current?.scrollTo({ left: 0 });
                         }}
                         aria-pressed={projectFilter === filter.key}
-                        className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-colors ${
+                        className={`px-3 py-1 rounded-full text-xs font-medium border transition-colors ${
                           projectFilter === filter.key
                             ? "bg-gradient-to-r from-violet-600 to-fuchsia-500 border-transparent text-white"
                             : "border-white/15 text-zinc-400 hover:text-zinc-200 hover:border-white/25"
