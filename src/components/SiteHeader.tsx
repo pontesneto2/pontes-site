@@ -130,7 +130,7 @@ export default function SiteHeader({
               width={2500}
               height={544}
               priority
-              className="h-7 sm:h-10 w-auto"
+              className="h-6 sm:h-10 w-auto"
             />
           </Link>
 
@@ -153,7 +153,7 @@ export default function SiteHeader({
                 href={effectiveCta.href}
                 {...(ctaIsExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                 onClick={() => trackCtaClick(effectiveCta.href)}
-                className="relative inline-flex min-h-[44px] sm:min-h-0 items-center gap-1 sm:gap-1.5 whitespace-nowrap px-3 py-2.5 sm:px-3 sm:py-1.5 rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-500 text-white shadow-lg shadow-fuchsia-700/20 text-xs sm:text-sm"
+                className="relative inline-flex items-center gap-1 sm:gap-1.5 whitespace-nowrap px-2.5 py-1.5 sm:px-3 rounded-lg sm:rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-500 text-white shadow-lg shadow-fuchsia-700/20 text-xs sm:text-sm"
               >
                 {t(effectiveCta.label)}
                 {ctaFlag && <span className="text-[0.85em] leading-none">{ctaFlag}</span>}
@@ -178,7 +178,7 @@ export default function SiteHeader({
               <LanguageSwitch lang={lang} setLang={setLang} compact />
             </div>
             <div className="sm:hidden">
-              <LanguageSwitch lang={lang} setLang={setLang} compact />
+              <LanguageSwitch lang={lang} setLang={setLang} size="sm" />
             </div>
             <button
               type="button"

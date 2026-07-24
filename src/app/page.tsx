@@ -122,8 +122,8 @@ function ProjectTagIcon({
   size?: "sm" | "md";
 }) {
   const Icon = projectTagIconMap[tag] ?? Code;
-  const boxClass = size === "sm" ? "h-6 w-6" : "h-8 w-8";
-  const iconClass = size === "sm" ? "h-3.5 w-3.5" : "h-5 w-5";
+  const boxClass = size === "sm" ? "h-6 w-6" : "h-6 w-6 sm:h-8 sm:w-8";
+  const iconClass = size === "sm" ? "h-3.5 w-3.5" : "h-3.5 w-3.5 sm:h-5 sm:w-5";
   return (
     <span
       title={tag}
@@ -175,9 +175,9 @@ function CategoryPill({ label }: { label: string }) {
   const className = config?.className ?? "bg-white/10 border-white/20 text-violet-200";
   return (
     <span
-      className={`inline-flex items-center gap-1.5 w-fit px-2 py-0.5 rounded-md text-[13px] font-medium border ${className}`}
+      className={`inline-flex items-center gap-1 sm:gap-1.5 w-fit px-1.5 py-0.5 sm:px-2 rounded-md text-[10px] sm:text-[13px] font-medium border whitespace-nowrap ${className}`}
     >
-      <Icon className="h-3 w-3" />
+      <Icon className="h-2.5 w-2.5 sm:h-3 sm:w-3" />
       {label}
     </span>
   );
@@ -185,7 +185,7 @@ function CategoryPill({ label }: { label: string }) {
 
 function CategoryBadge({ labels, compact = false }: { labels: string[]; compact?: boolean }) {
   return (
-    <div className={`flex flex-wrap gap-1.5 ${compact ? "mb-2" : "mb-4"}`}>
+    <div className={`flex flex-wrap gap-1 sm:gap-1.5 ${compact ? "mb-2" : "mb-4"}`}>
       {labels.map((l) => (
         <CategoryPill key={l} label={l} />
       ))}
@@ -1063,7 +1063,7 @@ export default function Page() {
                       whileInView={{ opacity: 1 }}
                       viewport={viewportSettings}
                       transition={{ duration: 1.1, ease: easeOut, delay: 0.15 }}
-                      className="mt-8 flex flex-wrap items-center gap-3"
+                      className="mt-8 flex flex-col sm:flex-row items-center gap-3"
                     >
                       <a
                         href="/recrutadores"
@@ -1115,15 +1115,16 @@ export default function Page() {
                   initial="hidden"
                   whileInView="show"
                   viewport={viewportSettings}
-                  className="text-[2.1rem] xs:text-[2.3rem] sm:text-[2.6rem] md:text-[3.30rem] font-black text-white"
+                  className="text-[2.1rem] xs:text-[2.3rem] sm:text-[2.6rem] md:text-[3.30rem] font-black text-white leading-[0.95] sm:leading-normal"
                   style={{ fontFamily: "var(--font-space-grotesk)" }}
                 >
                   {t({ pt: "Projetos em Destaque", en: "Featured Projects" })}
                 </motion.h2>
-                <p className="mt-3 max-w-2xl text-[12px] leading-relaxed text-zinc-500">
+                <p className="mt-1 flex items-start gap-1.5 max-w-2xl text-sm sm:text-[11px] leading-relaxed text-zinc-600">
+                  <Lock className="mt-0.5 h-3 w-3 shrink-0 text-zinc-600" />
                   {t({
-                    pt: "Portfólio composto exclusivamente por projetos públicos e autorizados. Não exponho dados sensíveis, informações confidenciais ou materiais sob sigilo — projetos privados ou protegidos por acordo de confidencialidade não são listados nesta página.",
-                    en: "A portfolio made up exclusively of public, authorized projects. No sensitive data, confidential information or material under NDA is exposed — private projects or those protected by a confidentiality agreement are not listed on this page.",
+                    pt: "Portfólio composto exclusivamente por projetos públicos e autorizados, não expondo dados sensíveis, informações confidenciais ou materiais sob sigilo",
+                    en: "A portfolio made up exclusively of public, authorized projects, exposing no sensitive data, confidential information or material under NDA",
                   })}
                 </p>
               </div>
@@ -1179,7 +1180,7 @@ export default function Page() {
                 <div
                   ref={featuredScrollRef}
                   onScroll={updateFeaturedScrollProgress}
-                  className="flex gap-8 overflow-x-auto overflow-y-hidden overscroll-x-contain snap-x snap-mandatory scroll-smooth pt-1 pb-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+                  className="-mx-6 xs:-mx-7 sm:mx-0 px-6 xs:px-7 sm:px-0 flex gap-8 overflow-x-auto overflow-y-hidden overscroll-x-contain snap-x snap-mandatory scroll-smooth pt-1 pb-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
                   style={{
                     maskImage: "linear-gradient(90deg, transparent, #000 16px, #000 calc(100% - 16px), transparent)",
                     WebkitMaskImage: "linear-gradient(90deg, transparent, #000 16px, #000 calc(100% - 16px), transparent)",
@@ -1200,7 +1201,7 @@ export default function Page() {
                         variants={fadeUpItem}
                         initial="hidden"
                         animate="show"
-                        className="card-surface-2 group snap-start shrink-0 w-[78%] sm:w-[calc(46%-1rem)] rounded-3xl overflow-hidden flex flex-col hover:border-violet-400/20 hover:-translate-y-1 transition-all duration-300"
+                        className="card-surface-2 group snap-start shrink-0 w-[95%] sm:w-[calc(46%-1rem)] rounded-3xl overflow-hidden flex flex-col hover:border-violet-400/20 hover:-translate-y-1 transition-all duration-300"
                       >
                         <div className="relative aspect-video w-full overflow-hidden bg-[#1a1425]">
                           {project.badge && (
@@ -1262,7 +1263,7 @@ export default function Page() {
                                 {t(project.subtitle)}
                               </span>
                             )}
-                            <p className="mt-3 sm:mt-1.5 text-sm text-zinc-400 leading-relaxed">
+                            <p className="mt-1.5 text-sm text-zinc-400 leading-relaxed">
                               {t(project.blurb)}
                             </p>
                             <div className="mt-4 sm:mt-2 border-t border-white/5" />
@@ -1339,7 +1340,7 @@ export default function Page() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={viewportSettings}
                   transition={{ duration: 1.1, ease: easeOut }}
-                  className="relative min-w-0 rounded-3xl border border-white/10 bg-gradient-to-br from-black/60 via-[#0d1b2a]/70 to-black/60 backdrop-blur-xl shadow-2xl overflow-hidden p-6 md:p-8"
+                  className="order-2 md:order-1 relative min-w-0 rounded-3xl border border-white/10 bg-gradient-to-br from-black/60 via-[#0d1b2a]/70 to-black/60 backdrop-blur-xl shadow-2xl overflow-hidden p-6 md:p-8"
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-[#0A66C2]/5 via-transparent to-violet-500/5 pointer-events-none" />
 
@@ -1409,7 +1410,9 @@ export default function Page() {
                   </div>
                 </motion.div>
 
-                <Testimonials />
+                <div className="order-1 md:order-2">
+                  <Testimonials />
+                </div>
               </div>
 
               <div className="mt-6 flex justify-center">
@@ -1431,7 +1434,7 @@ export default function Page() {
           >
             <div className="mx-auto max-w-6xl px-6 xs:px-7 sm:px-8 lg:px-12 2xl:max-w-8xl">
               <div className="relative">
-                <div className="relative z-10 grid md:grid-cols-2 gap-10 p-8 md:p-12 items-center">
+                <div className="relative z-10 grid md:grid-cols-2 gap-10 px-3 py-8 sm:p-8 md:p-12 items-center">
                   {/* Coluna da imagem */}
                   <div className="flex items-center justify-center">
                     <div className="relative w-full max-w-[360px] aspect-square">

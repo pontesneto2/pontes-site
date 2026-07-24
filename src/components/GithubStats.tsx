@@ -150,7 +150,7 @@ export default function GithubStats() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.7, ease: "easeOut" }}
-      className="relative rounded-2xl border border-violet-400/20 bg-gradient-to-br from-violet-950/50 via-zinc-950/70 to-black backdrop-blur-xl p-3 sm:p-4 md:p-6 shadow-2xl ring-1 ring-inset ring-white/5 overflow-hidden"
+      className="relative rounded-2xl border border-violet-400/20 bg-gradient-to-br from-violet-950/50 via-zinc-950/70 to-black backdrop-blur-xl px-5 py-7 sm:px-4 sm:py-6 md:px-6 md:py-8 shadow-2xl ring-1 ring-inset ring-white/5 overflow-hidden"
     >
       {/* Camadas decorativas */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
@@ -168,7 +168,7 @@ export default function GithubStats() {
       <div className="relative">
         <div className="mb-5">
           <div className="flex items-start justify-between gap-4">
-            <h3 className="text-sm font-semibold text-white flex items-center gap-1.5">
+            <h3 className="text-base font-semibold text-white flex items-center gap-1.5">
               <Code2 className="h-4 w-4 text-violet-300" />
               {t("Engineering KPIs", "Engineering KPIs")}
             </h3>
@@ -181,7 +181,7 @@ export default function GithubStats() {
               @{GITHUB_USER}
             </a>
           </div>
-          <p className="text-[13px] text-zinc-400 mt-0.5">
+          <p className="text-sm text-zinc-400 mt-1">
             {t(
               "Visão consolidada da atividade de desenvolvimento e das aplicações em produção, com dados do GitHub, Vercel e Railway.",
               "Consolidated view of development activity and production applications, with data from GitHub, Vercel and Railway."
@@ -189,7 +189,7 @@ export default function GithubStats() {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-x-4 gap-y-5 sm:gap-2">
           {kpis.map((stat, index) => {
             const delay = index * 0.08;
             return (
@@ -199,7 +199,7 @@ export default function GithubStats() {
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true, amount: 0.5 }}
                 transition={{ duration: 0.6, ease: "easeOut", delay }}
-                className="p-1.5 sm:p-3 min-h-[76px]"
+                className="p-1 sm:p-3 min-h-[76px] flex flex-col items-center text-center sm:items-start sm:text-left"
               >
                 <stat.icon className="h-[18px] w-[18px] text-violet-400 mb-1.5" />
                 {stat.value !== null ? (
