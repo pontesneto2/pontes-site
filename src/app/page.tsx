@@ -34,6 +34,7 @@ import {
   Monitor,
   Globe,
   RefreshCcw,
+  Activity,
   AppWindow,
   Dumbbell,
   Trophy,
@@ -324,10 +325,10 @@ export default function Page() {
         { icon: Building2, value: { pt: "Idealizador: Governo do Ceará junto com a Secretaria de Desenvolvimento Agrário", en: "Idealized by: Government of Ceará together with the Secretariat of Agrarian Development" } },
       ],
       impact: [
-        { icon: Users, value: { pt: "1.000+", en: "1,000+" }, label: { pt: "Usuários ativos", en: "Active users" } },
-        { icon: RefreshCcw, value: { pt: "Refeito", en: "Rebuilt" }, label: { pt: "Back e front migrados por módulos", en: "Backend & frontend migrated by module" } },
-        { icon: Smartphone, value: { pt: "200+", en: "200+" }, label: { pt: "Logins simultâneos", en: "Concurrent logins" } },
-        { icon: Clock, value: { pt: "1,8 anos", en: "1.8 years" }, label: { pt: "Desenvolvimento sem IA", en: "Development without AI" } },
+        { icon: Users, value: { pt: "1.000+", en: "1,000+" }, label: { pt: "Usuários", en: "Users" } },
+        { icon: RefreshCcw, value: { pt: "Refatorado", en: "Refactored" }, label: { pt: "", en: "" } },
+        { icon: Smartphone, value: { pt: "300+", en: "300+" }, label: { pt: "Logins simultâneos", en: "Concurrent logins" } },
+        { icon: Clock, value: { pt: "1,8 anos", en: "1.8 years" }, label: { pt: "de desenvolvimento sem IA", en: "of development without AI" } },
       ],
     },
     {
@@ -360,7 +361,7 @@ export default function Page() {
         { icon: Building2, value: { pt: "Idealizadora: Click SF", en: "Idealized by: Click SF" } },
       ],
       impact: [
-        { icon: Users, value: { pt: "200+", en: "200+" }, label: { pt: "Usuários ativos", en: "Active users" } },
+        { icon: Users, value: { pt: "200+", en: "200+" }, label: { pt: "Usuários", en: "Users" } },
         { icon: Gauge, value: { pt: "99,9%", en: "99.9%" }, label: { pt: "Uptime", en: "Uptime" } },
         { icon: TrendingDown, value: { pt: "-35%", en: "-35%" }, label: { pt: "Tempo de agendamento", en: "Scheduling time" } },
       ],
@@ -385,9 +386,8 @@ export default function Page() {
         { icon: Building2, value: { pt: "Idealizadora: Com3 Brasil", en: "Idealized by: Com3 Brasil" } },
       ],
       impact: [
-        { icon: Users, value: { pt: "2.350+", en: "2,350+" }, label: { pt: "Usuários ativos", en: "Active users" } },
+        { icon: Users, value: { pt: "2.350+", en: "2,350+" }, label: { pt: "Usuários", en: "Users" } },
         { icon: Gauge, value: { pt: "99,9%", en: "99.9%" }, label: { pt: "Uptime", en: "Uptime" } },
-        { icon: TrendingDown, value: { pt: "-40%", en: "-40%" }, label: { pt: "Manutenção semanal", en: "Weekly maintenance" } },
         { icon: Rocket, value: { pt: "-2 meses", en: "-2 months" }, label: { pt: "MVP antes do prazo", en: "MVP ahead of schedule" } },
       ],
     },
@@ -411,7 +411,7 @@ export default function Page() {
         { icon: Building2, value: { pt: "Idealizador: SDA Ceará", en: "Idealized by: SDA Ceará" } },
       ],
       impact: [
-        { icon: Users, value: { pt: "100+", en: "100+" }, label: { pt: "Demandas monitoradas/mês", en: "Demands tracked/month" } },
+        { icon: Users, value: { pt: "130+", en: "130+" }, label: { pt: "Demandas monitoradas/mês", en: "Demands tracked/month" } },
         { icon: Gauge, value: { pt: "99,5%", en: "99.5%" }, label: { pt: "Uptime", en: "Uptime" } },
         { icon: Rocket, value: { pt: "-25%", en: "-25%" }, label: { pt: "Tempo de resposta a demandas", en: "Demand response time" } },
       ],
@@ -475,7 +475,7 @@ export default function Page() {
         en: "Management system for the State Fund for Family Agriculture Development.",
       },
       category: [{ pt: "Sistema Web+Admin", en: "Web System+Admin" }],
-      thumb: "/images/capa-fedaf.png",
+      thumb: "/images/capa-fedaf-gov.png",
       bgClass: NEUTRAL_BG,
       badge: { pt: "Em produção", en: "In production" },
       highlights: [
@@ -483,7 +483,7 @@ export default function Page() {
         { icon: Building2, value: { pt: "Idealizador: Governo do Ceará", en: "Idealized by: Government of Ceará" } },
       ],
       impact: [
-        { icon: Users, value: { pt: "15.000+", en: "15,000+" }, label: { pt: "Produtores cadastrados", en: "Registered producers" } },
+        { icon: Users, value: { pt: "25.000+", en: "25,000+" }, label: { pt: "Produtores cadastrados", en: "Registered producers" } },
         { icon: Gauge, value: { pt: "99,6%", en: "99.6%" }, label: { pt: "Uptime", en: "Uptime" } },
         { icon: Rocket, value: { pt: "-35%", en: "-35%" }, label: { pt: "Tempo de análise de processos", en: "Process review time" } },
       ],
@@ -530,9 +530,9 @@ export default function Page() {
         { icon: Building2, value: { pt: "Idealizador: Instituto Agropolos", en: "Idealized by: Instituto Agropolos" } },
       ],
       impact: [
-        { icon: Users, value: { pt: "10.000+", en: "10,000+" }, label: { pt: "Usuários ativos", en: "Active users" } },
+        { icon: Users, value: { pt: "10.000+", en: "10,000+" }, label: { pt: "Usuários", en: "Users" } },
         { icon: Gauge, value: { pt: "99,7%", en: "99.7%" }, label: { pt: "Uptime", en: "Uptime" } },
-        { icon: TrendingDown, value: { pt: "-30%", en: "-30%" }, label: { pt: "Tempo de processos administrativos", en: "Administrative process time" } },
+        { icon: Activity, value: { pt: "Monitoramento", en: "Monitoring" }, label: { pt: "", en: "" } },
       ],
     },
     {
@@ -554,9 +554,9 @@ export default function Page() {
         { icon: Building2, value: { pt: "Idealizador: SDA Ceará", en: "Idealized by: SDA Ceará" } },
       ],
       impact: [
-        { icon: Users, value: { pt: "5.000+", en: "5,000+" }, label: { pt: "Imóveis regularizados", en: "Regularized properties" } },
+        { icon: Users, value: { pt: "30.000+", en: "30,000+" }, label: { pt: "Títulos regularizados", en: "Regularized titles" } },
         { icon: Gauge, value: { pt: "99,6%", en: "99.6%" }, label: { pt: "Uptime", en: "Uptime" } },
-        { icon: TrendingDown, value: { pt: "-45%", en: "-45%" }, label: { pt: "Tempo de regularização", en: "Regularization time" } },
+        { icon: TrendingDown, value: { pt: "-55%", en: "-55%" }, label: { pt: "Tempo de regularização", en: "Regularization time" } },
       ],
     },
     {
@@ -601,11 +601,6 @@ export default function Page() {
         { icon: Clock, value: { pt: "4 meses de produção", en: "4 months in production" } },
         { icon: Building2, value: { pt: "Idealizador: Alfa Construções", en: "Idealized by: Alfa Construções" } },
       ],
-      impact: [
-        { icon: Users, value: { pt: "12+", en: "12+" }, label: { pt: "Obras monitoradas", en: "Monitored construction sites" } },
-        { icon: Gauge, value: { pt: "99,4%", en: "99.4%" }, label: { pt: "Uptime", en: "Uptime" } },
-        { icon: TrendingDown, value: { pt: "-20%", en: "-20%" }, label: { pt: "Tempo de registro diário", en: "Daily log time" } },
-      ],
     },
     {
       title: "Website Instituto Anjos Digitais",
@@ -626,9 +621,7 @@ export default function Page() {
         { icon: Building2, value: { pt: "Idealizador: Anjos Digitais", en: "Idealized by: Anjos Digitais" } },
       ],
       impact: [
-        { icon: Gauge, value: { pt: "99,9%", en: "99.9%" }, label: { pt: "Uptime", en: "Uptime" } },
-        { icon: Users, value: { pt: "800+", en: "800+" }, label: { pt: "Visitas mensais", en: "Monthly visits" } },
-        { icon: Rocket, value: { pt: "+15%", en: "+15%" }, label: { pt: "Captação de apoiadores", en: "Supporter sign-ups" } },
+        { icon: Users, value: { pt: "3.000+", en: "3,000+" }, label: { pt: "Visitas mensais", en: "Monthly visits" } },
       ],
     },
     {
@@ -650,9 +643,8 @@ export default function Page() {
         { icon: Building2, value: { pt: "Idealizador: Instituto Agropolos", en: "Idealized by: Instituto Agropolos" } },
       ],
       impact: [
-        { icon: Gauge, value: { pt: "99,8%", en: "99.8%" }, label: { pt: "Uptime", en: "Uptime" } },
-        { icon: Users, value: { pt: "3.000+", en: "3,000+" }, label: { pt: "Visitas mensais", en: "Monthly visits" } },
-        { icon: Rocket, value: { pt: "Projeto dinâmico", en: "Dynamic project" }, label: { pt: "Substitui site estático", en: "Replaces static site" } },
+        { icon: Users, value: { pt: "10.000+", en: "10,000+" }, label: { pt: "Visitas mensais", en: "Monthly visits" } },
+        { icon: Rocket, value: { pt: "Projeto dinâmico", en: "Dynamic project" }, label: { pt: "", en: "" } },
       ],
     },
     {
@@ -672,10 +664,6 @@ export default function Page() {
       highlights: [
         { icon: Clock, value: { pt: "1 mês de desenvolvimento", en: "1 month of development" } },
         { icon: Building2, value: { pt: "Idealizador: UJVP CE", en: "Idealized by: UJVP CE" } },
-      ],
-      impact: [
-        { icon: Gauge, value: { pt: "99,9%", en: "99.9%" }, label: { pt: "Uptime", en: "Uptime" } },
-        { icon: Users, value: { pt: "300+", en: "300+" }, label: { pt: "Visitas mensais", en: "Monthly visits" } },
       ],
     },
     {
@@ -698,7 +686,7 @@ export default function Page() {
       ],
       impact: [
         { icon: Gauge, value: { pt: "99,5%", en: "99.5%" }, label: { pt: "Uptime", en: "Uptime" } },
-        { icon: Users, value: { pt: "10.000+", en: "10,000+" }, label: { pt: "Visitas mensais", en: "Monthly visits" } },
+        { icon: Users, value: { pt: "30.000+", en: "30,000+" }, label: { pt: "Visitas mensais", en: "Monthly visits" } },
       ],
     },
     {
@@ -719,10 +707,6 @@ export default function Page() {
         { icon: Clock, value: { pt: "1 mês de desenvolvimento", en: "1 month of development" } },
         { icon: Building2, value: { pt: "Idealizador: Silva & Duarte", en: "Idealized by: Silva & Duarte" } },
       ],
-      impact: [
-        { icon: Gauge, value: { pt: "99,9%", en: "99.9%" }, label: { pt: "Uptime", en: "Uptime" } },
-        { icon: Users, value: { pt: "100+", en: "100+" }, label: { pt: "Visitas mensais", en: "Monthly visits" } },
-      ],
     },
     {
       title: "Landing Page Sarrubbo Advogados",
@@ -741,9 +725,6 @@ export default function Page() {
       highlights: [
         { icon: Clock, value: { pt: "Desenvolvimento rápido", en: "Fast development" } },
         { icon: Building2, value: { pt: "Idealizador: Sarrubbo Advogados", en: "Idealized by: Sarrubbo Advogados" } },
-      ],
-      impact: [
-        { icon: Gauge, value: { pt: "99,9%", en: "99.9%" }, label: { pt: "Uptime", en: "Uptime" } },
       ],
     },
   ];
@@ -1229,9 +1210,9 @@ export default function Page() {
                       >
                         <div className="relative aspect-video w-full overflow-hidden bg-[#1a1425]">
                           {project.badge && (
-                            <div className="absolute -right-16 top-8 z-20 w-56 rotate-45 pointer-events-none">
+                            <div className="absolute -right-20 top-11 z-20 w-80 rotate-45 pointer-events-none">
                               <span
-                                className={`block py-1 text-center whitespace-nowrap text-[13px] font-bold uppercase leading-none tracking-wide text-zinc-950 shadow-sm shadow-black/30 ${
+                                className={`block py-1.5 text-center whitespace-nowrap text-[10.5px] font-bold uppercase leading-none tracking-wide text-zinc-950 shadow-sm shadow-black/30 ${
                                   project.badgeColor === "sky" ? "bg-sky-400" : "bg-amber-400"
                                 }`}
                               >
@@ -1261,7 +1242,7 @@ export default function Page() {
                                 return (
                                   <div
                                     key={i}
-                                    className="flex items-center gap-1.5 rounded-full bg-black/50 backdrop-blur-md px-2.5 py-1 shadow-sm shadow-black/30 ring-1 ring-white/5"
+                                    className="flex items-center gap-1.5 rounded-full bg-black/80 backdrop-blur-md px-2.5 py-1 shadow-sm shadow-black/50 ring-1 ring-white/10"
                                   >
                                     <Icon className="h-3 w-3 text-fuchsia-300/80 shrink-0" />
                                     <span className="text-[11px] font-semibold text-white leading-none">

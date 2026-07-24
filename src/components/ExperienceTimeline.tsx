@@ -25,7 +25,7 @@ export default function ExperienceTimeline() {
         {EXPERIENCE.map((exp, index) => {
           const isLatest = index === 0;
           const isOpen = openIndex === index;
-          const hasExtras = Boolean(exp.remote || exp.languages || exp.contractType);
+          const hasExtras = Boolean(exp.remote || exp.onsite || exp.hybrid || exp.languages || exp.contractType);
 
           return (
             <motion.div
@@ -112,6 +112,16 @@ export default function ExperienceTimeline() {
                             {exp.remote ? (
                               <span className="text-[10px] tracking-wide text-fuchsia-300/70 bg-fuchsia-500/[0.05] px-1.5 py-0.5 rounded-full border border-fuchsia-500/10 font-medium">
                                 {t({ pt: "Remoto", en: "Remote" })}
+                              </span>
+                            ) : null}
+                            {exp.onsite ? (
+                              <span className="text-[10px] tracking-wide text-fuchsia-300/70 bg-fuchsia-500/[0.05] px-1.5 py-0.5 rounded-full border border-fuchsia-500/10 font-medium">
+                                {t({ pt: "Presencial", en: "On-site" })}
+                              </span>
+                            ) : null}
+                            {exp.hybrid ? (
+                              <span className="text-[10px] tracking-wide text-fuchsia-300/70 bg-fuchsia-500/[0.05] px-1.5 py-0.5 rounded-full border border-fuchsia-500/10 font-medium">
+                                {t({ pt: "Híbrido", en: "Hybrid" })}
                               </span>
                             ) : null}
                             {exp.languages ? (

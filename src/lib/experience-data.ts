@@ -7,6 +7,8 @@ export type ExperienceItem = {
   description?: Bilingual;
   period: string;
   remote?: boolean;
+  onsite?: boolean;
+  hybrid?: boolean;
   languages?: string;
   contractType?: Bilingual;
   location: string;
@@ -20,15 +22,17 @@ export const EXPERIENCE: ExperienceItem[] = [
       en: "Software Engineer | Project Management",
     },
     description: {
-      pt: "Atuação dupla como engenheiro de software e gerente de projeto, unindo desenvolvimento técnico e gestão de entregas em soluções digitais.",
-      en: "Dual role as software engineer and project manager, combining technical development with delivery management for digital solutions.",
+      pt: "Atuação sênior como Engenheiro de Software e gerenciamento de projeto: arquitetura técnica, engenharia, decisões de stack e entrega ponta a ponta de soluções digitais para o negócio.",
+      en: "Senior role as Software Engineer and project manager: technical architecture, engineering, stack decisions and end-to-end delivery of business-critical digital solutions.",
     },
     period: "06/2025–07/2026",
+    onsite: true,
+    contractType: { pt: "CLT", en: "CLT" },
     location: "Fortaleza - CE",
   },
   {
     company: "FedEx Services",
-    role: { pt: "Sênior Desenvolvedor Full Stack", en: "Senior Full Stack Developer" },
+    role: { pt: "Engenheiro de Software Senior", en: "Senior Software Engineer" },
     description: {
       pt: "Projeto internacional em regime de contrato remoto, atuando no desenvolvimento full stack de sistemas corporativos internos da operação da FedEx.",
       en: "International remote contract project, working on full stack development of internal corporate systems for FedEx's operation.",
@@ -41,7 +45,7 @@ export const EXPERIENCE: ExperienceItem[] = [
   },
   {
     company: "FlixBus Tickets",
-    role: { pt: "Sênior Desenvolvedor Full Stack", en: "Senior Full Stack Developer" },
+    role: { pt: "Engenheiro de Software Senior", en: "Senior Software Engineer" },
     description: {
       pt: "Contrato remoto internacional, atuando no desenvolvimento full stack da plataforma de venda de passagens online da FlixBus.",
       en: "International remote contract, working on full stack development of FlixBus's online ticket sales platform.",
@@ -55,8 +59,8 @@ export const EXPERIENCE: ExperienceItem[] = [
   {
     company: "Instituto Anjos Digitais",
     role: {
-      pt: "Sênior Desenvolvedor Full Stack | Gerenciamento de projetos de Produtos Digitais",
-      en: "Senior Full Stack Developer | Digital Product Project Management",
+      pt: "Desenvolvedor de Softwares Senior",
+      en: "Senior Software Developer",
     },
     description: {
       pt: "Liderança técnica e gerenciamento de produtos digitais do instituto, incluindo o site institucional (WordPress/PHP) que elevou em +15% a captação de apoiadores.",
@@ -64,59 +68,66 @@ export const EXPERIENCE: ExperienceItem[] = [
     },
     period: "2023–2024",
     remote: true,
+    contractType: { pt: "Contrato", en: "Contract" },
     location: "Fortaleza - CE",
   },
   {
     company: "Secretaria do Desenvolvimento Agrário (CE)",
-    startRole: { pt: "Programador Jr", en: "Jr Programmer" },
+    startRole: { pt: "Programador", en: "Programmer" },
     role: {
       pt: "Analista de Sistemas Pleno | Product Designer",
       en: "Mid-level Systems Analyst | Product Designer",
     },
     description: {
-      pt: "Evolução de Programador Jr a Analista de Sistemas Pleno, atuando como product designer e full stack (React Native, .NET, PHP) em sistemas como o app SDA Ceará (1.000+ usuários) e o FEDAF (15.000+ produtores cadastrados).",
-      en: "Grew from Jr Programmer to Mid-level Systems Analyst, working as product designer and full stack developer (React Native, .NET, PHP) on systems like the SDA Ceará app (1,000+ users) and FEDAF (15,000+ registered producers).",
+      pt: "Promovido para Analista de Sistemas Pleno, atuando como product designer e full stack (React Native, .NET, C#, PHP) em sistemas como o app SDA Ceará (1.000+ usuários) e o FEDAF (15.000+ produtores cadastrados).",
+      en: "Promoted to Mid-level Systems Analyst, working as product designer and full stack developer (React Native, .NET, C#, PHP) on systems like the SDA Ceará app (1,000+ users) and FEDAF (15,000+ registered producers).",
     },
     period: "2021–2023",
+    onsite: true,
+    contractType: { pt: "CLT", en: "CLT" },
     location: "Fortaleza - CE",
   },
   {
     company: "Instituto Agropolos do Ceará",
-    startRole: { pt: "Programador Jr", en: "Jr Programmer" },
+    startRole: { pt: "Programador", en: "Programmer" },
     role: {
       pt: "Analista de Sistemas Pleno | UX/UI Designer",
       en: "Mid-level Systems Analyst | UX/UI Designer",
     },
     description: {
-      pt: "Evolução de Programador Jr a Analista de Sistemas Pleno, com atuação em UX/UI Design remota no Sistema Integrado de Gestão (.NET/Angular, 10.000+ usuários) e no site institucional do instituto.",
-      en: "Grew from Jr Programmer to Mid-level Systems Analyst, working remotely on UX/UI design for the Integrated Management System (.NET/Angular, 10,000+ users) and the institute's website.",
+      pt: "Promovido para Analista de Sistemas Pleno, com atuação em UX/UI Design no Sistema Integrado de Gestão (.NET/Angular, 10.000+ usuários) e no site institucional do instituto.",
+      en: "Promoted to Mid-level Systems Analyst, working on UX/UI Design for the Integrated Management System (.NET/Angular, 10,000+ users) and the institute's website.",
     },
     period: "2021–2023",
-    remote: true,
+    hybrid: true,
+    contractType: { pt: "CLT", en: "CLT" },
     location: "Fortaleza - CE",
   },
   {
     company: "Com3 Brasil",
     role: {
-      pt: "Analista de Sistemas Jr",
-      en: "Jr Systems Analyst",
+      pt: "Desenvolvedor Jr",
+      en: "Jr Developer",
     },
     description: {
       pt: "Primeiras experiências como analista de sistemas, atuando no sistema de gestão escolar do 2º CPM-CHMJ (PHP/Laravel/Angular, 2.350+ usuários) — os primeiros passos na carreira de tecnologia.",
       en: "Early experience as a systems analyst, working on the 2nd CPM-CHMJ school management system (PHP/Laravel/Angular, 2,350+ users) — the first steps into a technology career.",
     },
     period: "2020–2021",
+    onsite: true,
+    contractType: { pt: "CLT", en: "CLT" },
     location: "Fortaleza - CE",
   },
   {
     company: "Grupo Laredo Atacadista",
-    startRole: { pt: "Auxiliar de gerência", en: "Assistant Manager" },
     role: { pt: "Gerente Operacional de Mercado", en: "Store Operations Manager" },
     description: {
-      pt: "Evolução de auxiliar de gerência a gerente operacional de mercado, antes da transição para tecnologia.",
-      en: "Grew from assistant manager to store operations manager, before transitioning into technology.",
+      pt: "Gerente operacional de filial.",
+      en: "Store operations manager.",
     },
     period: "2017–2020",
+    onsite: true,
+    contractType: { pt: "CLT", en: "CLT" },
     location: "Fortaleza - CE",
   },
 ];

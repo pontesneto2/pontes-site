@@ -62,6 +62,7 @@ const challengesData = {
 
 const kpisData: Array<{ text: Bilingual }> = [
   { text: { pt: "184/184 municípios do Ceará com indicadores cadastrados", en: "184/184 Ceará municipalities with registered indicators" } },
+  { text: { pt: "500+ usuários ativos no sistema", en: "500+ active users in the system" } },
   { text: { pt: "18.403 demandas registradas no histórico do sistema, desde 2015", en: "18,403 demands recorded in the system's history, since 2015" } },
   { text: { pt: "100+ demandas monitoradas por mês", en: "100+ demands tracked per month" } },
   { text: { pt: "99,5% de uptime em produção", en: "99.5% uptime in production" } },
