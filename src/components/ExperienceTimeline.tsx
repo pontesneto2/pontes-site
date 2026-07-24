@@ -18,7 +18,7 @@ export default function ExperienceTimeline() {
   const hasMore = visibleCount < EXPERIENCE.length;
 
   return (
-    <div className="relative mx-auto max-w-3xl">
+    <div className="relative -mx-6 px-2 xs:-mx-7 sm:-mx-8 md:mx-auto md:px-0 max-w-none md:max-w-4xl lg:max-w-5xl">
       <div className="absolute left-[9px] top-4 bottom-4 w-px bg-gradient-to-b from-violet-400/50 via-violet-400/15 to-transparent" />
 
       <div className="space-y-4">
