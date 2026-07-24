@@ -1333,8 +1333,6 @@ export default function Page() {
           <section id="testimonials" className="relative py-14">
             <div className="mx-auto max-w-7xl px-6 xs:px-7 sm:px-8 lg:px-12 2xl:max-w-8xl">
               <div className="grid md:grid-cols-2 gap-10 items-stretch">
-                <Testimonials />
-
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -1409,6 +1407,8 @@ export default function Page() {
                     </a>
                   </div>
                 </motion.div>
+
+                <Testimonials />
               </div>
 
               <div className="mt-6 flex justify-center">
