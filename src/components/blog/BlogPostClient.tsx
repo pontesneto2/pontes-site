@@ -1,11 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { ArrowLeft } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import BlogHero from "@/components/blog/BlogHero";
+import ClickableImage from "@/components/case/ClickableImage";
 import MdxContent from "@/components/blog/MdxContent";
 import BlogLinkedInCTA from "@/components/blog/BlogLinkedInCTA";
 import BlogPagination from "@/components/blog/BlogPagination";
@@ -69,15 +69,15 @@ export default function BlogPostClient({
 
         {post.cover && post.coverWidth && post.coverHeight && (
           <div className="mx-auto max-w-2xl px-6 sm:px-8 lg:px-12">
-            <Image
-              src={post.cover}
-              alt={post.title}
-              width={post.coverWidth}
-              height={post.coverHeight}
-              sizes="(max-width: 672px) 100vw, 672px"
-              className="w-full h-auto"
-              priority
-            />
+            <div className="rounded-2xl overflow-hidden border border-white/10">
+              <ClickableImage
+                src={post.cover}
+                alt={post.title}
+                sizes="(max-width: 672px) 100vw, 672px"
+                aspectRatio={`${post.coverWidth}/${post.coverHeight}`}
+                priority
+              />
+            </div>
           </div>
         )}
 

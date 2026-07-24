@@ -1,9 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import CaseHero from "@/components/case/CaseHero";
 import CaseContent from "@/components/case/CaseContent";
 import CaseCTA from "@/components/case/CaseCTA";
+import ClickableImage from "@/components/case/ClickableImage";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
@@ -259,16 +259,12 @@ function ShowcaseHero() {
   return (
     <div className="relative mx-auto max-w-5xl px-6 sm:px-8 -mt-4 mb-16">
       <div className="relative rounded-[28px] overflow-hidden border border-white/10 shadow-[0_40px_100px_-20px_rgba(88,28,155,0.45)]">
-        <div className="relative aspect-[16/9]">
-          <Image
-            src="/images/estudo-de-caso-ucopiloto.png"
-            alt="Painel do prestador e app do motorista do Ucopiloto"
-            fill
-            sizes="(max-width: 1024px) 100vw, 1024px"
-            className="object-cover object-top"
-            priority
-          />
-        </div>
+        <ClickableImage
+          src="/images/estudo-de-caso-ucopiloto.png"
+          alt="Painel do prestador e app do motorista do Ucopiloto"
+          sizes="(max-width: 1024px) 100vw, 1024px"
+          priority
+        />
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
       </div>
     </div>
@@ -279,15 +275,12 @@ function PosterShot() {
   return (
     <div className="relative w-full max-w-[280px] mx-auto lg:mx-0 lg:ml-auto" style={{ transform: "rotate(2deg)" }}>
       <div className="relative rounded-3xl overflow-hidden border border-white/10 shadow-2xl shadow-black/60">
-        <div className="relative aspect-[941/1672]">
-          <Image
-            src="/images/estudo-de-caso-ucopiloto-5-mkt.png"
-            alt="Peça de divulgação do Ucopiloto"
-            fill
-            sizes="280px"
-            className="object-cover"
-          />
-        </div>
+        <ClickableImage
+          src="/images/estudo-de-caso-ucopiloto-5-mkt.png"
+          alt="Peça de divulgação do Ucopiloto"
+          sizes="280px"
+          aspectRatio="941/1672"
+        />
       </div>
       <div className="absolute -bottom-4 -left-4 rounded-2xl bg-white text-violet-700 text-[13px] font-semibold px-3 py-2 shadow-xl">
         Luiz Mendez · Ucopiloto
@@ -300,15 +293,12 @@ function PhoneShot() {
   return (
     <div className="relative w-full max-w-[220px] mx-auto" style={{ transform: "rotate(-2deg)" }}>
       <div className="relative rounded-[2rem] overflow-hidden border border-white/10 shadow-2xl shadow-black/60">
-        <div className="relative aspect-[1066/2175]">
-          <Image
-            src="/images/estudo-de-caso-ucopiloto-2.png"
-            alt="Tela de dashboard do app do motorista"
-            fill
-            sizes="220px"
-            className="object-cover"
-          />
-        </div>
+        <ClickableImage
+          src="/images/estudo-de-caso-ucopiloto-2.png"
+          alt="Tela de dashboard do app do motorista"
+          sizes="220px"
+          aspectRatio="1066/2175"
+        />
       </div>
     </div>
   );
@@ -318,15 +308,12 @@ function OnboardingShot() {
   return (
     <div className="relative w-full max-w-[260px] mx-auto lg:mx-0" style={{ transform: "rotate(1.5deg)" }}>
       <div className="relative rounded-3xl overflow-hidden border border-white/10 shadow-2xl shadow-black/60">
-        <div className="relative aspect-[853/1844]">
-          <Image
-            src="/images/estudo-de-caso-ucopiloto-4.png"
-            alt="Tela de cadastro do motorista"
-            fill
-            sizes="260px"
-            className="object-cover"
-          />
-        </div>
+        <ClickableImage
+          src="/images/estudo-de-caso-ucopiloto-4.png"
+          alt="Tela de cadastro do motorista"
+          sizes="260px"
+          aspectRatio="853/1844"
+        />
         <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/60 to-transparent pointer-events-none" />
       </div>
       <div className="absolute -top-3 -right-3 rounded-full bg-violet-500/15 border border-violet-400/30 text-violet-200 text-[13px] font-semibold px-3 py-1.5 backdrop-blur">
@@ -351,9 +338,7 @@ function AppGalleryShot({
   return (
     <div className="relative w-full max-w-[210px] mx-auto" style={{ transform: `rotate(${rotate})` }}>
       <div className="relative rounded-[1.75rem] overflow-hidden border border-white/10 shadow-2xl shadow-black/60">
-        <div className="relative aspect-[1320/2868]">
-          <Image src={src} alt={alt} fill sizes="210px" className="object-cover" />
-        </div>
+        <ClickableImage src={src} alt={alt} sizes="210px" aspectRatio="1320/2868" />
       </div>
       <p className="mt-3 text-center text-xs text-zinc-500">{tr(lang, label)}</p>
     </div>

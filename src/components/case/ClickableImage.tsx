@@ -10,12 +10,14 @@ export default function ClickableImage({
   alt,
   sizes = "(max-width: 1024px) 100vw, 1024px",
   className = "object-cover object-top",
+  aspectRatio = "16/9",
   priority = false,
 }: {
   src: string;
   alt: string;
   sizes?: string;
   className?: string;
+  aspectRatio?: string;
   priority?: boolean;
 }) {
   const [open, setOpen] = useState(false);
@@ -45,7 +47,7 @@ export default function ClickableImage({
         aria-label={alt}
         className="group relative block w-full cursor-zoom-in"
       >
-        <div className="relative aspect-[16/9] bg-white/[0.03]">
+        <div className="relative bg-white/[0.03]" style={{ aspectRatio }}>
           <Image src={src} alt={alt} fill sizes={sizes} priority={priority} className={className} />
         </div>
         <div className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/30 transition-colors duration-300">

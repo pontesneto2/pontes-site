@@ -289,6 +289,43 @@ function useSectionsData(lang: "pt" | "en") {
 
           <p className="mt-6">
             {t({
+              pt: "O mesmo dashboard também foi pensado para o PWA no celular, com o resumo do dia e os relatórios acessíveis na tela do próprio smartphone.",
+              en: "The same dashboard was also designed for the mobile PWA, with the day's summary and reports available right on the phone screen.",
+            })}
+          </p>
+          <div className="mt-4 flex flex-wrap justify-center gap-6">
+            <div className="w-full max-w-[220px]">
+              <figure className="overflow-hidden rounded-2xl border border-white/10">
+                <ClickableImage
+                  src="/images/sistema-escolar-policia-mobile-home.png"
+                  alt="Versão mobile do dashboard inicial do Sistema COM3"
+                  sizes="220px"
+                  aspectRatio="1320/2868"
+                  className="object-contain"
+                />
+                <figcaption className="px-3 py-2 text-xs text-zinc-400 bg-white/[0.02] border-t border-white/[0.06] text-center">
+                  {t({ pt: "Dashboard no PWA mobile", en: "Dashboard on the mobile PWA" })}
+                </figcaption>
+              </figure>
+            </div>
+            <div className="w-full max-w-[220px]">
+              <figure className="overflow-hidden rounded-2xl border border-white/10">
+                <ClickableImage
+                  src="/images/sistema-escolar-policia-mobile-relatorios.png"
+                  alt="Versão mobile da tela de relatórios do Sistema COM3"
+                  sizes="220px"
+                  aspectRatio="1320/2868"
+                  className="object-contain"
+                />
+                <figcaption className="px-3 py-2 text-xs text-zinc-400 bg-white/[0.02] border-t border-white/[0.06] text-center">
+                  {t({ pt: "Relatórios no PWA mobile", en: "Reports on the mobile PWA" })}
+                </figcaption>
+              </figure>
+            </div>
+          </div>
+
+          <p className="mt-6">
+            {t({
               pt: "O mesmo cuidado de redesenho se estendeu ao lançamento de notas: turma, disciplina e bimestre ficam sempre visíveis no topo, e a situação de cada aluno (aprovado, em recuperação, reprovado) é calculada e destacada por cor assim que as notas são digitadas — sem precisar salvar e abrir outra tela para conferir o resultado.",
               en: "The same redesign care extended to grade entry: class, subject and bimester stay visible at the top, and each student's status (passed, in remediation, failed) is calculated and color-highlighted as soon as grades are typed in — no need to save and open another screen just to check the result.",
             })}

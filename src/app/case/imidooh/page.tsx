@@ -4,6 +4,7 @@ import Image from "next/image";
 import CaseHero from "@/components/case/CaseHero";
 import CaseContent from "@/components/case/CaseContent";
 import CaseCTA from "@/components/case/CaseCTA";
+import ClickableImage from "@/components/case/ClickableImage";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
@@ -218,9 +219,7 @@ function DeviceShot({
   return (
     <div className="relative mx-auto" style={{ transform: `rotate(${rotate})`, maxWidth: `${maxWidth}px` }}>
       <div className="relative rounded-[1.5rem] overflow-hidden shadow-2xl shadow-black/60">
-        <div className="relative aspect-[2160/3840]">
-          <Image src={src} alt={alt} fill sizes={`${maxWidth}px`} className="object-contain" />
-        </div>
+        <ClickableImage src={src} alt={alt} sizes={`${maxWidth}px`} aspectRatio="2160/3840" className="object-contain" />
       </div>
       <p className="mt-3 text-center text-xs text-zinc-500">{tr(lang, caption)}</p>
     </div>

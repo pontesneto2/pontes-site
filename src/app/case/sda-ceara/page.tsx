@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import ClickableImage from "@/components/case/ClickableImage";
 import CaseHero from "@/components/case/CaseHero";
 import CaseContent from "@/components/case/CaseContent";
 import CaseCTA from "@/components/case/CaseCTA";
@@ -224,16 +224,12 @@ function ShowcaseHero() {
   return (
     <div className="relative mx-auto max-w-5xl px-6 sm:px-8 -mt-4 mb-16">
       <div className="relative rounded-[28px] overflow-hidden border border-white/10 shadow-[0_40px_100px_-20px_rgba(88,28,155,0.45)]">
-        <div className="relative aspect-[16/9]">
-          <Image
-            src="/images/capa-sda-app.png"
-            alt="Aplicativo SDA Ceará em uso"
-            fill
-            sizes="(max-width: 1024px) 100vw, 1024px"
-            className="object-cover object-top"
-            priority
-          />
-        </div>
+        <ClickableImage
+          src="/images/capa-sda-app.png"
+          alt="Aplicativo SDA Ceará em uso"
+          sizes="(max-width: 1024px) 100vw, 1024px"
+          priority
+        />
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
       </div>
     </div>
@@ -255,9 +251,7 @@ function PhoneShot({
   return (
     <div className="relative w-full max-w-[220px] mx-auto" style={{ transform: `rotate(${rotate})` }}>
       <div className="relative rounded-[2rem] overflow-hidden border border-white/10 shadow-2xl shadow-black/60">
-        <div className="relative aspect-[591/1280]">
-          <Image src={src} alt={alt} fill sizes="220px" className="object-cover" />
-        </div>
+        <ClickableImage src={src} alt={alt} sizes="220px" aspectRatio="591/1280" />
       </div>
       <p className="mt-3 text-center text-xs text-zinc-500">{tr(lang, caption)}</p>
     </div>
