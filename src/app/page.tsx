@@ -1205,8 +1205,8 @@ export default function Page() {
                   onScroll={updateFeaturedScrollProgress}
                   className="flex gap-8 overflow-x-auto overflow-y-hidden overscroll-x-contain snap-x snap-mandatory scroll-smooth pt-1 pb-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
                   style={{
-                    maskImage: "linear-gradient(90deg, transparent, #000 1.5%, #000 98.5%, transparent)",
-                    WebkitMaskImage: "linear-gradient(90deg, transparent, #000 1.5%, #000 98.5%, transparent)",
+                    maskImage: "linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent)",
+                    WebkitMaskImage: "linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent)",
                   }}
                 >
                   {visibleSecondaryProjects.length === 0 && (
@@ -1224,7 +1224,7 @@ export default function Page() {
                         variants={fadeUpItem}
                         initial="hidden"
                         animate="show"
-                        className="card-surface-2 group snap-start shrink-0 w-[85%] sm:w-[calc(48%-1rem)] rounded-3xl overflow-hidden flex flex-col hover:border-violet-400/20 hover:-translate-y-1 transition-all duration-300"
+                        className="card-surface-2 group snap-start shrink-0 w-[78%] sm:w-[calc(46%-1rem)] rounded-3xl overflow-hidden flex flex-col hover:border-violet-400/20 hover:-translate-y-1 transition-all duration-300"
                       >
                         <div className="relative aspect-video w-full overflow-hidden bg-[#1a1425]">
                           {project.badge && (
