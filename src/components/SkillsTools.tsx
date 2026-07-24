@@ -7,6 +7,7 @@ import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
 import GithubStats from "@/components/GithubStats";
 import SegmentedProgress from "@/components/SegmentedProgress";
 import { SKILL_USAGE } from "@/lib/skill-context";
+import CoreStackRow from "@/components/skills/CoreStackRow";
 
 interface Skill {
   name: string;
@@ -402,7 +403,7 @@ export default function SkillsTools() {
       className={`relative overflow-x-hidden ${spaceGrotesk.variable} ${jetbrainsMono.variable}`}
     >
       <div className="mx-auto max-w-[1180px] px-4 sm:px-6 md:px-10 py-16 md:py-24">
-        <div className="mb-3 text-center">
+        <div className="mb-12 md:mb-14 flex flex-col gap-4 md:flex-row md:items-center md:justify-between md:gap-8">
           <motion.h2
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
@@ -413,7 +414,23 @@ export default function SkillsTools() {
           >
             Skills &amp; Tools
           </motion.h2>
+
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.7, ease: "easeOut", delay: 0.1 }}
+            className="font-[family-name:var(--font-space-grotesk)] text-[12px] leading-relaxed md:max-w-[420px] md:text-right"
+            style={{ color: "#8d8d99" }}
+          >
+            {t({
+              pt: "O que eu uso todos os dias, o que já levei para produção e o que fica na caixa de ferramentas.",
+              en: "What I use every day, what I've already shipped to production, and what stays in the toolbox.",
+            })}
+          </motion.p>
         </div>
+
+        <CoreStackRow t={t} />
 
         <SkillsCarousel slides={slides} cardsPerSlide={cardsPerSlide} t={t} />
 
