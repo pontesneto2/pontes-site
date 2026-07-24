@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, animate, useInView } from "framer-motion";
-import { Github, Activity, Calendar, Rocket, ShieldCheck, Timer, Zap } from "lucide-react";
+import { Github, Activity, GitPullRequest, Rocket, ShieldCheck, Timer, Zap } from "lucide-react";
 import { useLanguage, tr } from "@/lib/language-context";
 
 const GITHUB_USER = "pontesneto2";
@@ -111,7 +111,7 @@ export default function GithubStats() {
           <div>
             <h3 className="text-lg font-semibold text-white flex items-center gap-2">
               <Github className="h-5 w-5 text-violet-300" />
-              {t("GitHub ao vivo", "GitHub live")}
+              {t("Engineering KPIs", "Engineering KPIs")}
             </h3>
             <p className="text-xs text-zinc-400 mt-1">
               {t(
@@ -135,18 +135,13 @@ export default function GithubStats() {
 
   const currentYear = new Date().getFullYear();
 
-  const stats = data
-    ? [
-        { icon: Activity, label: t(`Contribuições ${currentYear}`, `Contributions ${currentYear}`), value: data.contributionsThisYear, plain: false },
-        { icon: Calendar, label: t("GitHub desde", "GitHub since"), value: data.joinYear, plain: true },
-      ]
-    : [];
-
-  const deployMetrics = [
-    { icon: Rocket, label: t("Deploys (últimos 30d)", "Deploys (last 30d)"), value: deployData?.deploysLast30d ?? null, suffix: "", decimals: 0 },
-    { icon: ShieldCheck, label: t("Uptime médio", "Avg uptime"), value: deployData?.uptimePct ?? null, suffix: "%", decimals: 2 },
-    { icon: Timer, label: t("Build médio", "Avg build"), value: deployData?.avgBuildTimeSec ?? null, suffix: "s", decimals: 0 },
-    { icon: Zap, label: t("Latência (p95)", "Latency (p95)"), value: deployData?.p95LatencyMs ?? null, suffix: "ms", decimals: 0 },
+  const kpis = [
+    { icon: Activity, label: t(`Contribuições (${currentYear})`, `Contributions (${currentYear})`), value: data?.contributionsThisYear ?? null, prefix: "", suffix: "", decimals: 0, plain: false },
+    { icon: GitPullRequest, label: t("PRs Mesclados (12 meses)", "Merged PRs (12 months)"), value: 380, prefix: "≈", suffix: "", decimals: 0, plain: true },
+    { icon: ShieldCheck, label: t("Uptime Médio", "Avg uptime"), value: deployData?.uptimePct ?? null, prefix: "", suffix: "%", decimals: 2, plain: true },
+    { icon: Rocket, label: t("Deploys (30 dias)", "Deploys (30 days)"), value: deployData?.deploysLast30d ?? null, prefix: "", suffix: "", decimals: 0, plain: true },
+    { icon: Zap, label: t("Latência P95", "P95 latency"), value: deployData?.p95LatencyMs ?? null, prefix: "", suffix: " ms", decimals: 0, plain: true },
+    { icon: Timer, label: t("Tempo Médio de Build", "Avg build time"), value: deployData?.avgBuildTimeSec ?? null, prefix: "", suffix: " s", decimals: 0, plain: true },
   ];
 
   return (
@@ -155,110 +150,73 @@ export default function GithubStats() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.7, ease: "easeOut" }}
-      className="relative rounded-2xl border border-white/10 bg-black/55 backdrop-blur-xl p-3 sm:p-4 md:p-6 shadow-2xl overflow-hidden"
+      className="relative rounded-2xl border border-violet-400/20 bg-gradient-to-br from-violet-950/50 via-zinc-950/70 to-black backdrop-blur-xl p-3 sm:p-4 md:p-6 shadow-2xl ring-1 ring-inset ring-white/5 overflow-hidden"
     >
-      <div className="absolute inset-0 bg-gradient-to-br from-violet-500/5 via-transparent to-fuchsia-500/5" />
-      <div className="relative grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 divide-y md:divide-y-0 md:divide-x divide-white/10">
-        {/* Coluna 1 — GitHub ao vivo */}
-        <div className="md:pr-6 lg:pr-8">
-          <div className="flex items-center justify-between gap-4 mb-4">
-            <div>
-              <h3 className="text-sm font-semibold text-white flex items-center gap-1.5">
-                <Github className="h-4 w-4 text-violet-300" />
-                {t("GitHub ao vivo", "GitHub live")}
-              </h3>
-              <p className="text-[13px] text-zinc-400 mt-0.5">
-                {t("Dados atualizados em tempo real", "Data updated in real time")}
-              </p>
-            </div>
-            <a
-              href={`https://github.com/${GITHUB_USER}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-xs font-medium text-violet-300 hover:text-violet-200 transition-colors whitespace-nowrap"
-            >
-              @{GITHUB_USER}
-            </a>
+      {/* Camadas decorativas */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
+        <div className="absolute -top-24 -right-16 h-72 w-72 rounded-full bg-violet-600/20 blur-3xl" />
+        <div className="absolute -bottom-28 -left-16 h-64 w-64 rounded-full bg-fuchsia-600/10 blur-3xl" />
+        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-violet-400/40 to-transparent" />
+        <motion.div
+          animate={{ y: [0, -14, 0], rotate: [-12, -8, -12] }}
+          transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute -bottom-10 right-4 md:-bottom-8 md:right-10 hidden sm:block"
+        >
+          <Rocket className="h-40 w-40 md:h-52 md:w-52 text-violet-500/10 drop-shadow-[0_0_45px_rgba(139,92,246,0.35)]" />
+        </motion.div>
+      </div>
+      <div className="relative">
+        <div className="flex items-start justify-between gap-4 mb-5">
+          <div className="min-w-0">
+            <h3 className="text-sm font-semibold text-white flex items-center gap-1.5">
+              <Rocket className="h-4 w-4 text-violet-300" />
+              {t("Engineering KPIs", "Engineering KPIs")}
+            </h3>
+            <p className="text-[13px] text-zinc-400 mt-0.5">
+              {t(
+                "Visão consolidada da atividade de desenvolvimento e das aplicações em produção, com dados do GitHub, Vercel e Railway.",
+                "Consolidated view of development activity and production applications, with data from GitHub, Vercel and Railway."
+              )}
+            </p>
           </div>
+          <a
+            href={`https://github.com/${GITHUB_USER}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-xs font-medium text-violet-300 hover:text-violet-200 transition-colors whitespace-nowrap"
+          >
+            @{GITHUB_USER}
+          </a>
+        </div>
 
-          <div className="grid grid-cols-2 gap-2">
-            {(data ? stats : Array.from({ length: 2 })).map((stat, index) => (
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
+          {kpis.map((stat, index) => {
+            const delay = index * 0.08;
+            return (
               <motion.div
-                key={stat ? (stat as { label: string }).label : index}
+                key={stat.label}
                 initial={{ opacity: 0, y: 12 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.5 }}
-                transition={{ duration: 0.5, ease: "easeOut", delay: index * 0.1 }}
+                transition={{ duration: 0.5, ease: "easeOut", delay }}
                 className="p-1.5 sm:p-3 min-h-[76px]"
               >
-                {stat ? (
+                <stat.icon className="h-3.5 w-3.5 text-violet-400 mb-1.5" />
+                {stat.value !== null ? (
                   <>
-                    {(() => {
-                      const Icon = (stat as { icon: typeof Github }).icon;
-                      return <Icon className="h-3.5 w-3.5 text-violet-400 mb-1.5" />;
-                    })()}
-                    <div className="text-lg sm:text-xl font-semibold text-zinc-100 tabular-nums">
-                      <AnimatedNumber
-                        value={(stat as { value: number }).value}
-                        plain={(stat as { plain: boolean }).plain}
-                        delay={index * 0.1}
-                      />
+                    <div className="text-base sm:text-xl font-semibold text-zinc-100 tabular-nums">
+                      {stat.prefix}
+                      <AnimatedNumber value={stat.value} plain={stat.plain} decimals={stat.decimals} delay={delay} />
+                      {stat.suffix}
                     </div>
-                    <div className="text-[13px] text-zinc-400 mt-0.5">
-                      {(stat as { label: string }).label}
-                    </div>
+                    <div className="text-[13px] text-zinc-400 mt-0.5">{stat.label}</div>
                   </>
                 ) : (
-                  <div className="h-full w-full animate-pulse rounded-lg bg-white/5" />
+                  <div className="h-full w-full animate-pulse rounded-lg bg-white/5 min-h-[52px]" />
                 )}
               </motion.div>
-            ))}
-          </div>
-        </div>
-
-        {/* Coluna 2 — Engenharia ao vivo */}
-        <div className="pt-6 md:pt-0 md:pl-6 lg:pl-8">
-          <div className="mb-4">
-            <h3 className="text-sm font-semibold text-white flex items-center gap-1.5">
-              <Rocket className="h-4 w-4 text-violet-300" />
-              {t("Engenharia ao vivo", "Engineering live")}
-            </h3>
-            <p className="text-[13px] text-zinc-400 mt-0.5">
-              {t("Dados atualizados em tempo real", "Data updated in real time")}
-            </p>
-          </div>
-
-          <div className="grid grid-cols-2 gap-2">
-            {deployMetrics.map((stat, index) => {
-              const delay = 0.35 + index * 0.08;
-              return (
-                <motion.div
-                  key={stat.label}
-                  initial={{ opacity: 0, y: 12 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.5 }}
-                  transition={{ duration: 0.5, ease: "easeOut", delay }}
-                  className="p-1.5 sm:p-3 min-h-[76px]"
-                >
-                  <stat.icon className="h-3.5 w-3.5 text-violet-400 mb-1.5" />
-                  {stat.value !== null ? (
-                    <>
-                      <div className="text-base sm:text-xl font-semibold text-zinc-100 tabular-nums">
-                        <AnimatedNumber value={stat.value} plain decimals={stat.decimals} delay={delay} />
-                        {stat.suffix}
-                      </div>
-                      <div className="text-[13px] text-zinc-400 mt-0.5">{stat.label}</div>
-                    </>
-                  ) : (
-                    <>
-                      <div className="text-sm font-medium text-zinc-600 italic">{t("em breve", "soon")}</div>
-                      <div className="text-[13px] text-zinc-500 mt-0.5">{stat.label}</div>
-                    </>
-                  )}
-                </motion.div>
-              );
-            })}
-          </div>
+            );
+          })}
         </div>
       </div>
     </motion.div>

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import { RATE_LIMITS, checkRateLimit, getClientIp } from "@/lib/proposta/rate-limit.server";
+import { isAllowedOrigin } from "@/lib/security/origin.server";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const NAME_REGEX = /^[\p{L}][\p{L}\s'’-]{1,}$/u;
@@ -41,6 +42,11 @@ function emailHeaderRow(statusLabel: string) {
 }
 
 export async function POST(request: NextRequest) {
+  // Rejeita POST cross-site dirigido por browser (Origin presente e não é o nosso).
+  if (!isAllowedOrigin(request)) {
+    return NextResponse.json({ error: "Origin not allowed" }, { status: 403 });
+  }
+
   const body = await request.json().catch(() => null);
 
   if (!body) {
