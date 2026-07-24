@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, animate, useInView } from "framer-motion";
-import { Github, Activity, GitPullRequest, Rocket, ShieldCheck, Timer, Zap } from "lucide-react";
+import { Github, GitCommitHorizontal, GitMerge, Rocket, ShieldCheck, Timer, Zap, Code2 } from "lucide-react";
 import { useLanguage, tr } from "@/lib/language-context";
 
 const GITHUB_USER = "pontesneto2";
@@ -136,10 +136,10 @@ export default function GithubStats() {
   const currentYear = new Date().getFullYear();
 
   const kpis = [
-    { icon: Activity, label: t(`Contribuições (${currentYear})`, `Contributions (${currentYear})`), value: data?.contributionsThisYear ?? null, prefix: "", suffix: "", decimals: 0, plain: false },
-    { icon: GitPullRequest, label: t("PRs Mesclados (12 meses)", "Merged PRs (12 months)"), value: 380, prefix: "≈", suffix: "", decimals: 0, plain: true },
+    { icon: GitCommitHorizontal, label: t(`Contribuições\n(${currentYear})`, `Contributions\n(${currentYear})`), value: data?.contributionsThisYear ?? null, prefix: "", suffix: "", decimals: 0, plain: false },
+    { icon: GitMerge, label: t("PRs Mesclados\n(12 meses)", "Merged PRs\n(12 months)"), value: 380, prefix: "≈", suffix: "", decimals: 0, plain: true },
+    { icon: Rocket, label: t("Deploys\n(30 dias)", "Deploys\n(30 days)"), value: deployData?.deploysLast30d ?? null, prefix: "", suffix: "", decimals: 0, plain: true },
     { icon: ShieldCheck, label: t("Uptime Médio", "Avg uptime"), value: deployData?.uptimePct ?? null, prefix: "", suffix: "%", decimals: 2, plain: true },
-    { icon: Rocket, label: t("Deploys (30 dias)", "Deploys (30 days)"), value: deployData?.deploysLast30d ?? null, prefix: "", suffix: "", decimals: 0, plain: true },
     { icon: Zap, label: t("Latência P95", "P95 latency"), value: deployData?.p95LatencyMs ?? null, prefix: "", suffix: " ms", decimals: 0, plain: true },
     { icon: Timer, label: t("Tempo Médio de Build", "Avg build time"), value: deployData?.avgBuildTimeSec ?? null, prefix: "", suffix: " s", decimals: 0, plain: true },
   ];
@@ -166,27 +166,27 @@ export default function GithubStats() {
         </motion.div>
       </div>
       <div className="relative">
-        <div className="flex items-start justify-between gap-4 mb-5">
-          <div className="min-w-0">
+        <div className="mb-5">
+          <div className="flex items-start justify-between gap-4">
             <h3 className="text-sm font-semibold text-white flex items-center gap-1.5">
-              <Rocket className="h-4 w-4 text-violet-300" />
+              <Code2 className="h-4 w-4 text-violet-300" />
               {t("Engineering KPIs", "Engineering KPIs")}
             </h3>
-            <p className="text-[13px] text-zinc-400 mt-0.5">
-              {t(
-                "Visão consolidada da atividade de desenvolvimento e das aplicações em produção, com dados do GitHub, Vercel e Railway.",
-                "Consolidated view of development activity and production applications, with data from GitHub, Vercel and Railway."
-              )}
-            </p>
+            <a
+              href={`https://github.com/${GITHUB_USER}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs font-medium text-violet-300 hover:text-violet-200 transition-colors whitespace-nowrap"
+            >
+              @{GITHUB_USER}
+            </a>
           </div>
-          <a
-            href={`https://github.com/${GITHUB_USER}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-xs font-medium text-violet-300 hover:text-violet-200 transition-colors whitespace-nowrap"
-          >
-            @{GITHUB_USER}
-          </a>
+          <p className="text-[13px] text-zinc-400 mt-0.5">
+            {t(
+              "Visão consolidada da atividade de desenvolvimento e das aplicações em produção, com dados do GitHub, Vercel e Railway.",
+              "Consolidated view of development activity and production applications, with data from GitHub, Vercel and Railway."
+            )}
+          </p>
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
@@ -195,13 +195,13 @@ export default function GithubStats() {
             return (
               <motion.div
                 key={stat.label}
-                initial={{ opacity: 0, y: 12 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
                 viewport={{ once: true, amount: 0.5 }}
-                transition={{ duration: 0.5, ease: "easeOut", delay }}
+                transition={{ duration: 0.6, ease: "easeOut", delay }}
                 className="p-1.5 sm:p-3 min-h-[76px]"
               >
-                <stat.icon className="h-3.5 w-3.5 text-violet-400 mb-1.5" />
+                <stat.icon className="h-[18px] w-[18px] text-violet-400 mb-1.5" />
                 {stat.value !== null ? (
                   <>
                     <div className="text-base sm:text-xl font-semibold text-zinc-100 tabular-nums">
@@ -209,7 +209,7 @@ export default function GithubStats() {
                       <AnimatedNumber value={stat.value} plain={stat.plain} decimals={stat.decimals} delay={delay} />
                       {stat.suffix}
                     </div>
-                    <div className="text-[13px] text-zinc-400 mt-0.5">{stat.label}</div>
+                    <div className="text-[13px] text-zinc-400 mt-0.5 whitespace-pre-line">{stat.label}</div>
                   </>
                 ) : (
                   <div className="h-full w-full animate-pulse rounded-lg bg-white/5 min-h-[52px]" />
