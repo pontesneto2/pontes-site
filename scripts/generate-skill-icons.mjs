@@ -20,7 +20,7 @@ const SIMPLE_ICON_SLUGS = [
   "postgresql", "prisma", "redis", "sequelize", "mysql", "mongodb",
   "docker", "githubactions", "vercel", "railway", "linux", "kubernetes", "prometheus",
   "grafana", "gitlab", "googlecloud", "digitalocean", "nginx",
-  "jest", "cypress", "curl",
+  "jest", "cypress", "curl", "selenium",
   "figma",
   "jira", "trello",
   "angular", "git", "github", "bootstrap", "symfony",

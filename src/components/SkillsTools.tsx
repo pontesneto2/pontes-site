@@ -130,11 +130,6 @@ const CATEGORIES: SkillCategory[] = [
 
 export const SKILL_NAMES = CATEGORIES.flatMap((cat) => cat.skills.map((s) => s.name));
 
-const TIER_LABEL: Record<SkillTier, Bilingual> = {
-  core: { pt: "Stack principal", en: "Core stack" },
-  solid: { pt: "Experiência sólida", en: "Solid experience" },
-};
-
 const TIER_STYLE: Record<
   SkillTier,
   {
@@ -248,34 +243,6 @@ function SkillChip({ skill, t }: { skill: Skill; t: (v: Bilingual) => string }) 
           {usedIn.join(", ")}
         </div>
       )}
-    </div>
-  );
-}
-
-function TierLegend({ t }: { t: (v: Bilingual) => string }) {
-  const tiers: SkillTier[] = ["core", "solid"];
-  return (
-    <div className="mb-4 flex flex-wrap items-center justify-center gap-x-4 gap-y-3">
-      {tiers.map((tier) => {
-        const s = TIER_STYLE[tier];
-        return (
-          <span
-            key={tier}
-            className="inline-block rounded-[9px] border font-[family-name:var(--font-jetbrains-mono)]"
-            style={{
-              padding: s.paddingNoIcon,
-              fontSize: s.fontSize,
-              fontWeight: s.fontWeight,
-              borderColor: s.borderColor,
-              background: s.background,
-              color: s.color,
-              letterSpacing: "-0.01em",
-            }}
-          >
-            {t(TIER_LABEL[tier])}
-          </span>
-        );
-      })}
     </div>
   );
 }
@@ -591,8 +558,6 @@ export default function SkillsTools() {
             Skills &amp; Tools
           </motion.h2>
         </div>
-
-        <TierLegend t={t} />
 
         <SkillsCarousel slides={slides} cardsPerSlide={cardsPerSlide} t={t} />
 
