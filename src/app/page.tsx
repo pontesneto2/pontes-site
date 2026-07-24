@@ -641,7 +641,7 @@ export default function Page() {
         en: "Institutional website for the institute, presenting projects and institutional information.",
       },
       category: [{ pt: "Site Institucional", en: "Institutional Website" }],
-      thumb: "/images/capa-agropolos.png",
+      thumb: "/images/capa-agro.png",
       bgClass: NEUTRAL_BG,
       badge: { pt: "Em produção", en: "In production" },
       highlights: [
