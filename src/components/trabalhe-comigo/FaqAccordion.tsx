@@ -23,7 +23,7 @@ function renderAnswer(text: string) {
 export default function FaqAccordion() {
   const { lang } = useLanguage();
   const t = (v: Bilingual) => tr(lang, v);
-  const [openIndex, setOpenIndex] = useState<number>(0);
+  const [openIndex, setOpenIndex] = useState<number>(-1);
 
   return (
     <section id="faq" className="scroll-mt-20 border-t border-white/10 py-20" style={{ backgroundColor: "#08080b" }}>

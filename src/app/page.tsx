@@ -499,7 +499,7 @@ export default function Page() {
         en: "State-level registry system for family farming producers.",
       },
       category: [{ pt: "Sistema Web+Admin", en: "Web System+Admin" }, { pt: "Aplicativo PWA", en: "PWA App" }],
-      thumb: "/images/capa-secaf.png",
+      thumb: "/images/capa-secaff.png",
       bgClass: NEUTRAL_BG,
       badge: { pt: "Em produção", en: "In production" },
       highlights: [
@@ -596,7 +596,6 @@ export default function Page() {
       category: [{ pt: "Sistema Web+Admin", en: "Web System+Admin" }, { pt: "Aplicativo PWA", en: "PWA App" }],
       thumb: "/images/capa-diario.png",
       bgClass: NEUTRAL_BG,
-      badge: { pt: "Em produção", en: "In production" },
       highlights: [
         { icon: Clock, value: { pt: "4 meses de produção", en: "4 months in production" } },
         { icon: Building2, value: { pt: "Idealizador: Alfa Construções", en: "Idealized by: Alfa Construções" } },
@@ -615,7 +614,6 @@ export default function Page() {
       category: [{ pt: "Site Institucional", en: "Institutional Website" }],
       thumb: "/images/capa-anjo.png",
       bgClass: NEUTRAL_BG,
-      badge: { pt: "Em produção", en: "In production" },
       highlights: [
         { icon: Clock, value: { pt: "2 meses de desenvolvimento", en: "2 months of development" } },
         { icon: Building2, value: { pt: "Idealizador: Anjos Digitais", en: "Idealized by: Anjos Digitais" } },
@@ -637,7 +635,6 @@ export default function Page() {
       category: [{ pt: "Site Institucional", en: "Institutional Website" }],
       thumb: "/images/capa-agro.png",
       bgClass: NEUTRAL_BG,
-      badge: { pt: "Em produção", en: "In production" },
       highlights: [
         { icon: Clock, value: { pt: "2 meses de desenvolvimento", en: "2 months of development" } },
         { icon: Building2, value: { pt: "Idealizador: Instituto Agropolos", en: "Idealized by: Instituto Agropolos" } },
@@ -660,7 +657,6 @@ export default function Page() {
       category: [{ pt: "Site Institucional", en: "Institutional Website" }],
       thumb: "/images/capa-site-ujvp.png",
       bgClass: NEUTRAL_BG,
-      badge: { pt: "Em produção", en: "In production" },
       highlights: [
         { icon: Clock, value: { pt: "1 mês de desenvolvimento", en: "1 month of development" } },
         { icon: Building2, value: { pt: "Idealizador: UJVP CE", en: "Idealized by: UJVP CE" } },
@@ -679,7 +675,6 @@ export default function Page() {
       category: [{ pt: "Site Institucional", en: "Institutional Website" }],
       thumb: "/images/capa-site-sda-ceara.png",
       bgClass: NEUTRAL_BG,
-      badge: { pt: "Em produção", en: "In production" },
       highlights: [
         { icon: Clock, value: { pt: "Manutenção contínua", en: "Ongoing maintenance" } },
         { icon: Building2, value: { pt: "Idealizador: Governo do Ceará", en: "Idealized by: Government of Ceará" } },
@@ -702,7 +697,6 @@ export default function Page() {
       category: [{ pt: "Site Institucional", en: "Institutional Website" }],
       thumb: "/images/capa-silva-duarte.png",
       bgClass: NEUTRAL_BG,
-      badge: { pt: "Em produção", en: "In production" },
       highlights: [
         { icon: Clock, value: { pt: "1 mês de desenvolvimento", en: "1 month of development" } },
         { icon: Building2, value: { pt: "Idealizador: Silva & Duarte", en: "Idealized by: Silva & Duarte" } },
@@ -721,7 +715,6 @@ export default function Page() {
       category: [{ pt: "Site Institucional", en: "Institutional Website" }],
       thumb: "/images/capa-sarrubbo-advogados.png",
       bgClass: NEUTRAL_BG,
-      badge: { pt: "Em produção", en: "In production" },
       highlights: [
         { icon: Clock, value: { pt: "Desenvolvimento rápido", en: "Fast development" } },
         { icon: Building2, value: { pt: "Idealizador: Sarrubbo Advogados", en: "Idealized by: Sarrubbo Advogados" } },
@@ -1210,12 +1203,12 @@ export default function Page() {
                       >
                         <div className="relative aspect-video w-full overflow-hidden bg-[#1a1425]">
                           {project.badge && (
-                            <div className="absolute -right-20 top-11 z-20 w-80 rotate-45 pointer-events-none">
-                              <span
-                                className={`block py-1.5 text-center whitespace-nowrap text-[10.5px] font-bold uppercase leading-none tracking-wide text-zinc-950 shadow-sm shadow-black/30 ${
-                                  project.badgeColor === "sky" ? "bg-sky-400" : "bg-amber-400"
-                                }`}
-                              >
+                            <div
+                              className={`absolute -right-14 top-7 z-20 flex h-5 w-40 rotate-45 items-center justify-center pointer-events-none shadow-sm shadow-black/30 ${
+                                project.badgeColor === "sky" ? "bg-sky-400" : "bg-amber-400"
+                              }`}
+                            >
+                              <span className="text-[8.5px] font-bold uppercase leading-none tracking-wide text-zinc-950 whitespace-nowrap">
                                 {t(project.badge)}
                               </span>
                             </div>
