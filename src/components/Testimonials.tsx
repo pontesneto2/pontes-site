@@ -151,10 +151,10 @@ export default function Testimonials() {
           onWheel={handleWheel}
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
-          className="relative flex flex-1 gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+          className="relative grid grid-flow-col [grid-auto-columns:100%] gap-6 flex-1 overflow-x-auto snap-x snap-mandatory scroll-smooth [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
         >
           {items.map((item) => (
-            <div key={item.name} className="snap-start shrink-0 w-full">
+            <div key={item.name} className="snap-start min-w-0">
               <TestimonialContent item={item} />
             </div>
           ))}

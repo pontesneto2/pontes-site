@@ -254,7 +254,7 @@ export default function Hero() {
 
       <FloatingTechIcons />
 
-      <div className="magenta-glow relative z-10 mx-auto w-full max-w-7xl px-4 xs:px-5 sm:px-6 lg:px-8">
+      <div className="magenta-glow relative z-10 mx-auto w-full max-w-7xl px-6 xs:px-7 sm:px-8 lg:px-12">
         {/* Conteúdo de texto — alinhado à esquerda em todas as larguras; desktop centraliza na vertical */}
         <div className="w-full pt-24 sm:pt-28 lg:pt-0 lg:max-w-[560px] text-left">
           <motion.span

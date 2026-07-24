@@ -18,7 +18,7 @@ export default function ExperienceTimeline() {
   const hasMore = visibleCount < EXPERIENCE.length;
 
   return (
-    <div className="relative -mx-6 px-2 xs:-mx-7 sm:-mx-8 md:mx-auto md:px-0 max-w-none md:max-w-4xl lg:max-w-5xl">
+    <div className="relative mx-auto max-w-3xl md:max-w-4xl lg:max-w-5xl">
       <div className="absolute left-[9px] top-4 bottom-4 w-px bg-gradient-to-b from-violet-400/50 via-violet-400/15 to-transparent" />
 
       <div className="space-y-4">
@@ -58,10 +58,41 @@ export default function ExperienceTimeline() {
                 <button
                   type="button"
                   onClick={() => setOpenIndex(isOpen ? null : index)}
-                  className="w-full flex items-center gap-2 sm:gap-3 px-4 py-3.5 sm:px-5 text-left"
+                  className="w-full px-4 py-3.5 sm:px-5 text-left sm:flex sm:items-center sm:gap-3"
                   aria-expanded={isOpen}
                 >
-                  <span className="flex-1 min-w-0">
+                  {/* Mobile: tags on top, company/role/location below to avoid truncating the role */}
+                  <span className="flex items-center justify-between gap-2 sm:hidden">
+                    <span className="font-semibold text-sm text-white truncate">{exp.company}</span>
+                    <span className="flex items-center gap-1.5 shrink-0">
+                      <span className="text-[10px] tracking-wide text-zinc-400 bg-white/[0.03] px-1.5 py-0.5 rounded-full border border-white/[0.06] font-medium whitespace-nowrap">
+                        {exp.period}
+                      </span>
+                      {isLatest ? (
+                        <span className="hidden xs:inline text-[10px] tracking-wide text-violet-300/70 bg-violet-500/[0.06] px-1.5 py-0.5 rounded-full border border-violet-500/10 font-medium whitespace-nowrap">
+                          {t({ pt: "Mais recente", en: "Most recent" })}
+                        </span>
+                      ) : null}
+                      <ChevronDown
+                        className={`h-4 w-4 text-violet-400 transition-transform duration-300 shrink-0 ${
+                          isOpen ? "rotate-180" : ""
+                        }`}
+                      />
+                    </span>
+                  </span>
+                  <span className="mt-1.5 sm:hidden flex flex-wrap items-center gap-x-3 gap-y-0.5 text-xs text-violet-300/80">
+                    <span className="inline-flex items-center gap-1 min-w-0">
+                      <Briefcase className="h-3 w-3 shrink-0" />
+                      <span>{t(exp.role)}</span>
+                    </span>
+                    <span className="inline-flex items-center gap-1 min-w-0">
+                      <MapPin className="h-3 w-3 shrink-0" />
+                      <span>{exp.location}</span>
+                    </span>
+                  </span>
+
+                  {/* Desktop: single row, left column truncates */}
+                  <span className="hidden sm:block flex-1 min-w-0">
                     <span className="block font-semibold text-sm text-white truncate">{exp.company}</span>
                     <span className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-xs text-violet-300/80">
                       <span className="inline-flex items-center gap-1 truncate">
@@ -74,7 +105,7 @@ export default function ExperienceTimeline() {
                       </span>
                     </span>
                   </span>
-                  <span className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+                  <span className="hidden sm:flex items-center gap-1.5 sm:gap-2 shrink-0">
                     <span className="text-[10px] tracking-wide text-zinc-400 bg-white/[0.03] px-1.5 py-0.5 rounded-full border border-white/[0.06] font-medium whitespace-nowrap">
                       {exp.period}
                     </span>

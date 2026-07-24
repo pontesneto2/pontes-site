@@ -944,7 +944,7 @@ export default function Page() {
             id="intro"
             className="relative py-14 border-t border-white/5"
           >
-            <div className="mx-auto max-w-3xl px-4 xs:px-5 sm:px-6 lg:px-8 text-center">
+            <div className="mx-auto max-w-3xl px-6 xs:px-7 sm:px-8 lg:px-12 text-center">
               <motion.p
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
@@ -1109,19 +1109,18 @@ export default function Page() {
             className="relative py-14 overflow-x-hidden"
           >
             <div className="mx-auto max-w-7xl px-6 xs:px-7 sm:px-8 lg:px-12 2xl:max-w-8xl">
-              <div className="mb-12">
+              <div className="mb-12 text-center md:text-left">
                 <motion.h2
                   variants={fadeInHeading}
                   initial="hidden"
                   whileInView="show"
                   viewport={viewportSettings}
-                  className="text-[2.1rem] xs:text-[2.3rem] sm:text-[2.6rem] md:text-[3.30rem] font-black text-white leading-[0.95] sm:leading-normal"
+                  className="text-[2.5rem] xs:text-[2.7rem] sm:text-[3rem] md:text-[3.7rem] font-black text-white leading-[0.95] sm:leading-normal"
                   style={{ fontFamily: "var(--font-space-grotesk)" }}
                 >
                   {t({ pt: "Projetos em Destaque", en: "Featured Projects" })}
                 </motion.h2>
-                <p className="mt-1 flex items-start gap-1.5 max-w-2xl text-sm sm:text-[11px] leading-relaxed text-zinc-600">
-                  <Lock className="mt-0.5 h-3 w-3 shrink-0 text-zinc-600" />
+                <p className="mt-4 sm:mt-1 max-w-2xl mx-auto md:mx-0 text-center md:text-left text-[15px] sm:text-sm leading-relaxed text-zinc-600">
                   {t({
                     pt: "Portfólio composto exclusivamente por projetos públicos e autorizados, não expondo dados sensíveis, informações confidenciais ou materiais sob sigilo",
                     en: "A portfolio made up exclusively of public, authorized projects, exposing no sensitive data, confidential information or material under NDA",

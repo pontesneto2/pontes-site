@@ -402,7 +402,7 @@ export default function SkillsTools() {
       id="skills-tools"
       className={`relative overflow-x-hidden ${spaceGrotesk.variable} ${jetbrainsMono.variable}`}
     >
-      <div className="mx-auto max-w-[1180px] px-4 sm:px-6 md:px-10 py-16 md:py-24">
+      <div className="mx-auto max-w-[1180px] px-6 xs:px-7 sm:px-8 lg:px-12 py-16 md:py-24">
         <div className="mb-12 md:mb-14 flex flex-col gap-4 md:flex-row md:items-center md:justify-between md:gap-8">
           <motion.h2
             initial={{ opacity: 0 }}
