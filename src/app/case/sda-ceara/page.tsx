@@ -29,12 +29,12 @@ const heroData = {
 };
 
 const summaryData: Array<{ label: Bilingual; value: Bilingual }> = [
-  { label: { pt: "Tipo de projeto", en: "Project type" }, value: { pt: "App Mobile + Web/Admin", en: "Mobile + Web/Admin App" } },
-  { label: { pt: "Papel exercido", en: "Role" }, value: { pt: "Analista de Sistemas", en: "Systems Analyst" } },
+  { label: { pt: "Tipo de projeto", en: "Project type" }, value: { pt: "App Mobile", en: "Mobile App" } },
+  { label: { pt: "Papel exercido", en: "Role" }, value: { pt: "Desenvolvedor Mobile", en: "Mobile Developer" } },
   { label: { pt: "Idealizador", en: "Idealized by" }, value: { pt: "Governo do Ceará / SDA", en: "Government of Ceará / SDA" } },
   { label: { pt: "Status", en: "Status" }, value: { pt: "Em produção", en: "In production" } },
   { label: { pt: "Duração", en: "Duration" }, value: { pt: "1,8 anos de evolução contínua", en: "1.8 years of continuous evolution" } },
-  { label: { pt: "Plataformas", en: "Platforms" }, value: { pt: "iOS + Android + Web + Admin", en: "iOS + Android + Web + Admin" } },
+  { label: { pt: "Objetivo", en: "Objective" }, value: { pt: "Refatoração + novos módulos", en: "Refactoring + new modules" } },
 ];
 
 const challengesData = {
@@ -241,19 +241,44 @@ function PhoneShot({
   alt,
   caption,
   rotate,
+  fictionalData,
 }: {
   src: string;
   alt: string;
   caption: Bilingual;
   rotate: string;
+  fictionalData?: boolean;
 }) {
   const { lang } = useLanguage();
   return (
     <div className="relative w-full max-w-[220px] mx-auto" style={{ transform: `rotate(${rotate})` }}>
       <div className="relative rounded-[2rem] overflow-hidden border border-white/10 shadow-2xl shadow-black/60">
         <ClickableImage src={src} alt={alt} sizes="220px" aspectRatio="591/1280" />
+        {fictionalData && (
+          <span className="absolute top-1.5 right-1.5 z-10 rounded bg-black/60 backdrop-blur-sm px-1.5 py-[2px] text-[6px] font-medium uppercase tracking-wide text-amber-300/90 leading-none">
+            {tr(lang, { pt: "Dados fictícios", en: "Sample data" })}
+          </span>
+        )}
       </div>
       <p className="mt-3 text-center text-xs text-zinc-500">{tr(lang, caption)}</p>
+    </div>
+  );
+}
+
+function PhoneGallery({
+  items,
+}: {
+  items: Array<{ src: string; alt: string; caption: Bilingual; rotate: string; fictionalData?: boolean }>;
+}) {
+  return (
+    <div
+      className={`grid gap-6 ${
+        items.length >= 3 ? "grid-cols-2 sm:grid-cols-3" : "grid-cols-1 sm:grid-cols-2"
+      }`}
+    >
+      {items.map((item) => (
+        <PhoneShot key={item.src} {...item} />
+      ))}
     </div>
   );
 }
@@ -299,11 +324,23 @@ function useSectionsData(lang: "pt" | "en") {
               </div>
             </div>
 
-            <PhoneShot
-              src="/images/sda-estudo-caso-2.jpeg"
-              alt="Filtro do módulo Ceará Sem Fome x Projetos"
-              caption={{ pt: "Cruzamento de dados: Ceará Sem Fome x Projetos, por região, sexo e CadÚnico", en: "Cross-referencing data: Ceará Sem Fome x Projects, by region, gender and CadÚnico" }}
-              rotate="2deg"
+            <PhoneGallery
+              items={[
+                {
+                  src: "/images/01-inicio.png",
+                  alt: "Tela inicial do app SDA Ceará com atalhos para Mensagem, Atividades, Sistemas e Questionário",
+                  caption: { pt: "Início: acesso unificado a mensagens, atividades, sistemas e questionários", en: "Home: unified access to messages, activities, systems and surveys" },
+                  rotate: "2deg",
+                  fictionalData: true,
+                },
+                {
+                  src: "/images/03-ceara-sem-fome.png",
+                  alt: "Filtro do módulo Ceará Sem Fome x Projetos, com lista de beneficiários",
+                  caption: { pt: "Cruzamento de dados: Ceará Sem Fome x Projetos, por região, sexo e CadÚnico", en: "Cross-referencing data: Ceará Sem Fome x Projects, by region, gender and CadÚnico" },
+                  rotate: "-2deg",
+                  fictionalData: true,
+                },
+              ]}
             />
           </div>
         </>
@@ -357,11 +394,22 @@ function useSectionsData(lang: "pt" | "en") {
                   })}
                 </p>
               </div>
-              <PhoneShot
-                src="/images/sda-estudo-caso-1.jpeg"
-                alt="Filtro dinâmico por Entidade, Projeto, Ano e Município"
-                caption={{ pt: "Módulo Sistemas: filtro dinâmico por entidade, projeto, ano e município", en: "Sistemas module: dynamic filter by entity, project, year and municipality" }}
-                rotate="-2deg"
+              <PhoneGallery
+                items={[
+                  {
+                    src: "/images/04-filtro-por-projeto.png",
+                    alt: "Filtro dinâmico por Entidade, Projeto, Ano e Município no módulo Sistemas",
+                    caption: { pt: "Módulo Sistemas: filtro dinâmico por entidade, projeto, ano e município", en: "Sistemas module: dynamic filter by entity, project, year and municipality" },
+                    rotate: "-2deg",
+                  },
+                  {
+                    src: "/images/07-cadastro-beneficiario.png",
+                    alt: "Cadastro de beneficiário em etapas, com validação de CPF e NIS/CadÚnico",
+                    caption: { pt: "Cadastro de beneficiário: formulário em etapas, com validação e rascunho automático", en: "Beneficiary registration: multi-step form with validation and autosave" },
+                    rotate: "2deg",
+                    fictionalData: true,
+                  },
+                ]}
               />
             </div>
           </div>
@@ -446,12 +494,30 @@ function useSectionsData(lang: "pt" | "en") {
       title: { pt: "Integração de Múltiplos Módulos", en: "Integrating Multiple Modules" },
       children: (
         <>
-          <div className="grid grid-cols-1 lg:grid-cols-[0.85fr_1.15fr] gap-8 items-center">
-            <PhoneShot
-              src="/images/sda-estudo-caso-3.jpeg"
-              alt="Listagem do módulo MAPP com Dashboard MAPP"
-              caption={{ pt: "MAPP: sistema de acompanhamento com dashboard próprio", en: "MAPP: tracking system with its own dashboard" }}
-              rotate="1.5deg"
+          <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-8 items-center">
+            <PhoneGallery
+              items={[
+                {
+                  src: "/images/02-mapp.png",
+                  alt: "Listagem do módulo MAPP: cadastro de projetos, dashboard, relatórios e mapa",
+                  caption: { pt: "MAPP: sistema de acompanhamento com dashboard próprio", en: "MAPP: tracking system with its own dashboard" },
+                  rotate: "1.5deg",
+                },
+                {
+                  src: "/images/06-dashboard-mapp.png",
+                  alt: "Dashboard MAPP com indicadores de projetos por região e status",
+                  caption: { pt: "Dashboard MAPP: projetos por região e status, filtrados por ano", en: "MAPP Dashboard: projects by region and status, filtered by year" },
+                  rotate: "-1.5deg",
+                  fictionalData: true,
+                },
+                {
+                  src: "/images/05-mensagens.png",
+                  alt: "Lista de mensagens entre servidores, coordenação e beneficiários",
+                  caption: { pt: "Mensageria interna: histórico de conversas entre servidores e beneficiários", en: "Internal messaging: conversation history between staff and beneficiaries" },
+                  rotate: "1deg",
+                  fictionalData: true,
+                },
+              ]}
             />
             <div>
               <p>
