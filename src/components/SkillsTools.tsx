@@ -189,7 +189,7 @@ function CategoryCard({ category, t }: { category: SkillCategory; t: (v: Bilingu
           {t(category.title)}
         </span>
       </div>
-      <div className="flex flex-wrap items-center gap-x-1.5 gap-y-4 sm:gap-y-2 pt-4 font-[family-name:var(--font-jetbrains-mono)] text-[14px] leading-none">
+      <div className="flex flex-wrap items-center gap-x-1.5 gap-y-4 pt-4 font-[family-name:var(--font-jetbrains-mono)] text-[14px] leading-none">
         {category.skills.map((skill, index) => (
           <span key={`${skill.name}-${index}`} className="inline-flex items-center gap-1.5">
             <SkillName skill={skill} t={t} />
