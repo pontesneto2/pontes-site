@@ -1,7 +1,7 @@
 "use client";
 
 import { Download, Mail, MapPin, Phone } from "lucide-react";
-import SiteHeader from "@/components/SiteHeader";
+import StandardSiteHeader from "@/components/StandardSiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
 import { CV_URL_PT, CV_URL_EN } from "@/lib/constants";
@@ -14,7 +14,7 @@ export default function CvPage() {
   return (
     <>
       <div className="print:hidden">
-        <SiteHeader />
+        <StandardSiteHeader />
       </div>
 
       <main className="min-h-screen bg-[#0a0a0d] text-zinc-200 print:bg-white print:text-black">

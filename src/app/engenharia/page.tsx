@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Gauge, GitBranch, Layers, ShieldCheck } from "lucide-react";
-import SiteHeader from "@/components/SiteHeader";
+import StandardSiteHeader from "@/components/StandardSiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
 
@@ -73,7 +73,7 @@ export default function EngenhariaPage() {
 
   return (
     <>
-      <SiteHeader />
+      <StandardSiteHeader />
       <main className="min-h-screen bg-[#0a0a0d] text-zinc-200">
         <div className="mx-auto max-w-3xl px-4 xs:px-5 sm:px-6 py-14">
           <h1 className="text-3xl font-bold text-white">{t({ pt: "Engenharia deste site", en: "Engineering behind this site" })}</h1>

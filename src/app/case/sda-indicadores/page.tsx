@@ -4,7 +4,7 @@ import ClickableImage from "@/components/case/ClickableImage";
 import CaseHero from "@/components/case/CaseHero";
 import CaseContent from "@/components/case/CaseContent";
 import CaseCTA from "@/components/case/CaseCTA";
-import SiteHeader from "@/components/SiteHeader";
+import StandardSiteHeader from "@/components/StandardSiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
 
@@ -301,7 +301,7 @@ export default function SdaIndicadoresCasePage() {
   return (
     <div className="min-h-screen font-sans relative isolate">
       <div className="relative z-10">
-        <SiteHeader />
+        <StandardSiteHeader />
 
         {/* ── HERO ── */}
         <CaseHero {...heroData} />

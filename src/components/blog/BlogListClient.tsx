@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import SiteHeader from "@/components/SiteHeader";
+import StandardSiteHeader from "@/components/StandardSiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import BlogCard from "@/components/blog/BlogCard";
 import FloatingBlogIcons from "@/components/blog/FloatingBlogIcons";
@@ -27,7 +27,7 @@ export default function BlogListClient({ posts }: { posts: { pt: BlogPostMeta[];
   return (
     <div className="min-h-screen font-sans relative isolate">
       <div className="relative z-10">
-        <SiteHeader />
+        <StandardSiteHeader />
 
         <section className="relative overflow-hidden pt-20 pb-10 md:pt-24 md:pb-12">
           <div className="absolute inset-0 bg-gradient-to-b from-violet-950/30 via-indigo-950/15 to-transparent" />

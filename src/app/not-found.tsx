@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Compass, Home } from "lucide-react";
-import SiteHeader from "@/components/SiteHeader";
+import StandardSiteHeader from "@/components/StandardSiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { useLanguage, tr } from "@/lib/language-context";
 
@@ -11,7 +11,7 @@ export default function NotFound() {
 
   return (
     <>
-      <SiteHeader />
+      <StandardSiteHeader />
       <main className="min-h-[70vh] flex items-center justify-center bg-[#0a0a0d] text-zinc-200 px-6">
         <div className="text-center max-w-md">
           <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl border border-violet-500/25 bg-violet-500/10">

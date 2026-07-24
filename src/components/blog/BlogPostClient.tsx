@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import SiteHeader from "@/components/SiteHeader";
+import StandardSiteHeader from "@/components/StandardSiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import BlogHero from "@/components/blog/BlogHero";
 import ClickableImage from "@/components/case/ClickableImage";
@@ -47,7 +47,7 @@ export default function BlogPostClient({
   return (
     <div className="min-h-screen font-sans relative isolate">
       <div className="relative z-10">
-        <SiteHeader />
+        <StandardSiteHeader />
 
         <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12 pt-8 sm:pt-10">
           <Link
