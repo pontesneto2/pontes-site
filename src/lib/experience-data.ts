@@ -122,8 +122,8 @@ export const EXPERIENCE: ExperienceItem[] = [
     company: "Grupo Laredo Atacadista",
     role: { pt: "Gerente Operacional de Mercado", en: "Store Operations Manager" },
     description: {
-      pt: "Gerente operacional de filial.",
-      en: "Store operations manager.",
+      pt: "Gestão operacional de filial: controle de estoque e reposição, gestão de equipe de vendas e caixa, indicadores de performance (ruptura, quebra, giro) e relacionamento com fornecedores.",
+      en: "Operational management of a retail branch: inventory and restocking control, sales and cashier team management, performance metrics (stockouts, shrinkage, turnover) and supplier relations.",
     },
     period: "2017–2020",
     onsite: true,
