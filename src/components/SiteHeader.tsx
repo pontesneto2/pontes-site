@@ -196,12 +196,12 @@ export default function SiteHeader({
 
       <div
         id="site-nav-menu"
-        className={`overflow-hidden border-t border-white/5 bg-[#0b0b0e]/98 backdrop-blur-xl transition-[max-height,opacity] duration-300 ease-out ${
-          navOpen ? "max-h-[34rem] opacity-100" : "max-h-0 opacity-0 border-t-0"
+        className={`overflow-y-auto overflow-x-hidden border-t border-white/5 bg-[#131316] backdrop-blur-xl transition-[max-height,opacity] duration-300 ease-out ${
+          navOpen ? "max-h-[85vh] opacity-100" : "max-h-0 opacity-0 border-t-0"
         }`}
       >
-        <nav className="mx-auto max-w-7xl px-3 sm:px-6 lg:px-8 py-5">
-          <div className="sm:hidden mb-2.5">
+        <nav className="mx-auto max-w-7xl px-3 sm:px-6 lg:px-8 py-5 sm:py-6">
+          <div className="sm:hidden mb-3">
             <SearchBox
               searchOpen={searchOpen}
               setSearchOpen={setSearchOpen}
@@ -214,34 +214,31 @@ export default function SiteHeader({
               variant="full"
             />
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5">
+          <ul className="grid sm:grid-cols-2 sm:gap-x-10 divide-y divide-white/5 sm:divide-y-0">
             {navLinks.map((link, i) => {
               const href = withLocale(link.href, isEn);
               const active = pathname === href;
               return (
-                <Link
-                  key={link.href}
-                  href={href}
-                  onClick={() => setNavOpen(false)}
-                  className={`group relative flex flex-col justify-between gap-4 rounded-2xl border p-4 transition-all ${
-                    active
-                      ? "border-violet-400/40 bg-gradient-to-br from-violet-600/15 to-fuchsia-500/10"
-                      : "border-white/5 bg-white/[0.02] hover:border-violet-400/25 hover:bg-white/[0.05]"
-                  }`}
-                >
-                  <span className="font-mono text-[13px] tracking-widest text-zinc-500">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <span className="flex items-center justify-between gap-2">
-                    <span className="text-sm font-semibold text-zinc-100 group-hover:text-white">
+                <li key={link.href} className="sm:border-b sm:border-white/5">
+                  <Link
+                    href={href}
+                    onClick={() => setNavOpen(false)}
+                    className={`group -mx-3 flex items-center gap-3 rounded-xl px-3 py-3.5 sm:py-4 transition-colors ${
+                      active ? "bg-white/[0.06]" : "hover:bg-white/[0.06]"
+                    }`}
+                  >
+                    <span className="font-mono text-[11px] tabular-nums text-violet-400 transition-colors group-hover:text-violet-300">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <span className="flex-1 text-lg sm:text-xl font-medium tracking-tight text-white">
                       {t(link.label)}
                     </span>
-                    <ArrowUpRight className="h-3.5 w-3.5 shrink-0 text-zinc-500 transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-violet-300" />
-                  </span>
-                </Link>
+                    <ArrowUpRight className="h-4 w-4 shrink-0 text-violet-400 transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-violet-300" />
+                  </Link>
+                </li>
               );
             })}
-          </div>
+          </ul>
 
           {secondaryCta && (
             <a
@@ -251,7 +248,7 @@ export default function SiteHeader({
                 trackCtaClick(secondaryCta.href);
                 setNavOpen(false);
               }}
-              className="sm:hidden mt-2.5 flex items-center justify-center gap-1.5 rounded-2xl border border-violet-400/30 bg-violet-500/10 px-4 py-3 text-sm text-violet-200"
+              className="sm:hidden mt-4 flex items-center justify-center gap-1.5 rounded-2xl border border-violet-400/30 bg-violet-500/10 px-4 py-3 text-sm text-violet-200"
             >
               {t(secondaryCta.label)}
               {secondaryCtaFlag && <span className="text-[0.85em] leading-none">{secondaryCtaFlag}</span>}

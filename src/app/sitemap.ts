@@ -95,6 +95,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
       alternates: { languages: { "pt-BR": `${siteUrl}/case/sda-indicadores` } },
     },
     {
+      url: `${siteUrl}/case/secaf`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+      alternates: { languages: { en: `${siteUrl}/en/case/secaf` } },
+    },
+    {
+      url: `${siteUrl}/en/case/secaf`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.7,
+      alternates: { languages: { "pt-BR": `${siteUrl}/case/secaf` } },
+    },
+    {
       url: `${siteUrl}/case/sistema-escolar-policia`,
       lastModified: new Date(),
       changeFrequency: "monthly",

@@ -493,6 +493,7 @@ export default function Page() {
       subtitle: { pt: "", en: "" },
       tags: ["Git", "Docker", ".NET", "C#", "PHP"],
       link: "https://sistemas2.sda.ce.gov.br/scriptcase/app/secaf/login/",
+      caseStudy: "/case/secaf",
       ctaLabel: { pt: "Visite", en: "Visit" },
       blurb: {
         pt: "Sistema estadual de cadastro de produtores da agricultura familiar.",
