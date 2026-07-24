@@ -80,7 +80,7 @@ function Section({ title, children }: SectionProps) {
     >
       <h3 className="text-xl sm:text-2xl font-bold text-white mb-1">{tr(lang, title)}</h3>
       <div className="w-12 h-[2px] rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500 mb-6" />
-      <div className="text-[15px] sm:text-base text-zinc-400 leading-[1.85] space-y-4">
+      <div className="text-[15px] sm:text-base text-zinc-400 leading-[1.85] space-y-4 [&>p]:max-w-[75ch]">
         {children}
       </div>
     </motion.section>
@@ -99,14 +99,14 @@ export default function CaseContent({
   const { lang } = useLanguage();
 
   return (
-    <div className="mx-auto max-w-4xl px-6 sm:px-8 py-12 md:py-16">
+    <div className="mx-auto max-w-7xl 2xl:max-w-8xl px-6 sm:px-8 lg:px-12 py-12 md:py-16">
       {/* ── Resumo Executivo ── */}
       <motion.div
         variants={fadeUp}
         initial="hidden"
         whileInView="show"
         viewport={{ once: true, amount: 0 }}
-        className="mb-14 grid grid-cols-2 sm:grid-cols-3 gap-4"
+        className="mb-14 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4"
       >
         {summary.map((item) => (
           <div
@@ -129,7 +129,7 @@ export default function CaseContent({
         initial="hidden"
         whileInView="show"
         viewport={{ once: true, amount: 0 }}
-        className="mb-14 text-base sm:text-lg text-zinc-400 leading-relaxed border-l-2 border-violet-500/40 pl-5 italic"
+        className="mb-14 max-w-[75ch] text-base sm:text-lg text-zinc-400 leading-relaxed border-l-2 border-violet-500/40 pl-5 italic"
       >
         {tr(lang, intro)}
       </motion.p>
@@ -154,7 +154,7 @@ export default function CaseContent({
         </h3>
         <div className="w-12 h-[2px] rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500 mb-6" />
         {challenges.intro && (
-          <p className="text-[15px] sm:text-base text-zinc-400 leading-[1.85] mb-5">
+          <p className="max-w-[75ch] text-[15px] sm:text-base text-zinc-400 leading-[1.85] mb-5">
             {tr(lang, challenges.intro)}
           </p>
         )}

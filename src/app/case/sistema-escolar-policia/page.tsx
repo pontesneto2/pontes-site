@@ -1,9 +1,10 @@
 "use client";
 
-import Image from "next/image";
+import { FileText } from "lucide-react";
 import CaseHero from "@/components/case/CaseHero";
 import CaseContent from "@/components/case/CaseContent";
 import CaseCTA from "@/components/case/CaseCTA";
+import ClickableImage from "@/components/case/ClickableImage";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
@@ -217,18 +218,14 @@ function ArchitectureDiagram({ lang }: { lang: "pt" | "en" }) {
 
 function ShowcaseHero() {
   return (
-    <div className="relative mx-auto max-w-5xl px-6 sm:px-8 -mt-4 mb-16">
+    <div className="relative mx-auto max-w-6xl px-6 sm:px-8 -mt-4 mb-16">
       <div className="relative rounded-[28px] overflow-hidden border border-white/10 shadow-[0_40px_100px_-20px_rgba(88,28,155,0.45)]">
-        <div className="relative aspect-[16/9]">
-          <Image
-            src="/images/sistema-escolar-policia-redesign-hero.png"
-            alt="Portal de sistemas do 2º CPM-CHMJ (Com3 Brasil)"
-            fill
-            sizes="(max-width: 1024px) 100vw, 1024px"
-            className="object-cover object-top"
-            priority
-          />
-        </div>
+        <ClickableImage
+          src="/images/sistema-escolar-policia-redesign-hero.png"
+          alt="Portal de sistemas do 2º CPM-CHMJ (Com3 Brasil)"
+          sizes="(max-width: 1024px) 100vw, 1152px"
+          priority
+        />
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
       </div>
     </div>
@@ -244,9 +241,7 @@ function useSectionsData(lang: "pt" | "en") {
 
   const shot = (src: string, alt: string, caption: Bilingual) => (
     <figure key={src} className="overflow-hidden rounded-2xl border border-white/10">
-      <div className="relative aspect-[16/9]">
-        <Image src={src} alt={alt} fill sizes="(max-width: 1024px) 100vw, 800px" className="object-cover object-top" />
-      </div>
+      <ClickableImage src={src} alt={alt} sizes="(max-width: 1024px) 100vw, 800px" />
       <figcaption className="px-4 py-2.5 text-xs text-zinc-400 bg-white/[0.02] border-t border-white/[0.06]">
         {t(caption)}
       </figcaption>
@@ -424,13 +419,6 @@ function useSectionsData(lang: "pt" | "en") {
               en: "Every student carries an external SIGE code (with its own correction routine), most likely tied to the state network's integrated school management system — pointing to direct interoperability with Ceará state government databases. The Finance module closes that loop by issuing DAE for school fees and enrollment — the same document used for state revenue collection — with pre-enrollment status tracking confirmation and payment side by side.",
             })}
           </p>
-          <div className="mt-4">
-            {shot(
-              "/images/sistema-escolar-policia-pre-matricula.png",
-              "Tela de Pré-Matrícula mostrando SIGE, situação de confirmação e de pagamento (dados pessoais removidos)",
-              { pt: "Pré-Matrícula: SIGE, confirmação e situação de pagamento lado a lado. Dados pessoais borrados para esta publicação.", en: "Pre-Enrollment: SIGE, confirmation and payment status side by side. Personal data redacted for this publication." }
-            )}
-          </div>
 
           <h4 className="mt-10 text-sm font-semibold text-white">
             {t({ pt: "Avaliação, biblioteca e cadastro", en: "Grading, library and registry" })}
@@ -441,30 +429,6 @@ function useSectionsData(lang: "pt" | "en") {
               en: "Grading follows a four-bimester model consolidated into two semester grades, with its own nomenclature (NA, VE, MVE, VC) feeding into the final average and result (e.g. 8.78 → \"PASSED\"). The Library runs a conventional loan cycle integrated with the student base, and the Registry backs full records — the teacher record, for instance, includes CPF, education level, marital status, race/ethnicity, religion and a detailed address (state, municipality, district, ZIP code).",
             })}
           </p>
-          <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {shot(
-              "/images/sistema-escolar-policia-notas.png",
-              "Tela de Inserir/Atualizar Notas mostrando colunas NA, VE, MVE e VC (nomes de alunos removidos)",
-              { pt: "Lançamento de notas com o modelo NA/VE/MVE/VC. Nomes de alunos borrados para esta publicação.", en: "Grade entry with the NA/VE/MVE/VC model. Student names redacted for this publication." }
-            )}
-            {shot(
-              "/images/sistema-escolar-policia-boletim.png",
-              "Tela de Boletim mostrando notas por bimestre, média final e resultado (nomes de alunos removidos)",
-              { pt: "Boletim consolidado por bimestre/semestre, com média final e resultado. Nomes de alunos borrados para esta publicação.", en: "Report card consolidated by bimester/semester, with final average and result. Student names redacted for this publication." }
-            )}
-          </div>
-          <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {shot(
-              "/images/sistema-escolar-policia-biblioteca-retirada.png",
-              "Tela de Retirada da Biblioteca (nomes de alunos removidos)",
-              { pt: "Ciclo de retirada da Biblioteca, vinculado ao SIGE do aluno. Nomes de alunos borrados para esta publicação.", en: "Library checkout cycle, tied to the student's SIGE code. Student names redacted for this publication." }
-            )}
-            {shot(
-              "/images/sistema-escolar-policia-cadastro-professor.png",
-              "Formulário de Cadastro de Professor (campos vazios)",
-              { pt: "Cadastro de Professor: ficha completa com CPF, endereço e dados demográficos (formulário em branco).", en: "Teacher Registration: full record with CPF, address and demographic data (blank form)." }
-            )}
-          </div>
 
           <h4 className="mt-10 text-sm font-semibold text-white">
             {t({ pt: "Agenda e parametrização", en: "Agenda and configuration" })}
@@ -475,18 +439,6 @@ function useSectionsData(lang: "pt" | "en") {
               en: "The Agenda module logs class content and activities — including homework — by subject and class, while the system lets staff configure report-card texts and messages per bimester (e.g. appeal deadlines, grade-adjustment guidance), avoiding recurring manual edits at each closing period.",
             })}
           </p>
-          <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {shot(
-              "/images/sistema-escolar-policia-cadastro-atividades.png",
-              "Formulário de Cadastro de Atividades por disciplina e turma (campos vazios)",
-              { pt: "Cadastro de Atividades: conteúdo, atividades e tarefa de casa por disciplina/turma (formulário em branco).", en: "Activity Registration: content, activities and homework by subject/class (blank form)." }
-            )}
-            {shot(
-              "/images/sistema-escolar-policia-textos-mensagens.png",
-              "Tela de Textos/Mensagens do Sistema, configurada por bimestre",
-              { pt: "Textos/Mensagens do Sistema: avisos do boletim parametrizados por bimestre.", en: "System Texts/Messages: report-card notices configured per bimester." }
-            )}
-          </div>
 
           <h4 className="mt-10 text-sm font-semibold text-white">
             {t({ pt: "Auditoria e rastreabilidade", en: "Audit and traceability" })}
@@ -497,13 +449,6 @@ function useSectionsData(lang: "pt" | "en") {
               en: "The Reports module reinforces the system's accountability posture: beyond report cards and pedagogical, financial and front-office cuts, it keeps a dedicated Grade Change Log for auditing — important for a system handling academic and disciplinary data of minors.",
             })}
           </p>
-          <div className="mt-4">
-            {shot(
-              "/images/sistema-escolar-policia-relatorios-menu.png",
-              "Menu de Relatórios expandido, incluindo o submenu Pedagógico e o Log de Alteração de Notas",
-              { pt: "Menu de Relatórios: submenu Pedagógico e o Log de Alteração de Notas usado para auditoria.", en: "Reports menu: the Pedagogical submenu and the Grade Change Log used for auditing." }
-            )}
-          </div>
 
           <p className="mt-6">
             {t({
@@ -518,6 +463,15 @@ function useSectionsData(lang: "pt" | "en") {
               { pt: "Protótipo de boletim individual para impressão, com código de autenticidade do documento.", en: "Individual print-ready report card prototype, with a document authenticity code." }
             )}
           </div>
+          <a
+            href="/case/sistema-escolar-policia/boletim-exemplo"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-4 inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-500 text-white text-sm font-semibold shadow-lg shadow-violet-500/20 hover:shadow-violet-500/35 hover:scale-[1.03] transition-all duration-300"
+          >
+            <FileText className="h-4 w-4" />
+            {t({ pt: "Ver boletim completo (com opção de exportar PDF)", en: "View full report card (with PDF export)" })}
+          </a>
         </>
       ),
     },
