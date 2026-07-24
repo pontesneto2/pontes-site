@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     alternateLocale: "en_US",
     images: [
       {
-        url: "/images/capa-sda-app.png",
+        url: "/images/capa-sda-app-v2.png",
         width: 1920,
         height: 1080,
         alt: "SDA Ceará: aplicativo de gestão agrária do Governo do Estado",
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title,
     description,
-    images: ["/images/capa-sda-app.png"],
+    images: ["/images/capa-sda-app-v2.png"],
   },
 };
 
@@ -51,7 +51,7 @@ export default function CaseLayout({
         slug="sda-ceara"
         headline={title}
         description={description}
-        image="/images/capa-sda-app.png"
+        image="/images/capa-sda-app-v2.png"
         datePublished="2026-07-20"
         dateModified="2026-07-20"
       />

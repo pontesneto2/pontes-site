@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     alternateLocale: "pt_BR",
     images: [
       {
-        url: "/images/capa-sda-app.png",
+        url: "/images/capa-sda-app-v2.png",
         width: 1920,
         height: 1080,
         alt: "SDA Ceará: State Government agrarian management app",
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title,
     description,
-    images: ["/images/capa-sda-app.png"],
+    images: ["/images/capa-sda-app-v2.png"],
   },
 };
 

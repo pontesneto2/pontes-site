@@ -317,7 +317,7 @@ export default function Page() {
         en: "Mobile app to manage and track the sectors of Ceará's State Agrarian Development Department, centralizing administrative processes and indicators in one place.",
       },
       category: [{ pt: "Aplicativo Mobile Nativo", en: "Native Mobile App" }, { pt: "Sistema Web+Admin", en: "Web System+Admin" }],
-      thumb: "/images/capa-sda-app.png",
+      thumb: "/images/capa-sda-app-v2.png",
       bgClass: FEATURED_PROJECT_BG,
       badge: { pt: "Em produção", en: "In production" },
       highlights: [

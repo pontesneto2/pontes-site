@@ -225,7 +225,7 @@ function ShowcaseHero() {
     <div className="relative mx-auto max-w-5xl px-6 sm:px-8 -mt-4 mb-16">
       <div className="relative rounded-[28px] overflow-hidden border border-white/10 shadow-[0_40px_100px_-20px_rgba(88,28,155,0.45)]">
         <ClickableImage
-          src="/images/capa-sda-app.png"
+          src="/images/capa-sda-app-v2.png"
           alt="Aplicativo SDA Ceará em uso"
           sizes="(max-width: 1024px) 100vw, 1024px"
           priority
