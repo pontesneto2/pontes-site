@@ -4,7 +4,13 @@ import BrandIcon from "@/components/skills/BrandIcon";
 
 export default function CoreStackRow({ t }: { t: (v: Bilingual) => string }) {
   return (
-    <div className="mb-12 md:mb-14 mx-auto max-w-[900px]">
+    <div
+      className="mb-12 md:mb-14 mx-auto max-w-[900px] pr-4 md:pr-6 pb-5 md:pb-6"
+      style={{
+        borderRight: "1px solid rgba(255,255,255,.08)",
+        borderBottom: "1px solid rgba(255,255,255,.08)",
+      }}
+    >
       <div className="mb-3 flex items-center gap-3">
         <span
           className="whitespace-nowrap font-[family-name:var(--font-jetbrains-mono)] text-[10px] font-normal uppercase tracking-[0.16em]"

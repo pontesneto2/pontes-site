@@ -165,16 +165,6 @@ export default function SiteHeader({
               </a>
             </MagneticButton>
             <div className="hidden sm:flex items-center gap-2.5">
-              <SearchBox
-                searchOpen={searchOpen}
-                setSearchOpen={setSearchOpen}
-                searchQuery={searchQuery}
-                setSearchQuery={setSearchQuery}
-                searchResults={searchResults}
-                onSelect={handleSearchSelect}
-                t={t}
-                align="right"
-              />
               <LanguageSwitch lang={lang} setLang={setLang} compact />
             </div>
             <div className="sm:hidden">
@@ -201,7 +191,7 @@ export default function SiteHeader({
         }`}
       >
         <nav className="mx-auto max-w-7xl px-3 sm:px-6 lg:px-8 py-5 sm:py-6">
-          <div className="sm:hidden mb-3">
+          <div className="mb-3">
             <SearchBox
               searchOpen={searchOpen}
               setSearchOpen={setSearchOpen}
