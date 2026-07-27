@@ -28,6 +28,7 @@ const TECH_ICON_SLUGS: Record<string, string> = {
   Kubernetes: "kubernetes",
   Grafana: "grafana",
   Prometheus: "prometheus",
+  Angular: "angular",
 };
 
 export function getTechIconSlug(tag: string): string | undefined {

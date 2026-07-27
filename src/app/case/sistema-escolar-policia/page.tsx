@@ -217,16 +217,24 @@ function ArchitectureDiagram({ lang }: { lang: "pt" | "en" }) {
    ═══════════════════════════════════════════ */
 
 function ShowcaseHero() {
+  const { lang } = useLanguage();
+  const t = (v: Bilingual) => tr(lang, v);
   return (
     <div className="relative mx-auto max-w-6xl px-6 sm:px-8 -mt-4 mb-16">
-      <div className="relative rounded-[28px] overflow-hidden border border-white/10 shadow-[0_40px_100px_-20px_rgba(88,28,155,0.45)]">
+      <div className="relative overflow-hidden border border-white/10">
         <ClickableImage
           src="/images/sistema-escolar-policia-redesign-hero.png"
           alt="Portal de sistemas do 2º CPM-CHMJ (Com3 Brasil)"
           sizes="(max-width: 1024px) 100vw, 1152px"
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent pointer-events-none" />
+        <div className="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 z-10 pointer-events-none">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-black/55 backdrop-blur-md border border-white/10 px-3 py-1.5 text-[11px] font-medium text-zinc-200">
+            <span className="h-1.5 w-1.5 rounded-full bg-violet-400" />
+            {t({ pt: "2º CPM-CHMJ · portal de sistemas", en: "2º CPM-CHMJ · systems portal" })}
+          </span>
+        </div>
       </div>
     </div>
   );

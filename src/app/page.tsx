@@ -444,6 +444,30 @@ export default function Page() {
       ],
     },
     {
+      title: "PAA-Leite - Programa de Aquisição de Alimentos (Leite)",
+      subtitle: { pt: "", en: "" },
+      tags: ["Git", ".NET", "C#", "Angular", "PHP", "Docker", "Scriptcase"],
+      link: "https://sistemas2.sda.ce.gov.br/scriptcase/app/sea_leite/login/",
+      caseStudy: "/case/paa-leite",
+      ctaLabel: { pt: "Visite", en: "Visit" },
+      blurb: {
+        pt: "O PAA Leite (Programa de Aquisição de Alimentos, modalidade Incentivo à Produção e ao Consumo de Leite) é uma política pública federal que compra leite de pequenos produtores e o distribui gratuitamente para famílias carentes, ajudando quem produz e alimentando quem precisa.",
+        en: "PAA Leite (Food Acquisition Program, Incentive for Milk Production and Consumption modality) is a federal public policy that buys milk from small producers and distributes it for free to families in need, helping producers and feeding those who need it.",
+      },
+      category: [{ pt: "Sistema Web+Admin", en: "Web System+Admin" }],
+      thumb: "/images/capa-paa-leite.png",
+      bgClass: NEUTRAL_BG,
+      badge: { pt: "Em produção", en: "In production" },
+      highlights: [
+        { icon: Clock, value: { pt: "9 meses de produção", en: "9 months in production" } },
+        { icon: Building2, value: { pt: "Idealizador: Secretaria do Desenvolvimento Agrário CE", en: "Idealized by: Ceará Agrarian Development Secretariat" } },
+      ],
+      impact: [
+        { icon: Users, value: { pt: "5.000+", en: "5,000+" }, label: { pt: "Registros de entrega/quinzena", en: "Delivery records/cycle" } },
+        { icon: Activity, value: { pt: "Rede estadual", en: "Statewide network" }, label: { pt: "de laticínios parceiros", en: "of partner dairy plants" } },
+      ],
+    },
+    {
       title: "Sistema FEDAF - Fundo Estadual de Desenvolvimento da Agricultura",
       subtitle: { pt: "", en: "" },
       tags: ["Git", "Docker", "PHP", "Laravel", "Angular", "Scriptcase"],

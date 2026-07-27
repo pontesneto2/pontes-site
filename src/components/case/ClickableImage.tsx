@@ -5,21 +5,17 @@ import { createPortal } from "react-dom";
 import Image from "next/image";
 import { X, ZoomIn } from "lucide-react";
 
-export default function ClickableImage({
-  src,
-  alt,
-  sizes = "(max-width: 1024px) 100vw, 1024px",
-  className = "object-cover object-top",
-  aspectRatio = "16/9",
-  priority = false,
-}: {
+export default function ClickableImage(props: {
   src: string;
   alt: string;
   sizes?: string;
+  /** Mantidos por compatibilidade com os case studies existentes; ignorados —
+   *  a imagem agora é exibida no tamanho/proporção original, sem corte. */
   className?: string;
   aspectRatio?: string;
   priority?: boolean;
 }) {
+  const { src, alt, sizes = "(max-width: 1024px) 100vw, 1024px", priority = false } = props;
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
 
@@ -47,10 +43,17 @@ export default function ClickableImage({
         aria-label={alt}
         className="group relative block w-full cursor-zoom-in"
       >
-        <div className="relative bg-white/[0.03]" style={{ aspectRatio }}>
-          <Image src={src} alt={alt} fill sizes={sizes} priority={priority} className={className} />
-        </div>
-        <div className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/30 transition-colors duration-300">
+        {/* Proporção original: largura total, altura automática — sem crop. */}
+        <Image
+          src={src}
+          alt={alt}
+          width={0}
+          height={0}
+          sizes={sizes}
+          priority={priority}
+          className="block h-auto w-full"
+        />
+        <div className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/20 transition-colors duration-300">
           <span className="opacity-0 group-hover:opacity-100 scale-90 group-hover:scale-100 transition-all duration-300 inline-flex items-center justify-center h-11 w-11 rounded-full bg-black/60 border border-white/20 text-white backdrop-blur-sm">
             <ZoomIn className="h-5 w-5" />
           </span>
