@@ -73,6 +73,131 @@ const kpisData: Array<{ text: Bilingual }> = [
 const stackData = ["PHP", "Laravel", "PostgreSQL", "SQL", "Power BI", "Docker", "Git"];
 
 /* ═══════════════════════════════════════════
+   DIAGRAMA DE ARQUITETURA (SVG inline, bilíngue)
+   ═══════════════════════════════════════════ */
+
+function ArchitectureDiagram({ lang }: { lang: "pt" | "en" }) {
+  const t = (v: Bilingual) => tr(lang, v);
+  return (
+    <svg viewBox="0 0 820 480" className="w-full h-auto" role="img" aria-label="Diagrama da arquitetura do SDA Indicadores">
+      <defs>
+        <marker id="sdai-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0 0 L10 5 L0 10 z" fill="#8b5cf6" />
+        </marker>
+        <marker id="sdai-arrow-dim" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M0 0 L10 5 L0 10 z" fill="#71717a" />
+        </marker>
+      </defs>
+
+      {/* Pipeline de entrega */}
+      <rect x="250" y="8" width="320" height="44" rx="10" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.14)" />
+      <text x="410" y="26" textAnchor="middle" fontSize="10" fill="#e4e4e7" fontWeight="600">
+        {t({ pt: "Git → imagem Docker → deploy no ambiente SDA", en: "Git → Docker image → deploy to the SDA environment" })}
+      </text>
+      <text x="410" y="40" textAnchor="middle" fontSize="8.5" fill="#a1a1aa">
+        {t({ pt: "Versionamento e ambientes isolados (dev/prod)", en: "Versioning and isolated environments (dev/prod)" })}
+      </text>
+      <line x1="410" y1="52" x2="410" y2="72" stroke="#71717a" strokeWidth="1.4" strokeDasharray="3 3" markerEnd="url(#sdai-arrow-dim)" />
+
+      {/* Fronteira do container Docker */}
+      <rect x="200" y="74" width="604" height="330" rx="16" fill="none" stroke="rgba(139,92,246,0.35)" strokeDasharray="5 5" />
+      <text x="216" y="68" fontSize="9.5" fill="#a78bfa" letterSpacing="0.08em">AMBIENTE CONTAINERIZADO · DOCKER</text>
+
+      {/* Cliente */}
+      <rect x="8" y="180" width="152" height="64" rx="10" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.16)" />
+      <text x="84" y="205" textAnchor="middle" fontSize="11" fill="#e4e4e7" fontWeight="600">
+        {t({ pt: "Navegador", en: "Browser" })}
+      </text>
+      <text x="84" y="221" textAnchor="middle" fontSize="8.5" fill="#a1a1aa">
+        {t({ pt: "Gestores e", en: "Managers and" })}
+      </text>
+      <text x="84" y="233" textAnchor="middle" fontSize="8.5" fill="#a1a1aa">
+        {t({ pt: "coordenadores SDA", en: "SDA coordinators" })}
+      </text>
+      <text x="187" y="203" textAnchor="middle" fontSize="8" fill="#a1a1aa">HTTPS/TLS</text>
+      <line x1="160" y1="212" x2="214" y2="212" stroke="#8b5cf6" strokeWidth="1.6" markerEnd="url(#sdai-arrow)" />
+
+      {/* Backend Laravel */}
+      <rect x="216" y="168" width="182" height="104" rx="10" fill="rgba(139,92,246,0.08)" stroke="rgba(139,92,246,0.4)" />
+      <text x="307" y="187" textAnchor="middle" fontSize="10.5" fill="#e4e4e7" fontWeight="600">
+        {t({ pt: "Backend · Laravel/PHP", en: "Backend · Laravel/PHP" })}
+      </text>
+      <rect x="228" y="196" width="158" height="30" rx="7" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.14)" />
+      <text x="307" y="215" textAnchor="middle" fontSize="9" fill="#d4d4d8">
+        {t({ pt: "Cadastro · movimentação", en: "Registration · tracking" })}
+      </text>
+      <rect x="228" y="232" width="158" height="30" rx="7" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.14)" />
+      <text x="307" y="251" textAnchor="middle" fontSize="9" fill="#d4d4d8">
+        {t({ pt: "Agregação de indicadores", en: "Indicator aggregation" })}
+      </text>
+      <line x1="398" y1="210" x2="430" y2="210" stroke="#8b5cf6" strokeWidth="1.6" markerEnd="url(#sdai-arrow)" />
+
+      {/* Camada analítica SQL */}
+      <rect x="430" y="178" width="176" height="86" rx="10" fill="rgba(139,92,246,0.1)" stroke="rgba(139,92,246,0.45)" />
+      <text x="518" y="199" textAnchor="middle" fontSize="10.5" fill="#e4e4e7" fontWeight="600">
+        {t({ pt: "Camada analítica", en: "Analytics layer" })}
+      </text>
+      <text x="518" y="215" textAnchor="middle" fontSize="9" fill="#a1a1aa">
+        {t({ pt: "consultas SQL diretas", en: "direct SQL queries" })}
+      </text>
+      <text x="518" y="229" textAnchor="middle" fontSize="9" fill="#a1a1aa">
+        {t({ pt: "tratamento e agregação", en: "treatment and aggregation" })}
+      </text>
+      <text x="518" y="250" textAnchor="middle" fontSize="8.5" fill="#a1a1aa">
+        {t({ pt: "alimenta os painéis", en: "feeds the dashboards" })}
+      </text>
+
+      {/* Consumidores / BI */}
+      <rect x="634" y="150" width="158" height="44" rx="10" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.16)" />
+      <text x="713" y="170" textAnchor="middle" fontSize="10" fill="#e4e4e7" fontWeight="600">Power BI</text>
+      <text x="713" y="184" textAnchor="middle" fontSize="8.5" fill="#a1a1aa">
+        {t({ pt: "dashboards executivos", en: "executive dashboards" })}
+      </text>
+      <rect x="634" y="206" width="158" height="44" rx="10" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.16)" />
+      <text x="713" y="226" textAnchor="middle" fontSize="10" fill="#e4e4e7" fontWeight="600">
+        {t({ pt: "Indicadores", en: "Indicators" })}
+      </text>
+      <text x="713" y="240" textAnchor="middle" fontSize="8.5" fill="#a1a1aa">
+        {t({ pt: "em tempo real", en: "in real time" })}
+      </text>
+      <line x1="606" y1="200" x2="634" y2="174" stroke="#8b5cf6" strokeWidth="1.4" markerEnd="url(#sdai-arrow)" />
+      <line x1="606" y1="230" x2="634" y2="228" stroke="#8b5cf6" strokeWidth="1.4" markerEnd="url(#sdai-arrow)" />
+
+      {/* Banco de dados */}
+      <rect x="336" y="320" width="248" height="68" rx="10" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.16)" />
+      <text x="460" y="343" textAnchor="middle" fontSize="11" fill="#e4e4e7" fontWeight="600">PostgreSQL</text>
+      <text x="460" y="359" textAnchor="middle" fontSize="8.5" fill="#a1a1aa">
+        {t({ pt: "demandas · ações estratégicas", en: "demands · strategic actions" })}
+      </text>
+      <text x="460" y="373" textAnchor="middle" fontSize="8.5" fill="#a1a1aa">
+        {t({ pt: "movimentações e status", en: "movements and status" })}
+      </text>
+      <line x1="300" y1="272" x2="372" y2="320" stroke="#8b5cf6" strokeWidth="1.5" markerEnd="url(#sdai-arrow)" />
+      <line x1="500" y1="320" x2="518" y2="264" stroke="#71717a" strokeWidth="1.2" strokeDasharray="3 3" markerEnd="url(#sdai-arrow-dim)" />
+
+      {/* Fluxo de dados — pills */}
+      <text x="24" y="422" fontSize="8.5" fill="#71717a" letterSpacing="0.08em">
+        {t({ pt: "FLUXO DE DADOS — DA DEMANDA AO INDICADOR", en: "DATA FLOW — FROM DEMAND TO INDICATOR" })}
+      </text>
+      {[
+        { x: 24, w: 158, label: t({ pt: "Demanda cadastrada", en: "Demand registered" }) },
+        { x: 214, w: 150, label: t({ pt: "Movimentação", en: "Tracking update" }) },
+        { x: 396, w: 176, label: t({ pt: "Agregação (SQL)", en: "Aggregation (SQL)" }) },
+        { x: 604, w: 192, label: t({ pt: "Indicador no painel", en: "Indicator on dashboard" }) },
+      ].map((p, i) => (
+        <g key={p.label}>
+          <rect x={p.x} y="430" width={p.w} height="36" rx="18" fill="rgba(139,92,246,0.08)" stroke="rgba(139,92,246,0.3)" />
+          <text x={p.x + p.w / 2} y="452" textAnchor="middle" fontSize="9" fill="#d4d4d8">{p.label}</text>
+          {i < 3 ? (
+            <line x1={p.x + p.w} y1="448" x2={p.x + p.w + 28} y2="448" stroke="#8b5cf6" strokeWidth="1.5" markerEnd="url(#sdai-arrow)" />
+          ) : null}
+        </g>
+      ))}
+    </svg>
+  );
+}
+
+/* ═══════════════════════════════════════════
    FOTO REAL DO PRODUTO (moldura)
    ═══════════════════════════════════════════ */
 
@@ -270,6 +395,72 @@ function useSectionsData(lang: "pt" | "en") {
               en: "The backend was built in PHP with Laravel, handling the business rules for registering, tracking and aggregating indicators, with PostgreSQL as the database and direct SQL queries for the treatment and analysis that feed Power BI. The application runs containerized with Docker, standardizing the environment between development and production and simplifying deployment of new versions.",
             })}
           </p>
+
+          <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            {[
+              {
+                title: { pt: "Domínio em Laravel", en: "Domain in Laravel" },
+                desc: { pt: "As regras de cadastro, movimentação e agregação de demandas e ações vivem no backend Laravel, isoladas da camada de visualização.", en: "The rules for registering, tracking and aggregating demands and actions live in the Laravel backend, isolated from the visualization layer." },
+              },
+              {
+                title: { pt: "Transacional × analítico", en: "Transactional vs analytical" },
+                desc: { pt: "As consultas SQL de tratamento e agregação são separadas das regras transacionais, para que a análise não pese na operação diária.", en: "The SQL treatment and aggregation queries are separated from transactional rules, so analysis doesn't weigh on daily operation." },
+              },
+              {
+                title: { pt: "Power BI como visualização", en: "Power BI as visualization" },
+                desc: { pt: "O Power BI consome os dados já tratados e entrega os dashboards executivos — a camada de apresentação não recalcula regra de negócio.", en: "Power BI consumes the already-treated data and delivers the executive dashboards — the presentation layer doesn't recompute business rules." },
+              },
+              {
+                title: { pt: "Indicadores em tempo real", en: "Real-time indicators" },
+                desc: { pt: "Cada movimentação de uma demanda reflete no indicador correspondente, dando à secretaria acompanhamento sem espera por consolidação manual.", en: "Every update to a demand reflects in the corresponding indicator, giving the Secretariat tracking without waiting for manual consolidation." },
+              },
+              {
+                title: { pt: "Modelo relacional consistente", en: "Consistent relational model" },
+                desc: { pt: "PostgreSQL modela demandas, ações estratégicas e movimentações com integridade referencial, base confiável para a agregação.", en: "PostgreSQL models demands, strategic actions and movements with referential integrity, a reliable base for aggregation." },
+              },
+              {
+                title: { pt: "Ambientes padronizados", en: "Standardized environments" },
+                desc: { pt: "Docker isolando dev e produção, versionado via Git — o mesmo padrão de infraestrutura dos demais sistemas da SDA.", en: "Docker isolating dev and production, version-controlled via Git — the same infrastructure pattern as SDA's other systems." },
+              },
+            ].map((card) => (
+              <div key={card.title.pt} className="group rounded-2xl bg-white/[0.025] border border-white/[0.06] p-5 hover:border-violet-500/25 hover:bg-violet-500/[0.03] transition-all duration-300">
+                <h4 className="text-sm font-semibold text-white">{t(card.title)}</h4>
+                <p className="mt-2 text-sm text-zinc-300 leading-relaxed">{t(card.desc)}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-8 rounded-2xl bg-white/[0.02] border border-white/[0.06] p-6 overflow-x-auto">
+            <ArchitectureDiagram lang={lang} />
+            <p className="mt-4 text-center text-xs text-zinc-500">
+              {t({
+                pt: "Arquitetura em alto nível: backend Laravel sobre PostgreSQL, com uma camada analítica em SQL que trata e agrega os dados e alimenta os painéis do Power BI, tudo containerizado.",
+                en: "High-level architecture: a Laravel backend over PostgreSQL, with a SQL analytics layer that treats and aggregates the data and feeds the Power BI dashboards, all containerized.",
+              })}
+            </p>
+          </div>
+
+          <div className="mt-8 rounded-2xl bg-violet-500/[0.06] border border-violet-500/20 p-6">
+            <p className="text-sm text-violet-100 leading-relaxed">
+              {lang === "pt" ? (
+                <>
+                  A separação entre <span className="font-semibold text-violet-50">operação transacional</span> e{" "}
+                  <span className="font-semibold text-violet-50">camada analítica</span> é o que permite ao painel
+                  responder em tempo real sem travar o cadastro: as regras ficam no Laravel, a agregação pesada vai para
+                  o SQL e o Power BI só apresenta — uma decisão que sustenta a redução de{" "}
+                  <span className="font-semibold text-violet-50">25% no tempo de resposta a demandas</span>.
+                </>
+              ) : (
+                <>
+                  The split between <span className="font-semibold text-violet-50">transactional operation</span> and{" "}
+                  <span className="font-semibold text-violet-50">analytical layer</span> is what lets the dashboard
+                  respond in real time without stalling data entry: rules stay in Laravel, heavy aggregation goes to
+                  SQL and Power BI only presents — a decision that underpins the{" "}
+                  <span className="font-semibold text-violet-50">25% reduction in demand response time</span>.
+                </>
+              )}
+            </p>
+          </div>
         </>
       ),
     },

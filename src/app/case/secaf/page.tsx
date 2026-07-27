@@ -25,7 +25,7 @@ const heroData = {
     pt: "Sistema desenvolvido para a Secretaria do Desenvolvimento Agrário do Ceará (SDA) para cadastrar agricultores familiares, empreendedores individuais e cooperativas, e para operar o fluxo de editais, cotações e propostas que sustenta a Política Estadual de Aquisição de Alimentos da Agricultura Familiar — com mais de 20 mil produtores cadastrados.",
     en: "System built for the State Agrarian Development Secretariat of Ceará (SDA) to register family farmers, individual entrepreneurs and cooperatives, and to run the notice, quotation and proposal flow behind the State Family Farming Food Acquisition Policy — with over 20,000 registered producers.",
   },
-  tags: ["Git", "Docker", ".NET", "C#", "PHP"],
+  tags: ["Git", "Docker", ".NET", "C#", "PHP", "Angular"],
 };
 
 const summaryData: Array<{ label: Bilingual; value: Bilingual }> = [
@@ -68,7 +68,130 @@ const kpisData: Array<{ text: Bilingual }> = [
   { text: { pt: "Ambiente containerizado com Docker, versionado via Git", en: "Containerized environment with Docker, version-controlled via Git" } },
 ];
 
-const stackData = [".NET", "C#", "PHP", "Docker", "Git"];
+const stackData = [".NET", "C#", "PHP", "Angular", "Docker", "Git"];
+
+/* ═══════════════════════════════════════════
+   DIAGRAMA DE ARQUITETURA (SVG inline, bilíngue)
+   ═══════════════════════════════════════════ */
+
+function ArchitectureDiagram({ lang }: { lang: "pt" | "en" }) {
+  const t = (v: Bilingual) => tr(lang, v);
+  return (
+    <svg viewBox="0 0 820 480" className="w-full h-auto" role="img" aria-label="Diagrama da arquitetura do SECAF">
+      <defs>
+        <marker id="secaf-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0 0 L10 5 L0 10 z" fill="#8b5cf6" />
+        </marker>
+        <marker id="secaf-arrow-dim" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M0 0 L10 5 L0 10 z" fill="#71717a" />
+        </marker>
+      </defs>
+
+      {/* Pipeline de entrega */}
+      <rect x="250" y="8" width="320" height="44" rx="10" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.14)" />
+      <text x="410" y="26" textAnchor="middle" fontSize="10" fill="#e4e4e7" fontWeight="600">
+        {t({ pt: "Git → imagem Docker → deploy no ambiente SDA", en: "Git → Docker image → deploy to the SDA environment" })}
+      </text>
+      <text x="410" y="40" textAnchor="middle" fontSize="8.5" fill="#a1a1aa">
+        {t({ pt: "Versionamento e ambientes isolados (dev/prod)", en: "Versioning and isolated environments (dev/prod)" })}
+      </text>
+      <line x1="410" y1="52" x2="410" y2="72" stroke="#71717a" strokeWidth="1.4" strokeDasharray="3 3" markerEnd="url(#secaf-arrow-dim)" />
+
+      {/* Fronteira do container Docker */}
+      <rect x="200" y="74" width="604" height="330" rx="16" fill="none" stroke="rgba(139,92,246,0.35)" strokeDasharray="5 5" />
+      <text x="216" y="68" fontSize="9.5" fill="#a78bfa" letterSpacing="0.08em">AMBIENTE CONTAINERIZADO · DOCKER</text>
+
+      {/* Cliente */}
+      <rect x="8" y="180" width="152" height="64" rx="10" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.16)" />
+      <text x="84" y="205" textAnchor="middle" fontSize="11" fill="#e4e4e7" fontWeight="600">
+        {t({ pt: "Navegador", en: "Browser" })}
+      </text>
+      <text x="84" y="221" textAnchor="middle" fontSize="8.5" fill="#a1a1aa">
+        {t({ pt: "Equipes SDA (Codece)", en: "SDA teams (Codece)" })}
+      </text>
+      <text x="84" y="233" textAnchor="middle" fontSize="8.5" fill="#a1a1aa">
+        {t({ pt: "+ cooperativas", en: "+ cooperatives" })}
+      </text>
+      <text x="187" y="203" textAnchor="middle" fontSize="8" fill="#a1a1aa">HTTPS/TLS</text>
+      <line x1="160" y1="212" x2="214" y2="212" stroke="#8b5cf6" strokeWidth="1.6" markerEnd="url(#secaf-arrow)" />
+
+      {/* Camada web */}
+      <rect x="216" y="168" width="182" height="104" rx="10" fill="rgba(139,92,246,0.08)" stroke="rgba(139,92,246,0.4)" />
+      <text x="307" y="187" textAnchor="middle" fontSize="10.5" fill="#e4e4e7" fontWeight="600">
+        {t({ pt: "Painéis · PHP + Angular", en: "Panels · PHP + Angular" })}
+      </text>
+      <rect x="228" y="196" width="158" height="30" rx="7" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.14)" />
+      <text x="307" y="215" textAnchor="middle" fontSize="9" fill="#d4d4d8">
+        {t({ pt: "Editais · Cotações", en: "Notices · Quotations" })}
+      </text>
+      <rect x="228" y="232" width="158" height="30" rx="7" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.14)" />
+      <text x="307" y="251" textAnchor="middle" fontSize="9" fill="#d4d4d8">
+        {t({ pt: "Propostas ind./coletiva", en: "Individual/collective proposals" })}
+      </text>
+      <line x1="398" y1="210" x2="430" y2="210" stroke="#8b5cf6" strokeWidth="1.6" markerEnd="url(#secaf-arrow)" />
+
+      {/* Núcleo de regras */}
+      <rect x="430" y="178" width="176" height="86" rx="10" fill="rgba(139,92,246,0.1)" stroke="rgba(139,92,246,0.45)" />
+      <text x="518" y="199" textAnchor="middle" fontSize="11" fill="#e4e4e7" fontWeight="600">.NET / C#</text>
+      <text x="518" y="215" textAnchor="middle" fontSize="9" fill="#a1a1aa">
+        {t({ pt: "Cadastro validado", en: "Validated registry" })}
+      </text>
+      <text x="518" y="229" textAnchor="middle" fontSize="9" fill="#a1a1aa">
+        {t({ pt: "agricultor · cooperativa", en: "farmer · cooperative" })}
+      </text>
+      <text x="518" y="250" textAnchor="middle" fontSize="8.5" fill="#a1a1aa">
+        {t({ pt: "elegibilidade por CNPJ/CPF", en: "eligibility by CNPJ/CPF" })}
+      </text>
+
+      {/* Integrações / consumidores */}
+      <rect x="634" y="150" width="158" height="44" rx="10" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.16)" />
+      <text x="713" y="170" textAnchor="middle" fontSize="10" fill="#e4e4e7" fontWeight="600">Ceará Sem Fome</text>
+      <text x="713" y="184" textAnchor="middle" fontSize="8.5" fill="#a1a1aa">
+        {t({ pt: "consome o cadastro", en: "consumes the registry" })}
+      </text>
+      <rect x="634" y="206" width="158" height="44" rx="10" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.16)" />
+      <text x="713" y="226" textAnchor="middle" fontSize="10" fill="#e4e4e7" fontWeight="600">
+        {t({ pt: "Compra Institucional", en: "Institutional Purchase" })}
+      </text>
+      <text x="713" y="240" textAnchor="middle" fontSize="8.5" fill="#a1a1aa">
+        {t({ pt: "mín. 30% p/ agric. familiar", en: "min. 30% for family farming" })}
+      </text>
+      <line x1="606" y1="200" x2="634" y2="174" stroke="#71717a" strokeWidth="1.2" strokeDasharray="3 3" markerEnd="url(#secaf-arrow-dim)" />
+      <line x1="606" y1="230" x2="634" y2="228" stroke="#71717a" strokeWidth="1.2" strokeDasharray="3 3" markerEnd="url(#secaf-arrow-dim)" />
+
+      {/* Banco de dados */}
+      <rect x="336" y="320" width="248" height="68" rx="10" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.16)" />
+      <text x="460" y="343" textAnchor="middle" fontSize="11" fill="#e4e4e7" fontWeight="600">PostgreSQL</text>
+      <text x="460" y="359" textAnchor="middle" fontSize="8.5" fill="#a1a1aa">
+        {t({ pt: "cadastros · cotações · propostas", en: "registries · quotations · proposals" })}
+      </text>
+      <text x="460" y="373" textAnchor="middle" fontSize="8.5" fill="#a1a1aa">
+        {t({ pt: "status e valores por entidade", en: "status and amounts per entity" })}
+      </text>
+      <line x1="300" y1="272" x2="372" y2="320" stroke="#8b5cf6" strokeWidth="1.5" markerEnd="url(#secaf-arrow)" />
+      <line x1="518" y1="264" x2="500" y2="320" stroke="#8b5cf6" strokeWidth="1.5" markerEnd="url(#secaf-arrow)" />
+
+      {/* Fluxo de dados — pills */}
+      <text x="24" y="422" fontSize="8.5" fill="#71717a" letterSpacing="0.08em">
+        {t({ pt: "FLUXO DE DADOS — DO CADASTRO À PROPOSTA VENCEDORA", en: "DATA FLOW — FROM REGISTRATION TO WINNING PROPOSAL" })}
+      </text>
+      {[
+        { x: 24, w: 158, label: t({ pt: "Cadastro validado", en: "Validated registry" }) },
+        { x: 214, w: 150, label: t({ pt: "Edital / cotação", en: "Notice / quotation" }) },
+        { x: 396, w: 186, label: t({ pt: "Proposta (ind./coletiva)", en: "Proposal (ind./collective)" }) },
+        { x: 614, w: 182, label: t({ pt: "Julgamento → fornecimento", en: "Judging → supply" }) },
+      ].map((p, i) => (
+        <g key={p.label}>
+          <rect x={p.x} y="430" width={p.w} height="36" rx="18" fill="rgba(139,92,246,0.08)" stroke="rgba(139,92,246,0.3)" />
+          <text x={p.x + p.w / 2} y="452" textAnchor="middle" fontSize="9" fill="#d4d4d8">{p.label}</text>
+          {i < 3 ? (
+            <line x1={p.x + p.w} y1="448" x2={p.x + p.w + 28} y2="448" stroke="#8b5cf6" strokeWidth="1.5" markerEnd="url(#secaf-arrow)" />
+          ) : null}
+        </g>
+      ))}
+    </svg>
+  );
+}
 
 /* ═══════════════════════════════════════════
    FOTO REAL DO PRODUTO (moldura)
@@ -227,31 +350,77 @@ function useSectionsData(lang: "pt" | "en") {
         <>
           <p>
             {t({
-              pt: "O SECAF combina duas frentes: um núcleo em .NET/C# responsável pelo cadastro de produtores e cooperativas e pelas regras de negócio de validação (documentação, CNPJ/CPF, elegibilidade por perfil), e um conjunto de painéis operacionais em PHP para o fluxo de editais, cotações e propostas usado no dia a dia pelas equipes da secretaria e pelas cooperativas. A aplicação roda containerizada com Docker e é versionada via Git, seguindo o mesmo padrão de infraestrutura usado nos demais sistemas da SDA.",
-              en: "SECAF combines two fronts: a .NET/C# core handling producer and cooperative registration along with validation business rules (documentation, CNPJ/CPF, per-profile eligibility), and a set of operational panels in PHP for the notice, quotation and proposal flow used day-to-day by the Secretariat's teams and by the cooperatives. The application runs containerized with Docker and is version-controlled via Git, following the same infrastructure pattern used across SDA's other systems.",
+              pt: "O SECAF combina duas frentes: um núcleo em .NET/C# responsável pelo cadastro de produtores e cooperativas e pelas regras de negócio de validação (documentação, CNPJ/CPF, elegibilidade por perfil), e um conjunto de painéis operacionais em PHP e Angular para o fluxo de editais, cotações e propostas usado no dia a dia pelas equipes da secretaria e pelas cooperativas. A aplicação roda containerizada com Docker e é versionada via Git, seguindo o mesmo padrão de infraestrutura usado nos demais sistemas da SDA.",
+              en: "SECAF combines two fronts: a .NET/C# core handling producer and cooperative registration along with validation business rules (documentation, CNPJ/CPF, per-profile eligibility), and a set of operational panels in PHP and Angular for the notice, quotation and proposal flow used day-to-day by the Secretariat's teams and by the cooperatives. The application runs containerized with Docker and is version-controlled via Git, following the same infrastructure pattern used across SDA's other systems.",
             })}
           </p>
 
-          <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             {[
               {
-                title: { pt: "Cadastro validado", en: "Validated registry" },
-                desc: { pt: "Regras de documentação e elegibilidade distintas por perfil: agricultor individual, empreendedor e cooperativa.", en: "Distinct documentation and eligibility rules per profile: individual farmer, entrepreneur and cooperative." },
+                title: { pt: "Núcleo de regras isolado", en: "Isolated rules core" },
+                desc: { pt: "O cadastro e a validação vivem no núcleo .NET/C#, separados dos painéis PHP de operação — a regra de elegibilidade é a mesma para qualquer tela.", en: "Registration and validation live in the .NET/C# core, separate from the PHP operational panels — the eligibility rule is the same across every screen." },
+              },
+              {
+                title: { pt: "Cadastro validado por perfil", en: "Registry validated per profile" },
+                desc: { pt: "Documentação e elegibilidade distintas para agricultor individual, empreendedor e cooperativa, cada uma com suas exigências de CNPJ/CPF.", en: "Distinct documentation and eligibility for individual farmer, entrepreneur and cooperative, each with its own CNPJ/CPF requirements." },
+              },
+              {
+                title: { pt: "Fluxo edital → cotação → proposta", en: "Notice → quotation → proposal flow" },
+                desc: { pt: "Uma máquina de estados mantém a consistência entre edital, abertura de cotação e proposta, sem valores órfãos entre as etapas.", en: "A state machine keeps notice, quotation opening and proposal consistent, with no orphan amounts between steps." },
               },
               {
                 title: { pt: "Integridade de propostas", en: "Proposal integrity" },
-                desc: { pt: "Valor e situação de cada proposta rastreados por entidade, evitando divergência entre cotação e proposta.", en: "Amount and status of each proposal tracked per entity, avoiding divergence between quotation and proposal." },
+                desc: { pt: "Valor e situação de cada proposta rastreados por entidade (CNPJ), evitando divergência entre a cotação e o que cada cooperativa propôs.", en: "Amount and status of each proposal tracked per entity (CNPJ), avoiding divergence between the quotation and what each cooperative proposed." },
+              },
+              {
+                title: { pt: "Cadastro como fonte única", en: "Registry as single source" },
+                desc: { pt: "O mesmo cadastro alimenta o módulo Ceará Sem Fome e a Compra Institucional, sem duplicar produtores nem abrir brecha de inconsistência.", en: "The same registry feeds the Ceará Sem Fome module and Institutional Purchase, without duplicating producers or opening room for inconsistency." },
               },
               {
                 title: { pt: "Ambientes padronizados", en: "Standardized environments" },
-                desc: { pt: "Docker isolando ambientes de desenvolvimento e produção, com deploy versionado via Git.", en: "Docker isolating development and production environments, with deploys version-controlled via Git." },
+                desc: { pt: "Docker isolando dev e produção, versionado via Git — o mesmo padrão de infraestrutura dos demais sistemas da SDA.", en: "Docker isolating dev and production, version-controlled via Git — the same infrastructure pattern as SDA's other systems." },
               },
             ].map((card) => (
-              <div key={card.title.pt} className="rounded-2xl bg-white/[0.025] border border-white/[0.06] p-5">
+              <div key={card.title.pt} className="group rounded-2xl bg-white/[0.025] border border-white/[0.06] p-5 hover:border-violet-500/25 hover:bg-violet-500/[0.03] transition-all duration-300">
                 <h4 className="text-sm font-semibold text-white">{t(card.title)}</h4>
                 <p className="mt-2 text-sm text-zinc-300 leading-relaxed">{t(card.desc)}</p>
               </div>
             ))}
+          </div>
+
+          <div className="mt-8 rounded-2xl bg-white/[0.02] border border-white/[0.06] p-6 overflow-x-auto">
+            <ArchitectureDiagram lang={lang} />
+            <p className="mt-4 text-center text-xs text-zinc-500">
+              {t({
+                pt: "Arquitetura em alto nível: painéis PHP de editais/cotações/propostas sobre um núcleo de cadastro .NET/C#, com o cadastro alimentando a Compra Institucional e o Ceará Sem Fome, tudo containerizado.",
+                en: "High-level architecture: PHP notice/quotation/proposal panels over a .NET/C# registry core, with the registry feeding Institutional Purchase and Ceará Sem Fome, all containerized.",
+              })}
+            </p>
+          </div>
+
+          <div className="mt-8 rounded-2xl bg-violet-500/[0.06] border border-violet-500/20 p-6">
+            <p className="text-sm text-violet-100 leading-relaxed">
+              {lang === "pt" ? (
+                <>
+                  O SECAF é a base da <span className="font-semibold text-violet-50">Política Estadual de Aquisição de
+                  Alimentos da Agricultura Familiar</span> (Lei nº 15.910/2015), que obriga ao menos{" "}
+                  <span className="font-semibold text-violet-50">30% das compras públicas de alimentos</span> a virem da
+                  agricultura familiar. Cada cadastro e cada proposta no sistema decide, na prática, quem fornece
+                  alimento ao estado — por isso a validação de origem e a integridade das propostas foram tratadas com
+                  rigor de processo de compra pública.
+                </>
+              ) : (
+                <>
+                  SECAF is the backbone of the <span className="font-semibold text-violet-50">State Family Farming Food
+                  Acquisition Policy</span> (Law 15,910/2015), which requires at least{" "}
+                  <span className="font-semibold text-violet-50">30% of public food purchases</span> to come from family
+                  farming. Every registration and proposal in the system decides, in practice, who supplies food to the
+                  state — which is why origin validation and proposal integrity were handled with the rigor of a public
+                  procurement process.
+                </>
+              )}
+            </p>
           </div>
         </>
       ),

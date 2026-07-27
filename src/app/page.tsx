@@ -422,7 +422,7 @@ export default function Page() {
     {
       title: "Sistema SECAF - Sistema Estadual de Cadastro de Agricultores Familiares",
       subtitle: { pt: "", en: "" },
-      tags: ["Git", "Docker", ".NET", "C#", "PHP"],
+      tags: ["Git", "Docker", ".NET", "C#", "PHP", "Angular"],
       link: "https://sistemas2.sda.ce.gov.br/scriptcase/app/secaf/login/",
       caseStudy: "/case/secaf",
       ctaLabel: { pt: "Visite", en: "Visit" },

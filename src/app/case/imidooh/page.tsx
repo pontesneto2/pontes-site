@@ -27,6 +27,7 @@ const heroData = {
     en: "Building a scalable SaaS foundation for Digital Out Of Home media operations, focused on solid architecture, modular organization, and readiness for multi-tenant expansion.",
   },
   tags: [
+    "TypeScript",
     "Docker",
     "React Native",
     "Next.js",
@@ -79,7 +80,7 @@ const kpisData: Array<{ text: Bilingual }> = [
 
 const stackData = [
   "Docker",
-  "JavaScript",
+  "TypeScript",
   "React Native",
   "Next.js",
   "Node.js",
