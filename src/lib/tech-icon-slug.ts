@@ -29,6 +29,13 @@ const TECH_ICON_SLUGS: Record<string, string> = {
   Grafana: "grafana",
   Prometheus: "prometheus",
   Angular: "angular",
+  GitHub: "github",
+  WordPress: "wordpress",
+  Bootstrap: "bootstrap",
+  Symfony: "symfony",
+  Java: "java",
+  Spring: "spring",
+  Jira: "jira",
 };
 
 export function getTechIconSlug(tag: string): string | undefined {

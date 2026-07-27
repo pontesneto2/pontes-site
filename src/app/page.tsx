@@ -89,9 +89,9 @@ import type { IconType } from "react-icons";
 const projectTagIconMap: Record<string, IconType> = {
   "React Native": SiReact,
   TypeScript: SiTypescript,
-  NextJS: SiNextdotjs,
-  NodeJS: SiNodedotjs,
-  ExpressJS: SiExpress,
+  "Next.js": SiNextdotjs,
+  "Node.js": SiNodedotjs,
+  "Express.js": SiExpress,
   NestJS: SiNestjs,
   PostgreSQL: SiPostgresql,
   Prisma: SiPrisma,
@@ -105,9 +105,9 @@ const projectTagIconMap: Record<string, IconType> = {
   Jira: SiJira,
   GitHub: SiGithub,
   Grafana: SiGrafana,
-  TailwindCSS: SiTailwindcss,
+  "Tailwind CSS": SiTailwindcss,
   MongoDB: SiMongodb,
-  JS: SiJavascript,
+  JavaScript: SiJavascript,
   "Java Spring Boot": SiSpringboot,
   WordPress: SiWordpress,
   Bootstrap: SiBootstrap,
@@ -518,7 +518,7 @@ export default function Page() {
     {
       title: "Sistema Especial Fazenda Chapéu - IDACE",
       subtitle: { pt: "", en: "" },
-      tags: ["Scriptcase", "PHP", "JS", "Java Spring Boot", "PostgreSQL", "Docker", "Git"],
+      tags: ["Scriptcase", "PHP", "JavaScript", "Java Spring Boot", "PostgreSQL", "Docker", "Git"],
       link: "https://www.idace.ce.gov.br/",
       ctaLabel: { pt: "Visite", en: "Visit" },
       blurb: {
@@ -566,7 +566,7 @@ export default function Page() {
     {
       title: "Sistema Diário de Obras - ALPHA",
       subtitle: { pt: "", en: "" },
-      tags: ["NodeJS", "ExpressJS", "Prisma", "PostgreSQL", "Docker", "Git", "TailwindCSS", "TypeScript"],
+      tags: ["Node.js", "Express.js", "Prisma", "PostgreSQL", "Docker", "Git", "Tailwind CSS", "TypeScript"],
       link: "",
       private: true,
       blurb: {
@@ -584,7 +584,7 @@ export default function Page() {
     {
       title: "Website Instituto Anjos Digitais",
       subtitle: { pt: "", en: "" },
-      tags: ["WordPress", "PHP", "JS", "Bootstrap", "Docker", "Git"],
+      tags: ["WordPress", "PHP", "JavaScript", "Bootstrap", "Docker", "Git"],
       link: "https://anjosdigitais.org/",
       ctaLabel: { pt: "Visite", en: "Visit" },
       secondaryLink: {
@@ -672,7 +672,7 @@ export default function Page() {
     {
       title: "Website Silva & Duarte Advogados",
       subtitle: { pt: "", en: "" },
-      tags: ["GitHub", "Git", "TypeScript", "JS", "TailwindCSS"],
+      tags: ["GitHub", "Git", "TypeScript", "JavaScript", "Tailwind CSS"],
       link: "https://www.silvaeduarteadvogados.com/",
       ctaLabel: { pt: "Visite", en: "Visit" },
       blurb: {
@@ -690,7 +690,7 @@ export default function Page() {
     {
       title: "Landing Page Sarrubbo Advogados",
       subtitle: { pt: "", en: "" },
-      tags: ["Next.js", "TypeScript", "TailwindCSS", "Git"],
+      tags: ["Next.js", "TypeScript", "Tailwind CSS", "Git"],
       link: "https://sarrubboadvogados.com.br/",
       ctaLabel: { pt: "Visite", en: "Visit" },
       blurb: {
