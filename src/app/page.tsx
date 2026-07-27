@@ -711,9 +711,9 @@ export default function Page() {
       tags: [
         "React Native",
         "TypeScript",
-        "NextJS",
-        "NodeJS",
-        "ExpressJS",
+        "Next.js",
+        "Node.js",
+        "Express.js",
         "NestJS",
         "PostgreSQL",
         "Prisma",
