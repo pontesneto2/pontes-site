@@ -73,6 +73,11 @@ export default function SiteHeader({
   const ctaFlag = isCvUrl(effectiveCta.href) ? LANG_FLAG[lang] : null;
   const secondaryCtaFlag = secondaryCta && isCvUrl(secondaryCta.href) ? LANG_FLAG[lang] : null;
 
+  // "Início" sempre presente e sempre leva à home; evita duplicar caso já venha nos navLinks.
+  const desktopNavLinks = navLinks.some((l) => l.href === "/")
+    ? navLinks
+    : [{ href: "/", label: { pt: "Início", en: "Home" } as Bilingual }, ...navLinks];
+
   const [navOpen, setNavOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -133,6 +138,32 @@ export default function SiteHeader({
               className="h-6 sm:h-10 w-auto"
             />
           </Link>
+
+          {/* Navegação inline — apenas desktop; telas menores usam o hamburger. */}
+          <nav className="hidden lg:flex items-center gap-1">
+            {desktopNavLinks.map((link) => {
+              const href = withLocale(link.href, isEn);
+              const active =
+                link.href === "/" ? pathname === "/" || pathname === "/en" : pathname === href;
+              return (
+                <Link
+                  key={link.href}
+                  href={href}
+                  aria-current={active ? "page" : undefined}
+                  className={`group relative rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+                    active ? "text-white" : "text-zinc-400 hover:text-white"
+                  }`}
+                >
+                  {t(link.label)}
+                  <span
+                    className={`pointer-events-none absolute inset-x-3 -bottom-px h-px origin-left rounded-full bg-gradient-to-r from-violet-400 to-fuchsia-400 transition-transform duration-300 ${
+                      active ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
+                    }`}
+                  />
+                </Link>
+              );
+            })}
+          </nav>
 
           <div className="flex items-center gap-1.5 sm:gap-2.5">
             {secondaryCta && (
