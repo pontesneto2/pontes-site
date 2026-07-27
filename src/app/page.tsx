@@ -49,6 +49,8 @@ import {
   Swords,
   TrendingUp,
   Camera,
+  Instagram,
+  ArrowUpRight,
   type LucideIcon,
 } from "lucide-react";
 import {
@@ -296,6 +298,7 @@ export default function Page() {
     placeholder?: boolean;
     private?: boolean;
     ctaLabel?: Bilingual;
+    secondaryLink?: { url: string; label: Bilingual; icon: LucideIcon };
     blurb: Bilingual;
     category: Bilingual[];
     thumb: string;
@@ -329,6 +332,31 @@ export default function Page() {
         { icon: RefreshCcw, value: { pt: "Refatorado", en: "Refactored" }, label: { pt: "", en: "" } },
         { icon: Smartphone, value: { pt: "300+", en: "300+" }, label: { pt: "Logins simultâneos", en: "Concurrent logins" } },
         { icon: Clock, value: { pt: "1,8 anos", en: "1.8 years" }, label: { pt: "de desenvolvimento sem IA", en: "of development without AI" } },
+      ],
+    },
+    {
+      title: "2º Colégio da Polícia Militar Coronel Hervano Macêdo Júnior (2º CPM-CHMJ)",
+      subtitle: { pt: "", en: "" },
+      tags: ["PHP", "Laravel", "C#", ".NET", "Angular", "PostgreSQL", "Docker", "Git", "Jira", "Grafana"],
+      link: "https://com3brasil.com.br/cpmce/sistemas/",
+      caseStudy: "/case/sistema-escolar-policia",
+      ctaLabel: { pt: "Visite", en: "Visit" },
+      blurb: {
+        pt: "Sistema de gestão escolar para o 2º Colégio da Polícia Militar, com acesso controlado por perfil para acompanhamento acadêmico e administrativo. Sistema COM3 para a gestão acadêmica e o portal Aluno Online da SEDUC para o acompanhamento escolar.",
+        en: "School management system for the 2nd Military Police School, with role-based access for academic and administrative tracking. COM3 system for academic management and the SEDUC Aluno Online portal for tracking student progress.",
+      },
+      category: [{ pt: "Sistema Web+Admin", en: "Web System+Admin" }, { pt: "Aplicativo PWA", en: "PWA App" }],
+      thumb: "/images/capa-escolar.png",
+      bgClass: NEUTRAL_BG,
+      badge: { pt: "Em produção", en: "In production" },
+      highlights: [
+        { icon: Clock, value: { pt: "1,2 anos de produção", en: "1.2 years in production" } },
+        { icon: Building2, value: { pt: "Idealizadora: Com3 Brasil", en: "Idealized by: Com3 Brasil" } },
+      ],
+      impact: [
+        { icon: Users, value: { pt: "2.350+", en: "2,350+" }, label: { pt: "Usuários", en: "Users" } },
+        { icon: Gauge, value: { pt: "99,9%", en: "99.9%" }, label: { pt: "Uptime", en: "Uptime" } },
+        { icon: Rocket, value: { pt: "-2 meses", en: "-2 months" }, label: { pt: "MVP antes do prazo", en: "MVP ahead of schedule" } },
       ],
     },
     {
@@ -367,31 +395,6 @@ export default function Page() {
       ],
     },
     {
-      title: "2º Colégio da Polícia Militar Coronel Hervano Macêdo Júnior (2º CPM-CHMJ)",
-      subtitle: { pt: "", en: "" },
-      tags: ["PHP", "Laravel", "C#", ".NET", "Angular", "PostgreSQL", "Docker", "Git", "Jira", "Grafana"],
-      link: "https://com3brasil.com.br/cpmce/sistemas/",
-      caseStudy: "/case/sistema-escolar-policia",
-      ctaLabel: { pt: "Visite", en: "Visit" },
-      blurb: {
-        pt: "Sistema de gestão escolar para o 2º Colégio da Polícia Militar, com acesso controlado por perfil para acompanhamento acadêmico e administrativo. Sistema COM3 para a gestão acadêmica e o portal Aluno Online da SEDUC para o acompanhamento escolar.",
-        en: "School management system for the 2nd Military Police School, with role-based access for academic and administrative tracking. COM3 system for academic management and the SEDUC Aluno Online portal for tracking student progress.",
-      },
-      category: [{ pt: "Sistema Web+Admin", en: "Web System+Admin" }, { pt: "Aplicativo PWA", en: "PWA App" }],
-      thumb: "/images/capa-escolar.png",
-      bgClass: NEUTRAL_BG,
-      badge: { pt: "Em produção", en: "In production" },
-      highlights: [
-        { icon: Clock, value: { pt: "1,2 anos de produção", en: "1.2 years in production" } },
-        { icon: Building2, value: { pt: "Idealizadora: Com3 Brasil", en: "Idealized by: Com3 Brasil" } },
-      ],
-      impact: [
-        { icon: Users, value: { pt: "2.350+", en: "2,350+" }, label: { pt: "Usuários", en: "Users" } },
-        { icon: Gauge, value: { pt: "99,9%", en: "99.9%" }, label: { pt: "Uptime", en: "Uptime" } },
-        { icon: Rocket, value: { pt: "-2 meses", en: "-2 months" }, label: { pt: "MVP antes do prazo", en: "MVP ahead of schedule" } },
-      ],
-    },
-    {
       title: "Sistema de Indicadores de Demandas e Ações - SDA CE",
       subtitle: { pt: "", en: "" },
       tags: ["PHP", "Laravel", "PostgreSQL", "SQL", "Power BI", "Docker", "Git"],
@@ -417,51 +420,27 @@ export default function Page() {
       ],
     },
     {
-      title: "iMidooh - App",
+      title: "Sistema SECAF - Sistema Estadual de Cadastro de Agricultores Familiares",
       subtitle: { pt: "", en: "" },
-      tags: [
-        "React Native",
-        "TypeScript",
-        "NextJS",
-        "NodeJS",
-        "ExpressJS",
-        "NestJS",
-        "PostgreSQL",
-        "Prisma",
-        "Docker",
-      ],
-      link: "",
-      caseStudy: "/case/imidooh",
-      discontinued: true,
+      tags: ["Git", "Docker", ".NET", "C#", "PHP"],
+      link: "https://sistemas2.sda.ce.gov.br/scriptcase/app/secaf/login/",
+      caseStudy: "/case/secaf",
+      ctaLabel: { pt: "Visite", en: "Visit" },
       blurb: {
-        pt: "Plataforma mobile para operar mídia Digital Out Of Home em recursos visuais dos mais diversos tipos.",
-        en: "Mobile platform to operate Digital Out Of Home media across all kinds of visual resources.",
+        pt: "Sistema estadual de cadastro de produtores da agricultura familiar.",
+        en: "State-level registry system for family farming producers.",
       },
-      category: [{ pt: "Aplicativo Mobile Nativo", en: "Native Mobile App" }, { pt: "Sistema Web+Admin", en: "Web System+Admin" }],
-      thumb: "/images/capa-imidooh.png",
+      category: [{ pt: "Sistema Web+Admin", en: "Web System+Admin" }, { pt: "Aplicativo PWA", en: "PWA App" }],
+      thumb: "/images/capa-secaff.png",
       bgClass: NEUTRAL_BG,
+      badge: { pt: "Em produção", en: "In production" },
       highlights: [
-        { icon: Clock, value: { pt: "6 meses", en: "6 months" } },
-        { icon: Building2, value: { pt: "Idealizadora: Click SF", en: "Idealized by: Click SF" } },
+        { icon: Clock, value: { pt: "14 meses de produção", en: "14 months in production" } },
+        { icon: Building2, value: { pt: "Idealizador: Governo do Ceará", en: "Idealized by: Government of Ceará" } },
       ],
-    },
-    {
-      title: "Fitvo App Mobile",
-      subtitle: { pt: "", en: "" },
-      tags: ["React Native", "PostgreSQL", "NodeJS", "Docker"],
-      link: "",
-      placeholder: true,
-      blurb: {
-        pt: "Ecossistema mobile para educadores físicos, personal trainers, nutricionistas e nutrólogos esportivos, além de clínicas e academias, reunindo agendamentos, planos de treino e acompanhamento de alunos em um único app.",
-        en: "Mobile ecosystem for physical educators, personal trainers, sports nutritionists and doctors, as well as clinics and gyms, bringing scheduling, training plans and student tracking together in a single app.",
-      },
-      category: [{ pt: "Aplicativo Mobile Nativo", en: "Native Mobile App" }, { pt: "Sistema Web+Admin", en: "Web System+Admin" }],
-      thumb: "/images/capa-fitvo.png",
-      bgClass: NEUTRAL_BG,
-      badge: { pt: "Em desenvolvimento", en: "In development" },
-      badgeColor: "sky",
-      highlights: [
-        { icon: Clock, value: { pt: "Projeto em desenvolvimento", en: "Project in development" } },
+      impact: [
+        { icon: Users, value: { pt: "20.000+", en: "20,000+" }, label: { pt: "Produtores cadastrados", en: "Registered producers" } },
+        { icon: Gauge, value: { pt: "99,6%", en: "99.6%" }, label: { pt: "Uptime", en: "Uptime" } },
       ],
     },
     {
@@ -486,30 +465,6 @@ export default function Page() {
         { icon: Users, value: { pt: "25.000+", en: "25,000+" }, label: { pt: "Produtores cadastrados", en: "Registered producers" } },
         { icon: Gauge, value: { pt: "99,6%", en: "99.6%" }, label: { pt: "Uptime", en: "Uptime" } },
         { icon: Rocket, value: { pt: "-35%", en: "-35%" }, label: { pt: "Tempo de análise de processos", en: "Process review time" } },
-      ],
-    },
-    {
-      title: "Sistema SECAF - Sistema Estadual de Cadastro de Agricultores Familiares",
-      subtitle: { pt: "", en: "" },
-      tags: ["Git", "Docker", ".NET", "C#", "PHP"],
-      link: "https://sistemas2.sda.ce.gov.br/scriptcase/app/secaf/login/",
-      caseStudy: "/case/secaf",
-      ctaLabel: { pt: "Visite", en: "Visit" },
-      blurb: {
-        pt: "Sistema estadual de cadastro de produtores da agricultura familiar.",
-        en: "State-level registry system for family farming producers.",
-      },
-      category: [{ pt: "Sistema Web+Admin", en: "Web System+Admin" }, { pt: "Aplicativo PWA", en: "PWA App" }],
-      thumb: "/images/capa-secaff.png",
-      bgClass: NEUTRAL_BG,
-      badge: { pt: "Em produção", en: "In production" },
-      highlights: [
-        { icon: Clock, value: { pt: "14 meses de produção", en: "14 months in production" } },
-        { icon: Building2, value: { pt: "Idealizador: Governo do Ceará", en: "Idealized by: Government of Ceará" } },
-      ],
-      impact: [
-        { icon: Users, value: { pt: "20.000+", en: "20,000+" }, label: { pt: "Produtores cadastrados", en: "Registered producers" } },
-        { icon: Gauge, value: { pt: "99,6%", en: "99.6%" }, label: { pt: "Uptime", en: "Uptime" } },
       ],
     },
     {
@@ -608,6 +563,11 @@ export default function Page() {
       tags: ["WordPress", "PHP", "JS", "Bootstrap", "Docker", "Git"],
       link: "https://anjosdigitais.org/",
       ctaLabel: { pt: "Visite", en: "Visit" },
+      secondaryLink: {
+        url: "https://www.instagram.com/anjos_digitais/",
+        label: { pt: "Veja no Instagram", en: "See on Instagram" },
+        icon: Instagram,
+      },
       blurb: {
         pt: "Site institucional para divulgação de projetos sociais e captação de apoiadores.",
         en: "Institutional website to promote social projects and attract supporters.",
@@ -721,6 +681,35 @@ export default function Page() {
         { icon: Building2, value: { pt: "Idealizador: Sarrubbo Advogados", en: "Idealized by: Sarrubbo Advogados" } },
       ],
     },
+    {
+      title: "iMidooh - App",
+      subtitle: { pt: "", en: "" },
+      tags: [
+        "React Native",
+        "TypeScript",
+        "NextJS",
+        "NodeJS",
+        "ExpressJS",
+        "NestJS",
+        "PostgreSQL",
+        "Prisma",
+        "Docker",
+      ],
+      link: "",
+      caseStudy: "/case/imidooh",
+      discontinued: true,
+      blurb: {
+        pt: "Plataforma mobile para operar mídia Digital Out Of Home em recursos visuais dos mais diversos tipos.",
+        en: "Mobile platform to operate Digital Out Of Home media across all kinds of visual resources.",
+      },
+      category: [{ pt: "Aplicativo Mobile Nativo", en: "Native Mobile App" }, { pt: "Sistema Web+Admin", en: "Web System+Admin" }],
+      thumb: "/images/capa-imidooh.png",
+      bgClass: NEUTRAL_BG,
+      highlights: [
+        { icon: Clock, value: { pt: "6 meses", en: "6 months" } },
+        { icon: Building2, value: { pt: "Idealizadora: Click SF", en: "Idealized by: Click SF" } },
+      ],
+    },
   ];
 
   const impactStats: Array<{ value: string; label: Bilingual }> = [
@@ -786,6 +775,18 @@ export default function Page() {
       </Link>
     ) : null;
 
+    const secondaryLinkButton = project.secondaryLink ? (
+      <a
+        href={project.secondaryLink.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-flex items-center gap-1.5 text-[13px] text-zinc-500 hover:text-zinc-300 transition-colors duration-200"
+      >
+        <project.secondaryLink.icon className="h-3.5 w-3.5" />
+        {t(project.secondaryLink.label)}
+      </a>
+    ) : null;
+
     if (project.discontinued) {
       return (
         <div className="flex flex-wrap items-center gap-3">
@@ -840,6 +841,7 @@ export default function Page() {
             {project.ctaLabel ? t(project.ctaLabel) : t({ pt: "Visite o website", en: "Visit website" })}
           </a>
           {caseStudyButton}
+          {secondaryLinkButton}
         </div>
       );
     }
@@ -850,14 +852,17 @@ export default function Page() {
 
     if (project.link) {
       return (
-        <a
-          href={project.link}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={`${ctaClass} ${solidClass}`}
-        >
-          {project.ctaLabel ? t(project.ctaLabel) : t({ pt: "Visite o website", en: "Visit website" })}
-        </a>
+        <div className="flex flex-wrap items-center gap-3">
+          <a
+            href={project.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`${ctaClass} ${solidClass}`}
+          >
+            {project.ctaLabel ? t(project.ctaLabel) : t({ pt: "Visite o website", en: "Visit website" })}
+          </a>
+          {secondaryLinkButton}
+        </div>
       );
     }
 
@@ -1589,15 +1594,16 @@ export default function Page() {
 
           {/* BLOG - chamada discreta para os posts recentes */}
           {recentPosts && recentPosts[lang].length > 0 && (
-            <section className="relative py-10 border-t border-white/5">
+            <section className="relative py-12 border-t border-white/5">
               <div className="mx-auto max-w-6xl px-6 xs:px-7 sm:px-8 lg:px-12 2xl:max-w-8xl">
-                <div className="flex items-center justify-between mb-6">
-                  <h3 className="text-base font-semibold uppercase tracking-wider text-fuchsia-400">
+                <div className="flex items-center gap-4 mb-7">
+                  <h3 className="whitespace-nowrap text-base font-semibold uppercase tracking-wider text-fuchsia-400">
                     {t({ pt: "Últimos posts do meu Blog", en: "Latest posts from my blog" })}
                   </h3>
+                  <span className="hidden sm:block h-px flex-1 bg-white/10" aria-hidden="true" />
                   <Link
                     href="/blog"
-                    className="hidden sm:inline-flex text-xs font-medium text-violet-300 hover:text-violet-200 transition-colors items-center gap-1"
+                    className="hidden sm:inline-flex shrink-0 text-xs font-medium text-violet-300 hover:text-violet-200 transition-colors items-center gap-1"
                   >
                     {t({ pt: "Ver todos os posts", en: "See all posts" })}
                     <span aria-hidden="true">→</span>
@@ -1608,19 +1614,23 @@ export default function Page() {
                     <Link
                       key={post.slug}
                       href={`/blog/${post.slug}`}
-                      className="group rounded-xl border border-transparent bg-white/[0.015] p-4 hover:border-white/15 hover:bg-white/[0.03] transition-colors"
+                      className="group relative rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 transition-all duration-200 hover:border-white/20 hover:bg-white/[0.05] hover:shadow-lg hover:shadow-black/20 hover:-translate-y-0.5"
                     >
-                      <div className="flex flex-wrap gap-1.5 mb-2">
+                      <ArrowUpRight
+                        className="absolute top-4 right-4 h-3.5 w-3.5 text-zinc-600 opacity-0 transition-all duration-200 group-hover:opacity-100 group-hover:text-fuchsia-300"
+                        aria-hidden="true"
+                      />
+                      <div className="flex flex-wrap gap-1.5 mb-2 pr-5">
                         {post.tags.slice(0, 2).map((tag) => (
                           <span
                             key={tag}
-                            className="text-[13px] px-1.5 py-0.5 rounded border border-white/10 text-zinc-400"
+                            className="text-[13px] px-1.5 py-0.5 rounded border border-white/10 bg-white/[0.03] text-zinc-400"
                           >
                             {tag}
                           </span>
                         ))}
                       </div>
-                      <h4 className="text-sm font-semibold text-zinc-100 group-hover:text-white transition-colors line-clamp-2">
+                      <h4 className="text-sm font-semibold text-zinc-100 group-hover:text-white transition-colors line-clamp-2 pr-5">
                         {post.title}
                       </h4>
                       <p className="mt-1.5 text-[13px] text-zinc-500">
