@@ -22,13 +22,15 @@ const cspDirectives: Record<string, string[]> = {
     "'self'",
     "'unsafe-inline'",
     "'wasm-unsafe-eval'",
+    "https://platform.linkedin.com", // badge de perfil do LinkedIn (rodapé/blog)
     ...(isDev ? ["'unsafe-eval'", "https://va.vercel-scripts.com"] : []),
   ],
   // 'unsafe-inline': <style> inline do Next + atributos style do framer-motion.
   "style-src": ["'self'", "'unsafe-inline'"],
   // data:: SVG de ruído (globals.css) e QR code (toDataURL). blob:: object URLs.
   // thum.io/jsdelivr batem com images.remotePatterns (inclusão defensiva).
-  "img-src": ["'self'", "data:", "blob:", "https://image.thum.io", "https://cdn.jsdelivr.net"],
+  // licdn: imagens do badge de perfil do LinkedIn.
+  "img-src": ["'self'", "data:", "blob:", "https://image.thum.io", "https://cdn.jsdelivr.net", "https://media.licdn.com", "https://static.licdn.com"],
   "font-src": ["'self'", "data:"], // next/font self-hospeda as fontes (same-origin)
   // googleapis: fetch client-side do PageSpeed em /engenharia. Resto é same-origin.
   // dev: ws: pro websocket de HMR.
@@ -37,7 +39,7 @@ const cspDirectives: Record<string, string[]> = {
     "https://www.googleapis.com",
     ...(isDev ? ["ws:", "https://va.vercel-scripts.com"] : []),
   ],
-  "frame-src": ["'self'"],
+  "frame-src": ["'self'", "https://www.linkedin.com"], // iframe do badge do LinkedIn
   "worker-src": ["'self'", "blob:"],
   "media-src": ["'self'"],
   "manifest-src": ["'self'"],
