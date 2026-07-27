@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import CaseJsonLd from "@/components/case/CaseJsonLd";
 
-const title = "Estudo de Caso: SDA Ceará";
+const title = "SDA Ceará — Estudo de Caso de Engenharia Mobile";
 const description =
-  "App + Web + Admin para a Secretaria do Desenvolvimento Agrário do Ceará: migração modular de um sistema legado para produção, com 1.000+ usuários ativos e 200+ logins simultâneos orquestrados em Kubernetes.";
+  "Estudo de caso de engenharia por Francisco Pontes, desenvolvedor mobile: evolução do app oficial da Secretaria do Desenvolvimento Agrário do Ceará (SDA) — migração modular de um sistema legado para produção, com 1.000+ usuários ativos e 200+ logins simultâneos orquestrados em Kubernetes.";
 
 export const metadata: Metadata = {
   title,
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
         url: "/images/capa-sda-app-v2.png",
         width: 1920,
         height: 1080,
-        alt: "SDA Ceará: aplicativo de gestão agrária do Governo do Estado",
+        alt: "Estudo de caso de engenharia mobile de Francisco Pontes: app SDA Ceará (Governo do Estado)",
       },
     ],
   },
