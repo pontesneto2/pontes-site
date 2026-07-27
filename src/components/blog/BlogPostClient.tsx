@@ -8,6 +8,7 @@ import BlogHero from "@/components/blog/BlogHero";
 import ClickableImage from "@/components/case/ClickableImage";
 import MdxContent from "@/components/blog/MdxContent";
 import BlogLinkedInCTA from "@/components/blog/BlogLinkedInCTA";
+import LinkedInBadge from "@/components/LinkedInBadge";
 import BlogPagination from "@/components/blog/BlogPagination";
 import BlogRecentPosts from "@/components/blog/BlogRecentPosts";
 import { useLanguage, tr } from "@/lib/language-context";
@@ -85,6 +86,10 @@ export default function BlogPostClient({
           <MdxContent html={post.html} />
 
           {post.linkedin && <BlogLinkedInCTA href={post.linkedin} />}
+
+          <div className="mt-8">
+            <LinkedInBadge />
+          </div>
 
           <BlogPagination previous={post.previous} next={post.next} />
         </article>
