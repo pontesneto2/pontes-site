@@ -661,6 +661,60 @@ function useSectionsData(lang: "pt" | "en") {
       ),
     },
     {
+      title: { pt: "Segurança, Observabilidade e Decisões Técnicas", en: "Security, Observability and Technical Decisions" },
+      children: (
+        <>
+          <p>
+            {t({
+              pt: "Por lidar com dados de estudantes — muitos menores de idade — o sistema trata segurança e privacidade como requisito de primeira ordem, ao lado da observabilidade que mantém a operação escolar previsível.",
+              en: "Because it handles student data — many of them minors — the system treats security and privacy as a first-order requirement, alongside the observability that keeps school operations predictable.",
+            })}
+          </p>
+          <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+            {[
+              {
+                label: { pt: "Segurança & Privacidade", en: "Security & Privacy" },
+                items: [
+                  { pt: "Acesso controlado por perfil: aluno, responsável, professor, coordenação e admin", en: "Role-based access: student, guardian, teacher, coordination and admin" },
+                  { pt: "Dados de menores tratados sob princípios de LGPD: minimização e acesso restrito por papel", en: "Minors' data handled under LGPD principles: minimization and role-restricted access" },
+                  { pt: "Sessão e permissões isoladas por perfil; integração com o portal Aluno Online da SEDUC", en: "Session and permissions isolated per profile; integration with SEDUC's Aluno Online portal" },
+                  { pt: "Infra em AWS com isolamento de rede e grupos de segurança", en: "AWS infrastructure with network isolation and security groups" },
+                ],
+              },
+              {
+                label: { pt: "Observabilidade", en: "Observability" },
+                items: [
+                  { pt: "Grafana para acompanhamento operacional do sistema", en: "Grafana for operational monitoring of the system" },
+                  { pt: "Logs centralizados e trilha de auditoria das ações administrativas", en: "Centralized logs and an audit trail of administrative actions" },
+                  { pt: "Alertas de indisponibilidade e de erros críticos", en: "Alerts for downtime and critical errors" },
+                ],
+              },
+              {
+                label: { pt: "Decisões & trade-offs", en: "Decisions & trade-offs" },
+                items: [
+                  { pt: "PWA em vez de app nativo: um código, alcance multiplataforma e MVP entregue 2 meses antes do prazo", en: "PWA instead of a native app: one codebase, cross-platform reach and an MVP delivered 2 months ahead of schedule" },
+                  { pt: "Laravel/PHP + serviços .NET/C# + front Angular pela integração com o ecossistema COM3/SEDUC", en: "Laravel/PHP + .NET/C# services + Angular front, for integration with the COM3/SEDUC ecosystem" },
+                  { pt: "Modelo de permissões por perfil desde o início, evitando retrabalho de autorização", en: "A per-profile permission model from day one, avoiding authorization rework" },
+                ],
+              },
+            ].map((col) => (
+              <div key={col.label.pt} className="rounded-2xl bg-white/[0.025] border border-white/[0.06] p-5">
+                <h4 className="text-sm font-semibold text-white mb-3">{t(col.label)}</h4>
+                <ul className="space-y-2">
+                  {col.items.map((it) => (
+                    <li key={it.pt} className="flex items-start gap-2.5 text-sm text-zinc-300 leading-relaxed">
+                      <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-violet-500" />
+                      {t(it)}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </>
+      ),
+    },
+    {
       title: { pt: "Impacto do Projeto", en: "Project Impact" },
       children: (
         <>

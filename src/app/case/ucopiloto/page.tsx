@@ -630,6 +630,59 @@ function useSectionsData(lang: "pt" | "en") {
       ),
     },
     {
+      title: { pt: "Segurança, Observabilidade e Decisões Técnicas", en: "Security, Observability and Technical Decisions" },
+      children: (
+        <>
+          <p>
+            {t({
+              pt: "Mesmo mantido por um único engenheiro, o Ucopiloto foi construído com as práticas de segurança e observabilidade que se espera de um sistema de produção — para falhar com segurança e se recuperar sozinho.",
+              en: "Even maintained by a single engineer, Ucopiloto was built with the security and observability practices expected of a production system — to fail safely and recover on its own.",
+            })}
+          </p>
+          <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+            {[
+              {
+                label: { pt: "Segurança", en: "Security" },
+                items: [
+                  { pt: "Autenticação por token (JWT) e contratos de API tipados (TypeScript), eliminando classes inteiras de bug", en: "Token auth (JWT) and typed API contracts (TypeScript), eliminating whole classes of bugs" },
+                  { pt: "Rate limiting e validação de entrada na borda da API", en: "Rate limiting and input validation at the API edge" },
+                  { pt: "Segredos por ambiente e TLS; cada serviço isolado em seu container", en: "Secrets per environment and TLS; each service isolated in its container" },
+                ],
+              },
+              {
+                label: { pt: "Observabilidade", en: "Observability" },
+                items: [
+                  { pt: "Healthcheck + restart policy por container: auto-recuperação sem intervenção manual", en: "Per-container healthcheck + restart policy: self-healing with no manual intervention" },
+                  { pt: "Logs estruturados e monitoramento de uptime (99,9%)", en: "Structured logs and uptime monitoring (99.9%)" },
+                  { pt: "Jobs assíncronos (backup, notificação) separados da API, sem competir por recursos em tempo real", en: "Async jobs (backup, notification) separate from the API, not competing for real-time resources" },
+                ],
+              },
+              {
+                label: { pt: "Decisões & trade-offs", en: "Decisions & trade-offs" },
+                items: [
+                  { pt: "Monólito modular em NestJS em vez de microsserviços: um engenheiro mantém tudo, com domínio isolado por módulo", en: "Modular monolith in NestJS instead of microservices: one engineer keeps it all, with domain isolated per module" },
+                  { pt: "Prisma para eliminar erros de tipo em produção, abrindo mão de SQL manual mais performático porém arriscado", en: "Prisma to eliminate type errors in production, giving up faster but riskier hand-written SQL" },
+                  { pt: "Deploy versionado sem downtime perceptível, em vez da simplicidade de um deploy manual", en: "Versioned deploys with no noticeable downtime, instead of the simplicity of a manual deploy" },
+                ],
+              },
+            ].map((col) => (
+              <div key={col.label.pt} className="rounded-2xl bg-white/[0.025] border border-white/[0.06] p-5">
+                <h4 className="text-sm font-semibold text-white mb-3">{t(col.label)}</h4>
+                <ul className="space-y-2">
+                  {col.items.map((it) => (
+                    <li key={it.pt} className="flex items-start gap-2.5 text-sm text-zinc-300 leading-relaxed">
+                      <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-violet-500" />
+                      {t(it)}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </>
+      ),
+    },
+    {
       title: { pt: "Impacto do Projeto", en: "Project Impact" },
       children: (
         <>

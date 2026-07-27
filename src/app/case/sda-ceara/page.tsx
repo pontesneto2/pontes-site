@@ -560,6 +560,61 @@ function useSectionsData(lang: "pt" | "en") {
       ),
     },
     {
+      title: { pt: "Segurança, Observabilidade e Decisões Técnicas", en: "Security, Observability and Technical Decisions" },
+      children: (
+        <>
+          <p>
+            {t({
+              pt: "Um sistema estadual, acessado por servidores em todo o Ceará, exige que segurança e observabilidade sejam parte da arquitetura — não um apêndice. São essas camadas que mantêm o sistema seguro, observável e sustentável ao longo do tempo.",
+              en: "A statewide system, accessed by staff across all of Ceará, requires security and observability to be part of the architecture — not an afterthought. These are the layers that keep the system secure, observable and sustainable over time.",
+            })}
+          </p>
+          <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+            {[
+              {
+                label: { pt: "Segurança", en: "Security" },
+                items: [
+                  { pt: "Autenticação por token e acesso por perfil/setor da secretaria (RBAC)", en: "Token-based auth and access by secretariat role/sector (RBAC)" },
+                  { pt: "TLS ponta a ponta no ingress; segredos por ambiente, fora do código", en: "End-to-end TLS at the ingress; secrets per environment, out of the code" },
+                  { pt: "Dados administrativos sensíveis restritos por papel", en: "Sensitive administrative data restricted by role" },
+                  { pt: "Isolamento de rede entre serviços dentro do cluster", en: "Network isolation between services inside the cluster" },
+                ],
+              },
+              {
+                label: { pt: "Observabilidade", en: "Observability" },
+                items: [
+                  { pt: "Prometheus coletando métricas de todos os pods", en: "Prometheus scraping metrics from all pods" },
+                  { pt: "Grafana com dashboards operacionais em tempo real", en: "Grafana with real-time operational dashboards" },
+                  { pt: "Alertmanager disparando alertas de incidente", en: "Alertmanager firing incident alerts" },
+                  { pt: "Healthchecks + HPA reagindo a CPU/memória em picos estaduais", en: "Healthchecks + HPA reacting to CPU/memory during statewide spikes" },
+                ],
+              },
+              {
+                label: { pt: "Decisões & trade-offs", en: "Decisions & trade-offs" },
+                items: [
+                  { pt: "Refatoração incremental: serviços .NET novos convivendo com módulo PHP legado, em vez de reescrita big-bang", en: "Incremental refactor: new .NET services living alongside a legacy PHP module, instead of a big-bang rewrite" },
+                  { pt: "Réplica de leitura do PostgreSQL para backups e relatórios sem pesar no primário", en: "PostgreSQL read replica for backups and reports without loading the primary" },
+                  { pt: "Kubernetes + HPA pela imprevisibilidade do acesso estadual: elástico em vez de instância fixa superdimensionada", en: "Kubernetes + HPA for unpredictable statewide access: elastic instead of an oversized fixed instance" },
+                ],
+              },
+            ].map((col) => (
+              <div key={col.label.pt} className="rounded-2xl bg-white/[0.025] border border-white/[0.06] p-5">
+                <h4 className="text-sm font-semibold text-white mb-3">{t(col.label)}</h4>
+                <ul className="space-y-2">
+                  {col.items.map((it) => (
+                    <li key={it.pt} className="flex items-start gap-2.5 text-sm text-zinc-300 leading-relaxed">
+                      <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-violet-500" />
+                      {t(it)}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </>
+      ),
+    },
+    {
       title: { pt: "Impacto do Projeto", en: "Project Impact" },
       children: (
         <>
