@@ -1121,6 +1121,7 @@ export default function Page() {
                       src="/images/img-site-pn.webp"
                       alt="Francisco Pontes — código e engenharia"
                       fill
+                      unoptimized
                       sizes="(max-width: 768px) 100vw, 50vw"
                       className="object-contain md:object-cover object-center md:object-left"
                     />
@@ -1229,7 +1230,7 @@ export default function Page() {
                         variants={fadeUpItem}
                         initial="hidden"
                         animate="show"
-                        className="card-surface-2 group snap-start shrink-0 w-[95%] sm:w-[calc(46%-1rem)] rounded-3xl overflow-hidden flex flex-col hover:border-violet-400/20 hover:-translate-y-1 transition-all duration-300"
+                        className="card-surface-2 group snap-start shrink-0 w-full sm:w-[calc(46%-1rem)] rounded-3xl overflow-hidden flex flex-col hover:border-violet-400/20 hover:-translate-y-1 transition-all duration-300"
                       >
                         <div className="relative aspect-video w-full overflow-hidden bg-[#1a1425]">
                           {project.badge && (

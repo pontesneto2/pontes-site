@@ -181,7 +181,7 @@ export default function GithubStats() {
               @{GITHUB_USER}
             </a>
           </div>
-          <p className="text-sm text-zinc-400 mt-1">
+          <p className="text-[15px] text-zinc-400 mt-1">
             {t(
               "Visão consolidada da atividade de desenvolvimento e das aplicações em produção, com dados do GitHub, Vercel e Railway.",
               "Consolidated view of development activity and production applications, with data from GitHub, Vercel and Railway."
@@ -209,7 +209,7 @@ export default function GithubStats() {
                       <AnimatedNumber value={stat.value} plain={stat.plain} decimals={stat.decimals} delay={delay} />
                       {stat.suffix}
                     </div>
-                    <div className="text-[13px] text-zinc-400 mt-0.5 whitespace-pre-line">{stat.label}</div>
+                    <div className="text-[14px] text-zinc-400 mt-0.5 whitespace-pre-line">{stat.label}</div>
                   </>
                 ) : (
                   <div className="h-full w-full animate-pulse rounded-lg bg-white/5 min-h-[52px]" />

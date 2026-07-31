@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
 import AnimatedCounter from "./AnimatedCounter";
-import LinkedInBadge from "./LinkedInBadge";
 
 export default function SiteFooter({
   impactStats,
@@ -39,9 +38,6 @@ export default function SiteFooter({
             <Link href="/blog" className="text-zinc-400 hover:text-zinc-200 transition-colors">
               {t({ pt: "Conheça meu blog", en: "Check out my blog" })}
             </Link>
-          </div>
-          <div className="mt-4 flex justify-center lg:justify-start">
-            <LinkedInBadge />
           </div>
         </div>
 

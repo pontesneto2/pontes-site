@@ -29,13 +29,14 @@ export default function CoreStackRow({ t }: { t: (v: Bilingual) => string }) {
               "border-t border-[rgba(255,255,255,.08)] pt-2.5 first:border-t-0 first:pt-0",
               "transition-colors duration-150 motion-reduce:transition-none",
               "hover:border-purple-500",
+              "text-center md:text-left",
               "md:border-t-0 md:border-l md:pl-4 md:pt-0",
               "md:[&:nth-child(odd)]:border-l-0 md:[&:nth-child(odd)]:pl-0",
               "xl:[&:nth-child(odd)]:border-l xl:[&:nth-child(odd)]:pl-4",
               "xl:first:border-l-0 xl:first:pl-0",
             ].join(" ")}
           >
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center justify-center gap-1.5 md:justify-start">
               <span className="flex items-center gap-1 shrink-0">
                 {item.slugs.map((slug) => (
                   <BrandIcon
@@ -47,14 +48,14 @@ export default function CoreStackRow({ t }: { t: (v: Bilingual) => string }) {
                 ))}
               </span>
               <span
-                className="font-[family-name:var(--font-jetbrains-mono)] text-[13px] font-medium"
+                className="font-[family-name:var(--font-jetbrains-mono)] text-[14px] md:text-[13px] font-medium"
                 style={{ color: "#f0f0f4" }}
               >
                 {item.label}
               </span>
             </div>
             <div
-              className="mt-1 font-[family-name:var(--font-jetbrains-mono)] text-[11px] font-light"
+              className="mt-1 font-[family-name:var(--font-jetbrains-mono)] text-[12px] md:text-[11px] font-light"
               style={{ color: "#7d7d89" }}
             >
               {t(item.metric)}

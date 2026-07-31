@@ -171,7 +171,7 @@ export default function SiteHeader({
                 href={secondaryCta.href}
                 {...(secondaryIsExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                 onClick={() => trackCtaClick(secondaryCta.href)}
-                className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-violet-400/40 bg-violet-500/10 text-violet-200 hover:bg-violet-500/20 hover:border-violet-400/60 hover:text-white transition-colors text-sm"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-violet-400/40 bg-violet-500/10 text-violet-200 hover:bg-violet-500/20 hover:border-violet-400/60 hover:text-white transition-colors text-sm"
               >
                 {t(secondaryCta.label)}
                 {secondaryCtaFlag && (
@@ -179,7 +179,7 @@ export default function SiteHeader({
                 )}
               </a>
             )}
-            <MagneticButton strength={0.3}>
+            <MagneticButton strength={0.3} className="hidden sm:inline-flex">
               <a
                 href={effectiveCta.href}
                 {...(ctaIsExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
@@ -261,20 +261,23 @@ export default function SiteHeader({
             })}
           </ul>
 
-          {secondaryCta && (
-            <a
-              href={secondaryCta.href}
-              {...(secondaryIsExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-              onClick={() => {
-                trackCtaClick(secondaryCta.href);
-                setNavOpen(false);
-              }}
-              className="sm:hidden mt-4 flex items-center justify-center gap-1.5 rounded-2xl border border-violet-400/30 bg-violet-500/10 px-4 py-3 text-sm text-violet-200"
-            >
-              {t(secondaryCta.label)}
-              {secondaryCtaFlag && <span className="text-[0.85em] leading-none">{secondaryCtaFlag}</span>}
-            </a>
-          )}
+          <a
+            href={effectiveCta.href}
+            {...(ctaIsExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+            onClick={() => {
+              trackCtaClick(effectiveCta.href);
+              setNavOpen(false);
+            }}
+            className="relative sm:hidden mt-4 flex items-center justify-center gap-1.5 rounded-2xl bg-gradient-to-r from-violet-600 to-fuchsia-500 px-4 py-3 text-sm text-white"
+          >
+            {t(effectiveCta.label)}
+            {ctaFlag && <span className="text-[0.85em] leading-none">{ctaFlag}</span>}
+            {ctaBadge && (
+              <span className="absolute -right-2 -top-1.5 rotate-12 rounded-full bg-amber-400 px-1 py-px text-[8px] font-bold uppercase leading-none tracking-wide text-zinc-950 shadow-sm shadow-black/30">
+                {t(ctaBadge)}
+              </span>
+            )}
+          </a>
         </nav>
       </div>
     </header>
