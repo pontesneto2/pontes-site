@@ -5,7 +5,7 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://fcopts.com.br";
 
 const title = "Contrate um engenheiro de software sênior";
 const description =
-  "Sistemas, sites e aplicativos sob medida, da ideia ao lançamento. Engenheiro full stack sênior, remoto (PT/EN), com contrato, escopo fechado e código seu na entrega.";
+  "Sistemas, sites e aplicativos sob medida. Engenheiro full stack sênior, remoto (PT/EN), com contrato, escopo fechado e código seu na entrega.";
 
 export const metadata: Metadata = {
   title,

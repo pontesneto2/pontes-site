@@ -38,6 +38,10 @@ export default function SiteFooter({
             <Link href="/blog" className="text-zinc-400 hover:text-zinc-200 transition-colors">
               {t({ pt: "Conheça meu blog", en: "Check out my blog" })}
             </Link>
+            <span className="text-zinc-700">·</span>
+            <Link href="/cv" className="text-zinc-400 hover:text-zinc-200 transition-colors">
+              {t({ pt: "Currículo", en: "Resume" })}
+            </Link>
           </div>
         </div>
 

@@ -81,6 +81,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
       alternates: { languages: { "pt-BR": `${siteUrl}/case/sda-ceara` } },
     },
     {
+      url: `${siteUrl}/case/paa-leite`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+      alternates: { languages: { en: `${siteUrl}/en/case/paa-leite` } },
+    },
+    {
+      url: `${siteUrl}/en/case/paa-leite`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.7,
+      alternates: { languages: { "pt-BR": `${siteUrl}/case/paa-leite` } },
+    },
+    {
       url: `${siteUrl}/case/sda-indicadores`,
       lastModified: new Date(),
       changeFrequency: "monthly",
