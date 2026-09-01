@@ -13,7 +13,6 @@ import {
 } from "lucide-react";
 import { track } from "@vercel/analytics";
 import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
-import { usePropostaPrefill } from "@/lib/proposta/prefill-context";
 import type { Existente, TipoProjeto } from "./types";
 import TcSectionHeader from "./TcSectionHeader";
 import Reveal from "./Reveal";
@@ -159,17 +158,10 @@ const SERVICES: Service[] = [
 export default function OQueEuConstruo() {
   const { lang } = useLanguage();
   const t = (v: Bilingual) => tr(lang, v);
-  const { requestPrefill } = usePropostaPrefill();
-
-  // Alimenta o gerador de proposta com o serviço escolhido e leva o usuário até ele.
-  const handlePrefill = (service: Service) => {
-    requestPrefill({
-      description: `${t(service.name)} — ${t(service.description)}`,
-      tipo: service.tipo,
-      existente: service.existente,
-    });
-    track("trabalhe_comigo_servico_prefill", { service: service.id });
-    document.getElementById("proposta")?.scrollIntoView({ behavior: "smooth" });
+  // Leva o usuário até o formulário de contato com o serviço escolhido registrado.
+  const handleContato = (service: Service) => {
+    track("trabalhe_comigo_servico_contato", { service: service.id });
+    document.getElementById("contato")?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -237,10 +229,10 @@ export default function OQueEuConstruo() {
 
                 <button
                   type="button"
-                  onClick={() => handlePrefill(service)}
+                  onClick={() => handleContato(service)}
                   className="mt-5 inline-flex items-center gap-1.5 rounded-full border border-white/15 px-4 py-2 text-[13px] font-medium text-white transition-colors hover:border-white/30 hover:bg-white/[0.05]"
                 >
-                  {t({ pt: "Gerar proposta com isso", en: "Generate a proposal for this" })}
+                  {t({ pt: "Falar sobre isso", en: "Talk about this" })}
                   <ArrowRight className="h-3.5 w-3.5" />
                 </button>
               </Reveal>

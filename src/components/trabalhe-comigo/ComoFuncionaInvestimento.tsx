@@ -189,11 +189,11 @@ export default function ComoFuncionaInvestimento() {
             className="mt-7 inline-block"
           >
             <a
-              href="#proposta"
-              onClick={scrollToId("proposta")}
+              href="#contato"
+              onClick={scrollToId("contato")}
               className="inline-flex items-center gap-2 rounded-full bg-white px-8 py-3.5 text-sm font-semibold text-violet-700 shadow-lg shadow-black/20 transition-all hover:scale-[1.02] hover:bg-violet-50"
             >
-              {t({ pt: "Montar minha proposta", en: "Build my proposal" })}
+              {t({ pt: "Fale comigo", en: "Get in touch" })}
               <ArrowRight className="h-4 w-4" />
             </a>
           </motion.div>

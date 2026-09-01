@@ -3,26 +3,21 @@
 import SiteHeader, { type SearchEntry } from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
-import { PropostaPrefillProvider } from "@/lib/proposta/prefill-context";
 import HeroComercial from "@/components/trabalhe-comigo/HeroComercial";
 import MarqueeIdealizadores from "@/components/trabalhe-comigo/MarqueeIdealizadores";
 import OQueEuConstruo from "@/components/trabalhe-comigo/OQueEuConstruo";
 import ComoEuTrabalho from "@/components/trabalhe-comigo/ComoEuTrabalho";
-import GeradorProposta from "@/components/trabalhe-comigo/GeradorProposta";
-import CasosReais from "@/components/trabalhe-comigo/CasosReais";
 import GoogleReviews from "@/components/trabalhe-comigo/GoogleReviews";
 import ComoFuncionaInvestimento from "@/components/trabalhe-comigo/ComoFuncionaInvestimento";
 import SegurancaJuridica from "@/components/trabalhe-comigo/SegurancaJuridica";
 import FaqAccordion from "@/components/trabalhe-comigo/FaqAccordion";
 import ContatoSection from "@/components/trabalhe-comigo/ContatoSection";
-import SobreMim from "@/components/trabalhe-comigo/SobreMim";
 import FloatingMobileCTA from "@/components/trabalhe-comigo/FloatingMobileCTA";
 import Preloader from "@/components/Preloader";
 import { FAQ_ITEMS } from "@/components/trabalhe-comigo/faq-data";
 
 const NAV_LINKS = [
   { href: "/trabalhe-comigo#servicos", label: { pt: "Serviços", en: "Services" } },
-  { href: "/trabalhe-comigo#casos", label: { pt: "Portfólio", en: "Portfolio" } },
   { href: "/trabalhe-comigo#investimento", label: { pt: "Investimento", en: "Investment" } },
   { href: "/trabalhe-comigo#contato", label: { pt: "Contato", en: "Contact" } },
 ];
@@ -56,18 +51,14 @@ export default function TrabalheComigoPage() {
       <SiteHeader
         navLinks={NAV_LINKS}
         searchIndex={searchIndex}
-        cta={{ label: { pt: "Monte sua proposta", en: "Build my proposal" }, href: "#proposta" }}
+        cta={null}
       />
       <HeroComercial />
       <MarqueeIdealizadores />
-      <PropostaPrefillProvider>
-        <OQueEuConstruo />
-        <GeradorProposta />
-      </PropostaPrefillProvider>
+      <OQueEuConstruo />
       <ComoEuTrabalho />
       <ComoFuncionaInvestimento />
       <SegurancaJuridica />
-      <CasosReais />
       <FaqAccordion />
       <GoogleReviews />
       <section
@@ -76,13 +67,8 @@ export default function TrabalheComigoPage() {
         style={{ backgroundColor: "#101018" }}
       >
         <div className="mx-auto max-w-7xl px-6 xs:px-7 sm:px-8 lg:px-12 2xl:max-w-8xl">
-          <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
-            <div className="order-2 lg:order-1">
-              <SobreMim />
-            </div>
-            <div className="order-1 lg:order-2">
-              <ContatoSection />
-            </div>
+          <div className="mx-auto max-w-2xl">
+            <ContatoSection />
           </div>
         </div>
       </section>

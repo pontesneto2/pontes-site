@@ -2,9 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { track } from "@vercel/analytics";
 import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
-import { scrollToId } from "./scroll";
 import HeroVisual from "./HeroVisual";
 
 function TypedHeadline({ prefix, suffix }: { prefix: string; suffix: string }) {
@@ -75,29 +73,10 @@ export default function HeroComercial() {
 
           <p className="mt-6 max-w-2xl text-base text-zinc-400 sm:text-lg">
             {t({
-              pt: "Sou o Francisco, ",
-              en: "I'm Francisco, ",
-            })}
-            <b className="text-zinc-200">{t({ pt: "engenheiro de software sênior", en: "senior software engineer" })}</b>
-            {t({
-              pt: " e outras coisas mais. Construo sistemas, apps e sites de ponta a ponta, com contrato, escopo fechado e o código seu na entrega. Sem terceirização, sem enrolação.",
-              en: " and a few other things. I build systems, apps and websites end to end, with a contract, fixed scope and the code yours on delivery. No outsourcing, no runaround.",
+              pt: "Construo sistemas, apps e sites de ponta a ponta, com contrato, escopo fechado e o código seu na entrega. Sem terceirização, sem enrolação e a entrega é sempre em tempo recorde.",
+              en: "I build systems, apps and websites end to end, with a contract, fixed scope and the code yours on delivery. No outsourcing, no runaround, and delivery is always in record time.",
             })}
           </p>
-
-          <div className="mt-9 flex flex-wrap gap-3.5">
-            <a
-              href="#proposta"
-              onClick={(event) => {
-                track("trabalhe_comigo_cta_proposta", { source: "hero" });
-                scrollToId("proposta")(event);
-              }}
-              className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-500 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-violet-500/30 transition-all hover:scale-[1.02] hover:brightness-110"
-            >
-              {t({ pt: "Montar minha proposta agora", en: "Build my proposal now" })}
-              <span aria-hidden="true">→</span>
-            </a>
-          </div>
         </motion.div>
 
           <motion.div

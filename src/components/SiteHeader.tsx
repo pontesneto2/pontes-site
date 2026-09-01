@@ -59,7 +59,8 @@ export default function SiteHeader({
 }: {
   navLinks?: Array<{ href: string; label: Bilingual }>;
   searchIndex?: SearchEntry[];
-  cta?: { label: Bilingual; href: string };
+  // cta={null} esconde o botão do header nesta página; omitir cai no padrão (Baixar CV).
+  cta?: { label: Bilingual; href: string } | null;
   secondaryCta?: { label: Bilingual; href: string };
   ctaBadge?: Bilingual;
 }) {
@@ -67,10 +68,10 @@ export default function SiteHeader({
   const t = (v: Bilingual) => tr(lang, v);
   const pathname = usePathname();
   const isEn = pathname === "/en" || (pathname?.startsWith("/en/") ?? false);
-  const effectiveCta = cta ?? { label: DEFAULT_CTA_LABEL, href: getCvUrl(lang) };
-  const ctaIsExternal = effectiveCta.href.startsWith("http");
+  const effectiveCta = cta === null ? null : cta ?? { label: DEFAULT_CTA_LABEL, href: getCvUrl(lang) };
+  const ctaIsExternal = effectiveCta?.href.startsWith("http") ?? false;
   const secondaryIsExternal = secondaryCta?.href.startsWith("http") ?? false;
-  const ctaFlag = isCvUrl(effectiveCta.href) ? LANG_FLAG[lang] : null;
+  const ctaFlag = effectiveCta && isCvUrl(effectiveCta.href) ? LANG_FLAG[lang] : null;
   const secondaryCtaFlag = secondaryCta && isCvUrl(secondaryCta.href) ? LANG_FLAG[lang] : null;
 
   // "Início" sempre presente e sempre leva à home; evita duplicar caso já venha nos navLinks.
@@ -179,6 +180,7 @@ export default function SiteHeader({
                 )}
               </a>
             )}
+            {effectiveCta && (
             <MagneticButton strength={0.3} className="hidden sm:inline-flex">
               <a
                 href={effectiveCta.href}
@@ -195,6 +197,7 @@ export default function SiteHeader({
                 )}
               </a>
             </MagneticButton>
+            )}
             <div className="hidden sm:flex items-center gap-2.5">
               <LanguageSwitch lang={lang} setLang={setLang} compact />
             </div>
@@ -261,6 +264,7 @@ export default function SiteHeader({
             })}
           </ul>
 
+          {effectiveCta && (
           <a
             href={effectiveCta.href}
             {...(ctaIsExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
@@ -278,6 +282,7 @@ export default function SiteHeader({
               </span>
             )}
           </a>
+          )}
         </nav>
       </div>
     </header>
