@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, animate, useInView } from "framer-motion";
-import { Github, GitCommitHorizontal, GitMerge, Rocket, ShieldCheck, Timer, Zap, Code2 } from "lucide-react";
+import { Github, GitCommitHorizontal, GitMerge, Rocket, ShieldCheck, Code2 } from "lucide-react";
 import { useLanguage, tr } from "@/lib/language-context";
 
 const GITHUB_USER = "pontesneto2";
@@ -140,8 +140,6 @@ export default function GithubStats() {
     { icon: GitMerge, label: t("PRs Mesclados\n(12 meses)", "Merged PRs\n(12 months)"), value: 380, prefix: "≈", suffix: "", decimals: 0, plain: true },
     { icon: Rocket, label: t("Deploys\n(30 dias)", "Deploys\n(30 days)"), value: deployData?.deploysLast30d ?? null, prefix: "", suffix: "", decimals: 0, plain: true },
     { icon: ShieldCheck, label: t("Uptime Médio", "Avg uptime"), value: deployData?.uptimePct ?? null, prefix: "", suffix: "%", decimals: 2, plain: true },
-    { icon: Zap, label: t("Latência P95", "P95 latency"), value: deployData?.p95LatencyMs ?? null, prefix: "", suffix: " ms", decimals: 0, plain: true },
-    { icon: Timer, label: t("Tempo Médio de Build", "Avg build time"), value: deployData?.avgBuildTimeSec ?? null, prefix: "", suffix: " s", decimals: 0, plain: true },
   ];
 
   return (
@@ -189,7 +187,7 @@ export default function GithubStats() {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-x-4 gap-y-5 sm:gap-2">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-5 sm:gap-2">
           {kpis.map((stat, index) => {
             const delay = index * 0.08;
             return (

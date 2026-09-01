@@ -37,6 +37,7 @@ import {
   AppWindow,
   Instagram,
   ArrowUpRight,
+  ChevronDown,
   type LucideIcon,
 } from "lucide-react";
 import {
@@ -1111,7 +1112,37 @@ export default function Page() {
                 className="mb-8 space-y-8"
               >
                 {projectFilters.length > 1 && (
-                  <div className="flex flex-wrap justify-center gap-2 mb-6 sm:justify-start" role="group" aria-label={t({ pt: "Filtrar projetos", en: "Filter projects" })}>
+                  <div className="relative mb-6 sm:hidden">
+                    <label htmlFor="project-filter-select" className="sr-only">
+                      {t({ pt: "Filtrar projetos", en: "Filter projects" })}
+                    </label>
+                    <select
+                      id="project-filter-select"
+                      value={projectFilter ?? ""}
+                      onChange={(event) => {
+                        setProjectFilter(event.target.value === "" ? null : event.target.value);
+                        setFeaturedCurrentIndex(0);
+                        featuredScrollRef.current?.scrollTo({ left: 0 });
+                      }}
+                      className={`w-full appearance-none rounded-xl border bg-white/[0.03] px-4 py-2.5 pr-11 text-base text-white transition-colors focus:border-violet-400/60 focus:outline-none focus:ring-2 focus:ring-violet-500/25 ${
+                        projectFilter === null ? "border-white/15" : "border-violet-400/40"
+                      }`}
+                    >
+                      <option value="" className="bg-zinc-900">
+                        {t({ pt: "Todos", en: "All" })}
+                      </option>
+                      {projectFilters.map((filter) => (
+                        <option key={filter.key} value={filter.key} className="bg-zinc-900">
+                          {t(filter.label)}
+                        </option>
+                      ))}
+                    </select>
+                    <ChevronDown className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 h-4 w-4 text-violet-300" />
+                  </div>
+                )}
+
+                {projectFilters.length > 1 && (
+                  <div className="hidden sm:flex flex-wrap justify-center gap-2 mb-6 sm:justify-start" role="group" aria-label={t({ pt: "Filtrar projetos", en: "Filter projects" })}>
                     <button
                       type="button"
                       onClick={() => {
@@ -1313,9 +1344,9 @@ export default function Page() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={viewportSettings}
                   transition={{ duration: 1.1, ease: easeOut }}
-                  className="order-2 md:order-1 relative min-w-0 rounded-3xl border border-white/10 bg-gradient-to-br from-black/60 via-[#0d1b2a]/70 to-black/60 backdrop-blur-xl shadow-2xl overflow-hidden p-6 md:p-8"
+                  className="order-2 md:order-1 relative min-w-0 rounded-3xl border border-[#0A66C2]/25 bg-gradient-to-br from-black/60 via-[#0d2236]/80 to-black/60 backdrop-blur-xl shadow-2xl overflow-hidden p-6 md:p-8"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-br from-[#0A66C2]/5 via-transparent to-violet-500/5 pointer-events-none" />
+                  <div className="absolute inset-0 bg-gradient-to-br from-[#0A66C2]/10 via-transparent to-violet-500/5 pointer-events-none" />
 
                   <div className="relative flex flex-col gap-6">
                     <div>
@@ -1517,8 +1548,8 @@ export default function Page() {
                       className="mt-0.5 mb-6 text-sm text-zinc-400"
                     >
                       {t({
-                        pt: "Se você tem um projeto em mente ou quer discutir oportunidades, ficarei feliz em bater um papo. Estou aberto a novos desafios!",
-                        en: "If you have a project in mind or want to discuss opportunities, I'd be happy to chat. I'm open to new challenges!",
+                        pt: "Se você tem um projeto em mente ou quer discutir oportunidades, ficarei feliz em bater um papo!",
+                        en: "If you have a project in mind or want to discuss opportunities, I'd be happy to chat!",
                       })}
                     </motion.p>
                     <ContactForm onSuccess={() => track("home_contact_form_submitted")} />

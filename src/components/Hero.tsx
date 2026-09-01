@@ -191,19 +191,11 @@ export default function Hero() {
           { text: "Engenheiro de software em " },
           { text: "Fortaleza, Brasil", bold: true },
           { text: "." },
-          { text: "\n" },
-          { text: "Uso código e engenharia para dar vida a " },
-          { text: "novas ideias", bold: true, color: "#c4a6f7" },
-          { text: "." },
         ]
       : [
           { text: "Software engineer based in " },
           { text: "Fortaleza, Brazil", bold: true },
           { text: "." },
-          { text: "\n" },
-          { text: "I use code and engineering to bring " },
-          { text: "new ideas", bold: true, color: "#c4a6f7" },
-          { text: " to life." },
         ];
 
   return (
@@ -257,31 +249,11 @@ export default function Hero() {
       <div className="magenta-glow relative z-10 mx-auto w-full max-w-7xl px-6 xs:px-7 sm:px-8 lg:px-12">
         {/* Conteúdo de texto — alinhado à esquerda em todas as larguras; desktop centraliza na vertical */}
         <div className="w-full pt-24 sm:pt-28 lg:pt-0 lg:max-w-[560px] text-left">
-          <motion.span
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1, ease: easeOut }}
-            className="inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs"
-            style={{
-              border: "1px solid rgba(158,232,200,.3)",
-              background: "rgba(158,232,200,.06)",
-              color: "#9fe8c8",
-              fontFamily: "var(--font-jetbrains-mono)",
-              fontWeight: 400,
-            }}
-          >
-            <span className="relative flex h-[7px] w-[7px] shrink-0">
-              <span className="absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75 animate-ping" />
-              <span className="relative inline-flex h-[7px] w-[7px] rounded-full bg-green-400" />
-            </span>
-            Open to Work
-          </motion.span>
-
           <motion.p
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.18, ease: easeOut }}
-            className="mt-5 text-base sm:text-lg"
+            className="text-base sm:text-lg"
             style={{
               fontFamily: "var(--font-jetbrains-mono)",
               letterSpacing: "0.04em",

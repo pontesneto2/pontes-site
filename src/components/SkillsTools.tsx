@@ -7,7 +7,6 @@ import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
 import GithubStats from "@/components/GithubStats";
 import SegmentedProgress from "@/components/SegmentedProgress";
 import { SKILL_USAGE } from "@/lib/skill-context";
-import CoreStackRow from "@/components/skills/CoreStackRow";
 
 interface Skill {
   name: string;
@@ -190,7 +189,7 @@ function CategoryCard({ category, t }: { category: SkillCategory; t: (v: Bilingu
           {t(category.title)}
         </span>
       </div>
-      <div className="flex flex-wrap items-center justify-center gap-x-1.5 gap-y-5 pt-4 text-center font-[family-name:var(--font-jetbrains-mono)] text-[15px] leading-none">
+      <div className="flex flex-wrap items-center justify-center gap-x-1.5 gap-y-6 md:gap-y-5 pt-4 text-center font-[family-name:var(--font-jetbrains-mono)] text-[15px] leading-none">
         {category.skills.map((skill, index) => (
           <span key={`${skill.name}-${index}`} className="inline-flex items-center gap-1.5">
             <SkillName skill={skill} t={t} />
@@ -429,8 +428,6 @@ export default function SkillsTools() {
             })}
           </motion.p>
         </div>
-
-        <CoreStackRow t={t} />
 
         <SkillsCarousel slides={slides} cardsPerSlide={cardsPerSlide} t={t} />
 
