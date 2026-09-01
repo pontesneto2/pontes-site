@@ -6,8 +6,8 @@ import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
 
 // Menu superior padrão da home, compartilhado por todas as páginas que não
 // definem um header próprio (case studies, blog, cv, engenharia, 404, ...).
-// A home (page.tsx) e as páginas /trabalhe-comigo e /recrutadores continuam
-// passando props próprias ao SiteHeader por terem CTAs/links específicos.
+// A home (page.tsx) e a página /trabalhe-comigo continuam passando props
+// próprias ao SiteHeader por terem CTAs/links específicos.
 const NAV_LINKS: Array<{ href: string; label: Bilingual }> = [
   { href: "/#intro", label: { pt: "Sobre", en: "About" } },
   { href: "/#projects", label: { pt: "Projetos", en: "Projects" } },
@@ -46,7 +46,6 @@ export default function StandardSiteHeader() {
       navLinks={NAV_LINKS}
       searchIndex={searchIndex}
       cta={{ label: { pt: "Peça um orçamento", en: "Get a quote" }, href: "/trabalhe-comigo" }}
-      secondaryCta={{ label: { pt: "Para recrutadores", en: "For recruiters" }, href: "/recrutadores" }}
       ctaBadge={{ pt: "Novo", en: "New" }}
     />
   );

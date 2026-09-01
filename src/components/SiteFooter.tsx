@@ -27,10 +27,6 @@ export default function SiteFooter({
               {t({ pt: "Privacidade", en: "Privacy" })}
             </Link>
             <span className="text-zinc-700">·</span>
-            <Link href="/recrutadores" className="text-zinc-400 hover:text-zinc-200 transition-colors">
-              {t({ pt: "Para recrutadores", en: "For recruiters" })}
-            </Link>
-            <span className="text-zinc-700">·</span>
             <Link href="/trabalhe-comigo" className="text-zinc-400 hover:text-zinc-200 transition-colors">
               {t({ pt: "Monte seu orçamento aqui", en: "Build your quote here" })}
             </Link>

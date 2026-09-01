@@ -12,7 +12,7 @@ import {
   Download,
   Loader2,
   CheckCircle2,
-  MessageCircle,
+  Mail,
   ShieldCheck,
   ArrowRight,
 } from "lucide-react";
@@ -29,7 +29,6 @@ import {
   formatBRL,
   formatData,
   investimentoTexto,
-  lembreteWhatsappUrl,
   porteLabel,
 } from "@/lib/proposta/proposta-doc";
 
@@ -297,19 +296,17 @@ export default function PropostaModal({ proposal, description, numero, open, onC
                     </p>
                     <p className="mt-1.5 text-[13.5px] text-zinc-600">
                       {t(
-                        "Para um novo escopo, me chama direto no WhatsApp que eu monto com você — assim fica mais rápido e pessoal.",
-                        "For a new scope, message me directly on WhatsApp and I'll put it together with you — faster and more personal."
+                        "Para um novo escopo, me chama direto por e-mail que eu monto com você — assim fica mais rápido e pessoal.",
+                        "For a new scope, email me directly and I'll put it together with you — faster and more personal."
                       )}
                     </p>
                     <a
-                      href={BRAND.whatsappUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={() => track("trabalhe_comigo_whatsapp_click", { source: "proposta_limite" })}
+                      href={`mailto:${BRAND.email}`}
+                      onClick={() => track("trabalhe_comigo_email_click", { source: "proposta_limite" })}
                       className="mt-4 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-500 px-6 py-3 text-sm font-semibold text-white transition-all hover:brightness-110"
                     >
-                      <MessageCircle className="h-4 w-4" />
-                      {t("Falar no WhatsApp", "Chat on WhatsApp")}
+                      <Mail className="h-4 w-4" />
+                      {t("Falar por e-mail", "Send an email")}
                     </a>
                   </div>
                 ) : (
@@ -317,8 +314,8 @@ export default function PropostaModal({ proposal, description, numero, open, onC
                     {sendStatus === "error" && (
                       <p className="mt-3 text-[13px] text-red-500">
                         {t(
-                          "Não consegui abrir agora. Tente de novo ou fale no WhatsApp.",
-                          "Couldn't open it now. Try again or reach out on WhatsApp."
+                          "Não consegui abrir agora. Tente de novo ou fale por e-mail.",
+                          "Couldn't open it now. Try again or reach out by email."
                         )}
                       </p>
                     )}
@@ -463,23 +460,6 @@ export default function PropostaModal({ proposal, description, numero, open, onC
                     {downloading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Download className="h-4 w-4" />}
                     {t("Baixar PDF", "Download PDF")}
                   </button>
-                  <a
-                    href={lembreteWhatsappUrl({
-                      numero,
-                      tipo: proposal.tipo,
-                      porte: proposal.porte,
-                      nome: nome.trim(),
-                      contato: whatsapp.trim() || email.trim(),
-                      lang,
-                    })}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => track("trabalhe_comigo_whatsapp_click", { source: "proposta_lembrete" })}
-                    className="inline-flex items-center gap-2 rounded-full border border-zinc-300 px-5 py-3 text-sm font-semibold text-zinc-700 transition-colors hover:border-violet-400 hover:text-violet-700"
-                  >
-                    <MessageCircle className="h-4 w-4" />
-                    {t("Avisar no WhatsApp", "Ping on WhatsApp")}
-                  </a>
                 </div>
               </>
             )}

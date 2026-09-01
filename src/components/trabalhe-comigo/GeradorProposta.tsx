@@ -384,17 +384,15 @@ export default function GeradorProposta() {
               <div className="mt-6 rounded-2xl border border-white/15 bg-black/30 p-6">
                 <p className="text-[15px] text-zinc-400">
                   {t({
-                    pt: "Não consegui gerar a proposta automática agora. Sem problema, me chama direto no WhatsApp que eu monto seu escopo pessoalmente.",
-                    en: "I couldn't generate the automatic proposal right now. No problem, message me directly on WhatsApp and I'll put your scope together myself.",
+                    pt: "Não consegui gerar a proposta automática agora. Sem problema, me chama direto por e-mail que eu monto seu escopo pessoalmente.",
+                    en: "I couldn't generate the automatic proposal right now. No problem, email me directly and I'll put your scope together myself.",
                   })}
                 </p>
                 <a
-                  href="https://wa.me/5585981888896"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="mailto:contato@fcopts.com.br"
                   className="mt-4 inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-violet-700 transition-all hover:scale-[1.02]"
                 >
-                  {t({ pt: "Falar no WhatsApp", en: "Chat on WhatsApp" })}
+                  {t({ pt: "Falar por e-mail", en: "Send an email" })}
                   <span aria-hidden="true">→</span>
                 </a>
               </div>

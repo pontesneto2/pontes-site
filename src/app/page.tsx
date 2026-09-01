@@ -23,7 +23,6 @@ import {
   Linkedin,
   Lock,
   Building2,
-  Briefcase,
   Clock,
   Smartphone,
   Users,
@@ -36,19 +35,6 @@ import {
   RefreshCcw,
   Activity,
   AppWindow,
-  Dumbbell,
-  Trophy,
-  Flag,
-  Car as CarIcon,
-  BookOpen,
-  BrainCircuit,
-  Bot,
-  Gamepad2,
-  Code2,
-  Flame,
-  Swords,
-  TrendingUp,
-  Camera,
   Instagram,
   ArrowUpRight,
   type LucideIcon,
@@ -82,7 +68,6 @@ import {
   SiSymfony,
   SiFigma,
 } from "react-icons/si";
-import { FaWhatsapp } from "react-icons/fa6";
 import { FcGoogle } from "react-icons/fc";
 import type { IconType } from "react-icons";
 
@@ -951,7 +936,6 @@ export default function Page() {
           navLinks={navLinks}
           searchIndex={searchIndex}
           cta={{ label: { pt: "Peça um orçamento", en: "Get a quote" }, href: "/trabalhe-comigo" }}
-          secondaryCta={{ label: { pt: "Para recrutadores", en: "For recruiters" }, href: "/recrutadores" }}
           ctaBadge={{ pt: "Novo", en: "New" }}
         />
 
@@ -1061,19 +1045,7 @@ export default function Page() {
                         {t({
                           pt: "Ao longo da minha trajetória, participei de projetos em sistemas legado para o setor público, construções de soluções digitais do zero no setor privado e experiência internacional. Toda essa trajetória me permitiu atuar em distintos produtos digitais de diferentes complexidades.",
                           en: "Throughout my career, I've worked on legacy system projects in the public sector, built digital solutions from scratch in the private sector, and gained international experience. That journey let me work on distinct digital products of different complexities.",
-                        })}{" "}
-                        <span className="italic text-violet-300">
-                          {t({
-                            pt: "Uso, automatizo e me especializo cada vez mais em Inteligência Artificial, mas ainda sou da geração old school que codificava na mão consultando o Stack Overflow.",
-                            en: "I use, automate and keep specializing in Artificial Intelligence — but the old-school generation that used to hand-code while checking Stack Overflow is still alive.",
-                          })}
-                        </span>{" "}
-                        <span className="italic text-white">
-                          {t({
-                            pt: "Seja bem-vindo ao meu portfólio.",
-                            en: "Welcome to my portfolio.",
-                          })}
-                        </span>
+                        })}
                       </p>
                       <button
                         type="button"
@@ -1085,34 +1057,6 @@ export default function Page() {
                           ? t({ pt: "Ler menos", en: "Read less" })
                           : t({ pt: "Ler mais", en: "Read more" })}
                       </button>
-                    </motion.div>
-
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      whileInView={{ opacity: 1 }}
-                      viewport={viewportSettings}
-                      transition={{ duration: 1.1, ease: easeOut, delay: 0.15 }}
-                      className="mt-8 flex flex-col sm:flex-row items-center gap-3"
-                    >
-                      <a
-                        href="/recrutadores"
-                        onClick={() => track("cta_click", { href: "/recrutadores" })}
-                        className="inline-flex items-center justify-center gap-2 rounded-full px-6 py-2.5 border border-violet-400/40 bg-violet-500/10 text-violet-200 text-sm font-medium hover:bg-violet-500/20 hover:border-violet-400/60 hover:text-white transition-colors duration-300"
-                      >
-                        <Briefcase className="h-4 w-4" />
-                        {t({ pt: "Recrutador? Fale comigo aqui", en: "Recruiter? Talk to me here" })}
-                      </a>
-                      <span className="text-xs text-zinc-500 select-none">
-                        {t({ pt: "ou", en: "or" })}
-                      </span>
-                      <a
-                        href="/trabalhe-comigo"
-                        onClick={() => track("cta_click", { href: "/trabalhe-comigo" })}
-                        className="inline-flex items-center justify-center gap-2 rounded-full px-6 py-2.5 border border-fuchsia-400/40 bg-fuchsia-500/10 text-fuchsia-200 text-sm font-medium hover:bg-fuchsia-500/20 hover:border-fuchsia-400/60 hover:text-white transition-colors duration-300"
-                      >
-                        <FileText className="h-4 w-4" />
-                        {t({ pt: "Você precisa de um serviço?", en: "Do you need a service?" })}
-                      </a>
                     </motion.div>
                   </div>
 
@@ -1480,7 +1424,7 @@ export default function Page() {
                         </div>
                       </div>
 
-                      {/* Ícones de hobbies seguindo a curva da borda, balançando juntos ao longo da linha */}
+                      {/* Emojis de hobbies seguindo a curva da borda, balançando juntos ao longo da linha */}
                       <motion.div
                         className="absolute inset-0"
                         animate={{ rotate: [0, 5, 0, -5, 0] }}
@@ -1491,28 +1435,33 @@ export default function Page() {
                         }}
                       >
                         {[
-                          { Icon: Dumbbell, angle: 0 },
-                          { Icon: Trophy, angle: 24 },
-                          { Icon: Flag, angle: 48 },
-                          { Icon: CarIcon, angle: 72 },
-                          { Icon: Smartphone, angle: 96 },
-                          { Icon: BookOpen, angle: 120 },
-                          { Icon: BrainCircuit, angle: 144 },
-                          { Icon: Rocket, angle: 168 },
-                          { Icon: Bot, angle: 192 },
-                          { Icon: Gamepad2, angle: 216 },
-                          { Icon: Code2, angle: 240 },
-                          { Icon: Flame, angle: 264 },
-                          { Icon: Swords, angle: 288 },
-                          { Icon: TrendingUp, angle: 312 },
-                          { Icon: Camera, angle: 336 },
-                        ].map(({ Icon, angle }, index) => {
+                          { emoji: "🦍", angle: 0 },
+                          { emoji: "🏋️", angle: 18 },
+                          { emoji: "🏃", angle: 36 },
+                          { emoji: "⚽", angle: 54 },
+                          { emoji: "🏁", angle: 72 },
+                          { emoji: "🚗", angle: 90 },
+                          { emoji: "📱", angle: 108 },
+                          { emoji: "📚", angle: 126 },
+                          { emoji: "🧠", angle: 144 },
+                          { emoji: "🚀", angle: 162 },
+                          { emoji: "🤖", angle: 180 },
+                          { emoji: "👾", angle: 198 },
+                          { emoji: "💪🏼", angle: 216 },
+                          { emoji: "👨🏻‍💻", angle: 234 },
+                          { emoji: "🔥", angle: 252 },
+                          { emoji: "🥋", angle: 270 },
+                          { emoji: "🏋🏻", angle: 288 },
+                          { emoji: "📈", angle: 306 },
+                          { emoji: "📸", angle: 324 },
+                          { emoji: "🏇🏻", angle: 342 },
+                        ].map(({ emoji, angle }, index) => {
                           const rad = (angle * Math.PI) / 180;
                           const x = (50 + 52 * Math.cos(rad)).toFixed(4);
                           const y = (50 + 52 * Math.sin(rad)).toFixed(4);
                           return (
                             <motion.span
-                              key={angle}
+                              key={emoji}
                               style={{
                                 left: `${x}%`,
                                 top: `${y}%`,
@@ -1535,9 +1484,9 @@ export default function Page() {
                                   repeat: Infinity,
                                   ease: "easeInOut",
                                 }}
-                                className="flex h-10 w-10 items-center justify-center rounded-xl border border-violet-400/20 bg-violet-500/10 text-violet-200 shadow-lg cursor-pointer"
+                                className="flex items-center justify-center text-4xl drop-shadow-lg cursor-pointer"
                               >
-                                <Icon className="h-5 w-5" />
+                                {emoji}
                               </motion.span>
                             </motion.span>
                           );
@@ -1601,16 +1550,6 @@ export default function Page() {
                     className="h-11 w-11 rounded-full bg-white/5 hover:bg-fuchsia-500/10 border border-white/5 hover:border-fuchsia-400/40 flex items-center justify-center text-zinc-300 hover:text-fuchsia-300 transition-all"
                   >
                     <Linkedin className="h-5 w-5" />
-                  </a>
-                  <a
-                    href="https://wa.me/5585981888896"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="WhatsApp"
-                    onClick={() => track("contact_click", { channel: "whatsapp" })}
-                    className="h-11 w-11 rounded-full bg-white/5 hover:bg-fuchsia-500/10 border border-white/5 hover:border-fuchsia-400/40 flex items-center justify-center text-zinc-300 hover:text-fuchsia-300 transition-all"
-                  >
-                    <FaWhatsapp className="h-5 w-5" />
                   </a>
                 </motion.div>
               </div>
