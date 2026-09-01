@@ -32,8 +32,8 @@ export const FAQ_ITEMS: Array<{ question: Bilingual; answer: Bilingual }> = [
   {
     question: { pt: "Quanto tempo leva um projeto?", en: "How long does a project take?" },
     answer: {
-      pt: "A partir de 2 dias eu já estou entregando projetos. Monte sua proposta acima e vamos conversar: o prazo exato sai na hora, conforme o porte do que você precisa.",
-      en: "I start delivering projects in as little as 2 days. Build your proposal above and let's talk: you get the exact timeline on the spot, based on the size of what you need.",
+      pt: "A partir de 2 dias eu já estou entregando projetos. Me chama no formulário abaixo e vamos conversar: o prazo exato sai na hora, conforme o porte do que você precisa.",
+      en: "I start delivering projects in as little as 2 days. Reach out through the form below and let's talk: you get the exact timeline on the spot, based on the size of what you need.",
     },
   },
   {

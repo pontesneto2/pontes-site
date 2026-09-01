@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     locale: "pt_BR",
     title: "Software sob medida, da ideia ao lançamento | Francisco Pontes",
     description:
-      "Sistemas, sites e apps construídos por um engenheiro full stack sênior. Proposta na hora com IA, contrato e código seu na entrega.",
+      "Sistemas, sites e apps construídos por um engenheiro full stack sênior. Escopo fechado, contrato e código seu na entrega.",
     images: [
       {
         url: "/images/capa-img-link-public.png",
