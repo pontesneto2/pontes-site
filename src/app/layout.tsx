@@ -112,7 +112,7 @@ const personJsonLd = {
   ],
   worksFor: {
     "@type": "Organization",
-    name: "Star Capital",
+    name: "Governo do Estado do Ceará",
   },
   knowsAbout: [
     "React",

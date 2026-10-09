@@ -22,7 +22,7 @@ const cspDirectives: Record<string, string[]> = {
     "'self'",
     "'unsafe-inline'",
     "'wasm-unsafe-eval'",
-    "https://platform.linkedin.com", // badge de perfil do LinkedIn (rodapé/blog)
+    "https://platform.linkedin.com", // badge de perfil do LinkedIn (rodapé)
     ...(isDev ? ["'unsafe-eval'", "https://va.vercel-scripts.com"] : []),
   ],
   // 'unsafe-inline': <style> inline do Next + atributos style do framer-motion.

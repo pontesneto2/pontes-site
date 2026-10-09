@@ -5,14 +5,13 @@ import { SKILL_NAMES } from "@/components/SkillsTools";
 import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
 
 // Menu superior padrão da home, compartilhado por todas as páginas que não
-// definem um header próprio (case studies, blog, cv, engenharia, 404, ...).
+// definem um header próprio (case studies, cv, engenharia, 404, ...).
 // A home (page.tsx) e a página /trabalhe-comigo continuam passando props
 // próprias ao SiteHeader por terem CTAs/links específicos.
 const NAV_LINKS: Array<{ href: string; label: Bilingual }> = [
   { href: "/#intro", label: { pt: "Sobre", en: "About" } },
   { href: "/#projects", label: { pt: "Projetos", en: "Projects" } },
   { href: "/#about", label: { pt: "Contato", en: "Contact" } },
-  { href: "/blog", label: { pt: "Blog", en: "Blog" } },
 ];
 
 const SEARCH_SECTIONS: Array<{ href: string; label: Bilingual }> = [

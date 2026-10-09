@@ -101,7 +101,7 @@ export default function CvPage() {
                       <h3 className="text-sm font-semibold text-white print:text-black">
                         {exp.company}
                       </h3>
-                      <span className="text-xs text-zinc-400 print:text-zinc-600">{exp.period}</span>
+                      <span className="text-xs text-zinc-400 print:text-zinc-600">{typeof exp.period === "string" ? exp.period : t(exp.period)}</span>
                     </div>
                     <p className="text-sm text-violet-300 print:text-zinc-700">{t(exp.role)}</p>
                     <p className="text-xs text-zinc-500 print:text-zinc-600">

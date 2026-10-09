@@ -5,7 +5,7 @@ export type ExperienceItem = {
   startRole?: Bilingual;
   role: Bilingual;
   description?: Bilingual;
-  period: string;
+  period: string | Bilingual;
   remote?: boolean;
   onsite?: boolean;
   hybrid?: boolean;
@@ -15,6 +15,21 @@ export type ExperienceItem = {
 };
 
 export const EXPERIENCE: ExperienceItem[] = [
+  {
+    company: "Governo do Estado do Ceará",
+    role: {
+      pt: "Desenvolvedor de Aplicativos | Engenheiro de Software",
+      en: "App Developer | Software Engineer",
+    },
+    description: {
+      pt: "Desenvolvimento de aplicativos mobile para o Governo do Estado do Ceará: construção e evolução de apps de serviços públicos ao cidadão, da interface à publicação nas lojas.",
+      en: "Mobile app development for the Government of the State of Ceará: building and evolving public service apps for citizens, from interface to app store release.",
+    },
+    period: { pt: "09/2026–Atual", en: "09/2026–Present" },
+    onsite: true,
+    contractType: { pt: "CLT", en: "CLT" },
+    location: "Fortaleza - CE",
+  },
   {
     company: "Star Capital",
     role: {

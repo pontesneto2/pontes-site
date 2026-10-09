@@ -16,7 +16,6 @@ import Preloader from "@/components/Preloader";
 import LogosMarquee from "@/components/LogosMarquee";
 import ExperienceTimeline from "@/components/ExperienceTimeline";
 import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
-import type { BlogPostMeta } from "@/lib/blog";
 import {
   Code,
   Github,
@@ -36,7 +35,6 @@ import {
   Activity,
   AppWindow,
   Instagram,
-  ArrowUpRight,
   ChevronDown,
   type LucideIcon,
 } from "lucide-react";
@@ -187,14 +185,6 @@ export default function Page() {
 
   const [isMobile, setIsMobile] = useState(false);
   const [techBioExpanded, setTechBioExpanded] = useState(false);
-  const [recentPosts, setRecentPosts] = useState<{ pt: BlogPostMeta[]; en: BlogPostMeta[] } | null>(null);
-
-  useEffect(() => {
-    fetch("/api/recent-posts")
-      .then((res) => res.json())
-      .then(setRecentPosts)
-      .catch(() => setRecentPosts({ pt: [], en: [] }));
-  }, []);
 
   const featuredScrollRef = useRef<HTMLDivElement>(null);
   const [featuredCurrentIndex, setFeaturedCurrentIndex] = useState(0);
@@ -891,7 +881,6 @@ export default function Page() {
     { href: "/#intro", label: { pt: "Sobre", en: "About" } },
     { href: "/#projects", label: { pt: "Projetos", en: "Projects" } },
     { href: "/#about", label: { pt: "Contato", en: "Contact" } },
-    { href: "/blog", label: { pt: "Blog", en: "Blog" } },
   ];
 
   const searchSections = [
@@ -1586,66 +1575,6 @@ export default function Page() {
               </div>
             </div>
           </section>
-
-          {/* BLOG - chamada discreta para os posts recentes */}
-          {recentPosts && recentPosts[lang].length > 0 && (
-            <section className="relative py-12 border-t border-white/5">
-              <div className="mx-auto max-w-6xl px-6 xs:px-7 sm:px-8 lg:px-12 2xl:max-w-8xl">
-                <div className="flex items-center gap-4 mb-7">
-                  <h3 className="whitespace-nowrap text-base font-semibold uppercase tracking-wider text-fuchsia-400">
-                    {t({ pt: "Últimos posts do meu Blog", en: "Latest posts from my blog" })}
-                  </h3>
-                  <span className="hidden sm:block h-px flex-1 bg-white/10" aria-hidden="true" />
-                  <Link
-                    href="/blog"
-                    className="hidden sm:inline-flex shrink-0 text-xs font-medium text-violet-300 hover:text-violet-200 transition-colors items-center gap-1"
-                  >
-                    {t({ pt: "Ver todos os posts", en: "See all posts" })}
-                    <span aria-hidden="true">→</span>
-                  </Link>
-                </div>
-                <div className="grid sm:grid-cols-3 gap-4">
-                  {recentPosts[lang].map((post) => (
-                    <Link
-                      key={post.slug}
-                      href={`/blog/${post.slug}`}
-                      className="group relative rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 transition-all duration-200 hover:border-white/20 hover:bg-white/[0.05] hover:shadow-lg hover:shadow-black/20 hover:-translate-y-0.5"
-                    >
-                      <ArrowUpRight
-                        className="absolute top-4 right-4 h-3.5 w-3.5 text-zinc-600 opacity-0 transition-all duration-200 group-hover:opacity-100 group-hover:text-fuchsia-300"
-                        aria-hidden="true"
-                      />
-                      <div className="flex flex-wrap gap-1.5 mb-2 pr-5">
-                        {post.tags.slice(0, 2).map((tag) => (
-                          <span
-                            key={tag}
-                            className="text-[13px] px-1.5 py-0.5 rounded border border-white/10 bg-white/[0.03] text-zinc-400"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                      <h4 className="text-sm font-semibold text-zinc-100 group-hover:text-white transition-colors line-clamp-2 pr-5">
-                        {post.title}
-                      </h4>
-                      <p className="mt-1.5 text-[13px] text-zinc-500">
-                        {post.readingMinutes} {t({ pt: "min de leitura", en: "min read" })}
-                      </p>
-                    </Link>
-                  ))}
-                </div>
-                <div className="mt-5 flex justify-center sm:hidden">
-                  <Link
-                    href="/blog"
-                    className="text-xs font-medium text-violet-300 hover:text-violet-200 transition-colors inline-flex items-center gap-1"
-                  >
-                    {t({ pt: "Ver todos os posts", en: "See all posts" })}
-                    <span aria-hidden="true">→</span>
-                  </Link>
-                </div>
-              </div>
-            </section>
-          )}
 
         </main>
 

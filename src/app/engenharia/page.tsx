@@ -9,7 +9,6 @@ import { useLanguage, tr, type Bilingual } from "@/lib/language-context";
 const STACK = [
   { group: "Framework", items: ["Next.js 15 (App Router, Turbopack)", "React 18", "TypeScript"] },
   { group: "UI", items: ["Tailwind CSS", "Framer Motion", "Lucide Icons"] },
-  { group: "Conteúdo", items: ["MDX (blog) via unified/remark/rehype", "Shiki (syntax highlight)"] },
   { group: "Dados & Backend", items: ["Neon Postgres (serverless)", "Resend (e-mail transacional)", "@react-pdf/renderer (propostas em PDF)"] },
   { group: "Testes & Qualidade", items: ["Vitest (unit tests)", "ESLint", "tsc --noEmit"] },
   { group: "Deploy", items: ["Vercel", "GitHub Actions (CI)"] },

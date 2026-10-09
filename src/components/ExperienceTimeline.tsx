@@ -66,7 +66,7 @@ export default function ExperienceTimeline() {
                     <span className="font-semibold text-sm text-white truncate">{exp.company}</span>
                     <span className="flex items-center gap-1.5 shrink-0">
                       <span className="text-[10px] tracking-wide text-zinc-400 bg-white/[0.03] px-1.5 py-0.5 rounded-full border border-white/[0.06] font-medium whitespace-nowrap">
-                        {exp.period}
+                        {typeof exp.period === "string" ? exp.period : t(exp.period)}
                       </span>
                       {isLatest ? (
                         <span className="hidden xs:inline text-[10px] tracking-wide text-violet-300/70 bg-violet-500/[0.06] px-1.5 py-0.5 rounded-full border border-violet-500/10 font-medium whitespace-nowrap">
@@ -107,7 +107,7 @@ export default function ExperienceTimeline() {
                   </span>
                   <span className="hidden sm:flex items-center gap-1.5 sm:gap-2 shrink-0">
                     <span className="text-[10px] tracking-wide text-zinc-400 bg-white/[0.03] px-1.5 py-0.5 rounded-full border border-white/[0.06] font-medium whitespace-nowrap">
-                      {exp.period}
+                      {typeof exp.period === "string" ? exp.period : t(exp.period)}
                     </span>
                     {isLatest ? (
                       <span className="hidden xs:inline text-[10px] tracking-wide text-violet-300/70 bg-violet-500/[0.06] px-1.5 py-0.5 rounded-full border border-violet-500/10 font-medium whitespace-nowrap">

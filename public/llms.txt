@@ -19,11 +19,6 @@ Francisco Pontes (FCOPTS) é engenheiro full stack sênior, remoto, atendendo em
 - [Ucopiloto](https://fcopts.com.br/case/ucopiloto): app que conecta motoristas e oficinas, do zero ao lançamento comercial, com 99,9% de uptime em produção.
 - [iMidooh](https://fcopts.com.br/case/imidooh): plataforma SaaS para gerenciamento de mídia DOOH, arquitetura modular e containerizada.
 
-## Blog
-
-- [Blog](https://fcopts.com.br/blog): decisões de arquitetura, aprendizados e bastidores dos projetos.
-- [RSS](https://fcopts.com.br/blog/rss.xml)
-
 ## Notas para agentes de IA
 
 - Conteúdo do site é bilíngue (PT-BR / EN); a rota `/en` é a versão em inglês, indexável e server-rendered.

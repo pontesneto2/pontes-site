@@ -22,7 +22,6 @@ export const DEFAULT_NAV_LINKS = [
   { href: "/#skills-tools", label: { pt: "Skills & Tools", en: "Skills & Tools" } },
   { href: "/#projects", label: { pt: "Projetos", en: "Projects" } },
   { href: "/#experience", label: { pt: "Trajetória", en: "Journey" } },
-  { href: "/blog", label: { pt: "Blog", en: "Blog" } },
   { href: "/#about", label: { pt: "Contato", en: "Contact" } },
 ];
 
@@ -32,7 +31,7 @@ function trackCtaClick(href: string) {
 
 // "/" and "/#..." are the only routes that exist in both locales today:
 // on /en, point them at the SSR'd English home page instead of the
-// Portuguese one. Other links (e.g. /blog) aren't localized yet.
+// Portuguese one. Other links (e.g. /cv) aren't localized yet.
 function withLocale(href: string, isEn: boolean) {
   if (!isEn) return href;
   if (href === "/") return "/en";

@@ -41,10 +41,10 @@ export default function NotFound() {
               {tr(lang, { pt: "Voltar para o início", en: "Back to home" })}
             </Link>
             <Link
-              href="/blog"
+              href="/#projects"
               className="inline-flex items-center gap-2 rounded-xl px-4 py-2.5 border border-white/15 text-zinc-200 hover:bg-white/5 text-sm font-medium transition-colors"
             >
-              {tr(lang, { pt: "Ver o blog", en: "See the blog" })}
+              {tr(lang, { pt: "Ver os projetos", en: "See the projects" })}
             </Link>
           </div>
         </div>
