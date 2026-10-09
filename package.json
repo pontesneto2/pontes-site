@@ -15,7 +15,8 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
-    "icons:generate": "node scripts/generate-skill-icons.mjs"
+    "icons:generate": "node scripts/generate-skill-icons.mjs",
+    "logos:generate": "node scripts/generate-skill-logos.mjs"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.1.0",
@@ -48,6 +49,7 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10.4.21",
+    "devicon": "^2.17.0",
     "eslint": "^9",
     "eslint-config-next": "15.5.12",
     "oxipng-bin": "^1.0.0",

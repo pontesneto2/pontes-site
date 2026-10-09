@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from "react";
 import { motion, AnimatePresence, useReducedMotion, type PanInfo } from "framer-motion";
 import { spaceGrotesk, jetbrainsMono } from "@/lib/fonts";
@@ -11,6 +12,9 @@ import { SKILL_USAGE } from "@/lib/skill-context";
 interface Skill {
   name: string;
   highlight?: boolean;
+  // Arquivo em public/skills/<logo>.svg (gerado por scripts/generate-skill-logos.mjs).
+  // Sem logo (conceitos como "REST APIs" ou "SEO"), a skill aparece como texto.
+  logo?: string;
 }
 
 interface SkillCategory {
@@ -20,73 +24,73 @@ interface SkillCategory {
 }
 
 // core() = principal (destaque visual em cor); base() = padrão.
-const core = (name: string): Skill => ({ name, highlight: true });
-const base = (name: string): Skill => ({ name });
+const core = (name: string, logo?: string): Skill => ({ name, highlight: true, logo });
+const base = (name: string, logo?: string): Skill => ({ name, logo });
 
 const CATEGORIES: SkillCategory[] = [
   {
     index: "01",
     title: { pt: "Frontend", en: "Frontend" },
     skills: [
-      core("TypeScript"),
-      core("React Web"),
-      core("Next.js"),
-      base("Vue.js"),
-      core("React Native"),
-      base("Angular"),
-      core("Tailwind CSS"),
+      core("TypeScript", "typescript"),
+      core("React Web", "react"),
+      core("Next.js", "nextjs"),
+      base("Vue.js", "vuejs"),
+      core("React Native", "react"),
+      base("Angular", "angular"),
+      core("Tailwind CSS", "tailwindcss"),
     ],
   },
   {
     index: "02",
     title: { pt: "Backend", en: "Backend" },
     skills: [
-      core("Node.js"),
-      core("NestJS"),
-      core("Express"),
-      core("Java (Spring Boot)"),
-      core(".NET"),
-      base("Python"),
-      base("PHP"),
-      base("GraphQL"),
+      core("Node.js", "nodejs"),
+      core("NestJS", "nestjs"),
+      core("Express", "express"),
+      core("Java (Spring Boot)", "spring"),
+      core(".NET", "dotnet"),
+      base("Python", "python"),
+      base("PHP", "php"),
+      base("GraphQL", "graphql"),
       core("REST APIs"),
-      core("OpenAPI (Swagger)"),
-      core("JWT"),
-      base("OAuth 2.0"),
-      base("WordPress (spec)"),
+      core("OpenAPI (Swagger)", "swagger"),
+      core("JWT", "jwt"),
+      base("OAuth 2.0", "oauth"),
+      base("WordPress (spec)", "wordpress"),
     ],
   },
   {
     index: "03",
     title: { pt: "DevOps & Cloud", en: "DevOps & Cloud" },
     skills: [
-      core("Docker"),
-      core("Kubernetes"),
+      core("Docker", "docker"),
+      core("Kubernetes", "kubernetes"),
       core("CI/CD"),
-      core("GitHub Actions"),
-      base("GitLab CI/CD"),
-      base("AWS"),
-      base("Azure"),
-      base("Google Cloud"),
-      base("Nginx"),
-      core("Prometheus"),
-      base("Grafana"),
-      base("Linux"),
-      base("Terraform"),
+      core("GitHub Actions", "githubactions"),
+      base("GitLab CI/CD", "gitlab"),
+      base("AWS", "aws"),
+      base("Azure", "azure"),
+      base("Google Cloud", "googlecloud"),
+      base("Nginx", "nginx"),
+      core("Prometheus", "prometheus"),
+      base("Grafana", "grafana"),
+      base("Linux", "linux"),
+      base("Terraform", "terraform"),
     ],
   },
   {
     index: "04",
     title: { pt: "Banco de Dados & ORMs", en: "Databases & ORMs" },
     skills: [
-      core("PostgreSQL"),
-      base("MySQL"),
-      base("MongoDB"),
-      core("Redis"),
+      core("PostgreSQL", "postgresql"),
+      base("MySQL", "mysql"),
+      base("MongoDB", "mongodb"),
+      core("Redis", "redis"),
       base("SQL"),
-      base("Prisma"),
-      base("TypeORM"),
-      core("Sequelize"),
+      base("Prisma", "prisma"),
+      base("TypeORM", "typeorm"),
+      core("Sequelize", "sequelize"),
       base("MikroORM"),
       base("Entity Framework Core"),
     ],
@@ -95,14 +99,14 @@ const CATEGORIES: SkillCategory[] = [
     index: "05",
     title: { pt: "Testes & Qualidade", en: "Testing & Quality" },
     skills: [
-      core("Selenium"),
-      core("Playwright"),
-      core("Cypress"),
-      base("Jest"),
+      core("Selenium", "selenium"),
+      core("Playwright", "playwright"),
+      core("Cypress", "cypress"),
+      base("Jest", "jest"),
       base("Testes E2E"),
       base("Testes de Integração"),
       base("Smoke Testing"),
-      base("cURL"),
+      base("cURL", "curl"),
     ],
   },
   {
@@ -110,34 +114,80 @@ const CATEGORIES: SkillCategory[] = [
     title: { pt: "Produto & UX", en: "Product & UX" },
     skills: [
       base("UX/UI"),
-      base("Figma"),
+      base("Figma", "figma"),
       base("Design Systems"),
       base("Prototipagem"),
       base("Responsive Design"),
       base("Acessibilidade (WCAG)"),
       base("SEO"),
-      base("VTEX"),
+      base("VTEX", "vtex"),
     ],
   },
   {
     index: "07",
     title: { pt: "Ferramentas", en: "Tools" },
     skills: [
-      base("Git"),
-      base("GitHub"),
-      base("Jira"),
-      base("Trello"),
-      base("Postman"),
-      base("VS Code"),
-      base("IntelliJ IDEA"),
-      base("Eclipse"),
-      base("Power BI"),
+      base("Git", "git"),
+      base("GitHub", "github"),
+      base("Jira", "jira"),
+      base("Trello", "trello"),
+      base("Postman", "postman"),
+      base("VS Code", "vscode"),
+      base("IntelliJ IDEA", "intellij"),
+      base("Eclipse", "eclipse"),
+      base("Power BI", "powerbi"),
       base("DAX"),
     ],
   },
 ];
 
 export const SKILL_NAMES = CATEGORIES.flatMap((cat) => cat.skills.map((s) => s.name));
+
+function SkillLogo({ skill, t }: { skill: Skill & { logo: string }; t: (v: Bilingual) => string }) {
+  const [hover, setHover] = useState(false);
+  const usedIn = SKILL_USAGE[skill.name];
+
+  return (
+    <span
+      tabIndex={0}
+      className="relative inline-flex h-11 w-11 cursor-default items-center justify-center rounded-lg outline-none transition-colors duration-200 hover:bg-white/[0.06] focus-visible:bg-white/[0.06] focus-visible:ring-1 focus-visible:ring-white/20"
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      onFocus={() => setHover(true)}
+      onBlur={() => setHover(false)}
+    >
+      <Image
+        src={`/skills/${skill.logo}.svg`}
+        alt={skill.name}
+        width={28}
+        height={28}
+        unoptimized
+        // Só o slide ativo fica montado: com lazy, cada troca de slide piscava vazio.
+        loading="eager"
+        draggable={false}
+        className={`h-7 w-7 object-contain transition-opacity duration-200 ${
+          skill.highlight || hover ? "opacity-100" : "opacity-75"
+        }`}
+      />
+      {hover && (
+        <span
+          role="tooltip"
+          className="pointer-events-none absolute bottom-full left-1/2 z-20 mb-2 w-max max-w-[220px] -translate-x-1/2 whitespace-normal rounded-lg border border-white/10 bg-[#141418] px-2.5 py-1.5 text-center text-[13px] leading-snug text-zinc-300 shadow-xl shadow-black/40 font-[family-name:var(--font-space-grotesk)]"
+        >
+          <span className="block font-semibold text-zinc-100">{skill.name}</span>
+          {usedIn && (
+            <span className="block">
+              <span className="text-fuchsia-300 font-semibold">
+                {t({ pt: "Usado em: ", en: "Used in: " })}
+              </span>
+              {usedIn.join(", ")}
+            </span>
+          )}
+        </span>
+      )}
+    </span>
+  );
+}
 
 function SkillName({ skill, t }: { skill: Skill; t: (v: Bilingual) => string }) {
   const [hover, setHover] = useState(false);
@@ -173,6 +223,9 @@ function SkillName({ skill, t }: { skill: Skill; t: (v: Bilingual) => string }) 
 }
 
 function CategoryCard({ category, t }: { category: SkillCategory; t: (v: Bilingual) => string }) {
+  const withLogo = category.skills.filter(hasLogo);
+  const withoutLogo = category.skills.filter((skill) => !hasLogo(skill));
+
   return (
     <div className="flex h-full flex-col px-2 py-2">
       <div className="flex items-baseline gap-2 border-b border-white/10 pb-3">
@@ -189,19 +242,30 @@ function CategoryCard({ category, t }: { category: SkillCategory; t: (v: Bilingu
           {t(category.title)}
         </span>
       </div>
-      <div className="flex flex-wrap items-center justify-center gap-x-1.5 gap-y-6 md:gap-y-5 pt-4 text-center font-[family-name:var(--font-jetbrains-mono)] text-[15px] leading-none">
-        {category.skills.map((skill, index) => (
-          <span key={`${skill.name}-${index}`} className="inline-flex items-center gap-1.5">
-            <SkillName skill={skill} t={t} />
-            {index < category.skills.length - 1 && (
-              <span className="select-none text-zinc-600">·</span>
-            )}
-          </span>
-        ))}
-      </div>
+      {withLogo.length > 0 && (
+        <div className="flex flex-wrap items-center justify-center gap-1.5 pt-4">
+          {withLogo.map((skill) => (
+            <SkillLogo key={skill.name} skill={skill} t={t} />
+          ))}
+        </div>
+      )}
+      {withoutLogo.length > 0 && (
+        <div className="flex flex-wrap items-center justify-center gap-x-1.5 gap-y-6 md:gap-y-5 pt-5 text-center font-[family-name:var(--font-jetbrains-mono)] text-[15px] leading-none">
+          {withoutLogo.map((skill, index) => (
+            <span key={skill.name} className="inline-flex items-center gap-1.5">
+              <SkillName skill={skill} t={t} />
+              {index < withoutLogo.length - 1 && (
+                <span className="select-none text-zinc-600">·</span>
+              )}
+            </span>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
+
+const hasLogo = (skill: Skill): skill is Skill & { logo: string } => Boolean(skill.logo);
 
 function SkillsSlide({
   categories,
